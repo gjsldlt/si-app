@@ -1,0 +1,33 @@
+@import '../../styles/variable';
+
+.layout{
+    display:flex;
+    flex-direction: column;
+    main{
+        .body{
+            margin-top:$header-height;
+
+        }
+    }
+}
+
+/* Mobile CSS */
+@media (max-width: $mobile-width) {
+    .layout{
+
+    }
+}
+
+/* Tablet CSS */
+@media (max-width: $mobile-width) {
+    .layout{
+        
+    }
+}
+
+/* Laptop and above CSS */
+@media (max-width: $mobile-width) {
+    .layout{
+        
+    }
+}

@@ -1,0 +1,85 @@
+@import '../../styles/variable';
+
+.sidebar {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    width: $sidebar-width;
+    margin-top: $header-height;
+    height: calc(100vh - $header-height);
+    background-color: white;
+    transition: left 1s, right 1s;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+
+    &.show {
+        left: 0;
+    }
+
+    &.hide {
+        left: (0 - calc($sidebar-width - $sidebar-minified));
+        .menuItem{
+            padding:0;
+        }
+    }
+
+    .menuItem {
+        flex: 0 0 45px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        cursor:pointer;
+        transition:padding 1s, color 300ms;
+        .name {
+            flex: 1 0;
+        }
+
+        .icon {
+            flex: 0 0 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        &:hover{
+            .icon{
+                color:$primary-color;
+            }
+        }
+    }
+}
+
+/* Mobile CSS */
+@media (max-width: $mobile-width) {
+    .sidebar {
+        border-left: 1px solid black;
+        left:unset;
+        &.show {
+            // left: calc(100vw + $sidebar-width);
+            left:unset;
+            right: 0;
+        }
+
+        &.hide {
+            // left: calc(100vw - $sidebar-width);
+            left:unset;
+            right:(0 - $sidebar-width);
+        }
+
+        .menuItem {
+            flex-direction: row-reverse;
+        }
+    }
+}
+
+/* Tablet CSS */
+@media (max-width: $mobile-width) {
+    .sidebar {}
+}
+
+/* Laptop and above CSS */
+@media (max-width: $mobile-width) {
+    .sidebar {}
+}
