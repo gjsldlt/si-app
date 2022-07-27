@@ -1,6 +1,7 @@
 import HomeIcon from '@mui/icons-material/Home';
 import GroupsIcon from '@mui/icons-material/Groups';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import WorkIcon from '@mui/icons-material/Work';
 
 export default [
 
@@ -24,5 +25,12 @@ export default [
         route:'/employee',
         icon:<GroupsIcon/>
     },
+    {
+        name:'skills',
+        displayName:'Skills',
+        route:'/skills',
+        icon:<WorkIcon/>
+    },
+
 
 ]
