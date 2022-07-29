@@ -18,3 +18,14 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.hero-icons {
+  height: 25px;
+  width: 25px;
+}
+
+.login-bg {
+  background-image: url('../public/images/login-bg.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}

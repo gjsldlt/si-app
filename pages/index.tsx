@@ -1,10 +1,23 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useEffect } from 'react';
+
+import { getSkills } from '../services/skills.services';
 
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
+
+  const populateSkills = async () => {
+    let data = await getSkills();
+    return data;
+  }
+
+  useEffect(() => {
+    populateSkills();
+  }, [])
+
   return (
     <div className={styles.container}>
       <Head>
