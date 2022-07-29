@@ -15,13 +15,10 @@ export default function Layout({ children }: LayoutProps) {
 
   const tailwindClasses = {
     layout: '',
-    body: 'flex flex-row pt-header-height pl-45',
+    body: 'flex flex-row pt-header-height md:pl-45',
   }
 
   function goToRoute(routeItem: RouteItem) {
-    let newBreadcrumb = ['Home'];
-    router.pathname.split('/').forEach(r=>newBreadcrumb.push(r));
-    setBreadcrumb(newBreadcrumb);
     router.push(routeItem.route)
   }
 
@@ -29,9 +26,9 @@ export default function Layout({ children }: LayoutProps) {
     return <>{children}</>
   } else return (
     <div className={tailwindClasses.layout}>
-      <HeaderBar breadcrumb={breadcrumb} onMenuClick={() => setSidebarShow(!sidebarShow)} />
+      <HeaderBar breadcrumb={breadcrumb} onMenuClick={() => setSidebarShow(!sidebarShow)} show={sidebarShow} />
       <div className={tailwindClasses.body}>
-        <Sidebar onRouteClick={goToRoute} routes={AppRoutes} show={sidebarShow} />
+        <Sidebar onRouteClick={goToRoute} routes={AppRoutes} show={sidebarShow} activeRoute={router.route} />
         <div className={styles.body}>{children}</div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import { BeakerIcon } from '@heroicons/react/solid'
 
 function Employee() {
     const router = useRouter();
@@ -14,6 +15,7 @@ function Employee() {
             <h2 className={tailwindClasses.header}>Employee Home</h2>
             <p>
                 Employee Name: {router.query.employee}
+                <BeakerIcon className="h-45 w-45 font-xs text-blue-500" />
             </p>
         </div>);
 }
