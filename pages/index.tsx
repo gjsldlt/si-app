@@ -3,8 +3,8 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect } from 'react';
 
-import { getSkills } from '../services/skills.services';
-import { accessUserInSession } from '../services/user.services';
+import { getSkills } from '../services/skill.service';
+import { accessUserInSession } from '../services/user.service';
 import { UserDataType } from '../types/MasterTypes.types';
 import PageBanner from '../components/pageBanner/pageBanner.component';
 
@@ -34,8 +34,8 @@ const Home: NextPage = () => {
       <PageBanner content={
         <div className={tailwindClasses.customBanner}>
           <div className={tailwindClasses.nameContainer}>
-            <h1>{user.firstName}</h1>
-            <h2>{user.lastName}</h2></div>
+            <h1>{user?.firstName || ''}</h1>
+            <h2>{user?.lastName || ''}</h2></div>
           <div className={tailwindClasses.profilePicture}>
             picture
           </div>

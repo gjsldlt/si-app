@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { MailIcon, LockClosedIcon, EyeOffIcon, EyeIcon, ChevronRightIcon, IdentificationIcon, PhoneIcon } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
 
-import { authLogin, saveUserInSession } from '../../services/user.services';
+import { authLogin, saveUserInSession } from '../../services/user.service';
 
 const Form: React.FC = () => {
     const router = useRouter();

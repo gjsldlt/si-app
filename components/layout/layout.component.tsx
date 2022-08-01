@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 
 import HeaderBar from '../headerBar/headerBar.component';
@@ -7,10 +7,10 @@ import styles from './layout.module.scss';
 
 import AppRoutes from '../../helpers/routes.helper';
 import { RouteItem } from '../../types/MasterTypes.types';
-import { accessUserInSession } from '../../services/user.services';
+import { accessUserInSession } from '../../services/user.service';
 
 export default function Layout({ children }: LayoutProps) {
-  const router = useRouter();
+  let router = useRouter();
   let [sidebarShow, setSidebarShow] = useState(false)
   let [breadcrumb, setBreadcrumb] = useState(['home'])
 
@@ -24,10 +24,14 @@ export default function Layout({ children }: LayoutProps) {
     router.push(routeItem.route)
   }
 
-  let user = accessUserInSession();
-  if (user === null && router.pathname !== '/login') {
-    router.push('/login');
-  }
+
+  useEffect(() => {
+    let user = accessUserInSession();
+    if (user === null && router.pathname !== '/login') {
+      console.log(router);
+      router.replace('/login');
+    }
+  }, [router])
 
   if (router.pathname === '/login') {
     return <>{children}</>
