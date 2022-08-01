@@ -7,6 +7,7 @@ import styles from './layout.module.scss';
 
 import AppRoutes from '../../helpers/routes.helper';
 import { RouteItem } from '../../types/MasterTypes.types';
+import { accessUserInSession } from '../../services/user.services';
 
 export default function Layout({ children }: LayoutProps) {
   const router = useRouter();
@@ -14,22 +15,30 @@ export default function Layout({ children }: LayoutProps) {
   let [breadcrumb, setBreadcrumb] = useState(['home'])
 
   const tailwindClasses = {
-    layout: '',
-    body: 'flex flex-row pt-header-height md:pl-45',
+    layout: 'layout-container flex',
+    body: 'block pt-header-height md:pl-sidebar-min w-full',
+    content: '',
   }
 
   function goToRoute(routeItem: RouteItem) {
     router.push(routeItem.route)
   }
 
+  let user = accessUserInSession();
+  if (user === null && router.pathname !== '/login') {
+    router.push('/login');
+  }
+
   if (router.pathname === '/login') {
+    return <>{children}</>
+  } else if (router.pathname === '/_error') {
     return <>{children}</>
   } else return (
     <div className={tailwindClasses.layout}>
       <HeaderBar breadcrumb={breadcrumb} onMenuClick={() => setSidebarShow(!sidebarShow)} show={sidebarShow} />
       <div className={tailwindClasses.body}>
         <Sidebar onRouteClick={goToRoute} routes={AppRoutes} show={sidebarShow} activeRoute={router.route} />
-        <div className={styles.body}>{children}</div>
+        <div className={`${tailwindClasses.content}`}>{children}</div>
       </div>
     </div>
   )

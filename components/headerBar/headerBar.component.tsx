@@ -6,19 +6,19 @@ function HeaderBar({ onMenuClick, show }: HeaderBarProps) {
     const [profileBarState, setProfileBarState] = useState(false);
     const router = useRouter();
     const tailwindClasses = {
-        header: 'transition-all duration-500 fixed h-header-height min-w-full items-stretch top-0 w-full z-10 bg-sidebar md:bg-white text-black flex-row-reverse sm:flex-row flex justify-stretch items-center shadow-xl md:shadow-none',
-        title: 'flex-1 mx-2 flex flex-col text-white md:text-black',
+        header: 'transition-all duration-500 fixed h-header-height min-w-full items-stretch top-0 w-full z-10 bg-sidebar md:bg-transparent text-black flex-row-reverse sm:flex-row flex justify-stretch items-center shadow-xl md:shadow-none',
+        title: 'flex-1 mx-2 flex flex-col text-white ',
         mainTitle: 'flex-1 text-lg flex flex-row justify-start items-center whitespace-nowrap',
         headerBtn: 'bg-sidebar transition-all duration-500 box-border flex items-center overflow-hidden break-words cursor-pointer hover:text-current w-sidebar-min flex-row-reverse md:flex-row ',
         headerBtnMin: 'w-sidebar-min',
         headerBtnMax: 'md:w-sidebar-width',
         menuButton: 'z-[3] transition-all duration-500 w-sidebar-min h-header-height text-white cursor-pointer hover:text-current flex justify-center items-center m-0',
-        headerBtnTitle: 'transition-all duration-500 w-full text-white flex-1 ml-5 flex justify-start align-center whitespace-nowrap overflow-hidden flex-nowrap hidden md:block ',
+        headerBtnTitle: 'transition-all duration-500 w-full text-white flex-1 flex justify-start align-center whitespace-nowrap overflow-hidden flex-nowrap hidden md:block ',
         headerBtnTitleMin: 'opacity-0 -translate-x-full opacity-0 ml-0 ',
-        headerBtnTitleMax: 'opacity-1 translate-x-0 opacity-1 ',
+        headerBtnTitleMax: 'opacity-1 translate-x-0 opacity-1 ml-5 ',
         breadcrumb: 'flex flex-row hidden md:block',
         crumb: 'text-xs flex-initial mr-2 capitalize',
-        profileBar: 'hidden md:flex transition-all duration-500 w-profileBarMobile cursor-pointer text-sm md:w-profileBar overflow-hidden text-black h-full flex flex-col-reverse pr-profileBar h-header-height shadow-none',
+        profileBar: 'hidden md:flex transition-all duration-500 w-profileBarMobile cursor-pointer text-sm md:w-profileBar overflow-hidden text-white h-full flex flex-col-reverse pr-profileBar h-header-height shadow-none',
         profileBarActive: 'bg-sidebar text-white h-active-profile-bar shadow-lg flex-col justify-start',
         profile: 'flex flex-row justify-end items-center min-h-header-height max-h-header-height h-header-height absolute right-0 top-0 pr-profileBar',
         logoutButton: 'transition-position duration-500 z-1 flex flex-row justify-end items-center flex-0 text-white h-header-height',
@@ -64,8 +64,8 @@ function HeaderBar({ onMenuClick, show }: HeaderBarProps) {
                     </div>
                 }
             </div>
-            <div className={`${tailwindClasses.profileBar} ${profileBarState && tailwindClasses.profileBarActive}`} onClick={() => setProfileBarState(!profileBarState)}>
-                <div className={tailwindClasses.profile}>
+            <div className={`${tailwindClasses.profileBar} ${profileBarState ? tailwindClasses.profileBarActive : ''}`} onClick={() => setProfileBarState(!profileBarState)}>
+                <div className={`${tailwindClasses.profile} ${profileBarState ? 'text-white' : ''}`}>
                     Hi Test Name
                     <svg xmlns="http://www.w3.org/2000/svg" className="hero-icons" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />

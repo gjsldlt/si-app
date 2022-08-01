@@ -6,3 +6,11 @@ export type RouteItem = {
     route: string,
     icon: any
 }
+
+export type UserDataType = {
+    firstName: String,
+    lastName: String,
+    email: String,
+    userId: String,
+    token: String,
+}
