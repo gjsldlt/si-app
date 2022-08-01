@@ -24,15 +24,6 @@ export default function Layout({ children }: LayoutProps) {
     router.push(routeItem.route)
   }
 
-
-  useEffect(() => {
-    let user = accessUserInSession();
-    if (user === null && router.pathname !== '/login') {
-      console.log(router);
-      router.replace('/login');
-    }
-  }, [router])
-
   if (router.pathname === '/login') {
     return <>{children}</>
   } else if (router.pathname === '/_error') {

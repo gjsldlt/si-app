@@ -45,6 +45,11 @@ export const accessUserInSession = () => {
     }
 }
 
+export const clearUserSession = () => {
+    sessionStorage.removeItem('user')
+
+}
+
 
 type LoginDetails = {
     email: String,

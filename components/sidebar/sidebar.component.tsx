@@ -9,7 +9,7 @@ export default function Sidebar({ onRouteClick, routes, show, activeRoute }: Sid
     sidebarMax: 'w-sidebar-width',
     sidebarMin: 'w-sidebar-min translate-x-full sm:translate-x-0',
     menuItem: 'transition-all duration-500 box-border flex items-center overflow-hidden break-words h-45 cursor-pointer hover:text-current',
-    menuActive:'text-current',
+    menuActive: 'text-current',
     name: 'transition-all duration-500 break-normal whitespace-nowrap overflow-hidden flex-1 ',
     nameMin: '-translate-x-full opacity-0 ml-0',
     nameMax: 'translate-x-0 ml-5',
@@ -17,15 +17,23 @@ export default function Sidebar({ onRouteClick, routes, show, activeRoute }: Sid
     iconMin: 'h-45',
     iconMax: 'h-auto',
     activeStateBar: 'h-active-border-state w-active-border-state border-active-border-state bg-current',
+  }
 
+  console.log(activeRoute, routes)
+
+  const checkIfActive = (currRoute: string) => {
+    if (activeRoute === '/')
+      return activeRoute.includes(currRoute);
+    else 
+      return currRoute!=='/' && activeRoute.includes(currRoute);
   }
 
   return (
     <div className={`${tailwindClasses.sidebar} ${show ? tailwindClasses.sidebarMax : tailwindClasses.sidebarMin}`}>
       {
         routes.map((routeItem, routeIndex) => (
-          <div key={`route-sidebar-index-${routeIndex}`} className={`${tailwindClasses.menuItem} ${activeRoute===routeItem.route && tailwindClasses.menuActive}`} onClick={() => onRouteClick(routeItem)}>
-            <div className={`${activeRoute===routeItem.route && tailwindClasses.activeStateBar}`} />
+          <div key={`route-sidebar-index-${routeIndex}`} className={`${tailwindClasses.menuItem} ${checkIfActive(routeItem.route) && tailwindClasses.menuActive}`} onClick={() => onRouteClick(routeItem)}>
+            <div className={`${checkIfActive(routeItem.route) && tailwindClasses.activeStateBar}`} />
             <div className={`${tailwindClasses.name} ${show ? tailwindClasses.nameMax : tailwindClasses.nameMin}`}>{routeItem.displayName}</div>
             <div className={`${tailwindClasses.icon} ${show ? tailwindClasses.iconMax : tailwindClasses.iconMin}`}>{routeItem.icon}</div>
           </div>
@@ -44,5 +52,5 @@ type SidebarProps = {
   onRouteClick: (routeItem: RouteItem) => void,
   routes: Array<RouteItem>,
   show: boolean,
-  activeRoute: String
+  activeRoute: string
 }

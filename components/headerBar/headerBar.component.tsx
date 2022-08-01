@@ -2,6 +2,8 @@ import { SidebarCallerType } from '../../types/MasterTypes.types';
 import { useState } from 'react';
 import { useRouter } from 'next/router'
 
+import { clearUserSession } from '../../services/user.service';
+
 function HeaderBar({ onMenuClick, show }: HeaderBarProps) {
     const [profileBarState, setProfileBarState] = useState(false);
     const router = useRouter();
@@ -16,8 +18,8 @@ function HeaderBar({ onMenuClick, show }: HeaderBarProps) {
         headerBtnTitle: 'transition-all duration-500 w-full text-white flex-1 flex justify-start align-center whitespace-nowrap overflow-hidden flex-nowrap hidden md:block ',
         headerBtnTitleMin: 'opacity-0 -translate-x-full opacity-0 ml-0 ',
         headerBtnTitleMax: 'opacity-1 translate-x-0 opacity-1 ml-5 ',
-        breadcrumb: 'flex flex-row hidden md:block',
-        crumb: 'text-xs flex-initial mr-2 capitalize',
+        breadcrumb: 'flex-row hidden md:flex',
+        crumb: ' text-xs flex-initial mr-2 capitalize cursor-pointer hover:text-current',
         profileBar: 'hidden md:flex transition-all duration-500 w-profileBarMobile cursor-pointer text-sm md:w-profileBar overflow-hidden text-white h-full flex flex-col-reverse pr-profileBar h-header-height shadow-none',
         profileBarActive: 'bg-sidebar text-white h-active-profile-bar shadow-lg flex-col justify-start',
         profile: 'flex flex-row justify-end items-center min-h-header-height max-h-header-height h-header-height absolute right-0 top-0 pr-profileBar',
@@ -26,13 +28,29 @@ function HeaderBar({ onMenuClick, show }: HeaderBarProps) {
         logoutButtonInactive: '-translate-y-full opacity-0',
     }
     let breadcrumb = ['Home'];
-    router.pathname.split('/').forEach(r => breadcrumb.push(r));
+    router.asPath.split('/').forEach(routePath => {
+        if (routePath != '') breadcrumb.push(routePath)
+    });
 
     const logout = () => {
         if (profileBarState) {
-            //destroy token from session storage
+            clearUserSession();
             router.push('/login')
-            // console.log("logout clicked");
+        }
+    }
+
+    const breadcrumbClick = (crumbIndex: number) => {
+        if (crumbIndex === 0) {
+            router.push('/');
+        } else {
+            let newPath = "";
+            router.asPath.split('/').forEach((routePath, routeIndex) => {
+                if (routePath != '' && routeIndex <= crumbIndex) {
+                    newPath += `/${routePath}`
+                }
+            });
+            console.log(newPath);
+            router.push(newPath);
         }
     }
 
@@ -59,7 +77,7 @@ function HeaderBar({ onMenuClick, show }: HeaderBarProps) {
                     breadcrumb.length > 1 &&
                     <div className={tailwindClasses.breadcrumb}>
                         {
-                            breadcrumb.map((crumb, crumbIndex) => (<div className={tailwindClasses.crumb}>{crumb}</div>))
+                            breadcrumb.map((crumb, crumbIndex) => (<div onClick={() => breadcrumbClick(crumbIndex)} className={tailwindClasses.crumb}>{crumb}</div>))
                         }
                     </div>
                 }
