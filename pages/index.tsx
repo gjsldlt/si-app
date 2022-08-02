@@ -8,6 +8,8 @@ import { accessUserInSession } from '../services/user.service';
 import { UserDataType } from '../types/MasterTypes.types';
 import PageBanner from '../components/pageBanner/pageBanner.component';
 
+import HomeSVG from '../public/assets/images/home-alt.svg';
+
 
 import styles from '../styles/Home.module.css'
 
@@ -15,9 +17,15 @@ const Home: NextPage = () => {
   let user: UserDataType = accessUserInSession();
   const tailwindClasses = {
     container: 'index-container',
-    customBanner: 'h-full w-full bg-[rgba(0,0,0,0.2)] flex z-[2]',
-    profilePicture: 'flex-1',
-    nameContainer: 'flex-1',
+    customBanner: 'h-full w-full bg-[rgba(0,0,0,0.2)] md:bg-[transparent] flex z-[2]',
+    profilePicture: 'w-[30%]',
+    nameContainer: 'flex-grow flex flex-col justify-center items-center md:justify-start md:items-start md:pl-[5rem]',
+    nameh1: 'text-[3rem] m-0 z-[10] flex flex-row gap-2  md:items-end',
+    nameh2: 'text-[1rem] m-0 uppercase z-[10] md:hidden',
+    firstName: 'md:text-[5rem]',
+    lastName: 'md:text-[2rem]',
+    body: 'mt-[225px] flex flex-col items-center justify-center flex-grow h-full',
+    bodyImage:'h-[250px] w-[250px]'
   }
 
   const populateSkills = async () => {
@@ -26,6 +34,7 @@ const Home: NextPage = () => {
   }
 
   useEffect(() => {
+    user = accessUserInSession();
     populateSkills();
   }, [])
 
@@ -34,13 +43,25 @@ const Home: NextPage = () => {
       <PageBanner content={
         <div className={tailwindClasses.customBanner}>
           <div className={tailwindClasses.nameContainer}>
-            <h1>{user?.firstName || ''}</h1>
-            <h2>{user?.lastName || ''}</h2></div>
-          <div className={tailwindClasses.profilePicture}>
-            picture
+            <div className={tailwindClasses.nameh1}>
+              <span className={tailwindClasses.firstName}>{user?.firstName || ''}</span>
+              <span className={tailwindClasses.lastName}>{user?.lastName || ''}</span>
+            </div>
+            <h2 className={tailwindClasses.nameh2}>{user?.role || ''}</h2>
+          </div>
+          <div className={`${tailwindClasses.profilePicture} hidden md:flex`}>
+
           </div>
         </div>
       } />
+      <div className={tailwindClasses.body}>
+        <div className={tailwindClasses.bodyImage}>
+          {/* <img src={HomeSVG.src} /> */}
+        </div>
+        <div className=''>
+          Introduction to Admin Home
+        </div>
+      </div>
     </div>
   )
 }

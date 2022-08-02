@@ -2,11 +2,12 @@ import { SidebarCallerType } from '../../types/MasterTypes.types';
 import { useState } from 'react';
 import { useRouter } from 'next/router'
 
-import { clearUserSession } from '../../services/user.service';
+import { clearUserSession, accessUserInSession } from '../../services/user.service';
 
 function HeaderBar({ onMenuClick, show }: HeaderBarProps) {
     const [profileBarState, setProfileBarState] = useState(false);
     const router = useRouter();
+    const authorizedUser = accessUserInSession();
     const tailwindClasses = {
         header: 'transition-all duration-500 fixed h-header-height min-w-full items-stretch top-0 w-full z-10 bg-sidebar md:bg-transparent text-black flex-row-reverse sm:flex-row flex justify-stretch items-center shadow-xl md:shadow-none',
         title: 'flex-1 mx-2 flex flex-col text-white ',
@@ -84,7 +85,7 @@ function HeaderBar({ onMenuClick, show }: HeaderBarProps) {
             </div>
             <div className={`${tailwindClasses.profileBar} ${profileBarState ? tailwindClasses.profileBarActive : ''}`} onClick={() => setProfileBarState(!profileBarState)}>
                 <div className={`${tailwindClasses.profile} ${profileBarState ? 'text-white' : ''}`}>
-                    Hi Test Name
+                    Hi {`${authorizedUser?.firstName} ${authorizedUser?.lastName}!`}&nbsp;
                     <svg xmlns="http://www.w3.org/2000/svg" className="hero-icons" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>

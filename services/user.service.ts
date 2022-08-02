@@ -18,6 +18,9 @@ export async function authLogin({ email, password }: LoginDetails) {
                 ) { 
                     login(email:$email, password:$password) {
                         token
+                        managerId
+                        employeeId
+                        isAdmin
                         user{
                             firstName
                             lastName
@@ -30,16 +33,17 @@ export async function authLogin({ email, password }: LoginDetails) {
                 password: password
             },
         })
+    console.log(response.data.data);
     return response.data.data;
 }
 
 export const saveUserInSession = (UserData: UserDataType) => {
-    window.sessionStorage.setItem('user', JSON.stringify(UserData));
+    sessionStorage.setItem('user', JSON.stringify(UserData));
 }
 
 export const accessUserInSession = () => {
     try {
-        return JSON.parse(window.sessionStorage.getItem('user') || '');
+        return JSON.parse(sessionStorage.getItem('user') || '');
     } catch (e) {
         return null;
     }
@@ -47,7 +51,6 @@ export const accessUserInSession = () => {
 
 export const clearUserSession = () => {
     sessionStorage.removeItem('user')
-
 }
 
 

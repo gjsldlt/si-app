@@ -1,11 +1,14 @@
 import styles from './sidebar.module.scss';
-import HomeIcon from '@mui/icons-material/Home';
+import { useRouter } from 'next/router';
+
 import { RouteItem } from '../../types/MasterTypes.types';
+import { accessUserInSession, clearUserSession } from "../../services/user.service";
 
 export default function Sidebar({ onRouteClick, routes, show, activeRoute }: SidebarProps) {
-
+  let authorizedUser = accessUserInSession();
+  const router = useRouter();
   const tailwindClasses = {
-    sidebar: 'twind-sidebar transition-all duration-500 shadow-lg fixed right-0 min-h-full sm:fixed sm:left-0 z-[100] bg-sidebar text-grey1 overflow-hidden shadow-2xl',
+    sidebar: 'twind-sidebar transition-all duration-500 shadow-lg fixed right-0 min-h-full sm:fixed sm:left-0 z-[100] bg-sidebar text-grey1 overflow-hidden shadow-2xl flex-col',
     sidebarMax: 'w-sidebar-width',
     sidebarMin: 'w-sidebar-min translate-x-full sm:translate-x-0',
     menuItem: 'transition-all duration-500 box-border flex items-center overflow-hidden break-words h-45 cursor-pointer hover:text-current',
@@ -19,19 +22,21 @@ export default function Sidebar({ onRouteClick, routes, show, activeRoute }: Sid
     activeStateBar: 'h-active-border-state w-active-border-state border-active-border-state bg-current',
   }
 
-  console.log(activeRoute, routes)
-
   const checkIfActive = (currRoute: string) => {
     if (activeRoute === '/')
       return activeRoute.includes(currRoute);
-    else 
-      return currRoute!=='/' && activeRoute.includes(currRoute);
+    else
+      return currRoute !== '/' && activeRoute.includes(currRoute);
+  }
+  const mobileLogout = () => {
+    clearUserSession();
+    router.push('/login')
   }
 
   return (
     <div className={`${tailwindClasses.sidebar} ${show ? tailwindClasses.sidebarMax : tailwindClasses.sidebarMin}`}>
       {
-        routes.map((routeItem, routeIndex) => (
+        routes.filter(routeItem => routeItem.roles.includes(authorizedUser?.role)).map((routeItem, routeIndex) => (
           <div key={`route-sidebar-index-${routeIndex}`} className={`${tailwindClasses.menuItem} ${checkIfActive(routeItem.route) && tailwindClasses.menuActive}`} onClick={() => onRouteClick(routeItem)}>
             <div className={`${checkIfActive(routeItem.route) && tailwindClasses.activeStateBar}`} />
             <div className={`${tailwindClasses.name} ${show ? tailwindClasses.nameMax : tailwindClasses.nameMin}`}>{routeItem.displayName}</div>
@@ -43,6 +48,15 @@ export default function Sidebar({ onRouteClick, routes, show, activeRoute }: Sid
         <div className={`${tailwindClasses.name} ${show ? tailwindClasses.nameMax : tailwindClasses.nameMin}`}>Menu A</div>
         <div className={`${tailwindClasses.icon} ${show ? tailwindClasses.iconMax : tailwindClasses.iconMin}`}><HomeIcon /></div>
       </div> */}
+      <div className='filler flex-grow md:hidden'/>
+      <div key={`route-sidebar-index-mobile-logout`} className={`md:hidden self-end justify-self-end ${tailwindClasses.menuItem}`} onClick={mobileLogout}>
+        <div className={`${tailwindClasses.name} ${show ? tailwindClasses.nameMax : tailwindClasses.nameMin}`}>Log Out</div>
+        <div className={`${tailwindClasses.icon} ${show ? tailwindClasses.iconMax : tailwindClasses.iconMin}`}>
+          <svg xmlns="http://www.w3.org/2000/svg" className="hero-icons color-grey1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+        </div>
+      </div>
     </div>
   )
 }

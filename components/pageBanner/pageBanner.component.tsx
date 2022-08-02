@@ -1,8 +1,8 @@
 import styles from './pageBanner.module.scss';
 
-export default function PageBanner({ bgImage, title, content }: PageProps) {
+export default function PageBanner({ bgImage, title, content, height }: PageProps) {
   const tailwindClasses = {
-    container: `w-full pt-header-height h-[275px] bg-staticBanner bg-no-repeat bg-center bg-cover text-white absolute top-0`,
+    container: `w-full pt-header-height h-[${height ? height : '275'}px] bg-staticBanner bg-no-repeat bg-center bg-cover text-white absolute top-0`,
     backdrop: 'absolute h-full w-full bg-[rgba(0,0,0,0.2)] top-0 z-[1]',
   }
 
@@ -29,5 +29,6 @@ export default function PageBanner({ bgImage, title, content }: PageProps) {
 type PageProps = {
   bgImage?: String,
   title?: String,
-  content?: any
+  content?: any,
+  height?: number,
 }

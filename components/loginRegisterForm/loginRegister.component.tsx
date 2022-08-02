@@ -41,19 +41,27 @@ const Form: React.FC = () => {
 
     const login = async () => {
         const loginData = await authLogin({
-            'email': 'jdoe@email.com',
+            'email': 'admin@email.com',
             'password': 'asdqwe123'
         });
         console.log(loginData);
         if (loginData.login === null) {
             // login failed
         } else {
+            let role = '';
+            if (loginData.login.isAdmin) role = 'admin';
+            else if (loginData.login.employeeId === null) role = 'manager';
+            else role = 'employee';
+
             saveUserInSession({
+                role: role,
                 firstName: loginData.login.user.firstName,
                 lastName: loginData.login.user.lastName,
                 email: loginData.login.user.email,
                 userId: loginData.login.user._id,
                 token: loginData.login.token,
+                managerId: loginData.login.managerId,
+                employeeId: loginData.login.employeeId,
             })
             router.push('/');
         }

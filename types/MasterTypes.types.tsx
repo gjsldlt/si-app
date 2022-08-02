@@ -13,4 +13,7 @@ export type UserDataType = {
     email: String,
     userId: String,
     token: String,
+    managerId: String,
+    employeeId: String,
+    role: String,
 }
