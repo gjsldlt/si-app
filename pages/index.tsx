@@ -10,7 +10,6 @@ import PageBanner from '../components/pageBanner/pageBanner.component';
 
 import HomeSVG from '../public/assets/images/home-alt.svg';
 
-
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {

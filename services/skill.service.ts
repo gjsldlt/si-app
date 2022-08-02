@@ -10,9 +10,15 @@ export async function getSkills() {
     let data = await axios.get(
         GLOBALHELPER.APIURL, {
         params: {
-            query: `query($type:String!) { metadataByType(type:$type) {_id name description}}`,
+            query: `query($type:String!) {
+                 metadataByType(type:$type) {
+                    _id 
+                    name 
+                    description
+                }
+            }`,
             variables: {
-                type: 'skill'
+                type: 'skill',
             },
         }
     })

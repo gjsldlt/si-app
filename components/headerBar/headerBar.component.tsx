@@ -44,7 +44,7 @@ function HeaderBar({ onMenuClick, show }: HeaderBarProps) {
         if (crumbIndex === 0) {
             router.push('/');
         } else {
-            let newPath = "";
+            let newPath = '';
             router.asPath.split('/').forEach((routePath, routeIndex) => {
                 if (routePath != '' && routeIndex <= crumbIndex) {
                     newPath += `/${routePath}`
