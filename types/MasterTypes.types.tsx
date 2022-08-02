@@ -9,3 +9,14 @@ export type RouteItem = {
     route: string,
     icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>
 }
+
+export type UserDataType = {
+    firstName: String,
+    lastName: String,
+    email: String,
+    userId: String,
+    token: String,
+    managerId: String,
+    employeeId: String,
+    role: String,
+}

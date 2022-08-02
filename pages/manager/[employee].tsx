@@ -1,21 +1,29 @@
 import { useRouter } from 'next/router'
+import PageBanner from '../../components/pageBanner/pageBanner.component';
 
 function Employee() {
     const router = useRouter();
-    console.log(router.query);
-
+    const { employee } = router.query
     const tailwindClasses = {
-        content:'m-5',
-        header:'text-2xl'
+        customBanner: 'h-full w-full flex items-center justify-start p-[2rem]',
+        content: 'mt-[215px] pl-[2rem]',
+        header: 'text-2xl text-white z-[5] '
     }
 
     return (
-        <div className={tailwindClasses.content}>
-            <h2 className={tailwindClasses.header}>Employee Home</h2>
-            <p>
-                Employee Name: {router.query.employee}
-            </p>
-        </div>);
+        <>
+            <PageBanner content={<div className={tailwindClasses.customBanner}>
+                <h1 className={tailwindClasses.header}>Manager's View of {employee}'s' Skills and Details</h1>
+            </div>} />
+            <div className={tailwindClasses.content}>
+                <p>
+                    <a href={`/manager/${employee}/react`}>React Skill</a>
+                    <br />
+                    <a href={`/manager/${employee}/angular`}>Angular Skill</a>
+                </p>
+            </div>
+        </>
+    );
 }
 
 export default Employee;

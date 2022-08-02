@@ -18,3 +18,13 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.hero-icons {
+  height: 25px;
+  width: 25px;
+}
+
+.login-bg {
+  background-repeat: no-repeat;
+  background-size: cover;
+}

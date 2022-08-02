@@ -1,14 +1,6 @@
 @import '../../styles/variable';
 
 .layout{
-    display:flex;
-    flex-direction: column;
-    main{
-        .body{
-            margin-top:$header-height;
-
-        }
-    }
 }
 
 /* Mobile CSS */
