@@ -7,6 +7,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'loginRegisterMobile': "url('')",
+        'loginRegisterTablet': "url('')",
+        'loginRegisterDesktop': "url('')",
+      },
       height: {
         '45': '45px',
         'header-height': '60px',
@@ -63,8 +68,8 @@ module.exports = {
         'grey1': '#D0D0CE',
         'gainsboro': 'rgba(220 220 220,0.5)'
       },
-      backgroundImage:{
-        staticBanner:`url('/assets/images/static.jpeg')`
+      backgroundImage: {
+        staticBanner: `url('/assets/images/static.jpeg')`
       },
     },
   },
