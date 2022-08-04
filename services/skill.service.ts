@@ -6,8 +6,8 @@ axios.defaults.headers.common['Access-Control-Allow-Origin'] = `*`;
 axios.defaults.headers.common['Accept'] = `application/json, text/plain, application/graphql, */*`;
 // axios.defaults.headers.common['Authorization'] = ``;
 
-export async function getSkills() {
-    let data = await axios.get(
+const getSkills = async () => {
+    let skills = await axios.get(
         GLOBALHELPER.APIURL, {
         params: {
             query: `query($type:String!) {
@@ -22,5 +22,7 @@ export async function getSkills() {
             },
         }
     })
-    return data.data.data;
+    return skills;
 }
+
+export default getSkills;

@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect } from 'react';
 
-import { getSkills } from '../services/skill.service';
+import getSkills from '../services/skill.service';
 import { accessUserInSession } from '../services/user.service';
 import { UserDataType } from '../types/MasterTypes.types';
 import PageBanner from '../components/pageBanner/pageBanner.component';
