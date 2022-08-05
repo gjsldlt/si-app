@@ -24,11 +24,7 @@ export default function Layout({ children }: LayoutProps) {
     router.push(routeItem.route)
   }
 
-  if (router.pathname === '/login') {
-    return <>{children}</>
-  } else if (router.pathname === '/_error') {
-    return <>{children}</>
-  } else return (
+  return (
     <div className={tailwindClasses.layout}>
       <HeaderBar breadcrumb={breadcrumb} onMenuClick={() => setSidebarShow(!sidebarShow)} show={sidebarShow} />
       <div className={tailwindClasses.body}>
