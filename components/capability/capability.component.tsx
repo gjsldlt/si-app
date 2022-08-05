@@ -1,5 +1,4 @@
 import styles from "./skills.module.scss";
-import CapabilityPage from "../../pages/capability";
 
 export default function Capability({ children }: PageProps) {
   const tailwindClasses = {
@@ -8,9 +7,7 @@ export default function Capability({ children }: PageProps) {
   return (
     <div className={tailwindClasses.container}>
       <main>Capability</main>
-      <div>
-        <CapabilityPage />
-      </div>
+      <div></div>
     </div>
   );
 }
