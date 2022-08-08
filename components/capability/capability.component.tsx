@@ -1,14 +1,19 @@
+import { useEffect, useState } from "react";
+
 import styles from "./skills.module.scss";
 import { getCapabilities } from "../../services/capability.service";
 
 export default function Capability({ children }: PageProps) {
+  const [capabilityList, setCapabilityList] = useState([]);
   const tailwindClasses = {
     container: "",
   };
-  let capabilityList = [];
+  // let capabilityList = [];
 
   const populateCapabilities = async () => {
-    capabilityList = await getCapabilities();
+    // capabilityList = await getCapabilities();
+    let tempList = await getCapabilities();
+    setCapabilityList(tempList);
     console.log(capabilityList);
   };
 
