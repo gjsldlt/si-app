@@ -12,7 +12,6 @@ function Skills() {
   return (
     <div className={tailwindClasses.content}>
       <h2 className={tailwindClasses.header}>Capabilities Home</h2>
-
       <label>Add Capability: </label>
       <input className={tailwindClasses.input} type="text" />
       <button>

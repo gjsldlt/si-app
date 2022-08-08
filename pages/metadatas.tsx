@@ -3,6 +3,7 @@ import Link from "next/link";
 import PageBanner from "../components/pageBanner/pageBanner.component";
 import Skills from "../components/skills/skills.component";
 import Capability from "../components/capability/capability.component";
+
 function Metadata() {
   const tailwindClasses = {
     customBanner: "h-full w-full flex items-center justify-start p-[2rem]",
