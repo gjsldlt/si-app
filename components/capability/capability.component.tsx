@@ -11,13 +11,14 @@ export default function Capability({ children }: PageProps) {
   // let capabilityList = [];
 
   const populateCapabilities = async () => {
-    // capabilityList = await getCapabilities();
     let tempList = await getCapabilities();
     setCapabilityList(tempList);
     console.log(capabilityList);
   };
 
-  populateCapabilities();
+  useEffect(()=>{
+    populateCapabilities();
+  },[])
 
   return (
     <div className={tailwindClasses.container}>

@@ -24,6 +24,7 @@ export default function Layout({ children }: LayoutProps) {
     router.push(routeItem.route)
   }
 
+  console.log('layout render ')
   return (
     <div className={tailwindClasses.layout}>
       <HeaderBar breadcrumb={breadcrumb} onMenuClick={() => setSidebarShow(!sidebarShow)} show={sidebarShow} />
