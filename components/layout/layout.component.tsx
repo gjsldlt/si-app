@@ -28,7 +28,7 @@ export default function Layout({ children }: LayoutProps) {
     <div className={tailwindClasses.layout}>
       <HeaderBar breadcrumb={breadcrumb} onMenuClick={() => setSidebarShow(!sidebarShow)} show={sidebarShow} />
       <div className={tailwindClasses.body}>
-        <Sidebar onRouteClick={goToRoute} routes={AppRoutes} show={sidebarShow} activeRoute={router.route} />
+        <Sidebar onRouteClick={goToRoute} routes={AppRoutes} show={sidebarShow} />
         <div className={`${tailwindClasses.content}`}>{children}</div>
       </div>
     </div>

@@ -17,6 +17,7 @@ module.exports = {
         'active-profile-bar': '120px',
         'full': '100%',
         'screen': '100vh',
+        'iconbutton':'30px',
       },
       width: {
         '45': '45px',
@@ -32,6 +33,7 @@ module.exports = {
         '100vw': '100vw',
         'full': '100%',
         'screen': '100vw',
+        'iconbutton':'30px',
       },
       padding: {
         '0': '0',

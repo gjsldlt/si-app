@@ -8,7 +8,6 @@ axios.defaults.headers.common['Access-Control-Allow-Origin'] = `*`;
 axios.defaults.headers.common['Accept'] = `application/json, text/plain, application/graphql, */*`;
 
 export async function authLogin({ email, password }: LoginDetails) {
-    console.log('login', email, password);
     let response = await axios.post(
         GLOBALHELPER.APIURL,
         {
@@ -51,6 +50,27 @@ export const accessUserInSession = () => {
 
 export const clearUserSession = () => {
     sessionStorage.removeItem('user')
+}
+
+export const getAllManagers = async () => {
+    let data = await axios.get(
+        GLOBALHELPER.APIURL, {
+        params: {
+            query: `query GetAllManagers{
+                managers{
+                  _id
+                  firstName
+                  lastName
+                  email
+                  createdAt
+                  userId
+                }
+              }`,
+            variables: {
+            },
+        }
+    })
+    return data.data.data.managers;
 }
 
 

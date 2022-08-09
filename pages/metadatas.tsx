@@ -14,7 +14,7 @@ function Metadata() {
 
     return (
         <>
-            <PageBanner content={<div className={tailwindClasses.customBanner}>
+            <PageBanner height="5vh" content={<div className={tailwindClasses.customBanner}>
                 <h1 className={tailwindClasses.header}>Metadata List</h1>
             </div>} />
             <div className={tailwindClasses.content}>
