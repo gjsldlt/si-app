@@ -4,6 +4,7 @@ import { OverridableComponent } from "@mui/material/OverridableComponent";
 export let SidebarCallerType = function (newState: Boolean): Boolean { return false };
 
 export type RouteItem = {
+    roles: any;
     name: string,
     displayName: string,
     route: string,
@@ -11,6 +12,7 @@ export type RouteItem = {
 }
 
 export type UserDataType = {
+    role: string;
     firstName: String,
     lastName: String,
     email: String,
@@ -18,5 +20,5 @@ export type UserDataType = {
     token: String,
     managerId: String,
     employeeId: String,
-    role: String,
+    roles: [String],
 }

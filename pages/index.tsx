@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import getSkills from '../services/skill.service';
 import { accessUserInSession } from '../services/user.service';
@@ -11,9 +11,15 @@ import PageBanner from '../components/pageBanner/pageBanner.component';
 import HomeSVG from '../public/assets/images/home-alt.svg';
 
 import styles from '../styles/Home.module.css'
+import { setuid } from 'process';
 
 const Home: NextPage = () => {
-  let user: UserDataType = accessUserInSession();
+  //let user: UserDataType = accessUserInSession();
+  const [user, setUser] = useState({
+    firstName: '',
+    lastName: '',
+    role: '',
+  });
   const tailwindClasses = {
     container: 'index-container',
     customBanner: 'h-full w-full bg-[rgba(0,0,0,0.2)] md:bg-[transparent] flex z-[2]',
@@ -24,7 +30,7 @@ const Home: NextPage = () => {
     firstName: 'md:text-[5rem]',
     lastName: 'md:text-[2rem]',
     body: 'mt-[225px] flex flex-col items-center justify-center flex-grow h-full',
-    bodyImage:'h-[250px] w-[250px]'
+    bodyImage: 'h-[250px] w-[250px]'
   }
 
   const populateSkills = async () => {
@@ -33,7 +39,7 @@ const Home: NextPage = () => {
   }
 
   useEffect(() => {
-    user = accessUserInSession();
+    setUser(accessUserInSession());
     populateSkills();
   }, [])
 
