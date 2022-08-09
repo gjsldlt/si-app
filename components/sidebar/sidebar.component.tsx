@@ -25,7 +25,6 @@ export default function Sidebar({ onRouteClick, routes, show }: SidebarProps) {
   const [sidebarMenuItems, setSidebarMenuItems] = useState<React.ReactNode[]>([])
 
   const checkIfActive = (currRoute: string) => {
-    console.log('checkIfActive')
     if (router.pathname === '/')
       return router.pathname.includes(currRoute);
     else
@@ -46,7 +45,7 @@ export default function Sidebar({ onRouteClick, routes, show }: SidebarProps) {
         <div className={`${tailwindClasses.icon} ${show ? tailwindClasses.iconMax : tailwindClasses.iconMin}`}>{routeItem.icon}</div>
       </div>
     ));
-    newMenuItems.push(<div className='filler flex-grow md:hidden' />)
+    newMenuItems.push(<div key={`route-sidebar-filler`} className='filler flex-grow md:hidden' />)
     newMenuItems.push(<div key={`route-sidebar-index-mobile-logout`} className={`md:hidden self-end justify-self-end ${tailwindClasses.menuItem}`} onClick={mobileLogout}>
       <div className={`${tailwindClasses.name} ${show ? tailwindClasses.nameMax : tailwindClasses.nameMin}`}>Log Out</div>
       <div className={`${tailwindClasses.icon} ${show ? tailwindClasses.iconMax : tailwindClasses.iconMin}`}>
