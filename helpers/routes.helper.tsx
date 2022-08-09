@@ -62,13 +62,13 @@ export default [
   //   route: '/employee',
   //   icon: <GroupsIcon />
   // },
-  {
-    name: 'skills',
-    displayName: 'Skills',
-    roles: ['admin'],
-    route: '/skills',
-    icon: <WorkIcon />
-  },
+  // {
+  //   name: 'skills',
+  //   displayName: 'Skills',
+  //   roles: ['admin'],
+  //   route: '/skills',
+  //   icon: <WorkIcon />
+  // },
 
 
 ]
