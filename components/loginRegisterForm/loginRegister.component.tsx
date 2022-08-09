@@ -11,6 +11,9 @@ const Form: React.FC = () => {
     const [displayRegister, setDisplayRegister] = useState(false)
     const [displayPassword, setDisplayPassword] = useState(false)
 
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
     const loginForm = async () => {
         if (displayLogin === false) {
             setDisplayLogin(true)
@@ -39,14 +42,15 @@ const Form: React.FC = () => {
         }
     }
 
-    const login = async () => {
+    const login = async (e) => {
+        e.preventDefault();
         const loginData = await authLogin({
-            'email': 'admin@email.com',
-            'password': 'asdqwe123'
+            'email': email,
+            'password': password
         });
-        console.log(loginData);
         if (loginData.login === null) {
             // login failed
+            console.log("Login Error")
         } else {
             let role = '';
             if (loginData.login.isAdmin) role = 'admin';
@@ -62,8 +66,17 @@ const Form: React.FC = () => {
                 token: loginData.login.token,
                 managerId: loginData.login.managerId,
                 employeeId: loginData.login.employeeId,
+                roles:'',
             })
             router.push('/');
+        }
+    }
+
+    const onChange = (evt) => {
+        switch(evt.target.name){
+            case 'email': setEmail(evt.target.value); break;
+            case 'password':setPassword(evt.target.value); break;
+            default:break;
         }
     }
 
@@ -73,15 +86,31 @@ const Form: React.FC = () => {
                 <span className={displayLogin === true ? "text-white" : "text-white text-opacity-50"}><button onClick={loginForm} className={displayLogin === true ? "border-b border-solid border-white w-[100px]" : "border-b border-solid border-white border-opacity-50 w-[100px]"} disabled={displayLogin}>LOGIN</button></span>
                 <span className={displayRegister === true ? "text-white" : "text-white text-opacity-50"}><button onClick={registerForm} className={displayRegister === true ? "border-b border-solid border-white w-[100px]" : "border-b border-solid border-white border-opacity-50 w-[100px]"} disabled={displayRegister}>REGISTER</button></span>
             </div>
-            <form action="submit" className={displayLogin === true ? "block" : "hidden"}>
+            <form onSubmit={login} action="submit" className={displayLogin === true ? "block" : "hidden"}>
                 <div className="flex flex-col items-center md:m-auto md:w-[360px]">
                     <label htmlFor="emailLogin" className="relative mt-[30px] md:mt-[50px]">
                         <MailIcon className="pointer-events-none w-[20px] h-[20px] absolute top-1/2 transform -translate-y-1/2 left-[15px] fill-white opacity-50" />
-                        <input type="email" id="emailLogin" className="w-[275px] md:w-[360px] h-[40px] rounded-[25px] border-[2px] border-solid border-white border-opacity-25 bg-black bg-opacity-50 transition hover:bg-opacity-100 placeholder-white placeholder-opacity-50 text-white px-[45px] py-[10px]" placeholder="Email Address" required />
+                        <input 
+                            onChange={onChange}
+                            value={email}
+                            name="email"
+                            type="email" 
+                            id="emailLogin" 
+                            className="w-[275px] md:w-[360px] h-[40px] rounded-[25px] border-[2px] border-solid border-white border-opacity-25 bg-black bg-opacity-50 transition hover:bg-opacity-100 placeholder-white placeholder-opacity-50 text-white px-[45px] py-[10px]" 
+                            placeholder="Email Address" 
+                            required />
                     </label>
                     <label htmlFor="passwordLogin" className="relative mt-[30px] md:mt-[50px]">
                         <LockClosedIcon className="pointer-events-none w-[20px] h-[20px] absolute top-1/2 transform -translate-y-1/2 left-[15px] fill-white opacity-50" />
-                        <input type={displayPassword === true ? "text" : "password"} id="passwordLogin" className="w-[275px] md:w-[360px] h-[40px] rounded-[25px] border-[2px] border-solid border-white border-opacity-25 transition hover:bg-opacity-100 bg-black bg-opacity-50 placeholder-white placeholder-opacity-50 text-white px-[45px] py-[10px]" placeholder="Password" required />
+                        <input 
+                            onChange={onChange}
+                            name="password"
+                        value={password}
+                        type={displayPassword === true ? "text" : "password"} 
+                        id="passwordLogin" 
+                        className="w-[275px] md:w-[360px] h-[40px] rounded-[25px] border-[2px] border-solid border-white border-opacity-25 transition hover:bg-opacity-100 bg-black bg-opacity-50 placeholder-white placeholder-opacity-50 text-white px-[45px] py-[10px]" 
+                        placeholder="Password" 
+                        required />
                         {displayPassword === false ? (
                             <EyeOffIcon onClick={passwordInput} className="cursor-pointer w-[20px] h-[20px] absolute top-1/2 transform -translate-y-1/2 right-[15px] fill-white opacity-50" />
                         ) : (
@@ -96,7 +125,7 @@ const Form: React.FC = () => {
                         <a href="#" className="mt-[15px] md:mt-0 italic text-white text-opacity-75 transition hover:underline">Forgot Password?</a>
                     </div>
                     <div className="md:w-[360px] flex justify-end">
-                        <button onClick={login} className="flex justify-center items-center mt-[30px] md:mt-[50px] w-[275px] md:w-[150px] rounded-[25px] bg-[#80B324] bg-opacity-50 transition hover:bg-opacity-100 text-[16px] text-white text-opacity-75"><span>Login</span><ChevronRightIcon className="w-[40px] h-[40px]" /></button>
+                        <button type="submit" className="flex justify-center items-center mt-[30px] md:mt-[50px] w-[275px] md:w-[150px] rounded-[25px] bg-[#80B324] bg-opacity-50 transition hover:bg-opacity-100 text-[16px] text-white text-opacity-75"><span>Login</span><ChevronRightIcon className="w-[40px] h-[40px]" /></button>
                     </div>
                 </div>
             </form>
