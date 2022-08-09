@@ -5,7 +5,7 @@ import { RouteItem } from '../../types/MasterTypes.types';
 import { accessUserInSession, clearUserSession } from "../../services/user.service";
 import { useEffect, useState } from 'react';
 
-export default function Sidebar({ onRouteClick, routes, show, activeRoute }: SidebarProps) {
+export default function Sidebar({ onRouteClick, routes, show }: SidebarProps) {
   let authorizedUser = accessUserInSession();
   const router = useRouter();
   const tailwindClasses = {
@@ -20,17 +20,18 @@ export default function Sidebar({ onRouteClick, routes, show, activeRoute }: Sid
     icon: 'transition-all duration-500 flex items-center justify-center w-sidebar-min',
     iconMin: 'h-45',
     iconMax: 'h-auto',
-    activeStateBar: 'h-active-border-state w-active-border-state border-active-border-state bg-current',
+    activeStateBar: 'transition-all duration-500 h-active-border-state w-active-border-state border-active-border-state bg-current',
   }
-  let [sidebarMenuItems, setSidebarMenuItems] = useState([])
-
+  const [sidebarMenuItems, setSidebarMenuItems] = useState<React.ReactNode[]>([])
 
   const checkIfActive = (currRoute: string) => {
-    if (activeRoute === '/')
-      return activeRoute.includes(currRoute);
+    console.log('checkIfActive')
+    if (router.pathname === '/')
+      return router.pathname.includes(currRoute);
     else
-      return currRoute !== '/' && activeRoute.includes(currRoute);
+      return currRoute !== '/' && router.pathname.includes(currRoute);
   }
+
   const mobileLogout = () => {
     clearUserSession();
     router.push('/login')
@@ -55,7 +56,7 @@ export default function Sidebar({ onRouteClick, routes, show, activeRoute }: Sid
       </div>
     </div>)
     setSidebarMenuItems(newMenuItems);
-  }, []);
+  }, [router.pathname]);
 
   return (
     <div className={`${tailwindClasses.sidebar} ${show ? tailwindClasses.sidebarMax : tailwindClasses.sidebarMin}`}>
@@ -69,5 +70,4 @@ type SidebarProps = {
   onRouteClick: (routeItem: RouteItem) => void,
   routes: Array<RouteItem>,
   show: boolean,
-  activeRoute: string
 }
