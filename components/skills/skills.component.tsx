@@ -19,7 +19,11 @@ const Skills: FunctionComponent<PageProps> = (props) => {
     container: '',
     input: 'border-2'
   }
+
   const [skillList, setSkillList] = useState<SkillObj[]>([])
+
+  const [newSkillName, setNewSkillName] = useState<string>("")
+  const [newSkillDesc, setNewSkillDesc] = useState<string>("")
 
   useEffect(() => {
     getSkills().then(res => {
@@ -30,8 +34,15 @@ const Skills: FunctionComponent<PageProps> = (props) => {
   return (
     <div className={tailwindClasses.container}>
       <main>Skills</main>
-      <label>Add Skill: </label><input className={tailwindClasses.input} type="text" />
-      <button><AddIcon /></button>
+      <form>
+        <div>Add Skill:</div>
+        <label>Skill Name </label>
+        <input className={tailwindClasses.input} type="text" />
+        <br/>
+        <label>Description </label>
+        <input className={tailwindClasses.input} type="text" />
+        <button type="submit"><AddIcon /></button>
+      </form>
       {skillList.map(function(skill, i){
         return (<li key={i}>{skill.name}</li>)
       })}
