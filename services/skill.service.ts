@@ -24,3 +24,5 @@ export async function getSkills() {
     })
     return data.data.data;
 }
+
+
