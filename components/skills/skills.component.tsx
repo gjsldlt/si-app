@@ -1,10 +1,9 @@
-import { FC, useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import AddIcon from '@mui/icons-material/Add';
-import getSkills from '../../services/skill.service';
-import { SkillObj } from './skills.type';
-import axios from 'axios';
-import GLOBALHELPER from '../../helpers/global.helper';
+import { FC, useState, ChangeEvent } from 'react';
 
+import { useFetchSkills, addSkill } from '../../services/skill.service';
+
+import AddIcon from '@mui/icons-material/Add';
+import GLOBALHELPER from '../../helpers/global.helper';
 
 const Skills: FC = () => {
   const tailwindClasses = {
@@ -12,16 +11,9 @@ const Skills: FC = () => {
     input: 'border-2'
   }
 
-  const [skillList, setSkillList] = useState<SkillObj[]>([])
+  //set state hooks for input
   const [newSkillName, setNewSkillName] = useState<string>('')
   const [newSkillDesc, setNewSkillDesc] = useState<string>('')
-
-  //drill down API response to skill metadata
-  useEffect(() => {
-    getSkills().then(response => {
-      setSkillList(response.data.data.metadataByType)
-    })
-  }, [])
 
   //detect change of input in text boxes
   const inputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -33,53 +25,21 @@ const Skills: FC = () => {
     }
   }
 
-  //query string for API post request
-  const addSkillQuery = `mutation CreateMetadata
-  (
-    $name: String!,
-    $description: String!,
-    $type: String!
-  )
-  {
-    addMetadata (metadata:
-      {
-      name: $name,
-      description: $description,
-      type: $type
-      }
-    )
-    {
-      _id
-      name
-      description
-    }
-  }`
+  //fetch api response using custom hook
+  const {skills, error, isLoading } = useFetchSkills(GLOBALHELPER.APIURL)
 
-  //call API to post data from input box
-  const addSkill = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    axios.post(
-      GLOBALHELPER.APIURL,
-      {
-        query: addSkillQuery,
-        variables: {
-          name: newSkillName,
-          description: newSkillDesc,
-          type: "skill"
-        }
-      }).then((response) => {
-        console.log(response.status);
-        console.log(response.data.data);
-        skillList.push(response.data.data)
-      })
+  if (isLoading) {
+    return <div>Loading...</div>
   }
-
   
+  if (error) {
+    return <div>{error}</div>
+  }
 
   return (
     <div className={tailwindClasses.container}>
       <main>Skills</main>
-      <form action="submit" onSubmit={addSkill}>
+      <form action="submit" onSubmit={(event) => addSkill(event, newSkillName, newSkillDesc, skills)}>
         <div>Add Skill:</div>
         <label>Skill Name </label>
         <input
@@ -102,9 +62,9 @@ const Skills: FC = () => {
         />
         <button type="submit"><AddIcon /></button>
       </form>
-      {skillList.map(function (skill, i) {
-        return (<li key={i}>{skill.name}</li>)
-      })}
+      {skills.map(skill => (
+        <li key={skill._id}>{skill.name}</li>
+      ))}
     </div>
   )
 }
