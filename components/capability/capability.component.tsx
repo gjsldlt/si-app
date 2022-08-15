@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { PlusIcon, XIcon } from "@heroicons/react/solid";
 
-import { getCapabilities } from "../../services/capability.service";
+import {
+  getCapabilities,
+  addCapability,
+} from "../../services/capability.service";
 import { CapabilityType } from "../../types/MasterTypes.types";
 import LoaderComponent from "../loader/loader.component";
 import CapabilityForm from "./capabilityForm.component";
@@ -22,6 +25,7 @@ export default function Capability({ children }: PageProps) {
   const [addState, setAddState] = useState<Boolean>(false);
 
   const renderData = async () => {
+    setAddState(false);
     setLoadState(true);
     setCapabilityList(await getCapabilities());
     setLoadState(false);
@@ -69,7 +73,11 @@ export default function Capability({ children }: PageProps) {
             )}
           </button>
         </div>
-        {addState ? <CapabilityForm /> : renderList()}
+        {addState ? (
+          <CapabilityForm renderData={renderData} setLoadState={setLoadState} />
+        ) : (
+          renderList()
+        )}
       </div>
 
       <div></div>

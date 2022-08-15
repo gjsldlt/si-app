@@ -1,82 +1,88 @@
 import { useEffect, useState } from "react";
+import { addCapability } from "../../services/capability.service";
 
-export default function ManagerList({}: PageProps) {
-  const [addName, setAddName] = useState("");
-  const [addDescription, setAddDescription] = useState("");
+export default function CapabilityForm({
+  renderData,
+  setLoadState,
+}: PageProps) {
+  const [formName, setFormName] = useState("");
+  const [formDescription, setFormDescription] = useState("");
   const tailwindClasses = {
     form: "flex flex-col",
-    addButton: "pt-[200px] pl-[90px]",
+    addButton: "mt-[200px] pl-[90px] bg-blue-300 ",
     input:
-      "appearance-none block w-[300px] bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white",
+      "appearance-none block w-[300px] bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white",
   };
   useEffect(() => {}, []);
-
+  //onchange
   const capabilityOnChange = (evt) => {
     switch (evt.target.name) {
-      case "addName":
-        setAddName(evt.target.value);
+      case "formName":
+        setFormName(evt.target.value);
         break;
-      case "addDescription":
-        setAddDescription(evt.target.value);
+      case "formDescription":
+        setFormDescription(evt.target.value);
         break;
       default:
         break;
     }
   };
 
-  const capabilityOnSubmit = (evt) => {
+  //onchange
+  ///onsubmit
+  const capabilityOnSubmit = async (evt) => {
     evt.preventDefault();
-    console.log(addName, addDescription);
-  };
+    setLoadState(true);
+    if (formName !== "" && formDescription !== "") {
+      const newCapability = await addCapability(formName, formDescription);
+      setFormName("");
+      setFormDescription("");
+      renderData();
+    }
 
+    // console.log(newCapability);
+  };
+  ///onsubmit
   return (
-    <form className="w-full max-w-lg">
+    <form onSubmit={capabilityOnSubmit} className="w-full max-w-lg ">
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-first-name"
+            htmlFor="formName"
           >
-            Add Capability
+            Capability
           </label>
           <input
             onChange={capabilityOnChange}
-            value={addName}
-            name="addName"
+            value={formName}
+            name="formName"
             required
             className={tailwindClasses.input}
-            id="grid-first-name"
+            id="formName"
             type="text"
             placeholder="Jane"
           />
-          <p className="text-red-500 text-xs italic">
-            Please fill out this field.
-          </p>
+
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-first-name"
+            htmlFor="formDescription"
           >
-            Add Description
+            Description
           </label>
           <input
             onChange={capabilityOnChange}
-            value={addDescription}
-            name="addDescription"
+            value={formDescription}
+            name="formDescription"
             required
             className={tailwindClasses.input}
-            id="grid-first-name"
+            id="formDescription"
             type="text"
             placeholder="Jane"
           />
-          <p className="text-red-500 text-xs italic">
-            Please fill out this field.
-          </p>
         </div>
         <div className="w-full md:w-1/2 px-3">
-          <button
-            onClick={capabilityOnSubmit}
-            className={tailwindClasses.addButton}
-          >
+          <button type="submit" className={tailwindClasses.addButton}>
             add
           </button>
         </div>
@@ -85,4 +91,7 @@ export default function ManagerList({}: PageProps) {
   );
 }
 
-type PageProps = {};
+type PageProps = {
+  renderData: () => {};
+  setLoadState: React.Dispatch<React.SetStateAction<Boolean>>;
+};

@@ -46,7 +46,7 @@ export async function addCapability(name:String ,description:String) {
                        name
                        description
                         }
-                    }
+                    
                 }`,
             variables: { // will add name, description , type
                 name: name,
