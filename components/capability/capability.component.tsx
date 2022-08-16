@@ -12,14 +12,14 @@ import CapabilityForm from "./capabilityForm.component";
 export default function Capability({ children }: PageProps) {
   const tailwindClasses = {
     container:
-      "relative flex flex-col bg-white p-1 min-h-[200px] md:min-h-100 md:w-[47vw] lg:w-[27vw] border-[1px] shadow-lg",
+      " fixed flex flex-col bg-white p-1 min-h-[520px]  md:min-h-100 md:w-[47vw] lg:w-[27vw] border-[1px] shadow-lg",
     toolbar: "flex flex-row",
     title: "flex-1",
     addButton: "h-iconbutton w-iconbutton flex items-center justify-center p-0",
     list: "flex flex-col h-[100px]",
     lineItem: "",
   };
-
+  // const [capabilityToEdit, setCapabilityToEdit] = useState<CapabilityType>();
   const [capabilityList, setCapabilityList] = useState<CapabilityType[]>([]);
   const [loadState, setLoadState] = useState<Boolean>(true);
   const [addState, setAddState] = useState<Boolean>(false);
@@ -33,6 +33,14 @@ export default function Capability({ children }: PageProps) {
   const addNewCapability = () => {
     setAddState(!addState);
   };
+  //   const clickCapabilityRow = (id: String) => {
+  //     if (enableRowAction) {
+  //       if (activeCapability === id) {
+  //       onclick(undefined)
+  //     }else{onclick(id)}
+  //   }
+
+  // }
 
   const renderList = () => {
     return (
@@ -56,7 +64,7 @@ export default function Capability({ children }: PageProps) {
 
   return (
     <div className={tailwindClasses.container}>
-      <main>Capability test</main>
+      {/* <main>Capability test</main> */}
 
       <div className={tailwindClasses.container}>
         {loadState ? <LoaderComponent /> : null}
@@ -79,8 +87,6 @@ export default function Capability({ children }: PageProps) {
           renderList()
         )}
       </div>
-
-      <div></div>
     </div>
   );
 }

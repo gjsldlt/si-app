@@ -61,7 +61,7 @@ export default function CapabilityForm({
             className={tailwindClasses.input}
             id="formName"
             type="text"
-            placeholder="Jane"
+            placeholder="Capability"
           />
 
           <label
@@ -78,7 +78,7 @@ export default function CapabilityForm({
             className={tailwindClasses.input}
             id="formDescription"
             type="text"
-            placeholder="Jane"
+            placeholder="Description"
           />
         </div>
         <div className="w-full md:w-1/2 px-3">

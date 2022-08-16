@@ -59,23 +59,55 @@ export async function addCapability(name:String ,description:String) {
 }
 
 
+// export async function updateCapability(name:String ,description:String) {
+//     let response = await axios.post(
+//         GLOBALHELPER.APIURL,
+//         {  //will add the query form the ss
+//             query: `mutation CreateMetadata(
+//                 $name:String!, 
+//                 $description:String!,
+//                 $type:String!,
 
-
-// export const getAllCapabilities = async () => {
-//     let data = await axios.get(
-//         GLOBALHELPER.APIURL, {
-//         params: {
-//             query: `query GetAllCapabilities{
-//                 managers{
-//                     _id 
-//                     name 
-//                     description
-//                 }
-//               }`,
-//                 variables: {
-//                     type: 'capability',
+//                 ) { 
+//                     addMetadata(metadata:{
+//                         name:$name,
+//                         description:$description
+//                         type:$type
+//                     }) {
+//                        _id
+//                        name
+//                        description
+//                         }
+                    
+//                 }`,
+//             variables: { // will add name, description , type
+//                 name: name,
+//                 description: description,
+//                 type :"capability"
 //             },
-//         }
-//     })
-//     return data.data.data.managers;
+//         })
+//     console.log(response.data.data);
+//     return response.data.data;
 // }
+
+
+
+
+
+
+// mutation UpdateMetadata(
+//     $id:String!
+//     $metadata: MetadataUpdateFields!
+//   ){
+//     updateMetadata(
+//       id:$id,
+//       metadata:$metadata
+//     ){
+//       _id
+//       name
+//       description
+//       type
+//       createdAt
+//     }
+//   }
+
