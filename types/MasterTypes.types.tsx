@@ -44,3 +44,11 @@ export type EmployeeType = {
     createdAt: String,
     userId: String,
 }
+
+
+export type CapabilityType = {
+  _id: String;
+
+  name: String;
+  description: String;
+};
