@@ -21,6 +21,7 @@ export default function ManagerList({ activeManager, onClick, enableRowActions }
     lineButton: 'lineButton h-[20px] w-[20px] cursor-pointer hover:text-current',
   }
 
+  const [managerToEdit, setManagerToEdit] = useState<ManagerType>();
   const [managerList, setManagerList] = useState<ManagerType[]>([]);
   const [loadState, setLoadState] = useState<Boolean>(true);
   const [addState, setAddState] = useState<Boolean>(false);
@@ -32,6 +33,7 @@ export default function ManagerList({ activeManager, onClick, enableRowActions }
   }
 
   const addNewManager = () => {
+    setManagerToEdit(null);
     setAddState(!addState);
   }
 
@@ -43,6 +45,11 @@ export default function ManagerList({ activeManager, onClick, enableRowActions }
         onClick(id);
       }
     }
+  }
+
+  const editManager = (manager) => {
+    setAddState(true);
+    setManagerToEdit(manager);
   }
 
   const renderList = () => {
@@ -58,7 +65,7 @@ export default function ManagerList({ activeManager, onClick, enableRowActions }
             {
               enableRowActions ? (
                 <div className={tailwindClasses.lineActions}>
-                  <PencilIcon className={tailwindClasses.lineButton} />
+                  <PencilIcon className={tailwindClasses.lineButton} onClick={()=>{editManager(item)}} />
                   <TrashIcon className={tailwindClasses.lineButton} />
                 </div>
               ) : null
@@ -86,7 +93,7 @@ export default function ManagerList({ activeManager, onClick, enableRowActions }
           }
         </button>
       </div>
-      {addState ? <ManagerForm /> : renderList()}
+      {addState ? <ManagerForm managerToEdit={managerToEdit} /> : renderList()}
     </div>
   )
 }
