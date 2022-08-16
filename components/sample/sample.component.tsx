@@ -1,16 +1,15 @@
 import styles from './sample.module.scss';
 
-export default function Sample({ children }: PageProps) {
+export default function Sample({ }: PageProps) {
   const tailwindClasses = {
     container: ''
   }
   return (
     <div className={tailwindClasses.container}>
-      <main>Sample</main>
+      <div>Sample</div>
     </div>
   )
 }
 
 type PageProps = {
-  children: any
 }

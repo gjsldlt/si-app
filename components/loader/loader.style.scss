@@ -1,0 +1,27 @@
+@import '../../styles/variable';
+
+.loader{
+    display:flex;
+    flex-direction: column;
+}
+
+/* Mobile CSS */
+@media (max-width: $mobile-width) {
+    .loader{
+
+    }
+}
+
+/* Tablet CSS */
+@media (max-width: $mobile-width) {
+    .loader{
+        
+    }
+}
+
+/* Laptop and above CSS */
+@media (max-width: $mobile-width) {
+    .loader{
+        
+    }
+}

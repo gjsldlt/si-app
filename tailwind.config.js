@@ -7,6 +7,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'loginRegisterMobile': "url('')",
+        'loginRegisterTablet': "url('')",
+        'loginRegisterDesktop': "url('')",
+      },
       height: {
         '45': '45px',
         'header-height': '60px',
@@ -17,6 +22,7 @@ module.exports = {
         'active-profile-bar': '120px',
         'full': '100%',
         'screen': '100vh',
+        'iconbutton':'30px',
       },
       width: {
         '45': '45px',
@@ -32,6 +38,7 @@ module.exports = {
         '100vw': '100vw',
         'full': '100%',
         'screen': '100vw',
+        'iconbutton':'30px',
       },
       padding: {
         '0': '0',
@@ -63,8 +70,8 @@ module.exports = {
         'grey1': '#D0D0CE',
         'gainsboro': 'rgba(220 220 220,0.5)'
       },
-      backgroundImage:{
-        staticBanner:`url('/assets/images/static.jpeg')`
+      backgroundImage: {
+        staticBanner: `url('/assets/images/static.jpeg')`
       },
     },
   },

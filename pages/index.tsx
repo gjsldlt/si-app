@@ -40,7 +40,8 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     setUser(accessUserInSession());
-    useFetchSkills;
+    // populateSkills();
+    // useFetchSkills;
   }, [])
 
   return (

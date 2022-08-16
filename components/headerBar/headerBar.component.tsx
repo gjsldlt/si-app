@@ -82,7 +82,7 @@ function HeaderBar({ onMenuClick, show }: HeaderBarProps) {
                     breadcrumb.length > 1 &&
                     <div className={tailwindClasses.breadcrumb}>
                         {
-                            breadcrumb.map((crumb, crumbIndex) => (<div onClick={() => breadcrumbClick(crumbIndex)} className={tailwindClasses.crumb}>{crumb}</div>))
+                            breadcrumb.map((crumb, crumbIndex) => (<div key={`key-crumb-${crumbIndex}`} onClick={() => breadcrumbClick(crumbIndex)} className={tailwindClasses.crumb}>{crumb}</div>))
                         }
                     </div>
                 }

@@ -5,6 +5,14 @@ import logoDesktopTablet from '../../public/assets/images/shared/deloitte-logo-d
 
 const AccentBar: React.FC = () => {
 
+    const tailwindClasses = {
+        accentBarContainer: `w-screen h-[70px] bg-black absolute lg:hidden`,
+        logoTitleContainer: `flex items-center pl-[20px] pt-[15px]`,
+        titleContainer: `flex items-center`,
+        titleProperties: `text-white text-[20px] md:text-[32px] font-bold`,
+        spanSpacing: `px-[12px]`
+    }
+
     const [logo, setLogo] = useState(true)
 
     useEffect(() => {
@@ -16,17 +24,17 @@ const AccentBar: React.FC = () => {
     }, [])
 
     return (
-        <nav className="w-screen h-[70px] bg-black absolute lg:hidden">
-            <div className="flex items-center pl-[20px] pt-[15px]">
+        <div className={`${tailwindClasses.accentBarContainer}`}>
+            <div className={`${tailwindClasses.logoTitleContainer}`}>
                 <Image src={logo === true ? logoMobile : logoDesktopTablet} alt="Deloitte Logo" width={logo === true ? 98.91 : 178.2} height={40} />
-                <div className="flex items-center" >
-                    <span className="text-white text-[20px] md:text-[32px] font-bold">
-                        <span className="px-[12px]">&bull;</span>
+                <div className={`${tailwindClasses.titleContainer}`} >
+                    <span className={`${tailwindClasses.titleProperties}`}>
+                        <span className={`${tailwindClasses.spanSpacing}`}>&bull;</span>
                         iFED
                     </span>
                 </div>
             </div>
-        </nav>
+        </div>
     )
 }
 
