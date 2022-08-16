@@ -48,6 +48,7 @@ const addSkill = (event: FormEvent<HTMLFormElement>, sklName: string, sklDesc: s
 			console.log(response.status);
 			console.log(response.data.data);
 			sklList.push(response.data.data)
+			useFetchSkills;
 		})
 }
 //GET SKILLS FROM API
