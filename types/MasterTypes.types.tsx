@@ -22,3 +22,19 @@ export type UserDataType = {
     employeeId: String,
     roles: [String],
 }
+
+export type ManagerType = {
+    _id: String;
+    firstName: String;
+    lastName: String;
+    email: String;
+    password: String;
+    createdAt: String;
+    userId: String;
+};
+
+export type IndustryType = {
+    _id: String;
+    name: String;
+    description: String;
+};
