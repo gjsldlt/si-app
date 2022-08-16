@@ -32,3 +32,13 @@ export type ManagerType = {
     createdAt: String,
     userId: String,
 }
+
+export type EmployeeType = {
+    _id: String,
+    firstName: String,
+    lastName: String,
+    email: String,
+    password: String,
+    createdAt: String,
+    userId: String,
+}

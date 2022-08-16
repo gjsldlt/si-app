@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { PlusIcon, XIcon, PencilIcon, TrashIcon } from '@heroicons/react/solid';
 
-import styles from './managerList.module.scss';
+import styles from './employeeList.module.scss';
 import LoaderComponent from '../loader/loader.component';
-import { getAllManagers } from '../../services/user.service';
-import { ManagerType } from '../../types/MasterTypes.types';
-import ManagerForm from "./managerForm.component";
+import { getEmployees, getEmployeesOfManager } from '../../services/user.service';
+import { EmployeeType } from '../../types/MasterTypes.types';
+import EmployeeForm from "./employeeForm.component";
 
-export default function ManagerList({ activeManager, onClick, enableRowActions }: PageProps) {
+export default function EmployeeList({ activeManager, activeEmployee, onClick, enableRowActions }: PageProps) {
   const tailwindClasses = {
     container: 'container relative flex flex-col bg-white p-1 min-h-[200px] md:h-full md:min-h-100 md:w-[47vw] lg:w-[27vw] border-[1px] shadow-lg',
     toolbar: 'toolbar flex flex-row',
@@ -21,23 +21,29 @@ export default function ManagerList({ activeManager, onClick, enableRowActions }
     lineButton: 'lineButton h-[20px] w-[20px] cursor-pointer hover:text-current',
   }
 
-  const [managerList, setManagerList] = useState<ManagerType[]>([]);
+  const [employeeList, setEmployeeList] = useState<EmployeeType[]>([]);
   const [loadState, setLoadState] = useState<Boolean>(true);
   const [addState, setAddState] = useState<Boolean>(false);
 
   const renderData = async () => {
     setLoadState(true);
-    setManagerList(await getAllManagers());
+    if (activeManager === null) {
+      // get all employees
+      setEmployeeList(await getEmployees());
+    } else {
+      // get all employees of specific manager
+      setEmployeeList(await getEmployeesOfManager(activeManager));
+    }
     setLoadState(false);
   }
 
-  const addNewManager = () => {
+  const addNewEmployee = () => {
     setAddState(!addState);
   }
 
-  const clickManagerRow = (id: String) => {
+  const clickEmployeeRow = (id: String) => {
     if (enableRowActions) {
-      if (activeManager === id) {
+      if (activeEmployee === id) {
         onClick(undefined);
       } else {
         onClick(id);
@@ -48,10 +54,10 @@ export default function ManagerList({ activeManager, onClick, enableRowActions }
   const renderList = () => {
     return <div className={tailwindClasses.list}>
       {
-        !loadState && managerList.map((item, index) => {
-          let activeLine = activeManager === item._id;
-          return <div key={`manager-line-item-${index}`} className={`${tailwindClasses.lineItem} ${activeLine ? tailwindClasses.lineItemActive : ''}`}>
-            <div className={tailwindClasses.name} onClick={() => clickManagerRow(item._id)}>
+        !loadState && employeeList.map((item, index) => {
+          let activeLine = activeEmployee === item._id;
+          return <div key={`employee-line-item-${index}`} className={`${tailwindClasses.lineItem} ${activeLine ? tailwindClasses.lineItemActive : ''}`}>
+            <div className={tailwindClasses.name} onClick={() => clickEmployeeRow(item._id)}>
               <span>{item.firstName}</span>
               <span>{item.lastName}</span>
             </div>
@@ -70,8 +76,9 @@ export default function ManagerList({ activeManager, onClick, enableRowActions }
   }
 
   useEffect(() => {
+    console.log(activeManager)
     renderData();
-  }, [])
+  }, [activeManager])
 
   return (
     <div className={tailwindClasses.container}>
@@ -79,25 +86,27 @@ export default function ManagerList({ activeManager, onClick, enableRowActions }
         loadState ? <LoaderComponent /> : null
       }
       <div className={tailwindClasses.toolbar}>
-        <p className={tailwindClasses.title}>Managers</p>
-        <button className={tailwindClasses.addButton} onClick={addNewManager}>
+        <p className={tailwindClasses.title}>Employees</p>
+        <button className={tailwindClasses.addButton} onClick={addNewEmployee}>
           {
             addState ? <XIcon className="h-5 w-5 text-gray" /> : <PlusIcon className="h-5 w-5 text-gray" />
           }
         </button>
       </div>
-      {addState ? <ManagerForm /> : renderList()}
+      {addState ? <EmployeeForm /> : renderList()}
     </div>
   )
 }
 
 type PageProps = {
   activeManager: String,
+  activeEmployee: String,
   onClick: Function,
   enableRowActions: Boolean
 }
-ManagerList.defaultProps = {
+EmployeeList.defaultProps = {
   activeManager: null,
+  activeEmployee: null,
   onClick: () => { console.log('done nothing.') },
   enableRowActions: false
 }
