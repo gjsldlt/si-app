@@ -1,0 +1,27 @@
+@import '../../styles/variable';
+
+.employeeList{
+    display:flex;
+    flex-direction: column;
+}
+
+/* Mobile CSS */
+@media (max-width: $mobile-width) {
+    .employeeList{
+
+    }
+}
+
+/* Tablet CSS */
+@media (max-width: $mobile-width) {
+    .employeeList{
+        
+    }
+}
+
+/* Laptop and above CSS */
+@media (max-width: $mobile-width) {
+    .employeeList{
+        
+    }
+}

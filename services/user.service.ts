@@ -73,6 +73,59 @@ export const getAllManagers = async () => {
     return data.data.data.managers;
 }
 
+export const getEmployeesOfManager = async (managerId: String) => {
+    let data = await axios.get(
+        GLOBALHELPER.APIURL, {
+        params: {
+            query: `query GetAllEmployeesOfManager($managerId: String!){
+                employeesPerManager(managerId:$managerId){
+                    _id
+                    firstName
+                    lastName
+                    email
+                    skills{
+                      rate
+                      skill{
+                        name
+                        description
+                      }
+                    }
+                  }
+              }`,
+            variables: {
+                managerId:managerId
+            },
+        }
+    })
+    return data.data.data.employeesPerManager;
+}
+
+export const getEmployees = async () => {
+    let data = await axios.get(
+        GLOBALHELPER.APIURL, {
+        params: {
+            query: `query GetAllEmployees{
+                employees{
+                    _id
+                    firstName
+                    lastName
+                    email
+                    skills{
+                      rate
+                      skill{
+                        name
+                        description
+                      }
+                    }
+                  }
+              }`,
+            variables: {
+            },
+        }
+    })
+    return data.data.data.employees;
+}
+
 
 type LoginDetails = {
     email: String,
