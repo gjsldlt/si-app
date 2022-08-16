@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { MailIcon, LockClosedIcon, EyeOffIcon, EyeIcon, ChevronRightIcon, IdentificationIcon, PhoneIcon } from '@heroicons/react/solid'
+import { useRouter } from 'next/router'
+
+import { authLogin, saveUserInSession } from '../../services/user.service';
 
 const Form: React.FC = () => {
-
+    const router = useRouter();
     const [displayLogin, setDisplayLogin] = useState(true)
     const [displayRegister, setDisplayRegister] = useState(false)
     const [displayPassword, setDisplayPassword] = useState(false)
@@ -36,6 +39,34 @@ const Form: React.FC = () => {
         }
     }
 
+    const login = async () => {
+        const loginData = await authLogin({
+            'email': 'admin@email.com',
+            'password': 'asdqwe123'
+        });
+        console.log(loginData);
+        if (loginData.login === null) {
+            // login failed
+        } else {
+            let role = '';
+            if (loginData.login.isAdmin) role = 'admin';
+            else if (loginData.login.employeeId === null) role = 'manager';
+            else role = 'employee';
+
+            saveUserInSession({
+                role: role,
+                firstName: loginData.login.user.firstName,
+                lastName: loginData.login.user.lastName,
+                email: loginData.login.user.email,
+                userId: loginData.login.user._id,
+                token: loginData.login.token,
+                managerId: loginData.login.managerId,
+                employeeId: loginData.login.employeeId,
+            })
+            router.push('/');
+        }
+    }
+
     return (
         <div className="bg-black bg-opacity-50 w-screen md:w-[480px] h-screen md:h-[450px] md:rounded-[25px] md:backdrop-blur-[10px] flex flex-col items-center justify-center">
             <div className="flex justify-center">
@@ -65,7 +96,7 @@ const Form: React.FC = () => {
                         <a href="#" className="mt-[15px] md:mt-0 italic text-white text-opacity-75 transition hover:underline">Forgot Password?</a>
                     </div>
                     <div className="md:w-[360px] flex justify-end">
-                        <button className="flex justify-center items-center mt-[30px] md:mt-[50px] w-[275px] md:w-[150px] rounded-[25px] bg-[#80B324] bg-opacity-50 transition hover:bg-opacity-100 text-[16px] text-white text-opacity-75"><Link href="/admin">LOGIN</Link><ChevronRightIcon className="w-[40px] h-[40px]" /></button>
+                        <button onClick={login} className="flex justify-center items-center mt-[30px] md:mt-[50px] w-[275px] md:w-[150px] rounded-[25px] bg-[#80B324] bg-opacity-50 transition hover:bg-opacity-100 text-[16px] text-white text-opacity-75"><span>Login</span><ChevronRightIcon className="w-[40px] h-[40px]" /></button>
                     </div>
                 </div>
             </form>
