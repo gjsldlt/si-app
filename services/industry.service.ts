@@ -1,5 +1,6 @@
 import axios from 'axios';
 import GLOBALHELPER from '../helpers/global.helper';
+import { IndustryType } from '../types/MasterTypes.types';
 
 axios.defaults.headers.common['Content-Type'] = `application/json`;
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = `*`;
@@ -22,7 +23,8 @@ export async function getIndustries() {
             },
         }
     })
-    return data.data.data;
+
+    return data.data.data.metadataByType;
 }
 
 export async function addIndustry(name: String, description: String) {
@@ -30,10 +32,10 @@ export async function addIndustry(name: String, description: String) {
         GLOBALHELPER.APIURL,
         {  //will add the query form the ss
             query: `mutation CreateMetadata(
-                $name:String!,
+                $name:String!, 
                 $description:String!,
                 $type:String!,
-                ) {
+                ) { 
                     addMetadata(metadata:{
                         name:$name,
                         description:$description
@@ -43,8 +45,8 @@ export async function addIndustry(name: String, description: String) {
                        name
                        description
                         }
+                    
                 }`,
-
             variables: { // will add name, description , type
                 name: name,
                 description: description,
