@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect, useState } from 'react';
 
-import getSkills from '../services/skill.service';
+import { useFetchSkills } from '../services/skill.service';
 import { accessUserInSession } from '../services/user.service';
 import { UserDataType } from '../types/MasterTypes.types';
 import PageBanner from '../components/pageBanner/pageBanner.component';
@@ -33,14 +33,15 @@ const Home: NextPage = () => {
     bodyImage: 'h-[250px] w-[250px]'
   }
 
-  const populateSkills = async () => {
-    let data = await getSkills();
-    return data;
-  }
+  // const populateSkills = async () => {
+  //   let data = await getSkills();
+  //   return data;
+  // }
 
   useEffect(() => {
     setUser(accessUserInSession());
     // populateSkills();
+    // useFetchSkills;
   }, [])
 
   return (
