@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import PageBanner from '../components/pageBanner/pageBanner.component';
-import Skills from '../components/skills/skills.component';
+import SkillComponent from '../components/skills/skills.component';
 
 function Metadata() {
 
@@ -19,7 +19,7 @@ function Metadata() {
             </div>} />
             <div className={tailwindClasses.content}>
                 <div className={tailwindClasses.widget}>
-                    <Skills />
+                    <SkillComponent />
                 </div>
                 <div className={tailwindClasses.widget}>
                     capabilities
