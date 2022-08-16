@@ -2,7 +2,7 @@ import { useState, useEffect, FormEvent } from 'react'
 
 import axios from 'axios';
 import GLOBALHELPER from '../helpers/global.helper';
-import { SkillObj } from '../components/skills/skills.type';
+import { SkillObj } from '../types/skills.type';
 
 axios.defaults.headers.common['Content-Type'] = `application/json`;
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = `*`;
@@ -48,7 +48,6 @@ const addSkill = (event: FormEvent<HTMLFormElement>, sklName: string, sklDesc: s
 			console.log(response.status);
 			console.log(response.data.data);
 			sklList.push(response.data.data)
-			useFetchSkills;
 		})
 }
 //GET SKILLS FROM API
