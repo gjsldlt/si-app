@@ -26,7 +26,7 @@ function Users() {
                     <ManagerList activeManager={activeManager} onClick={setActiveManager} enableRowActions={true} />
                 </div>
                 <div className={tailwindClasses.box}>
-                    <EmployeeList  activeManager={activeManager} />
+                    <EmployeeList activeManager={activeManager} />
                 </div>
             </div>
         </>

@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import { PlusIcon, XIcon } from '@heroicons/react/solid';
+import { useEffect, useState } from "react";
+import { PlusIcon, XIcon } from "@heroicons/react/solid";
 
-import LoaderComponent from '../loader/loader.component';
-import { ManagerType } from '../../types/MasterTypes.types';
+import LoaderComponent from "../loader/loader.component";
+import { ManagerType } from "../../types/MasterTypes.types";
 
 export default function ManagerList({ managerToEdit }: PageProps) {
     const [firstName, setFirstName] = useState(managerToEdit ? managerToEdit.firstName : '');
