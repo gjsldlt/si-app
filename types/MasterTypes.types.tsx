@@ -8,7 +8,7 @@ export type RouteItem = {
     name: string,
     displayName: string,
     route: string,
-    icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>
+    icon: JSX.Element //OverridableComponent<SvgIconTypeMap<{}, "svg">>
 }
 
 export type UserDataType = {
