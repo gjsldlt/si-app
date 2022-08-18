@@ -1,44 +1,72 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 
 import SkillForm from './skillsForm.component';
-import { useFetchSkills, addSkill } from '../../services/skill.service';
+import { getSkills } from '../../services/skill.service';
+import { PlusIcon, XIcon } from "@heroicons/react/solid";
 
-import AddIcon from '@mui/icons-material/Add';
+import LoaderComponent from '../loader/loader.component';
+import { SkillType } from '../../types/MasterTypes.types';
 
 const SkillComponent: FC = () => {
   const tailwindClasses = {
-    container: '',
-    input: 'border-2'
+    container: "relative flex flex-col bg-white p-1 min-h-[200px] md:min-h-100 md:w-[47vw] lg:w-[27vw] border-[1px] shadow-lg",
+    toolbar: "flex flex-row",
+    title: "flex-1",
+    addButton: "h-iconbutton w-iconbutton flex items-center justify-center p-0",
+    list: "flex flex-col h-[100px]",
+    lineItem: "",
+    xButton: "h-5 w-5 text-blue-500",
+    plusButton: "h-5 w-5 text-blue-500",
+  }
+  const [skillList, setSkillList] = useState<SkillType[]>([])
+
+  const [displayForm, setDisplayForm] = useState<Boolean>(false)
+  const [loadState, setLoadState] = useState<Boolean>(true);
+
+  const addSkill = () => {
+    setDisplayForm(!displayForm)
   }
 
-  const [displayForm, setDisplayForm] = useState<boolean>(false)
+  const RenderData = async () => {
+    setDisplayForm(false);
+    setLoadState(true)
+    setSkillList(await getSkills())
+    setLoadState(false)
+  };
 
-  const addClick = () => {
-    setDisplayForm(true)
-  }
-  //fetch api response using custom hook
-  const { skills, error, isLoading } = useFetchSkills()
+  useEffect(() => {
+    RenderData();
+  }, []);
 
- 
   const handleFormDisplay = () => {
-    if (isLoading) {
-      return <div>Loading...</div>
-    }
-    if (error) {
-      return <div>{error}</div>
-    }
     return (
-      displayForm ? <SkillForm />
-        : skills.map(skill => (
-          <li key={skill._id}>{skill.name}</li>
+      displayForm ? <SkillForm renderData={RenderData} setLoadState={setLoadState} />
+        : skillList.map(skill => (
+          <div
+            key={`skill-line-item-${skill._id}`}
+            className={tailwindClasses.lineItem}
+          >
+            {skill.name}
+          </div>
         ))
     )
   }
 
   return (
     <div className={tailwindClasses.container}>
-      <main>Skills</main><button onClick={addClick}>Add Skill<AddIcon /></button>
-      {handleFormDisplay()}
+      <div className={tailwindClasses.toolbar}>
+        <p className={tailwindClasses.title}>Skills</p>
+        <button
+          className={tailwindClasses.addButton}
+          onClick={addSkill}>
+          {displayForm ? (
+            <XIcon className={tailwindClasses.xButton} />
+          ) : (
+            <PlusIcon className={tailwindClasses.plusButton} />
+          )}
+        </button>
+      </div>
+      {loadState ? <LoaderComponent /> : handleFormDisplay()}
     </div>
   )
 }
