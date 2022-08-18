@@ -52,3 +52,11 @@ export type CapabilityType = {
   name: String;
   description: String;
 };
+
+
+export type UserType = {
+    _id: String,
+    firstName: String,
+    lastName: String,
+    email: String,
+}
