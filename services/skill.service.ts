@@ -47,11 +47,11 @@ const getSkills = async () => {
 	return skills.data.data.metadataByType;
 }
 
-const updateSkills = async () => {
+const updateSkill = async () => {
 	axios.put(
 		GLOBALHELPER.APIURL,{
 			query: updateSkillQuery
 		})
 }
 
-export { getSkills, addSkill, updateSkills };
+export { getSkills, addSkill, updateSkill };
