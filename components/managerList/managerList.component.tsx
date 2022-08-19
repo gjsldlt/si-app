@@ -16,9 +16,11 @@ export default function ManagerList({ activeManager, onClick, enableRowActions }
     list: 'list flex flex-col h-[100px]',
     lineItem: 'lineitem transition-all duration-500 rounded py-1 px-2 flex flex-row',
     lineItemActive: 'active bg-sidebar text-white',
-    name: 'name flex flex-row justify-start items-center flex-grow gap-1 cursor-pointer',
-    lineActions: 'lineActions flex flex-row',
+    lineDetails: 'name flex flex-col justify-start justify-center flex-grow cursor-pointer',
+    lineActions: 'lineActions flex flex-row justify-center items-center',
     lineButton: 'lineButton h-[20px] w-[20px] cursor-pointer hover:text-current',
+    email: 'block w-full text-xs',
+    name:'p-0 m-0',
   }
 
   const [managerToEdit, setManagerToEdit] = useState<ManagerType>();
@@ -33,7 +35,7 @@ export default function ManagerList({ activeManager, onClick, enableRowActions }
   }
 
   const addNewManager = () => {
-    setManagerToEdit(null);
+    setManagerToEdit(undefined);
     setAddState(!addState);
   }
 
@@ -47,7 +49,8 @@ export default function ManagerList({ activeManager, onClick, enableRowActions }
     }
   }
 
-  const editManager = (manager) => {
+  const editManager = (manager: ManagerType) => {
+    console.log(manager)
     setAddState(true);
     setManagerToEdit(manager);
   }
@@ -58,14 +61,17 @@ export default function ManagerList({ activeManager, onClick, enableRowActions }
         !loadState && managerList.map((item, index) => {
           let activeLine = activeManager === item._id;
           return <div key={`manager-line-item-${index}`} className={`${tailwindClasses.lineItem} ${activeLine ? tailwindClasses.lineItemActive : ''}`}>
-            <div className={tailwindClasses.name} onClick={() => clickManagerRow(item._id)}>
-              <span>{item.firstName}</span>
-              <span>{item.lastName}</span>
+            <div className={tailwindClasses.lineDetails} onClick={() => clickManagerRow(item._id)}>
+              <p className={tailwindClasses.name}>
+                <span>{item.firstName}</span>
+                <span>{item.lastName}</span>
+              </p>
+              <span className={tailwindClasses.email}>{item.email}</span>
             </div>
             {
               enableRowActions ? (
                 <div className={tailwindClasses.lineActions}>
-                  <PencilIcon className={tailwindClasses.lineButton} onClick={()=>{editManager(item)}} />
+                  <PencilIcon className={tailwindClasses.lineButton} onClick={() => { editManager(item) }} />
                   <TrashIcon className={tailwindClasses.lineButton} />
                 </div>
               ) : null

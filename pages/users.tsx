@@ -2,8 +2,10 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 import PageBanner from '../components/pageBanner/pageBanner.component';
+import UserList from '../components/userList/userList.component';
 import ManagerList from '../components/managerList/managerList.component';
 import EmployeeList from '../components/employeeList/employeeList.component';
+import { UserType } from '../types/MasterTypes.types';
 
 function Users() {
     const [activeManager, setActiveManager] = useState(undefined)
@@ -23,10 +25,12 @@ function Users() {
             </div>} />
             <div className={tailwindClasses.content}>
                 <div className={tailwindClasses.box}>
-                    <ManagerList activeManager={activeManager} onClick={setActiveManager} enableRowActions={true} />
+                    {/* Manager List */}
+                    <UserList role="managers" activeUser={activeManager} onClick={setActiveManager} enableRowActions={true} />
                 </div>
                 <div className={tailwindClasses.box}>
-                    <EmployeeList activeManager={activeManager} />
+                    {/* Employee List */}
+                    <UserList role={activeManager ? 'employeesof' : 'employees'} parentUser={activeManager} enableRowActions={true} />
                 </div>
             </div>
         </>

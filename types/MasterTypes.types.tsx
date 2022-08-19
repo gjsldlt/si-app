@@ -52,8 +52,16 @@ export type CapabilityType = {
   description: String;
 };
 
+
 export type SkillType = {
     _id: string
     name: string
     description: string
+
+
+export type UserType = {
+    _id: String,
+    firstName: String,
+    lastName: String,
+    email: String,
 }
