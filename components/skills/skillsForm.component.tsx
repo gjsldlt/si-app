@@ -1,16 +1,24 @@
-import { FC, useState, ChangeEvent } from 'react';
+import { FC, useState, ChangeEvent, FormEvent } from 'react';
 
-import { useFetchSkills, addSkill } from '../../services/skill.service';
+import { addSkill, updateSkill } from '../../services/skill.service';
+import { SkillType } from '../../types/MasterTypes.types';
 
-const SkillForm: FC = () => {
+const SkillForm: FC<FormProps> = ({
+  renderData,
+  setLoadState,
+  skillToEdit,
+}: FormProps) => {
   const tailwindClasses = {
     container: '',
     input: 'border-2'
   }
 
   //set state hooks for input
-  const [newSkillName, setNewSkillName] = useState<string>('')
-  const [newSkillDesc, setNewSkillDesc] = useState<string>('')
+  const [newSkillName, setNewSkillName] = useState<string>(skillToEdit ? skillToEdit.name : '')
+  const [newSkillDesc, setNewSkillDesc] = useState<string>(skillToEdit ? skillToEdit.description : '')
+
+  const skillId: string = skillToEdit ? skillToEdit._id : ''
+  console.log("skill id: "+skillId)
 
   //detect change of input in text boxes
   const inputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -21,12 +29,33 @@ const SkillForm: FC = () => {
       default: break;
     }
   }
-  //fetch api response using custom hook
-  const { skills } = useFetchSkills()
+
+  //form submit
+  const formSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setLoadState(true)
+    if (skillToEdit === null) {
+      //submit to create
+      if (newSkillName !== "" && newSkillDesc !== "") {
+        addSkill(newSkillName, newSkillDesc)
+        setNewSkillName("")
+        setNewSkillDesc("")
+        renderData();
+      }
+    }
+    else {
+      //submit to update
+      updateSkill(skillId, newSkillName, newSkillDesc)
+      setNewSkillName("")
+      setNewSkillDesc("")
+      renderData();
+    }
+
+  }
 
   return (
-    <form action="submit" onSubmit={(event) => addSkill(event, newSkillName, newSkillDesc, skills)}>
-      <label>Skill Name </label>
+    <form action="submit" onSubmit={formSubmit}>
+      <label>Skill</label>
       <input
         onChange={inputChange}
         className={tailwindClasses.input}
@@ -36,7 +65,7 @@ const SkillForm: FC = () => {
         name="skillName"
       />
       <br />
-      <label>Description </label>
+      <label>Description</label>
       <input
         onChange={inputChange}
         className={tailwindClasses.input}
@@ -52,3 +81,9 @@ const SkillForm: FC = () => {
 }
 
 export default SkillForm;
+
+type FormProps = {
+  renderData: () => {}
+  setLoadState: React.Dispatch<React.SetStateAction<Boolean>>
+  skillToEdit?: SkillType
+};

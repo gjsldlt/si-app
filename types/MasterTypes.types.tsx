@@ -45,13 +45,18 @@ export type EmployeeType = {
     userId: String,
 }
 
-
 export type CapabilityType = {
   _id: String;
 
   name: String;
   description: String;
 };
+
+
+export type SkillType = {
+    _id: string
+    name: string
+    description: string
 
 
 export type UserType = {

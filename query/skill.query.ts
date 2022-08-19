@@ -29,7 +29,7 @@ export const getSkillsQuery =  `query($type:String!) {
 }`
 
 //query string for API put request
-export const updateSkill = `mutation UpdateMetadata(
+export const updateSkillQuery = `mutation UpdateMetadata(
   $id:String!
   $metadata: MetadataUpdateFields!
 ){
