@@ -22,36 +22,46 @@ const SkillComponent: FC = () => {
     pencilButton: "h-5 w-5 text-blue-500",
     skillName: "flex-1"
   }
+  //state hook to capture api response to SkillType array
   const [skillList, setSkillList] = useState<SkillType[]>([])
-
+  //state hook to capture skill to edit on click of pencil icon
+  const [skillToEdit, setSkillToEdit] = useState<SkillType>()
+  //state hook to display form containing input fields
   const [displayForm, setDisplayForm] = useState<Boolean>(false)
-  const [loadState, setLoadState] = useState<Boolean>(true);
+  //state hook to show loadscreen component
+  const [loadState, setLoadState] = useState<Boolean>(true)
 
-  const addSkill = () => {
+  const showSkillForm = () => {
+    setSkillToEdit(undefined)
     setDisplayForm(!displayForm)
   }
 
-  const RenderData = async () => {
-    setDisplayForm(false);
+  const editSkill = (skill: SkillType) => {
+    setDisplayForm(true)
+    setSkillToEdit(skill)
+  }
+
+  const renderData = async () => {
+    setDisplayForm(false)
     setLoadState(true)
     setSkillList(await getSkills())
     setLoadState(false)
   };
 
   useEffect(() => {
-    RenderData();
+    renderData();
   }, []);
 
   const handleFormDisplay = () => {
     return (
-      displayForm ? <SkillForm renderData={RenderData} setLoadState={setLoadState} />
+      displayForm ? <SkillForm renderData={renderData} setLoadState={setLoadState} skillToEdit={skillToEdit}/>
         : skillList.map(skill => (
           <div
             key={`skill-line-item-${skill._id}`}
             className={tailwindClasses.lineItem}
           >
             <p className={tailwindClasses.title}>{skill.name}</p>
-            <button><PencilIcon className={tailwindClasses.pencilButton} /></button>
+            <button onClick={()=>editSkill(skill)}><PencilIcon className={tailwindClasses.pencilButton} /></button>
             <button><TrashIcon className={tailwindClasses.trashButton} /></button>
           </div>
         ))
@@ -64,7 +74,7 @@ const SkillComponent: FC = () => {
         <p className={tailwindClasses.title}>Skills</p>
         <button
           className={tailwindClasses.addButton}
-          onClick={addSkill}>
+          onClick={showSkillForm}>
           {displayForm ? (
             <XIcon className={tailwindClasses.xButton} />
           ) : (

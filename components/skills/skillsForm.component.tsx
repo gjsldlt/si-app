@@ -1,10 +1,12 @@
 import { FC, useState, ChangeEvent, FormEvent } from 'react';
 
 import { addSkill } from '../../services/skill.service';
+import { SkillType } from '../../types/MasterTypes.types';
 
 const SkillForm: FC<FormProps> = ({
   renderData,
   setLoadState,
+  skillToEdit,
 }: FormProps) => {
   const tailwindClasses = {
     container: '',
@@ -12,8 +14,8 @@ const SkillForm: FC<FormProps> = ({
   }
 
   //set state hooks for input
-  const [newSkillName, setNewSkillName] = useState<string>('')
-  const [newSkillDesc, setNewSkillDesc] = useState<string>('')
+  const [newSkillName, setNewSkillName] = useState<string>(skillToEdit ? skillToEdit.name : '')
+  const [newSkillDesc, setNewSkillDesc] = useState<string>(skillToEdit ? skillToEdit.description : '')
 
   //detect change of input in text boxes
   const inputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -29,12 +31,20 @@ const SkillForm: FC<FormProps> = ({
   const formSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setLoadState(true)
-    if (newSkillName !== "" && newSkillDesc !== "") {
-      addSkill(event, newSkillName, newSkillDesc)
-      setNewSkillName("")
-      setNewSkillDesc("")
-      renderData();
+    if (skillToEdit === null) {
+      //submit to create
+      if (newSkillName !== "" && newSkillDesc !== "") {
+        addSkill(event, newSkillName, newSkillDesc)
+        setNewSkillName("")
+        setNewSkillDesc("")
+        renderData();
+      }
+      else {
+        //submit to update
+
+      }
     }
+
   }
 
   return (
@@ -67,6 +77,7 @@ const SkillForm: FC<FormProps> = ({
 export default SkillForm;
 
 type FormProps = {
-  renderData: () => {};
-  setLoadState: React.Dispatch<React.SetStateAction<Boolean>>;
+  renderData: () => {}
+  setLoadState: React.Dispatch<React.SetStateAction<Boolean>>
+  skillToEdit?: SkillType
 };

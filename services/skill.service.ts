@@ -3,7 +3,7 @@ import { FormEvent } from 'react'
 import axios from 'axios';
 import GLOBALHELPER from '../helpers/global.helper';
 
-import { addSkillQuery, getSkillsQuery } from '../query/skill.query'
+import { addSkillQuery, getSkillsQuery, updateSkillQuery } from '../query/skill.query'
 
 axios.defaults.headers.common['Content-Type'] = `application/json`;
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = `*`;
@@ -47,4 +47,11 @@ const getSkills = async () => {
 	return skills.data.data.metadataByType;
 }
 
-export { getSkills, addSkill };
+const updateSkills = async () => {
+	axios.put(
+		GLOBALHELPER.APIURL,{
+			query: updateSkillQuery
+		})
+}
+
+export { getSkills, addSkill, updateSkills };
