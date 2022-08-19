@@ -2,7 +2,8 @@ import { FC, useState, useEffect } from 'react';
 
 import SkillForm from './skillsForm.component';
 import { getSkills } from '../../services/skill.service';
-import { PlusIcon, XIcon } from "@heroicons/react/solid";
+import { PlusIcon, XIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
+
 
 import LoaderComponent from '../loader/loader.component';
 import { SkillType } from '../../types/MasterTypes.types';
@@ -14,9 +15,12 @@ const SkillComponent: FC = () => {
     title: "flex-1",
     addButton: "h-iconbutton w-iconbutton flex items-center justify-center p-0",
     list: "flex flex-col h-[100px]",
-    lineItem: "",
+    lineItem: "flex flex-row",
     xButton: "h-5 w-5 text-blue-500",
     plusButton: "h-5 w-5 text-blue-500",
+    trashButton: "h-5 w-5 text-blue-500",
+    pencilButton: "h-5 w-5 text-blue-500",
+    skillName: "flex-1"
   }
   const [skillList, setSkillList] = useState<SkillType[]>([])
 
@@ -46,7 +50,9 @@ const SkillComponent: FC = () => {
             key={`skill-line-item-${skill._id}`}
             className={tailwindClasses.lineItem}
           >
-            {skill.name}
+            <p className={tailwindClasses.title}>{skill.name}</p>
+            <button><PencilIcon className={tailwindClasses.pencilButton} /></button>
+            <button><TrashIcon className={tailwindClasses.trashButton} /></button>
           </div>
         ))
     )
