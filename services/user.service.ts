@@ -1,6 +1,6 @@
 import axios from 'axios';
 import GLOBALHELPER from '../helpers/global.helper';
-import { UserDataType } from '../types/MasterTypes.types';
+import { UserDataType, UserType } from '../types/MasterTypes.types';
 
 
 axios.defaults.headers.common['Content-Type'] = `application/json`;
@@ -93,7 +93,7 @@ export const getEmployeesOfManager = async (managerId: String) => {
                   }
               }`,
             variables: {
-                managerId:managerId
+                managerId: managerId
             },
         }
     })
@@ -126,6 +126,9 @@ export const getEmployees = async () => {
     return data.data.data.employees;
 }
 
+export const registerEmployee = async (user: UserType) => {
+
+}
 
 type LoginDetails = {
     email: String,
