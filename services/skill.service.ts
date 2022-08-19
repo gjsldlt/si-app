@@ -10,11 +10,10 @@ axios.defaults.headers.common['Access-Control-Allow-Origin'] = `*`;
 axios.defaults.headers.common['Accept'] = `application/json, text/plain, application/graphql, */*`;
 // axios.defaults.headers.common['Authorization'] = ``;
 
-//ADD SKILLS TO API
+//CREATE SKILLS TO API
 
 //call API to post data from input box
-const addSkill = async (event: FormEvent<HTMLFormElement>, sklName: string, sklDesc: string) => {
-	event.preventDefault();
+const addSkill = async (sklName: string, sklDesc: string) => {
 	let response = await axios
 		.post(
 			GLOBALHELPER.APIURL,
@@ -29,10 +28,9 @@ const addSkill = async (event: FormEvent<HTMLFormElement>, sklName: string, sklD
 	return response.data.data
 }
 
-//GET SKILLS FROM API
+//READ SKILLS FROM API
 
-//Create custom hook to get skills from API
-
+//Create function to get skills from API
 const getSkills = async () => {
 	let skills = await axios.get(
 		GLOBALHELPER.APIURL,
@@ -46,12 +44,25 @@ const getSkills = async () => {
 		})
 	return skills.data.data.metadataByType;
 }
+//UPDATE SKILL FROM API
 
-const updateSkill = async () => {
-	axios.put(
-		GLOBALHELPER.APIURL,{
-			query: updateSkillQuery
-		})
+//Create function to update skills in APU
+//uses POST instead of PUT as PUT is not allowed by the API
+const updateSkill = async (sklId: string, sklName: string, sklDesc: string) => {
+	let response = await axios
+		.post(
+			GLOBALHELPER.APIURL,
+			{
+				query: updateSkillQuery,
+				variables: {
+					id: sklId,
+					metadata: {
+						name: sklName,
+						description: sklDesc
+					}
+				}
+			})
+	return response.data.data;
 }
 
 export { getSkills, addSkill, updateSkill };

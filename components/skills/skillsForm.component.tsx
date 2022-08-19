@@ -1,6 +1,6 @@
 import { FC, useState, ChangeEvent, FormEvent } from 'react';
 
-import { addSkill } from '../../services/skill.service';
+import { addSkill, updateSkill } from '../../services/skill.service';
 import { SkillType } from '../../types/MasterTypes.types';
 
 const SkillForm: FC<FormProps> = ({
@@ -16,6 +16,9 @@ const SkillForm: FC<FormProps> = ({
   //set state hooks for input
   const [newSkillName, setNewSkillName] = useState<string>(skillToEdit ? skillToEdit.name : '')
   const [newSkillDesc, setNewSkillDesc] = useState<string>(skillToEdit ? skillToEdit.description : '')
+
+  const skillId: string = skillToEdit ? skillToEdit._id : ''
+  console.log("skill id: "+skillId)
 
   //detect change of input in text boxes
   const inputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -34,15 +37,18 @@ const SkillForm: FC<FormProps> = ({
     if (skillToEdit === null) {
       //submit to create
       if (newSkillName !== "" && newSkillDesc !== "") {
-        addSkill(event, newSkillName, newSkillDesc)
+        addSkill(newSkillName, newSkillDesc)
         setNewSkillName("")
         setNewSkillDesc("")
         renderData();
       }
-      else {
-        //submit to update
-
-      }
+    }
+    else {
+      //submit to update
+      updateSkill(skillId, newSkillName, newSkillDesc)
+      setNewSkillName("")
+      setNewSkillDesc("")
+      renderData();
     }
 
   }
