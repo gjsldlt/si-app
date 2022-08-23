@@ -1,7 +1,7 @@
 import { FC, useState, useEffect } from 'react';
 
 import SkillForm from './skillsForm.component';
-import SkillPopup from './skills.popup';
+import SkillPopup from './skillsPopup.component';
 import { getSkills } from '../../services/skill.service';
 import { PlusIcon, XIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
 
@@ -68,7 +68,7 @@ const SkillComponent: FC = () => {
       return (<SkillForm renderData={renderData} setLoadState={setLoadState} skillToEdit={skillToEdit} />)
     }
     else if (displayPopup) {
-      return (<SkillPopup renderData={renderData} setLoadState={setLoadState} skillToDelete={skillToDelete} />)
+      return (<SkillPopup renderData={renderData} skillToDelete={skillToDelete} />)
     }
     else {
       return (

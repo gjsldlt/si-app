@@ -1,11 +1,10 @@
-import { FC, FormEvent } from 'react';
+import { FC } from 'react';
 
 import { deleteSkill } from '../../services/skill.service';
 import { SkillType } from '../../types/MasterTypes.types';
 
 const SkillPopup: FC<PopupProps> = ({
   renderData,
-  setLoadState,
   skillToDelete,
 }: PopupProps) => {
 
@@ -33,6 +32,5 @@ export default SkillPopup
 
 type PopupProps = {
   renderData: () => {}
-  setLoadState: React.Dispatch<React.SetStateAction<Boolean>>
   skillToDelete?: SkillType
 };
