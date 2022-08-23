@@ -37,7 +37,6 @@ export type ManagerType = {
 
 export type IndustryType = {
     _id: String;
-
     name: String;
     description: String;
 };
