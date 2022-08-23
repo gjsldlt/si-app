@@ -15,7 +15,7 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
     toolbar: 'toolbar flex flex-row',
     title: 'title flex-1',
     addButton: 'addbutton h-iconbutton w-iconbutton flex items-center justify-center p-0',
-    list: 'list flex flex-col h-[100px]',
+    list: 'list flex-grow flex flex-col overflow-auto max-h-[300px] md:max-h-unset',
     lineItem: 'lineitem transition-all duration-500 rounded py-1 px-2 flex flex-row',
     lineItemActive: 'active bg-sidebar text-white',
     lineDetails: 'name flex flex-col justify-start justify-center flex-grow cursor-pointer',
