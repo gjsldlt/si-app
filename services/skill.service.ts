@@ -3,7 +3,7 @@ import { FormEvent } from 'react'
 import axios from 'axios';
 import GLOBALHELPER from '../helpers/global.helper';
 
-import { addSkillQuery, getSkillsQuery, updateSkillQuery } from '../query/skill.query'
+import { addSkillQuery, getSkillsQuery, updateSkillQuery, deleteSkillQuery } from '../query/skill.query'
 
 axios.defaults.headers.common['Content-Type'] = `application/json`;
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = `*`;
@@ -64,5 +64,21 @@ const updateSkill = async (sklId: string, sklName: string, sklDesc: string) => {
 			})
 	return response.data.data;
 }
+//DELETE SKILL FROM API
 
-export { getSkills, addSkill, updateSkill };
+const deleteSkill = async (sklId: string) => {
+	let response = await axios
+	.post(
+		GLOBALHELPER.APIURL,
+		{
+			query: deleteSkillQuery,
+			variables: {
+				id: sklId
+			}
+		}
+
+	)
+	return response.data.data;
+}
+
+export { getSkills, addSkill, updateSkill, deleteSkill };

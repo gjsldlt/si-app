@@ -45,3 +45,10 @@ export const updateSkillQuery = `mutation UpdateMetadata(
   }
 }`
 
+export const deleteSkillQuery = `mutation DeleteMetadata($id: String!) {
+  deleteMetadata(id: $id) 
+  {
+    message
+  }
+}`
+
