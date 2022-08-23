@@ -10,7 +10,7 @@ function HeaderBar({ onMenuClick, show }: HeaderBarProps) {
     const authorizedUser = accessUserInSession();
     let [humanName, setHumanName] = useState('');
     const tailwindClasses = {
-        header: 'transition-all duration-500 fixed h-header-height min-w-full items-stretch top-0 w-full z-10 bg-sidebar md:bg-transparent text-black flex-row-reverse sm:flex-row flex justify-stretch items-center shadow-xl md:shadow-none',
+        header: 'transition-all duration-500 fixed h-header-height min-w-full items-stretch top-0 w-full z-[101] bg-sidebar md:bg-transparent text-black flex-row-reverse md:flex-row flex justify-stretch items-center shadow-xl md:shadow-none',
         title: 'flex-1 mx-2 flex flex-col text-white ',
         mainTitle: 'flex-1 text-lg flex flex-row justify-start items-center whitespace-nowrap',
         headerBtn: 'bg-sidebar transition-all duration-500 box-border flex items-center overflow-hidden break-words cursor-pointer hover:text-current w-sidebar-min flex-row-reverse md:flex-row ',
@@ -22,7 +22,7 @@ function HeaderBar({ onMenuClick, show }: HeaderBarProps) {
         headerBtnTitleMax: 'opacity-1 translate-x-0 opacity-1 ml-5 ',
         breadcrumb: 'flex-row hidden md:flex',
         crumb: ' text-xs flex-initial mr-2 capitalize cursor-pointer hover:text-current',
-        profileBar: 'hidden md:flex transition-all duration-500 w-profileBarMobile cursor-pointer text-sm md:w-profileBar overflow-hidden text-white h-full flex flex-col-reverse pr-profileBar h-header-height shadow-none',
+        profileBar: 'hidden rounded-lg md:flex transition-all duration-500 w-profileBarMobile cursor-pointer text-sm md:w-profileBar overflow-hidden text-white h-full flex flex-col-reverse pr-profileBar h-header-height shadow-none',
         profileBarActive: 'bg-sidebar text-white h-active-profile-bar shadow-lg flex-col justify-start',
         profile: 'flex flex-row justify-end items-center min-h-header-height max-h-header-height h-header-height absolute right-0 top-0 pr-profileBar',
         logoutButton: 'transition-position duration-500 z-1 flex flex-row justify-end items-center flex-0 text-white h-header-height',

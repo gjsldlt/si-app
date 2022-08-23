@@ -10,9 +10,9 @@ export default function Sidebar({ onRouteClick, routes, show }: SidebarProps) {
   let authorizedUser = accessUserInSession();
   const router = useRouter();
   const tailwindClasses = {
-    sidebar: 'tailwind-sidebar transition-all duration-500 shadow-lg fixed right-0 min-h-full sm:fixed sm:left-0 z-[100] bg-sidebar text-grey1 overflow-hidden shadow-2xl flex-col',
+    sidebar: 'tailwind-sidebar transition-all pt-header-height duration-500 shadow-lg fixed right-0 min-h-full fixed md:left-[0] z-[100] md:h-screen bg-sidebar text-grey1 overflow-hidden shadow-2xl flex-col',
     sidebarMax: 'w-sidebar-width',
-    sidebarMin: 'w-sidebar-min translate-x-full sm:translate-x-0',
+    sidebarMin: 'w-sidebar-min md:translate-x-0 translate-x-full',
     menuItem: 'transition-all duration-500 box-border flex items-center overflow-hidden break-words h-45 cursor-pointer hover:text-current',
     menuActive: 'text-current',
     name: 'transition-all duration-500 break-normal whitespace-nowrap overflow-hidden flex-1 ',

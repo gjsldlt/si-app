@@ -1,6 +1,6 @@
 import { FC, useState, ChangeEvent, FormEvent } from 'react';
 
-import { addSkill, updateSkill } from '../../services/skill.service';
+import { addSkill, updateSkill} from '../../services/skill.service';
 import { SkillType } from '../../types/MasterTypes.types';
 
 const SkillForm: FC<FormProps> = ({
@@ -8,6 +8,7 @@ const SkillForm: FC<FormProps> = ({
   setLoadState,
   skillToEdit,
 }: FormProps) => {
+
   const tailwindClasses = {
     container: '',
     input: 'border-2'
@@ -18,11 +19,9 @@ const SkillForm: FC<FormProps> = ({
   const [newSkillDesc, setNewSkillDesc] = useState<string>(skillToEdit ? skillToEdit.description : '')
 
   const skillId: string = skillToEdit ? skillToEdit._id : ''
-  console.log("skill id: "+skillId)
 
   //detect change of input in text boxes
   const inputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value, event.target.name)
     switch (event.target.name) {
       case 'skillName': setNewSkillName(event.target.value); break;
       case 'skillDesc': setNewSkillDesc(event.target.value); break;
@@ -31,26 +30,25 @@ const SkillForm: FC<FormProps> = ({
   }
 
   //form submit
-  const formSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const formSubmit = async(event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setLoadState(true)
-    if (skillToEdit === null) {
-      //submit to create
-      if (newSkillName !== "" && newSkillDesc !== "") {
-        addSkill(newSkillName, newSkillDesc)
-        setNewSkillName("")
-        setNewSkillDesc("")
-        renderData();
-      }
-    }
-    else {
-      //submit to update
-      updateSkill(skillId, newSkillName, newSkillDesc)
+    //submit to update
+    if (skillToEdit) {
+      await updateSkill(skillId, newSkillName, newSkillDesc)
       setNewSkillName("")
       setNewSkillDesc("")
-      renderData();
+      renderData() 
     }
-
+    else {
+      //submit to create
+      if (newSkillName  && newSkillDesc) {
+        await addSkill(newSkillName, newSkillDesc)
+        setNewSkillName("")
+        setNewSkillDesc("")
+        renderData()
+      }
+    }
   }
 
   return (
@@ -75,7 +73,7 @@ const SkillForm: FC<FormProps> = ({
         name="skillDesc"
       />
       <br />
-      <button type="submit">Add Skill</button>
+      <button type="submit">{skillToEdit ? "Update" : "Add"}</button>
     </form>
   )
 }

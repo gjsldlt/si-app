@@ -46,10 +46,9 @@ export type EmployeeType = {
 }
 
 export type CapabilityType = {
-  _id: String;
-
-  name: String;
-  description: String;
+    _id: String;
+    name: String;
+    description: String;
 };
 
 
@@ -57,11 +56,13 @@ export type SkillType = {
     _id: string
     name: string
     description: string
-
+}
 
 export type UserType = {
-    _id: String,
+    _id?: String,
     firstName: String,
     lastName: String,
     email: String,
+    password?: String,
+    userId?: String
 }
