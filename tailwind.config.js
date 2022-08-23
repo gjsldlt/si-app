@@ -6,6 +6,22 @@ module.exports = {
     "./styles/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    screens: {
+      'sm': '640px',
+      // => @media (min-width: 640px) { ... }
+
+      'md': '768px',
+      // => @media (min-width: 768px) { ... }
+
+      'lg': '1024px',
+      // => @media (min-width: 1024px) { ... }
+
+      'xl': '1280px',
+      // => @media (min-width: 1280px) { ... }
+
+      '2xl': '1536px',
+      // => @media (min-width: 1536px) { ... }
+    },
     extend: {
       backgroundImage: {
         'loginRegisterMobile': "url('')",
@@ -22,7 +38,7 @@ module.exports = {
         'active-profile-bar': '120px',
         'full': '100%',
         'screen': '100vh',
-        'iconbutton':'30px',
+        'iconbutton': '30px',
       },
       width: {
         '45': '45px',
@@ -38,7 +54,7 @@ module.exports = {
         '100vw': '100vw',
         'full': '100%',
         'screen': '100vw',
-        'iconbutton':'30px',
+        'iconbutton': '30px',
       },
       padding: {
         '0': '0',
@@ -47,7 +63,11 @@ module.exports = {
         'profileBar': '1rem',
         'sidebar-min': '60px',
       },
+      left: {
+        'sidebar-min': '60px',
+      },
       margin: {
+        'header-height': '60px',
         'sidebar-min': '60px',
         '1': '0.25rem',
         '2': '0.50rem',
@@ -57,7 +77,7 @@ module.exports = {
         transparent: 'transparent',
         current: '#2BD79C',
         'sidebar': '#041E42',
-        'header': '#005587',
+        'header': '#052654',
         'white': '#ffffff',
         'black': '#000',
         'purple': '#3f3cbb',
