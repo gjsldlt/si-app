@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useState } from "react";
 
 import PageBanner from "../components/pageBanner/pageBanner.component";
 import Skills from "../components/skills/skills.component";
@@ -13,6 +14,7 @@ function Metadata() {
     header: 'text-2xl text-white z-[5]',
     box: 'flex flex-grow overflow-auto'
   }
+  const [activeSkill, setActiveSkill] = useState(undefined);
 
   return (
     <>
@@ -21,7 +23,7 @@ function Metadata() {
       </div>} />
       <div className={tailwindClasses.content}>
         <div className={tailwindClasses.box}>
-          <SkillComponent />
+          <SkillComponent activeMetadata={activeSkill} onMetadataClick={setActiveSkill} />
         </div>
         <div className={tailwindClasses.box}>
           <Capability />

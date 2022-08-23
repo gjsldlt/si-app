@@ -8,7 +8,7 @@ import { PlusIcon, XIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
 import LoaderComponent from '../loader/loader.component';
 import { SkillType } from '../../types/MasterTypes.types';
 
-const SkillComponent: FC = () => {
+const SkillComponent: FC = ({activeMetadata, onMetadataClick}) => {
   const tailwindClasses = {
     container: "relative flex-grow flex flex-col bg-white p-1 min-h-[200px] md:min-h-100 md:w-[47vw] lg:w-[27vw] border-[1px] shadow-lg",
     toolbar: "flex flex-row",
@@ -16,6 +16,7 @@ const SkillComponent: FC = () => {
     addButton: "h-iconbutton w-iconbutton flex items-center justify-center p-0",
     list: "flex flex-col h-[100px]",
     lineItem: "flex flex-row",
+    lineItemActive: "bg-sidebar text-white h-[70px]",
     xButton: "h-5 w-5 text-blue-500",
     plusButton: "h-5 w-5 text-blue-500",
     trashButton: "h-5 w-5 text-blue-500",
@@ -48,6 +49,14 @@ const SkillComponent: FC = () => {
     setLoadState(false)
   };
 
+  const onLineItemClick = (lineItem) => {
+    if(lineItem._id === activeMetadata?._id){
+      onMetadataClick(undefined);
+    } else {
+      onMetadataClick(lineItem);
+    }
+  }
+
   useEffect(() => {
     renderData();
   }, []);
@@ -57,8 +66,9 @@ const SkillComponent: FC = () => {
       displayForm ? <SkillForm renderData={renderData} setLoadState={setLoadState} skillToEdit={skillToEdit}/>
         : skillList.map(skill => (
           <div
+            onClick={(e)=>{onLineItemClick(skill)}}
             key={`skill-line-item-${skill._id}`}
-            className={tailwindClasses.lineItem}
+            className={`${tailwindClasses.lineItem} ${activeMetadata?._id===skill._id ? tailwindClasses.lineItemActive : ''}`}
           >
             <p className={tailwindClasses.title}>{skill.name}</p>
             <button onClick={()=>editSkill(skill)}><PencilIcon className={tailwindClasses.pencilButton} /></button>
