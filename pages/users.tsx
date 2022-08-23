@@ -13,9 +13,13 @@ function Users() {
 
     const tailwindClasses = {
         customBanner: 'h-full w-full flex items-center justify-start p-[2rem]',
-        content: 'flex relative mx-1 md:mx-0 md:pl-[1rem] pt-1 md:py-[1rem] flex flex-col md:flex-row gap-1 md:gap-[1rem] z-[1] md:flex-grow',
+        content: 'flex relative mx-1 md:mx-0 md:pl-[1rem] md:mr-4 pt-1 md:py-[1rem] flex flex-col md:flex-row gap-1 md:gap-[1rem] z-[1] md:flex-grow items-stretch',
         header: 'text-2xl text-white z-[5]',
-        box: 'h-full md:h-[unset] flex flex-grow md:grow-0'
+        box: 'h-full md:h-[unset] md:w-[30vw] flex flex-grow',
+        subtitle: 'italic text-sm text-[gray]',
+        statsBox: 'flex flex-grow flex-col items-stretch',
+        managerStats: 'flex flex-grow justify-center items-center',
+        employeeStats: 'flex flex-grow justify-center items-center',
     }
 
     return (
@@ -26,11 +30,37 @@ function Users() {
             <div className={tailwindClasses.content}>
                 <div className={tailwindClasses.box}>
                     {/* Manager List */}
-                    <UserList role="managers" activeUser={activeManager} onClick={setActiveManager} enableRowActions={true} />
+                    <UserList 
+                    role="managers" 
+                    activeUser={activeManager} 
+                    onClick={setActiveManager} 
+                    enableRowActions={true} />
                 </div>
                 <div className={tailwindClasses.box}>
                     {/* Employee List */}
-                    <UserList role={activeManager ? 'employeesof' : 'employees'} parentUser={activeManager} enableRowActions={true} />
+                    <UserList role={activeManager ? 'employeesof' : 'employees'} activeUser={activeEmployee} onClick={setActiveEmployee} parentUser={activeManager} enableRowActions={true} />
+                </div>
+                <div className={tailwindClasses.box}>
+                    <div className={tailwindClasses.statsBox}>
+                        {
+                            activeManager !== undefined &&
+                            <div className={tailwindClasses.managerStats}>
+                                <span className={tailwindClasses.subtitle}>Call Manager Stats of selected manager</span>
+                            </div>
+                        }
+                        {
+                            activeEmployee !== undefined &&
+                            <div className={tailwindClasses.employeeStats}>
+                                <span className={tailwindClasses.subtitle}>Call Employee Stats of selected employee</span>
+                            </div>
+                        }
+                        {
+                            (activeEmployee === undefined && activeManager === undefined) &&
+                            <div className={tailwindClasses.employeeStats}>
+                                <span className={tailwindClasses.subtitle}>Select a Manager or Employee to see their details</span>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
         </>

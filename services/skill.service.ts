@@ -13,7 +13,7 @@ axios.defaults.headers.common['Accept'] = `application/json, text/plain, applica
 //CREATE SKILLS TO API
 
 //call API to post data from input box
-const addSkill = async (sklName: string, sklDesc: string) => {
+const addSkill = async (sklName: string, sklDesc: string, type:string) => {
 	let response = await axios
 		.post(
 			GLOBALHELPER.APIURL,
@@ -22,7 +22,7 @@ const addSkill = async (sklName: string, sklDesc: string) => {
 				variables: {
 					name: sklName,
 					description: sklDesc,
-					type: "skill"
+					type: type
 				}
 			})
 	return response.data.data
