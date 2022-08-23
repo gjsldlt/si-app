@@ -4,9 +4,10 @@ import { PlusIcon, XIcon, PencilIcon, TrashIcon } from '@heroicons/react/solid';
 import styles from './managerList.module.scss';
 import LoaderComponent from '../loader/loader.component';
 import { getAllManagers } from '../../services/user.service';
-import { getEmployees, getEmployeesOfManager } from '../../services/user.service';
+import { getEmployees, getEmployeesOfManager, deleteUser, registerManager, registerEmployee } from '../../services/user.service';
 import { UserType } from '../../types/MasterTypes.types';
 import UserForm from "./userForm.component";
+import { USER_ROLES } from '../../helpers/constants.helper';
 
 export default function UserList({ role, activeUser, parentUser, onClick, enableRowActions }: PageProps) {
   const tailwindClasses = {
@@ -14,7 +15,7 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
     toolbar: 'toolbar flex flex-row',
     title: 'title flex-1',
     addButton: 'addbutton h-iconbutton w-iconbutton flex items-center justify-center p-0',
-    list: 'list flex flex-col h-[100px]',
+    list: 'list flex-grow flex flex-col overflow-auto max-h-[300px] md:max-h-unset',
     lineItem: 'lineitem transition-all duration-500 rounded py-1 px-2 flex flex-row',
     lineItemActive: 'active bg-sidebar text-white',
     lineDetails: 'name flex flex-col justify-start justify-center flex-grow cursor-pointer',
@@ -30,6 +31,7 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
 
   const renderData = async () => {
     if (!addState) {
+      setAddState(false);
       setLoadState(true);
       switch (role) {
         case 'employees':
@@ -41,7 +43,7 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
         case 'managers':
           setUserList(await getAllManagers());
           break;
-        case 'all':
+        case USER_ROLES.ALL:
         default:
           break;
       }
@@ -64,9 +66,49 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
     }
   }
 
-  const editUser = (manager: UserType) => {
+  const editUser = (user: UserType) => {
     setAddState(true);
-    setUserToEdit(manager);
+    setUserToEdit(user);
+  }
+
+  const deleteUserHandler = async (user: UserType) => {
+    setLoadState(true);
+    if (window.confirm(`Are you sure you want to delete ${user.firstName} ${user.lastName}?`)) {
+      let result = await deleteUser(user.userId!);
+      await renderData();
+      if (!result.success) {
+        window.alert(result.message);
+      }
+    }
+    setLoadState(false);
+  }
+
+  const registerUser = async (newUser: UserType, managerId?: String) => {
+    setLoadState(true);
+    if (role === USER_ROLES.MANAGERS) {
+      console.log('register new manager', newUser)
+      await registerManager(newUser);
+      await renderData();
+      setAddState(false);
+      window.alert(`${newUser.firstName} ${newUser.lastName} is now registered as a Manager.`)
+    } else {
+      //registerEmployee
+      console.log(`register new employee of ${managerId}`, newUser)
+      await registerEmployee(newUser, managerId!);
+      await renderData();
+      setAddState(false);
+    }
+    setLoadState(false);
+  }
+
+  const updateUser = async (updatedUser: UserType, managerId?: String) => {
+    setLoadState(true);
+    if (role === USER_ROLES.MANAGERS) {
+
+     }
+    else { 
+      
+    }
   }
 
   const renderList = () => {
@@ -77,7 +119,7 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
           return <div key={`manager-line-item-${index}`} className={`${tailwindClasses.lineItem} ${activeLine ? tailwindClasses.lineItemActive : ''}`}>
             <div className={tailwindClasses.lineDetails} onClick={() => clickUserRow(item)}>
               <p className={tailwindClasses.name}>
-                <span>{item.firstName}</span>
+                <span>{item.firstName}</span>&nbsp;
                 <span>{item.lastName}</span>
               </p>
               <span className={tailwindClasses.email}>{item.email}</span>
@@ -86,7 +128,7 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
               enableRowActions ? (
                 <div className={tailwindClasses.lineActions}>
                   <PencilIcon className={tailwindClasses.lineButton} onClick={() => { editUser(item) }} />
-                  <TrashIcon className={tailwindClasses.lineButton} />
+                  <TrashIcon className={tailwindClasses.lineButton} onClick={() => { deleteUserHandler(item) }} />
                 </div>
               ) : null
             }
@@ -99,25 +141,25 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
   const boxTitle = () => {
     if (addState && userToEdit === undefined) {
       switch (role) {
-        case 'employees':
+        case USER_ROLES.EMPLOYEES:
           return 'New Employee';
-        case 'employeesof':
+        case USER_ROLES.EMPLOYEESOF:
           return `New Employee of ${parentUser?.firstName} ${parentUser?.lastName}`;
-        case 'managers':
+        case USER_ROLES.MANAGERS:
           return 'New Manager';
-        case 'all':
+        case USER_ROLES.ALL:
         default:
           return 'New User';
       }
     } else if (!addState && userToEdit === undefined) {
       switch (role) {
-        case 'employees':
+        case USER_ROLES.EMPLOYEES:
           return 'Employees';
-        case 'employeesof':
+        case USER_ROLES.EMPLOYEESOF:
           return `Employees of ${parentUser?.firstName} ${parentUser?.lastName}`;
-        case 'managers':
+        case USER_ROLES.MANAGERS:
           return 'Managers';
-        case 'all':
+        case USER_ROLES.ALL:
         default:
           return 'Users';
       }
@@ -128,7 +170,7 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
 
   useEffect(() => {
     renderData();
-  }, [role])
+  }, [role, parentUser, addState])
 
   return (
     <div className={tailwindClasses.container}>
@@ -143,7 +185,16 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
           }
         </button>
       </div>
-      {addState ? <UserForm userToEdit={userToEdit} /> : renderList()}
+      {
+        addState ? <UserForm
+          role={role}
+          userToEdit={userToEdit}
+          setLoadState={setLoadState}
+          parentUser={parentUser || undefined}
+          registerUser={registerUser}
+          updateUser={updateUser}
+        /> : renderList()
+      }
     </div>
   )
 }
@@ -156,7 +207,7 @@ type PageProps = {
   parentUser?: UserType,
 }
 UserList.defaultProps = {
-  role: 'all',
+  role: USER_ROLES.ALL,
   activeUser: null,
   onClick: () => { console.log('done nothing.') },
   enableRowActions: false,

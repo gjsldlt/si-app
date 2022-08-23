@@ -16,8 +16,8 @@ export default function Layout({ children }: LayoutProps) {
 
   const tailwindClasses = {
     layout: 'layout-container flex',
-    body: 'block pt-header-height md:pl-sidebar-min w-full',
-    content: '',
+    body: 'body relative md:ml-sidebar-min w-full h-screen',
+    content: 'content relative flex flex-col items-stretch h-screen',
   }
 
   function goToRoute(routeItem: RouteItem) {
