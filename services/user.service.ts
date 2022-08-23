@@ -126,9 +126,89 @@ export const getEmployees = async () => {
     return data.data.data.employees;
 }
 
-export const registerEmployee = async (user: UserType) => {
-
+export const registerManager = async (user: UserType) => {
+    let response = await axios.post(
+        GLOBALHELPER.APIURL,
+        {
+            query: `
+            mutation NewManager($manager:ManagerInput){
+                addManager(manager:$manager){
+                    _id
+                    userId
+                    firstName
+                    lastName
+                    email
+                }
+            }`,
+            variables: {
+                manager: {
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
+                    password: user.password
+                }
+            },
+        })
+    console.log(response.data.data.addManager);
+    return response.data.data.addManager;
 }
+
+export const registerEmployee = async (user: UserType, managerId: String) => {
+    let response = await axios.post(
+        GLOBALHELPER.APIURL,
+        {
+            query: `
+            mutation NewEmployee(
+                $firstName: String!
+                $lastName: String!
+                $email: String!
+                $password: String!
+                $managerId:String!
+                ){
+                addEmployee(
+                    firstName:$ firstName
+                    lastName:$ lastName
+                    email:$ email
+                    password:$ password
+                    managerId:$managerId){
+                    _id
+                    userId
+                    firstName
+                    lastName
+                    email
+                }
+            }`,
+            variables: {
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                password: user.password,
+                managerId: managerId
+            },
+        })
+    console.log(response.data.data.addEmployee);
+    return response.data.data.addEmployee;
+}
+
+export const deleteUser = async (id: String) => {
+    let response = await axios.post(
+        GLOBALHELPER.APIURL,
+        {
+            query: `
+        mutation DeleteUser($id:String!){
+          deleteUser(id:$id){
+            message
+            success
+          }
+        }`,
+            variables: {
+                id: id,
+            },
+        })
+    console.log(response.data.data.deleteUser);
+    return response.data.data.deleteUser;
+}
+
 
 type LoginDetails = {
     email: String,
