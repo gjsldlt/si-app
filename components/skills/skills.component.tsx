@@ -1,27 +1,28 @@
-import { FC, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import SkillForm from './skillsForm.component';
-import { getSkills } from '../../services/skill.service';
+import { addSkill, getSkills } from '../../services/skill.service';
 import { PlusIcon, XIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
-
 
 import LoaderComponent from '../loader/loader.component';
 import { SkillType } from '../../types/MasterTypes.types';
+import { userAgent } from 'next/server';
+import { deleteUser } from '../../services/user.service';
 
-const SkillComponent: FC = ({activeMetadata, onMetadataClick}) => {
+const SkillComponent = ({ role, activeMetadata, onMetadataClick, enableRowActions }: Pageprops) => {
   const tailwindClasses = {
-    container: "relative flex-grow flex flex-col bg-white p-1 min-h-[200px] md:min-h-100 md:w-[47vw] lg:w-[27vw] border-[1px] shadow-lg",
-    toolbar: "flex flex-row",
-    title: "flex-1",
-    addButton: "h-iconbutton w-iconbutton flex items-center justify-center p-0",
-    list: "flex flex-col h-[100px]",
-    lineItem: "flex flex-row",
-    lineItemActive: "bg-sidebar text-white h-[70px]",
-    xButton: "h-5 w-5 text-blue-500",
-    plusButton: "h-5 w-5 text-blue-500",
-    trashButton: "h-5 w-5 text-blue-500",
-    pencilButton: "h-5 w-5 text-blue-500",
-    skillName: "flex-1"
+    container: 'container relative flex flex-col bg-white p-1 min-h-[200px] md:h-full md:min-h-100 md:w-[47vw] lg:w-[27vw] border-[1px] shadow-lg',
+    toolbar: 'toolbar flex flex-row',
+    title: 'title flex-1',
+    addButton: 'addbutton h-iconbutton w-iconbutton flex items-center justify-center p-0',
+    list: 'list flex-grow flex flex-col overflow-auto max-h-[300px] md:max-h-unset',
+    lineItem: 'lineitem transition-all duration-500 rounded py-1 px-2 flex flex-row',
+    lineItemActive: 'active bg-sidebar text-white h-[100px]',
+    lineDetails: 'name flex flex-col justify-start justify-center flex-grow cursor-pointer',
+    lineActions: 'lineActions flex flex-row justify-center items-center',
+    lineButton: 'lineButton h-[20px] w-[20px] cursor-pointer hover:text-current',
+    description: 'block w-full text-xs',
+    name: 'p-0 m-0',
   }
   //state hook to capture api response to SkillType array
   const [skillList, setSkillList] = useState<SkillType[]>([])
@@ -32,14 +33,30 @@ const SkillComponent: FC = ({activeMetadata, onMetadataClick}) => {
   //state hook to show loadscreen component
   const [loadState, setLoadState] = useState<Boolean>(true)
 
-  const showSkillForm = () => {
+  const [addState, setAddState] = useState<Boolean>(false)
+
+  const showSkillForm = (skill: SkillType) => {
     setSkillToEdit(undefined)
     setDisplayForm(!displayForm)
+  }
+
+  const clickSkillRow = (skill: SkillType) => {
+    if (enableRowActions) {
+      if (activeMetadata?._id === skill._id) {
+        onMetadataClick(undefined)
+      } else {
+        onMetadataClick(skill)
+      }
+    }
   }
 
   const editSkill = (skill: SkillType) => {
     setDisplayForm(true)
     setSkillToEdit(skill)
+  }
+
+  const deleteSkill = (skill: SkillType) => {
+
   }
 
   const renderData = async () => {
@@ -50,7 +67,7 @@ const SkillComponent: FC = ({activeMetadata, onMetadataClick}) => {
   };
 
   const onLineItemClick = (lineItem) => {
-    if(lineItem._id === activeMetadata?._id){
+    if (lineItem._id === activeMetadata?._id) {
       onMetadataClick(undefined);
     } else {
       onMetadataClick(lineItem);
@@ -62,20 +79,43 @@ const SkillComponent: FC = ({activeMetadata, onMetadataClick}) => {
   }, []);
 
   const handleFormDisplay = () => {
-    return (
-      displayForm ? <SkillForm renderData={renderData} setLoadState={setLoadState} skillToEdit={skillToEdit}/>
-        : skillList.map(skill => (
-          <div
-            onClick={(e)=>{onLineItemClick(skill)}}
-            key={`skill-line-item-${skill._id}`}
-            className={`${tailwindClasses.lineItem} ${activeMetadata?._id===skill._id ? tailwindClasses.lineItemActive : ''}`}
+    return <div className={tailwindClasses.list}>
+      {displayForm ? <SkillForm renderData={renderData} setLoadState={setLoadState} skillToEdit={skillToEdit} />
+        : !loadState && skillList.map((item, index) => {
+          let activeLine = activeMetadata?._id === item._id
+          return <div
+            key={`skill-line-item-${item._id}`}
+            className={`${tailwindClasses.lineItem} ${activeLine ? tailwindClasses.lineItemActive : ''}`}
           >
-            <p className={tailwindClasses.title}>{skill.name}</p>
-            <button onClick={()=>editSkill(skill)}><PencilIcon className={tailwindClasses.pencilButton} /></button>
-            <button><TrashIcon className={tailwindClasses.trashButton} /></button>
+            <div
+              className={`${tailwindClasses.lineDetails}`}
+              onClick={() => { clickSkillRow(item) }}
+            >
+              <p className={tailwindClasses.name}>
+                <span>{item.name}</span>
+              </p>
+              <span className={tailwindClasses.description}>
+                {activeLine ? item.description : ''}
+              </span>
+            </div>
+            {
+              enableRowActions ? (
+                <div className={tailwindClasses.lineActions}>
+                  <PencilIcon
+                    className={tailwindClasses.lineButton}
+                    onClick={() => { editSkill(item) }}
+                  />
+                  <TrashIcon
+                    className={tailwindClasses.lineButton}
+                    onClick={() => { deleteUser(item) }}
+                  />
+                </div>
+              ) : null
+            }
           </div>
-        ))
-    )
+        })
+      }
+    </div>
   }
 
   return (
@@ -86,9 +126,9 @@ const SkillComponent: FC = ({activeMetadata, onMetadataClick}) => {
           className={tailwindClasses.addButton}
           onClick={showSkillForm}>
           {displayForm ? (
-            <XIcon className={tailwindClasses.xButton} />
+            <XIcon className="h-5 w-5 text-gray" />
           ) : (
-            <PlusIcon className={tailwindClasses.plusButton} />
+            <PlusIcon className="h-5 w-5 text-gray" />
           )}
         </button>
       </div>
@@ -96,6 +136,12 @@ const SkillComponent: FC = ({activeMetadata, onMetadataClick}) => {
     </div>
   )
 }
+
+type Pageprops = {
+  role?: String,
+  activeMetadata: SkillType,
+  onMetadataClick: Function,
+  enableRowActions: Boolean
+}
+
 export default SkillComponent;
-
-

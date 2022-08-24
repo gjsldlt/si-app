@@ -23,7 +23,7 @@ function Metadata() {
       </div>} />
       <div className={tailwindClasses.content}>
         <div className={tailwindClasses.box}>
-          <SkillComponent activeMetadata={activeSkill} onMetadataClick={setActiveSkill} />
+          <SkillComponent role="skills" activeMetadata={activeSkill} onMetadataClick={setActiveSkill} enableRowActions={true} />
         </div>
         <div className={tailwindClasses.box}>
           <Capability />
