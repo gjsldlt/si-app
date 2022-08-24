@@ -1,6 +1,6 @@
 import axios from 'axios';
 import GLOBALHELPER from '../helpers/global.helper';
-import { UserDataType, UserType } from '../types/MasterTypes.types';
+import { UserDataType, UserType, EmployeeType } from '../types/MasterTypes.types';
 
 
 axios.defaults.headers.common['Content-Type'] = `application/json`;
@@ -171,7 +171,7 @@ export const registerManager = async (user: UserType) => {
     return response.data.data.addManager;
 }
 
-export const registerEmployee = async (user: UserType, managerId: String) => {
+export const registerEmployee = async (emp: EmployeeType, managerId: String) => {
     let response = await axios.post(
         GLOBALHELPER.APIURL,
         {
@@ -182,13 +182,20 @@ export const registerEmployee = async (user: UserType, managerId: String) => {
                 $email: String!
                 $password: String!
                 $managerId:String!
+                $capabilityId:String,
+                $primarySkillId:String,
+                $secondarySkillId:String,
                 ){
                 addEmployee(
-                    firstName:$ firstName
-                    lastName:$ lastName
-                    email:$ email
-                    password:$ password
-                    managerId:$managerId){
+                    firstName:$firstName
+                    lastName:$lastName
+                    email:$email
+                    password:$password
+                    managerId:$managerId
+                    capabilityId:$capabilityId
+                    primarySkillId:$primarySkillId
+                    secondarySkillId:$secondarySkillId
+                    ){
                     _id
                     userId
                     firstName
@@ -197,11 +204,11 @@ export const registerEmployee = async (user: UserType, managerId: String) => {
                 }
             }`,
             variables: {
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                password: user.password,
-                managerId: managerId
+                ...emp,
+                capabilityId: emp.capability?._id,
+                primarySkillId: emp.primarySkill?._id,
+                secondarySkillId: emp.secondarySkill?._id,
+                managerId: managerId,
             },
         })
     console.log(response.data.data.addEmployee);
@@ -249,20 +256,24 @@ export const getEmployeeByUserId = async (id: String) => {
                     }
                     capability{
                         name
+                        _id
                     }
                     skills {
                         _id
                         skill{
                             name
+                            _id
                         }
                         rate
                         yearsExperience
                     }
                     primarySkill{
                         name
+                        _id
                     }
                     secondarySkill{
                         name
+                        _id
                     }
                 }
             }`,

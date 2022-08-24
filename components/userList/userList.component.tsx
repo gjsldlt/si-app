@@ -5,17 +5,17 @@ import styles from './managerList.module.scss';
 import LoaderComponent from '../loader/loader.component';
 import { getAllManagers } from '../../services/user.service';
 import { getEmployees, getEmployeesOfManager, deleteUser, registerManager, registerEmployee, updateManager } from '../../services/user.service';
-import { UserType } from '../../types/MasterTypes.types';
+import { UserType, EmployeeType } from '../../types/MasterTypes.types';
 import UserForm from "./userForm.component";
 import { USER_ROLES } from '../../helpers/constants.helper';
 
 export default function UserList({ role, activeUser, parentUser, onClick, enableRowActions }: PageProps) {
   const tailwindClasses = {
     container: 'container relative flex flex-grow flex-col bg-white p-1 min-h-[200px] md:min-h-100 border-[1px] shadow-lg',
-    toolbar: 'toolbar flex flex-row',
+    toolbar: 'toolbar flex flex-row grow-0',
     title: 'title flex-1',
     addButton: 'addbutton h-iconbutton w-iconbutton flex items-center justify-center p-0',
-    list: 'list flex-grow flex flex-col overflow-auto max-h-[300px] md:max-h-unset',
+    list: 'list flex-1 flex flex-col  max-h-[300px] md:max-h-unset',
     lineItem: 'lineitem transition-all duration-500 rounded py-1 px-2 flex flex-row',
     lineItemActive: 'active bg-sidebar text-white',
     lineDetails: 'name flex flex-col justify-start justify-center flex-grow cursor-pointer',
@@ -83,7 +83,7 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
     setLoadState(false);
   }
 
-  const registerUser = async (newUser: UserType, managerId?: String) => {
+  const registerUser = async (newUser: UserType, managerId?: String, employee?:EmployeeType) => {
     setLoadState(true);
     if (role === USER_ROLES.MANAGERS) {
       console.log('register new manager', newUser)
@@ -92,9 +92,8 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
       setAddState(false);
       window.alert(`${newUser.firstName} ${newUser.lastName} is now registered as a Manager.`)
     } else {
-      //registerEmployee
-      console.log(`register new employee of ${managerId}`, newUser)
-      // await registerEmployee(newUser, managerId!);
+      console.log(`register new employee of ${managerId}`, newUser, employee)
+      await registerEmployee(employee, managerId!);
       await renderData();
       setAddState(false);
     }
