@@ -23,11 +23,15 @@ const MetadataPopup: FC<PopupProps> = ({
   }
   
   return (
-      <div>
-        <p>Are you sure you want to delete {metadataToDelete?.name}?</p>
-        <button onClick={clickYes}>Yes</button>
-        <button onClick={clickNo}>No</button>
-      </div>
+    <div>
+      <p>Are you sure you want to delete {metadataToDelete?.name}?</p>
+      <button onClick={clickYes} className={tailwindClasses.formButton}>
+        Yes
+      </button>
+      <button onClick={exitDeletion} className={tailwindClasses.formButton}>
+        No
+      </button>
+    </div>
   )
 }
 

@@ -7,21 +7,21 @@ import LoaderComponent from '../loader/loader.component';
 import { MetadataComponentProps } from '../../types/MasterPageComponent.type';
 import { Metadata } from '../../types/MasterTypes.types';
 
-import { PlusIcon, XIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
-
-const MetadataComponent: FC<MetadataComponentProps> = ({ type }: MetadataComponentProps) => {
+const MetadataComponent: FC<MetadataComponentProps> = ({ type, activeMetadata, onMetadataClick, enableRowActions }: MetadataComponentProps) => {
   const tailwindClasses = {
     container: "relative flex-grow flex flex-col bg-white p-1 min-h-[200px] md:min-h-100 md:w-[47vw] lg:w-[27vw] border-[1px] shadow-lg",
     toolbar: "flex flex-row",
     title: "flex-1",
-    addButton: "h-iconbutton w-iconbutton flex items-center justify-center p-0",
-    list: "flex flex-col h-[100px]",
-    lineItem: "flex flex-row",
-    xButton: "h-5 w-5 text-blue-500",
-    plusButton: "h-5 w-5 text-blue-500",
-    trashButton: "h-5 w-5 text-blue-500",
-    pencilButton: "h-5 w-5 text-blue-500",
-    skillName: "flex-1"
+    submitButton: "h-iconbutton w-iconbutton flex items-center justify-center p-0",
+    list: "list flex-grow flex flex-col overflow-auto max-h-[300px] md:max-h-unset",
+    lineItem: "lineitem transition-all duration-500 rounded py-1 px-2 flex flex-row",
+    lineItemActive: "active bg-sidebar text-white min-h-0",
+    lineDetails: "name flex flex-col justify-start justify-center flex-grow cursor-pointer",
+    lineActions: "lineActions flex flex-row justify-center items-center",
+    lineButton: "lineButton h-[20px] w-[20px] cursor-pointer hover:text-current",
+    icon: "h-5 w-5 text-gray",
+    description: "block w-full text-xs",
+    name: "p-0 m-0",
   }
   //state hook to capture api response to Metadata Type array
   const [metadataList, setMetadataList] = useState<Metadata[]>([])
@@ -42,7 +42,16 @@ const MetadataComponent: FC<MetadataComponentProps> = ({ type }: MetadataCompone
     setDisplayForm(!displayForm)
   }
 
-  //display form when editing a metadata entry
+  const clickMetadataRow = (metadata: Metadata) => {
+    if (enableRowActions) {
+      if (activeMetadata?._id === metadata._id) {
+        onMetadataClick(undefined)
+      } else {
+        onMetadataClick(metadata)
+      }
+    }
+  }
+
   const editMetadata = (metadata: Metadata) => {
     setDisplayForm(true)
     setMetadataToEdit(metadata)
@@ -78,16 +87,31 @@ const MetadataComponent: FC<MetadataComponentProps> = ({ type }: MetadataCompone
       return (<MetadataPopup renderData={renderData} metadataToDelete={metadataToDelete} />)
     }
     else {
-      return (
-        metadataList.map(metadata => (
-          <div
-            key={`${type}-line-item-${metadata._id}`}
-            className={tailwindClasses.lineItem}
-          >
-            <p className={tailwindClasses.title}>{metadata.name}</p>
-            <button onClick={() => editMetadata(metadata)}><PencilIcon className={tailwindClasses.pencilButton} /></button>
-            <button onClick={() => removeMetadata(metadata)}><TrashIcon className={tailwindClasses.trashButton} /></button>
-          </div>)))
+      return <div className={tailwindClasses.list}>
+        {
+          metadataList.map((metadata) => {
+            let activeLine = activeMetadata?._id === metadata._id
+            return <div key={`${type}-line-item-${metadata._id}`} className={`${tailwindClasses.lineItem} ${activeLine ? tailwindClasses.lineItemActive : ''}`}>
+              <div className={`${tailwindClasses.lineDetails}`} onClick={() => { clickMetadataRow(metadata) }}>
+                <p className={tailwindClasses.name}>
+                  <span>{metadata.name}</span>
+                </p>
+                <span className={tailwindClasses.description}>
+                  {activeLine ? metadata.description : ''}
+                </span>
+              </div>
+              {
+                enableRowActions ? (
+                  <div className={tailwindClasses.lineActions}>
+                    <PencilIcon className={tailwindClasses.lineButton} onClick={() => { editMetadata(metadata) }} />
+                    <TrashIcon className={tailwindClasses.lineButton} onClick={() => { removeMetadata(metadata) }} />
+                  </div>
+                ) : null
+              }
+            </div>
+          })
+        }
+      </div>
     }
   }
 
@@ -108,12 +132,12 @@ const MetadataComponent: FC<MetadataComponentProps> = ({ type }: MetadataCompone
         <p className={tailwindClasses.title}>{metadataTitle()}</p>
         {
           displayPopup ? <p></p> : <button
-            className={tailwindClasses.addButton}
+            className={tailwindClasses.submitButton}
             onClick={showMetadataForm}>
             {displayForm ? (
-              <XIcon className={tailwindClasses.xButton} />
+              <XIcon className={tailwindClasses.icon} />
             ) : (
-              <PlusIcon className={tailwindClasses.plusButton} />
+              <PlusIcon className={tailwindClasses.icon} />
             )}
           </button>
         }
