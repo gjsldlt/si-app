@@ -17,7 +17,7 @@ const SkillComponent = ({ role, activeMetadata, onMetadataClick, enableRowAction
     addButton: 'addbutton h-iconbutton w-iconbutton flex items-center justify-center p-0',
     list: 'list flex-grow flex flex-col overflow-auto max-h-[300px] md:max-h-unset',
     lineItem: 'lineitem transition-all duration-500 rounded py-1 px-2 flex flex-row',
-    lineItemActive: 'active bg-sidebar text-white h-[100px]',
+    lineItemActive: 'active bg-sidebar text-white min-h-0',
     lineDetails: 'name flex flex-col justify-start justify-center flex-grow cursor-pointer',
     lineActions: 'lineActions flex flex-row justify-center items-center',
     lineButton: 'lineButton h-[20px] w-[20px] cursor-pointer hover:text-current',
