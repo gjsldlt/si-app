@@ -9,6 +9,7 @@ const MetadataPopup: FC<PopupProps> = ({
   metadataToDelete,
 }: PopupProps) => {
 
+  //confirm deletion of metadata
   const clickYes = async() => {
     if (metadataToDelete) {
       await deleteMetadata(metadataToDelete._id)
@@ -16,7 +17,8 @@ const MetadataPopup: FC<PopupProps> = ({
     }
   }
 
-  const exitDeletion = () => {
+  //go back to list of metadata
+  const clickNo = () => {
     renderData()
   }
   
@@ -24,7 +26,7 @@ const MetadataPopup: FC<PopupProps> = ({
       <div>
         <p>Are you sure you want to delete {metadataToDelete?.name}?</p>
         <button onClick={clickYes}>Yes</button>
-        <button onClick={exitDeletion}>No</button>
+        <button onClick={clickNo}>No</button>
       </div>
   )
 }

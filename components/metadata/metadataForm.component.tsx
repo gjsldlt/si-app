@@ -1,6 +1,6 @@
 import { FC, useState, ChangeEvent, FormEvent } from 'react';
 
-import { addMetadata, updateMetadata} from '../../services/metadata.service';
+import { addMetadata, updateMetadata } from '../../services/metadata.service';
 import { FormProps } from '../../types/MasterPageComponent.type';
 
 const MetadataForm: FC<FormProps> = ({
@@ -30,8 +30,9 @@ const MetadataForm: FC<FormProps> = ({
     }
   }
 
-  //form submit
-  const formSubmit = async(event: FormEvent<HTMLFormElement>) => {
+  //function when submitting the form containing data from input fields
+  //action depends if add or update is selected
+  const formSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setLoadState(true)
     //submit to update
@@ -39,17 +40,16 @@ const MetadataForm: FC<FormProps> = ({
       await updateMetadata(metadataId, newMetadataName, newMetadataDesc)
       setNewMetadataName('')
       setNewMetadataDesc('')
-      renderData() 
+      renderData()
     }
-    else {
-      //submit to create
-      if (newMetadataName  && newMetadataDesc) {
-        await addMetadata(newMetadataName, newMetadataDesc, metadataType)
-        setNewMetadataName('')
-        setNewMetadataDesc('')
-        renderData()
-      }
+    //submit to create
+    else if (newMetadataName && newMetadataDesc) {
+      await addMetadata(newMetadataName, newMetadataDesc, metadataType)
+      setNewMetadataName('')
+      setNewMetadataDesc('')
+      renderData()
     }
+
   }
 
   return (
