@@ -3,13 +3,11 @@ import { FC, useState, useEffect, useCallback } from 'react';
 import MetadataForm from './metadataForm.component';
 import MetadataPopup from './metadataPopup.component';
 import { getMetadata } from '../../services/metadata.service';
-import { PlusIcon, XIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
-
-import { MetadataComponentProps } from '../../types/MasterPageComponent.type';
-
-
 import LoaderComponent from '../loader/loader.component';
+import { MetadataComponentProps } from '../../types/MasterPageComponent.type';
 import { Metadata } from '../../types/MasterTypes.types';
+
+import { PlusIcon, XIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
 
 const MetadataComponent: FC<MetadataComponentProps> = ({ type }: MetadataComponentProps) => {
   const tailwindClasses = {
