@@ -3,8 +3,12 @@ import { FC, useState, useEffect, useCallback } from 'react';
 import MetadataForm from './metadataForm.component';
 import MetadataPopup from './metadataPopup.component';
 import { getMetadata } from '../../services/metadata.service';
-import LoaderComponent from '../loader/loader.component';
+import { PlusIcon, XIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
+
 import { MetadataComponentProps } from '../../types/MasterPageComponent.type';
+
+
+import LoaderComponent from '../loader/loader.component';
 import { Metadata } from '../../types/MasterTypes.types';
 
 const MetadataComponent: FC<MetadataComponentProps> = ({ type, activeMetadata, onMetadataClick, enableRowActions }: MetadataComponentProps) => {
@@ -23,11 +27,11 @@ const MetadataComponent: FC<MetadataComponentProps> = ({ type, activeMetadata, o
     description: "block w-full text-xs",
     name: "p-0 m-0",
   }
-  //state hook to capture api response to Metadata Type array
+  //state hook to capture api response to SkillType array
   const [metadataList, setMetadataList] = useState<Metadata[]>([])
-  //state hook to capture metadata to edit on click of pencil icon
+  //state hook to capture skill to edit on click of pencil icon
   const [metadataToEdit, setMetadataToEdit] = useState<Metadata>()
-  //state hook to capture metadata to delete on click of trash icon
+  //state hook to capture skill to delete on click of trash icon
   const [metadataToDelete, setMetadataToDelete] = useState<Metadata>()
   //state hook to display form containing input fields
   const [displayForm, setDisplayForm] = useState<Boolean>(false)
@@ -36,7 +40,6 @@ const MetadataComponent: FC<MetadataComponentProps> = ({ type, activeMetadata, o
   //state hook to show loadscreen component
   const [loadState, setLoadState] = useState<Boolean>(true)
 
-  //display/close form when clicking on the icon on the top right of widget
   const showMetadataForm = () => {
     setMetadataToEdit(undefined)
     setDisplayForm(!displayForm)
@@ -57,14 +60,11 @@ const MetadataComponent: FC<MetadataComponentProps> = ({ type, activeMetadata, o
     setMetadataToEdit(metadata)
   }
 
-  //display popup when deleting a metadata entry
   const removeMetadata = (metadata: Metadata) => {
     setDisplayPopup(true)
     setMetadataToDelete(metadata)
   }
 
-  //call this function whenever create, update and delete of
-  //metadata is called. rerenders list based on latest action
   const renderData = useCallback(async () => {
     setDisplayForm(false)
     setDisplayPopup(false)
@@ -77,8 +77,6 @@ const MetadataComponent: FC<MetadataComponentProps> = ({ type, activeMetadata, o
     renderData();
   }, [renderData]);
 
-
-  //handles display of forms depending on state hooks
   const handleFormDisplay = () => {
     if (displayForm) {
       return (<MetadataForm renderData={renderData} setLoadState={setLoadState} metadataToEdit={metadataToEdit} metadataType={type} />)
@@ -115,7 +113,6 @@ const MetadataComponent: FC<MetadataComponentProps> = ({ type, activeMetadata, o
     }
   }
 
-  //assign title of widget depending on metadata
   const metadataTitle = () => {
     let title: string
     switch (type) {
