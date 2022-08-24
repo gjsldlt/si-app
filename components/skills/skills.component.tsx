@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 
 import SkillForm from './skillsForm.component';
-import { addSkill, getSkills } from '../../services/skill.service';
+import SkillPopup from './skillsPopup.component';
+import { getSkills } from '../../services/skill.service';
 import { PlusIcon, XIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
 
 import LoaderComponent from '../loader/loader.component';
@@ -28,8 +29,12 @@ const SkillComponent = ({ role, activeMetadata, onMetadataClick, enableRowAction
   const [skillList, setSkillList] = useState<SkillType[]>([])
   //state hook to capture skill to edit on click of pencil icon
   const [skillToEdit, setSkillToEdit] = useState<SkillType>()
+  //state hook to capture skill to delete on click of trash icon
+  const [skillToDelete, setSkillToDelete] = useState<SkillType>()
   //state hook to display form containing input fields
   const [displayForm, setDisplayForm] = useState<Boolean>(false)
+  //state hook to display delete confirmation
+  const [displayPopup, setDisplayPopup] = useState<Boolean>(false)
   //state hook to show loadscreen component
   const [loadState, setLoadState] = useState<Boolean>(true)
 
@@ -50,17 +55,19 @@ const SkillComponent = ({ role, activeMetadata, onMetadataClick, enableRowAction
     }
   }
 
+  const removeSkill = (skill: SkillType) => {
+    setDisplayPopup(true)
+    setSkillToDelete(skill)
+  }
+
   const editSkill = (skill: SkillType) => {
     setDisplayForm(true)
     setSkillToEdit(skill)
   }
 
-  const deleteSkill = (skill: SkillType) => {
-
-  }
-
   const renderData = async () => {
     setDisplayForm(false)
+    setDisplayPopup(false)
     setLoadState(true)
     setSkillList(await getSkills())
     setLoadState(false)
@@ -79,6 +86,26 @@ const SkillComponent = ({ role, activeMetadata, onMetadataClick, enableRowAction
   }, []);
 
   const handleFormDisplay = () => {
+    /*
+         if (displayForm) {
+      return (<SkillForm renderData={renderData} setLoadState={setLoadState} skillToEdit={skillToEdit} />)
+    }
+    else if (displayPopup) {
+      return (<SkillPopup renderData={renderData} skillToDelete={skillToDelete} />)
+    }
+    else {
+      return (
+        skillList.map(skill => (
+        <div
+          key={`skill-line-item-${skill._id}`}
+          className={tailwindClasses.lineItem}
+        >
+          <p className={tailwindClasses.title}>{skill.name}</p>
+          <button onClick={() => editSkill(skill)}><PencilIcon className={tailwindClasses.pencilButton} /></button>
+          <button onClick={() => removeSkill(skill)}><TrashIcon className={tailwindClasses.trashButton} /></button>
+        </div>)))
+    }
+    */
     return <div className={tailwindClasses.list}>
       {displayForm ? <SkillForm renderData={renderData} setLoadState={setLoadState} skillToEdit={skillToEdit} />
         : !loadState && skillList.map((item, index) => {
@@ -122,15 +149,17 @@ const SkillComponent = ({ role, activeMetadata, onMetadataClick, enableRowAction
     <div className={tailwindClasses.container}>
       <div className={tailwindClasses.toolbar}>
         <p className={tailwindClasses.title}>Skills</p>
-        <button
-          className={tailwindClasses.addButton}
-          onClick={showSkillForm}>
-          {displayForm ? (
-            <XIcon className="h-5 w-5 text-gray" />
-          ) : (
-            <PlusIcon className="h-5 w-5 text-gray" />
-          )}
-        </button>
+        {
+          displayPopup ? <p></p> : <button
+            className={tailwindClasses.addButton}
+            onClick={showSkillForm}>
+            {displayForm ? (
+              <XIcon className="h-5 w-5 text-gray" />
+            ) : (
+              <PlusIcon className="h-5 w-5 text-gray" />
+            )}
+          </button>
+        }
       </div>
       {loadState ? <LoaderComponent /> : handleFormDisplay()}
     </div>

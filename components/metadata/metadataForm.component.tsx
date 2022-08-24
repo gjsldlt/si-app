@@ -1,20 +1,17 @@
 import { FC, useState, ChangeEvent, FormEvent } from 'react';
 
-import { addSkill, updateSkill } from '../../services/skill.service';
-import { SkillType } from '../../types/MasterTypes.types';
+import { addMetadata, updateMetadata } from '../../services/metadata.service';
+import { FormProps } from '../../types/MasterPageComponent.type';
 
-const SkillForm: FC<FormProps> = ({
+const MetadataForm: FC<FormProps> = ({
+  metadataType,
   renderData,
   setLoadState,
-  skillToEdit,
+  metadataToEdit,
 }: FormProps) => {
-  // const tailwindClasses = {
-  //   container: '',
-  //   input: 'border-2'
-  // }
+
   const tailwindClasses = {
     form: 'flex flex-wrap w-full max-w-lg',
-    formItemHalf: 'w-full md:w-1/2 px-3 pt-1 md:pt-0',
     formItem: 'w-full px-3 pt-1',
     inputLabel: 'block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mr-1',
     input: 'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500',
@@ -22,17 +19,16 @@ const SkillForm: FC<FormProps> = ({
   }
 
   //set state hooks for input
-  const [newSkillName, setNewSkillName] = useState<string>(skillToEdit ? skillToEdit.name : '')
-  const [newSkillDesc, setNewSkillDesc] = useState<string>(skillToEdit ? skillToEdit.description : '')
+  const [newMetadataName, setNewMetadataName] = useState<string>(metadataToEdit ? metadataToEdit.name : '')
+  const [newMetadataDesc, setNewMetadataDesc] = useState<string>(metadataToEdit ? metadataToEdit.description : '')
 
-  const skillId: string = skillToEdit ? skillToEdit._id : ''
-  console.log("skill id: " + skillId)
+  const metadataId: string = metadataToEdit ? metadataToEdit._id : ''
 
   //detect change of input in text boxes
   const inputChange = (event: ChangeEvent<HTMLInputElement>) => {
     switch (event.target.name) {
-      case 'skillName': setNewSkillName(event.target.value); break;
-      case 'skillDesc': setNewSkillDesc(event.target.value); break;
+      case 'metadataName': setNewMetadataName(event.target.value); break;
+      case 'metadataDesc': setNewMetadataDesc(event.target.value); break;
       default: break;
     }
   }
@@ -42,37 +38,37 @@ const SkillForm: FC<FormProps> = ({
     event.preventDefault()
     setLoadState(true)
     //submit to update
-    if (skillToEdit) {
-      await updateSkill(skillId, newSkillName, newSkillDesc)
-      setNewSkillName("")
-      setNewSkillDesc("")
+    if (metadataToEdit) {
+      await updateMetadata(metadataId, newMetadataName, newMetadataDesc)
+      setNewMetadataName('')
+      setNewMetadataDesc('')
       renderData()
     }
     else {
       //submit to create
-      if (newSkillName && newSkillDesc) {
-        await addSkill(newSkillName, newSkillDesc)
-        setNewSkillName("")
-        setNewSkillDesc("")
+      if (newMetadataName && newMetadataDesc) {
+        await addMetadata(newMetadataName, newMetadataDesc, metadataType)
+        setNewMetadataName('')
+        setNewMetadataDesc('')
         renderData()
       }
     }
   }
 
   return (
-    <form className={tailwindClasses.form} onSubmit={formSubmit}>
+    <form action="submit" className={tailwindClasses.form} onSubmit={formSubmit}>
       <div className={tailwindClasses.formItem}>
         <label className={tailwindClasses.inputLabel}>
-          Skill Name
+          {metadataType.charAt(0).toUpperCase() + metadataType.slice(1)}
         </label>
         <input
           required
-          name="skillName"
           onChange={inputChange}
-          value={newSkillName}
           className={tailwindClasses.input}
-          id="grid-email-name"
+          value={newMetadataName}
           type="text"
+          id="metadataName"
+          name="metadataName"
           placeholder="ex. JavaScript"
         />
       </div>
@@ -82,28 +78,23 @@ const SkillForm: FC<FormProps> = ({
         </label>
         <input
           required
-          name="skillDesc"
           onChange={inputChange}
-          value={newSkillDesc}
           className={tailwindClasses.input}
-          id="skillDesc"
+          value={newMetadataDesc}
           type="text"
-          placeholder="ex. Scripting language for Web pages"
+          id="metadataDesc"
+          name="metadataDesc"
+          placeholder="ex. Scripting language for web pages"
         />
       </div>
       <div className={`${tailwindClasses.formItem} mt-1 flex justify-end`}>
-        <button className={tailwindClasses.formButton} type="submit">
-          {skillToEdit === undefined ? 'Create' : 'Update'}
+        <button type="submit" className={tailwindClasses.formButton}>
+          {metadataToEdit ? "Update" : "Add"}
         </button>
       </div>
     </form>
   )
 }
 
-export default SkillForm;
+export default MetadataForm;
 
-type FormProps = {
-  renderData: () => {}
-  setLoadState: React.Dispatch<React.SetStateAction<Boolean>>
-  skillToEdit?: SkillType
-};

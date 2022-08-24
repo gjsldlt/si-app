@@ -2,10 +2,8 @@ import Link from "next/link";
 import { useState } from "react";
 
 import PageBanner from "../components/pageBanner/pageBanner.component";
-import Skills from "../components/skills/skills.component";
-import Capability from "../components/capability/capability.component";
-import Industry from "../components/industries/industries.component";
-import SkillComponent from '../components/skills/skills.component';
+
+import MetadataComponent from "../components/metadata/metadata.component";
 
 function Metadata() {
   const tailwindClasses = {
@@ -19,6 +17,8 @@ function Metadata() {
     mobileTabOption: ''
   }
   const [activeSkill, setActiveSkill] = useState(undefined);
+  const [activeCapability, setActiveCapability] = useState(undefined);
+  const [activeIndustry, setActiveIndustry] = useState(undefined);
   const [activeMobileTab, setActiveMobileTab] = useState<String>('Skills');
   const mobileTabs = [
     "Skills",
@@ -42,9 +42,9 @@ function Metadata() {
       <div className={tailwindClasses.mobileTab}>
         {
           mobileTabs.map((tab, index) => (
-            <div 
-            key={`mobile-tab-${index}`}
-            className={tailwindClasses.mobileTab}
+            <div
+              key={`mobile-tab-${index}`}
+              className={tailwindClasses.mobileTab}
               onClick={(e) => onMobileTabClick(tab)}>
               {tab}
             </div>
@@ -55,14 +55,14 @@ function Metadata() {
 
 
       <div className={tailwindClasses.content}>
-        <div className={`${tailwindClasses.box} ${activeMobileTab === 'Skills' ? tailwindClasses.mobileBoxShow : tailwindClasses.mobileBoxHidden}`}>
-          <SkillComponent role="skills" activeMetadata={activeSkill} onMetadataClick={setActiveSkill} enableRowActions={true} />
+        <div className={tailwindClasses.box}>
+          <MetadataComponent type="skill" activeMetadata={activeSkill} onMetadataClick={setActiveSkill} enableRowActions={true} />
         </div>
-        <div className={`${tailwindClasses.box} ${activeMobileTab === 'Capabilities' ? tailwindClasses.mobileBoxShow : tailwindClasses.mobileBoxHidden}`}>
-          <Capability />
+        <div className={tailwindClasses.box}>
+          <MetadataComponent type="capability" activeMetadata={activeCapability} onMetadataClick={setActiveCapability} enableRowActions={true} />
         </div>
-        <div className={`${tailwindClasses.box} ${activeMobileTab === 'Industries' ? tailwindClasses.mobileBoxShow : tailwindClasses.mobileBoxHidden}`}>
-          <Industry />
+        <div className={tailwindClasses.box}>
+          <MetadataComponent type="industry" activeMetadata={activeIndustry} onMetadataClick={setActiveIndustry} enableRowActions={true} />
         </div>
       </div>
     </>
