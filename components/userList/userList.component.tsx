@@ -11,7 +11,7 @@ import { USER_ROLES } from '../../helpers/constants.helper';
 
 export default function UserList({ role, activeUser, parentUser, onClick, enableRowActions }: PageProps) {
   const tailwindClasses = {
-    container: 'container relative flex flex-grow flex-col bg-white p-1 min-h-[200px] md:h-full md:min-h-100 md:w-[47vw] lg:w-[27vw] border-[1px] shadow-lg',
+    container: 'container relative flex flex-grow flex-col bg-white p-1 min-h-[200px] md:min-h-100 border-[1px] shadow-lg',
     toolbar: 'toolbar flex flex-row',
     title: 'title flex-1',
     addButton: 'addbutton h-iconbutton w-iconbutton flex items-center justify-center p-0',
