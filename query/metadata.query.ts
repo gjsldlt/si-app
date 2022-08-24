@@ -1,5 +1,5 @@
 //query string for API post request
-export const addSkillQuery = `mutation CreateMetadata
+export const addMetadataQuery = `mutation CreateMetadata
   (
     $name: String!,
     $description: String!,
@@ -20,7 +20,7 @@ export const addSkillQuery = `mutation CreateMetadata
     }
   }`
 //query string for API get request
-export const getSkillsQuery =  `query($type:String!) {
+export const getMetadataQuery =  `query($type:String!) {
 	metadataByType(type:$type) {
 		_id 
 		name 
@@ -29,7 +29,7 @@ export const getSkillsQuery =  `query($type:String!) {
 }`
 
 //query string for API put request
-export const updateSkillQuery = `mutation UpdateMetadata(
+export const updateMetadataQuery = `mutation UpdateMetadata(
   $id:String!
   $metadata: MetadataUpdateFields!
 ){
@@ -45,7 +45,7 @@ export const updateSkillQuery = `mutation UpdateMetadata(
   }
 }`
 
-export const deleteSkillQuery = `mutation DeleteMetadata($id: String!) {
+export const deleteMetadataQuery = `mutation DeleteMetadata($id: String!) {
   deleteMetadata(id: $id) 
   {
     message
