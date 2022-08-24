@@ -66,3 +66,9 @@ export type UserType = {
     password?: String,
     userId?: String
 }
+
+export type Metadata = {
+    _id: string
+    name: string
+    description: string
+}

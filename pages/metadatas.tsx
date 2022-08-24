@@ -1,10 +1,8 @@
 import Link from "next/link";
 
 import PageBanner from "../components/pageBanner/pageBanner.component";
-import Skills from "../components/skills/skills.component";
-import Capability from "../components/capability/capability.component";
-import Industry from "../components/industries/industries.component";
-import SkillComponent from '../components/skills/skills.component';
+
+import MetadataComponent from "../components/metadata/metadata.component";
 
 function Metadata() {
   const tailwindClasses = {
@@ -21,13 +19,13 @@ function Metadata() {
       </div>} />
       <div className={tailwindClasses.content}>
         <div className={tailwindClasses.box}>
-          <SkillComponent />
+          <MetadataComponent type="skill" />
         </div>
         <div className={tailwindClasses.box}>
-          <Capability />
+          <MetadataComponent type="capability" />
         </div>
         <div className={tailwindClasses.box}>
-          <Industry />
+          <MetadataComponent type="industry" />
         </div>
       </div>
     </>
