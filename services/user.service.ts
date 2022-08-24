@@ -107,15 +107,33 @@ export const getEmployees = async () => {
             query: `query GetAllEmployees{
                 employees{
                     _id
+                    userId
                     firstName
                     lastName
                     email
-                    skills{
-                      rate
-                      skill{
+                    manager{
+                        _id
+                        firstName
+                        lastName
+                        email
+                        userId
+                    }
+                    capability{
                         name
-                        description
-                      }
+                    }
+                    skills {
+                        _id
+                        skill{
+                            name
+                        }
+                        rate
+                        yearsExperience
+                    }
+                    primarySkill{
+                        name
+                    }
+                    secondarySkill{
+                        name
                     }
                   }
               }`,
@@ -209,43 +227,86 @@ export const deleteUser = async (id: String) => {
     return response.data.data.deleteUser;
 }
 
-export const getEmployeeByUserId = async (id:String) =>{
-/*
-*/
-let data = await axios.get(
-    GLOBALHELPER.APIURL, {
-    params: {
-        query: `
-        query GetEmployeeByID($employeeId:String!){
-            employeeById(employeeId:$employeeId){
-            firstName
-            lastName
-            email
-            capability{
-              name
-            }
-            skills {
-              _id
-              skill{
-                name
-              }
-              rate
-              yearsExperience
-            }
-            primarySkill{
-              name
-            }
-            secondarySkill{
-              name
-            }
-          }
-        }`,
-        variables: {
-            employeeId: id
-        },
+export const getEmployeeByUserId = async (id: String) => {
+
+    let data = await axios.get(
+        GLOBALHELPER.APIURL, {
+        params: {
+            query: `
+            query GetEmployeeByID($employeeId:String!){
+                employeeById(employeeId:$employeeId){
+                    _id
+                    userId
+                    firstName
+                    lastName
+                    email
+                    manager{
+                        _id
+                        firstName
+                        lastName
+                        email
+                        userId
+                    }
+                    capability{
+                        name
+                    }
+                    skills {
+                        _id
+                        skill{
+                            name
+                        }
+                        rate
+                        yearsExperience
+                    }
+                    primarySkill{
+                        name
+                    }
+                    secondarySkill{
+                        name
+                    }
+                }
+            }`,
+            variables: {
+                employeeId: id
+            },
+        }
+    })
+    return data.data.data.employeeById;
+}
+
+export const updateManager = async (id: String, user: UserType) => {
+    try {
+        delete user.password;
+        console.log(id, user)
+        let response = await axios.post(
+            GLOBALHELPER.APIURL,
+            {
+                query: `mutation UpdateUser(
+                    $id:String!
+                    $user: UserUpdateFields!
+                  ){
+                    updateUser(
+                      id:$id,
+                      user:$user
+                    ){
+                      _id
+                      firstName
+                      lastName
+                      email
+                    }
+                  }`,
+                variables: {
+                    id: id,
+                    user: user
+                },
+            })
+        console.log(response.data.data);
+        return response.data.data;
+    } catch (e) {
+        return {
+            error: e
+        }
     }
-})
-return data.data.employeeById;
 }
 
 

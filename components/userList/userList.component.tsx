@@ -4,7 +4,7 @@ import { PlusIcon, XIcon, PencilIcon, TrashIcon } from '@heroicons/react/solid';
 import styles from './managerList.module.scss';
 import LoaderComponent from '../loader/loader.component';
 import { getAllManagers } from '../../services/user.service';
-import { getEmployees, getEmployeesOfManager, deleteUser, registerManager, registerEmployee } from '../../services/user.service';
+import { getEmployees, getEmployeesOfManager, deleteUser, registerManager, registerEmployee, updateManager } from '../../services/user.service';
 import { UserType } from '../../types/MasterTypes.types';
 import UserForm from "./userForm.component";
 import { USER_ROLES } from '../../helpers/constants.helper';
@@ -94,7 +94,7 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
     } else {
       //registerEmployee
       console.log(`register new employee of ${managerId}`, newUser)
-      await registerEmployee(newUser, managerId!);
+      // await registerEmployee(newUser, managerId!);
       await renderData();
       setAddState(false);
     }
@@ -104,11 +104,17 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
   const updateUser = async (updatedUser: UserType, managerId?: String) => {
     setLoadState(true);
     if (role === USER_ROLES.MANAGERS) {
-
-     }
-    else { 
-      
+      let response = await updateManager(userToEdit?.userId!, updatedUser);
+      if (response.error) {
+        window.alert('Something went wrong. Please contact administrator of tool.');
+      }
     }
+    else {
+      console.log('Submit to update -- employee')
+    }
+    setAddState(false);
+    setUserToEdit(undefined);
+    setLoadState(false);
   }
 
   const renderList = () => {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { PlusIcon, XIcon } from "@heroicons/react/solid";
 
 import LoaderComponent from "../loader/loader.component";
-import { UserType, ManagerType } from "../../types/MasterTypes.types";
+import { UserType, ManagerType, EmployeeType } from "../../types/MasterTypes.types";
 import { USER_ROLES } from '../../helpers/constants.helper';
 import { getAllManagers, getEmployeeByUserId } from '../../services/user.service';
 
@@ -14,7 +14,7 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
     const [confirmPassword, setConfirmPassword] = useState<String>('');
     const [managerId, setManagerId] = useState<String>('');
     const [managerList, setManagerList] = useState<ManagerType[]>([]);
-    const [employeeData, setEmployeeData] = useState();
+    const [employeeData, setEmployeeData] = useState<EmployeeData>();
     const tailwindClasses = {
         form: 'flex flex-wrap w-full max-w-lg',
         formItemHalf: 'w-full md:w-1/2 px-3 pt-1 md:pt-0',
@@ -63,33 +63,56 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
         console.log(id);
     }
 
-    const renderManagerList = async () => {
+    const renderManagerListForNewEmployee = async () => {
         setLoadState(true);
-        setManagerList(await getAllManagers());
-        console.log('managerlist', managerList)
+        await setManagerList(await getAllManagers());;
         setLoadState(false);
     }
 
     const renderEmployeeData = async () => {
         setLoadState(true);
         setManagerList(await getAllManagers());
-        console.log('managerlist', managerList)
-        console.log(userToEdit);
         setEmployeeData(await getEmployeeByUserId(userToEdit?._id!));
-        console.log('employee', employeeData)
         setLoadState(false);
     }
 
-    // useEffect(() => {
-    //     if (parentUser)
-    //         renderManagerList();
-    // }, [parentUser])
+    const renderEmployeeFormFields = () => {
+        // console.log(employeeData)
+        let manager = managerList.find(item => item._id === employeeData?.manager._id);
+        console.log(manager?._id);
+        return (<>
+            <div className={tailwindClasses.formItem}>
+                <label className={tailwindClasses.inputLabel} htmlFor="grid-password-name">
+                    Manager
+                </label>
+                <select
+                    required
+                    name="managerId"
+                    onChange={onInputChange}
+                    className={tailwindClasses.input}
+                    value={manager?._id}
+                    id="grid-password-name">
+                    <option value={''} disabled selected={parentUser === undefined}></option>
+                    {
+                        managerList.map((item, index) => (
+                            <option key={`manager-option-${index}`} value={item.userId!} >
+                                {`${item.firstName} ${item.lastName}`}
+                            </option>
+                        ))
+                    }
+                </select>
+            </div>
+        </>)
+    }
 
     useEffect(() => {
         if (role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF) {
-            renderEmployeeData();
+            if (userToEdit) {
+                renderEmployeeData();
+            } else {
+                renderManagerListForNewEmployee();
+            }
         }
-
     }, [role])
 
     return (
@@ -137,31 +160,7 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
                     placeholder="email@email.com" />
             </div>
             {
-                (role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF) &&
-                <div className={tailwindClasses.formItem}>
-                    <label className={tailwindClasses.inputLabel} htmlFor="grid-password-name">
-                        Manager
-                    </label>
-                    <select
-                        required
-                        name="managerId"
-                        onChange={onInputChange}
-                        className={tailwindClasses.input}
-                        id="grid-password-name">
-                        <option value={''} disabled selected={parentUser === undefined}></option>
-                        {
-                            managerList.map((item, index) => (
-                                <option
-                                    key={`manager-option-${index}`}
-                                    value={item._id!}
-                                    selected={parentUser?._id === item.userId}
-                                >
-                                    {`${item.firstName} ${item.lastName}`}
-                                </option>
-                            ))
-                        }
-                    </select>
-                </div>
+                (role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF) ? renderEmployeeFormFields() : null
             }
             {
                 userToEdit === undefined && <>
