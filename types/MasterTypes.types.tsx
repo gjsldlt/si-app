@@ -35,15 +35,15 @@ export type ManagerType = {
     userId: String,
 }
 
-export type EmployeeType = {
-    _id: String,
-    firstName: String,
-    lastName: String,
-    email: String,
-    password: String,
-    createdAt: String,
-    userId: String,
-}
+// export type EmployeeType = {
+//     _id: String,
+//     firstName: String,
+//     lastName: String,
+//     email: String,
+//     password: String,
+//     createdAt: String,
+//     userId: String,
+// }
 
 export type CapabilityType = {
     _id: String;
@@ -71,4 +71,47 @@ export type Metadata = {
     _id: string
     name: string
     description: string
+}
+
+export type EmployeeType = {
+    _id: String,
+    firstName: String,
+    lastName: String,
+    email: String,
+    manager: {
+        _id: String,
+        userId: String,
+        firstName: String,
+        lastName: String,
+        email: String,
+    },
+    capability?:{
+        _id:String,
+        name:String,
+        id:String,
+        description:String,
+    }
+    primarySkill?:{
+        _id:String,
+        name:String,
+        id:String,
+        description:String,
+    }
+    secondarySkill?:{
+        _id:String,
+        name:String,
+        id:String,
+        description:String,
+    }
+    skills?:[{
+        name:String,
+        rate:String,
+        yearsExperience:String,
+        skill:{
+            _id:String,
+            name:String,
+            id:String,
+            description:String,
+        }
+    }]
 }
