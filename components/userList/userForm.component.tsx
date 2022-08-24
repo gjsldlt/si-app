@@ -26,7 +26,7 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
     const onSubmitForm = (e: any) => {
         e.preventDefault();
         if (userToEdit) {
-            //  submit to update
+            //  submit to update pemp
             let newUser = {
                 firstName: firstName,
                 lastName: lastName,
@@ -58,7 +58,7 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
         }
     }
 
-    const onManagerSelect = (id:String) => {
+    const onManagerSelect = (id: String) => {
         console.log(id);
     }
 
@@ -71,7 +71,8 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
 
     useEffect(() => {
         console.log(parentUser)
-        renderManagerList();
+        if (parentUser)
+            renderManagerList();
     }, [parentUser])
 
     return (

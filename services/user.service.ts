@@ -209,6 +209,10 @@ export const deleteUser = async (id: String) => {
     return response.data.data.deleteUser;
 }
 
+export const getEmployeeByUserId = async (id:String) =>{
+
+}
+
 
 type LoginDetails = {
     email: String,
