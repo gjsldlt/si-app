@@ -210,7 +210,42 @@ export const deleteUser = async (id: String) => {
 }
 
 export const getEmployeeByUserId = async (id:String) =>{
-
+/*
+*/
+let data = await axios.get(
+    GLOBALHELPER.APIURL, {
+    params: {
+        query: `
+        query GetEmployeeByID($employeeId:String!){
+            employeeById(employeeId:$employeeId){
+            firstName
+            lastName
+            email
+            capability{
+              name
+            }
+            skills {
+              _id
+              skill{
+                name
+              }
+              rate
+              yearsExperience
+            }
+            primarySkill{
+              name
+            }
+            secondarySkill{
+              name
+            }
+          }
+        }`,
+        variables: {
+            employeeId: id
+        },
+    }
+})
+return data.data.employeeById;
 }
 
 

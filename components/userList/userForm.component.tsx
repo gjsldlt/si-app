@@ -4,7 +4,7 @@ import { PlusIcon, XIcon } from "@heroicons/react/solid";
 import LoaderComponent from "../loader/loader.component";
 import { UserType, ManagerType } from "../../types/MasterTypes.types";
 import { USER_ROLES } from '../../helpers/constants.helper';
-import { getAllManagers } from '../../services/user.service';
+import { getAllManagers, getEmployeeByUserId } from '../../services/user.service';
 
 export default function UserList({ userToEdit, updateUser, registerUser, parentUser, setLoadState, role }: PageProps) {
     const [firstName, setFirstName] = useState<String>(userToEdit ? userToEdit.firstName : '');
@@ -14,6 +14,7 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
     const [confirmPassword, setConfirmPassword] = useState<String>('');
     const [managerId, setManagerId] = useState<String>('');
     const [managerList, setManagerList] = useState<ManagerType[]>([]);
+    const [employeeData, setEmployeeData] = useState();
     const tailwindClasses = {
         form: 'flex flex-wrap w-full max-w-lg',
         formItemHalf: 'w-full md:w-1/2 px-3 pt-1 md:pt-0',
@@ -69,11 +70,27 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
         setLoadState(false);
     }
 
+    const renderEmployeeData = async () => {
+        setLoadState(true);
+        setManagerList(await getAllManagers());
+        console.log('managerlist', managerList)
+        console.log(userToEdit);
+        setEmployeeData(await getEmployeeByUserId(userToEdit?._id!));
+        console.log('employee', employeeData)
+        setLoadState(false);
+    }
+
+    // useEffect(() => {
+    //     if (parentUser)
+    //         renderManagerList();
+    // }, [parentUser])
+
     useEffect(() => {
-        console.log(parentUser)
-        if (parentUser)
-            renderManagerList();
-    }, [parentUser])
+        if (role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF) {
+            renderEmployeeData();
+        }
+
+    }, [role])
 
     return (
         <form className={tailwindClasses.form} onSubmit={onSubmitForm}>
