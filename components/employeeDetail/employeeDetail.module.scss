@@ -1,27 +1,27 @@
 @import '../../styles/variable';
 
-.employeeList{
+.employeeDetail{
     display:flex;
     flex-direction: column;
 }
 
 /* Mobile CSS */
 @media (max-width: $mobile-width) {
-    .employeeList{
+    .employeeDetail{
 
     }
 }
 
 /* Tablet CSS */
 @media (max-width: $mobile-width) {
-    .employeeList{
+    .employeeDetail{
         
     }
 }
 
 /* Laptop and above CSS */
 @media (max-width: $mobile-width) {
-    .employeeList{
+    .employeeDetail{
         
     }
 }
