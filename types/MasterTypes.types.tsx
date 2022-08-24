@@ -78,6 +78,7 @@ export type EmployeeType = {
     firstName: String,
     lastName: String,
     email: String,
+    password?:String,
     manager: {
         _id: String,
         userId: String,
