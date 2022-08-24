@@ -28,7 +28,7 @@ const MetadataPopup: FC<PopupProps> = ({
       <button onClick={clickYes} className={tailwindClasses.formButton}>
         Yes
       </button>
-      <button onClick={exitDeletion} className={tailwindClasses.formButton}>
+      <button onClick={clickNo} className={tailwindClasses.formButton}>
         No
       </button>
     </div>
