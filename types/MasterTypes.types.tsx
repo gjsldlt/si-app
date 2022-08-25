@@ -67,7 +67,7 @@ export type UserType = {
     userId?: String
 }
 
-export type Metadata = {
+export interface Metadata {
     _id: string
     name: string
     description: string
