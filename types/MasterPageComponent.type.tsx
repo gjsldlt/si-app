@@ -8,6 +8,9 @@ export interface CustomAppProps extends AppProps {
 
 export type MetadataComponentProps = {
     type: "skill" | "industry" | "capability"
+    onMetadataClick: React.Dispatch<React.SetStateAction<Metadata | undefined>>
+    enableRowActions: Boolean
+    activeMetadata?: Metadata
 }
 
 export type FormProps = {

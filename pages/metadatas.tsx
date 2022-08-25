@@ -4,8 +4,9 @@ import { useState } from "react";
 import PageBanner from "../components/pageBanner/pageBanner.component";
 
 import MetadataComponent from "../components/metadata/metadata.component";
+import { Metadata } from '../types/MasterTypes.types';
 
-function Metadata() {
+const MetadataPage = () => {
   const tailwindClasses = {
     customBanner: 'h-full w-full flex items-center justify-start p-[2rem]',
     content: 'flex relative mx-1 md:mx-0 md:mr-4 md:pl-[1rem] pt-1 md:py-[1rem] flex flex-col md:flex-row gap-1 md:gap-[1rem] z-[1] md:flex-grow',
@@ -16,9 +17,9 @@ function Metadata() {
     mobileTab: 'md:hidden ',
     mobileTabOption: ''
   }
-  const [activeSkill, setActiveSkill] = useState(undefined);
-  const [activeCapability, setActiveCapability] = useState(undefined);
-  const [activeIndustry, setActiveIndustry] = useState(undefined);
+  const [activeSkill, setActiveSkill] = useState<Metadata>();
+  const [activeCapability, setActiveCapability] = useState<Metadata>();
+  const [activeIndustry, setActiveIndustry] = useState<Metadata>();
   const [activeMobileTab, setActiveMobileTab] = useState<String>('Skills');
   const mobileTabs = [
     "Skills",
@@ -48,8 +49,7 @@ function Metadata() {
               onClick={(e) => onMobileTabClick(tab)}>
               {tab}
             </div>
-          )
-          )
+          ))
         }
       </div>
 
@@ -69,5 +69,5 @@ function Metadata() {
   );
 }
 
-export default Metadata;
+export default MetadataPage;
 

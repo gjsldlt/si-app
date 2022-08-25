@@ -11,7 +11,13 @@ import { MetadataComponentProps } from '../../types/MasterPageComponent.type';
 import LoaderComponent from '../loader/loader.component';
 import { Metadata } from '../../types/MasterTypes.types';
 
-const MetadataComponent: FC<MetadataComponentProps> = ({ type, activeMetadata, onMetadataClick, enableRowActions }: MetadataComponentProps) => {
+const MetadataComponent: FC<MetadataComponentProps> = ({
+  type,
+  activeMetadata,
+  onMetadataClick,
+  enableRowActions
+}: MetadataComponentProps) => {
+
   const tailwindClasses = {
     container: "relative flex-grow flex flex-col bg-white p-1 min-h-[200px] md:min-h-100 md:w-[47vw] lg:w-[27vw] border-[1px] shadow-lg",
     toolbar: "flex flex-row",
@@ -27,6 +33,7 @@ const MetadataComponent: FC<MetadataComponentProps> = ({ type, activeMetadata, o
     description: "block w-full text-xs",
     name: "p-0 m-0",
   }
+  
   //state hook to capture api response to SkillType array
   const [metadataList, setMetadataList] = useState<Metadata[]>([])
   //state hook to capture skill to edit on click of pencil icon
