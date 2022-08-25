@@ -2,8 +2,8 @@ import Link from "next/link";
 import { useState } from "react";
 
 import PageBanner from "../components/pageBanner/pageBanner.component";
-
 import MetadataComponent from "../components/metadata/metadata.component";
+
 import { Metadata } from '../types/MasterTypes.types';
 
 const MetadataPage = () => {
