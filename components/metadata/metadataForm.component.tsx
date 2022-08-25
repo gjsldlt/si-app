@@ -11,10 +11,10 @@ const MetadataForm: FC<FormProps> = ({
 }: FormProps) => {
 
   const tailwindClasses = {
-    form: 'flex flex-wrap w-full max-w-lg',
+    form: 'flex flex-wrap w-full',
     formItem: 'w-full px-3 pt-1',
     inputLabel: 'block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mr-1',
-    input: 'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500',
+    input: 'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight] focus:outline-none focus:bg-white focus:border-gray-500',
     formButton: 'bg-transparent hover:bg-sidebar text-sidebar font-semibold hover:text-white py-2 px-4 border border-sidebar hover:border-transparent rounded',
   }
 
