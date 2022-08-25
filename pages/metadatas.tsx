@@ -13,8 +13,9 @@ function Metadata() {
     box: 'flex flex-grow overflow-auto ',
     mobileBoxShow: 'flex',
     mobileBoxHidden: 'md:flex hidden',
-    mobileTab: 'md:hidden ',
-    mobileTabOption: ''
+    mobileTab: 'md:hidden flex justify-center',
+    mobileTabOption: '',
+    formButton: 'm-[10px] bg-transparent hover:bg-sidebar text-sidebar font-semibold hover:text-white py-2 px-4 border border-sidebar hover:border-transparent rounded'
   }
   const [activeSkill, setActiveSkill] = useState(undefined);
   const [activeCapability, setActiveCapability] = useState(undefined);
@@ -46,22 +47,23 @@ function Metadata() {
               key={`mobile-tab-${index}`}
               className={tailwindClasses.mobileTab}
               onClick={(e) => onMobileTabClick(tab)}>
-              {tab}
+              <button className={tailwindClasses.formButton}>
+                {tab}
+              </button>
             </div>
           )
           )
         }
       </div>
 
-
       <div className={tailwindClasses.content}>
-        <div className={tailwindClasses.box}>
+        <div className={`${tailwindClasses.box} ${activeMobileTab === 'Skills' ? tailwindClasses.mobileBoxShow : tailwindClasses.mobileBoxHidden}`}>
           <MetadataComponent type="skill" activeMetadata={activeSkill} onMetadataClick={setActiveSkill} enableRowActions={true} />
         </div>
-        <div className={tailwindClasses.box}>
+        <div className={`${tailwindClasses.box} ${activeMobileTab === 'Capabilities' ? tailwindClasses.mobileBoxShow : tailwindClasses.mobileBoxHidden}`}>
           <MetadataComponent type="capability" activeMetadata={activeCapability} onMetadataClick={setActiveCapability} enableRowActions={true} />
         </div>
-        <div className={tailwindClasses.box}>
+        <div className={`${tailwindClasses.box} ${activeMobileTab === 'Industries' ? tailwindClasses.mobileBoxShow : tailwindClasses.mobileBoxHidden}`}>
           <MetadataComponent type="industry" activeMetadata={activeIndustry} onMetadataClick={setActiveIndustry} enableRowActions={true} />
         </div>
       </div>
