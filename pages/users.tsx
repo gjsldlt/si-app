@@ -13,9 +13,9 @@ function Users() {
 
     const tailwindClasses = {
         customBanner: 'h-full w-full flex items-center justify-start p-[2rem]',
-        content: 'flex relative mx-1 mb-2 md:mx-0 md:pl-[1rem] md:mr-4 pt-1 md:py-[1rem] flex flex-col md:flex-row gap-1 md:gap-[1rem] z-[1] md:flex-grow items-stretch h-full',
+        content: 'flex relative mx-1 mb-1 md:mx-0 md:pl-[1rem] md:mr-4 md:w-full pt-1 md:py-[1rem] flex flex-col md:flex-row gap-1 md:gap-[1rem] z-[1] md:grow-0 items-stretch h-full overflow-hidden',
         header: 'text-2xl text-white z-[5]',
-        box: 'md:h-full md:h-[unset] flex flex-1 flex-col gap-1 md:grow-0 md:w-[25vw]',
+        box: 'flex flex-col gap-1 shrink-0 grow-0 md:basis-[31.25vw] basis-1/2',
         subtitle: 'italic text-sm text-[gray]',
         statsBox: 'flex flex-grow w-[unset] flex-col items-stretch',
         managerStats: 'flex h-[30%] justify-center items-center',
@@ -50,6 +50,8 @@ function Users() {
                         onClick={setActiveEmployee}
                         parentUser={activeManager}
                         enableRowActions={true} />
+                </div>
+                <div className={tailwindClasses.box}>
                 </div>
                 {/* <div className={`${tailwindClasses.box} flex-grow`}>
                     <div className={tailwindClasses.statsBox}>

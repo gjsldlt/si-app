@@ -58,7 +58,7 @@ export type SkillType = {
     description: string
 }
 
-export type UserType = {
+export interface UserType  {
     _id?: String,
     firstName: String,
     lastName: String,

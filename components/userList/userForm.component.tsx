@@ -36,7 +36,7 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
     });
     const [capabilityList, setCapabilityList] = useState<Metadata[]>([]);
     const tailwindClasses = {
-        form: 'flex flex-grow justify-start items-start flex-wrap w-full max-w-lg content-start',
+        form: 'flex flex-1 flex-grow justify-start items-start flex-wrap w-full content-start overflow-auto pb-2',
         formItemHalf: 'w-full md:w-1/2 px-3 pt-1 md:pt-1 grow-0',
         formItem: 'w-full px-3 pt-1 grow-0',
         skillsContainer: 'flex-grow',
