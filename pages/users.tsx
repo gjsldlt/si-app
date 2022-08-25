@@ -13,9 +13,9 @@ function Users() {
 
     const tailwindClasses = {
         customBanner: 'h-full w-full flex items-center justify-start p-[2rem]',
-        content: 'flex relative mx-1 md:mx-0 md:pl-[1rem] md:mr-4 pt-1 md:py-[1rem] flex flex-col md:flex-row gap-1 md:gap-[1rem] z-[1] md:flex-grow items-stretch',
+        content: 'flex relative mx-1 mb-2 md:mx-0 md:pl-[1rem] md:mr-4 pt-1 md:py-[1rem] flex flex-col md:flex-row gap-1 md:gap-[1rem] z-[1] md:flex-grow items-stretch h-full',
         header: 'text-2xl text-white z-[5]',
-        box: 'h-full md:h-[unset] flex flex-col flex-grow gap-1 md:grow-0 md:w-[25vw]',
+        box: 'md:h-full md:h-[unset] flex flex-1 flex-col gap-1 md:grow-0 md:w-[25vw]',
         subtitle: 'italic text-sm text-[gray]',
         statsBox: 'flex flex-grow w-[unset] flex-col items-stretch',
         managerStats: 'flex h-[30%] justify-center items-center',

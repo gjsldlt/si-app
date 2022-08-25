@@ -11,11 +11,11 @@ import { USER_ROLES } from '../../helpers/constants.helper';
 
 export default function UserList({ role, activeUser, parentUser, onClick, enableRowActions }: PageProps) {
   const tailwindClasses = {
-    container: 'container relative flex flex-grow flex-col bg-white p-1 min-h-[200px] md:min-h-100 border-[1px] shadow-lg',
+    container: 'container relative flex flex-1 flex-col bg-white p-1 min-h-[200px] md:min-h-100 border-[1px] shadow-lg',
     toolbar: 'toolbar flex flex-row grow-0',
     title: 'title flex-1',
     addButton: 'addbutton h-iconbutton w-iconbutton flex items-center justify-center p-0',
-    list: 'list flex-1 flex flex-col  max-h-[300px] md:max-h-unset',
+    list: 'list flex-1 flex flex-col  max-h-[300px] md:max-h-unset overflow-scroll',
     lineItem: 'lineitem transition-all duration-500 rounded py-1 px-2 flex flex-row',
     lineItemActive: 'active bg-sidebar text-white',
     lineDetails: 'name flex flex-col justify-start justify-center flex-grow cursor-pointer',
