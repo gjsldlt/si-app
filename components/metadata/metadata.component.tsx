@@ -33,7 +33,7 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
     description: "block w-full text-xs",
     name: "p-0 m-0",
   }
-  
+
   //state hook to capture api response to SkillType array
   const [metadataList, setMetadataList] = useState<Metadata[]>([])
   //state hook to capture skill to edit on click of pencil icon
