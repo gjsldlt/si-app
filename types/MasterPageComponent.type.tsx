@@ -1,5 +1,6 @@
 import type { AppProps } from "next/app";
 import { Metadata } from "./MasterTypes.types";
+import { ReactNode } from "react";
 
 export interface CustomAppProps extends AppProps {
   getLayout(page: AppProps): AppProps;
@@ -23,3 +24,13 @@ export interface PopupProps {
   renderData: () => Promise<void>;
   metadataToDelete?: Metadata;
 }
+
+export interface HeaderBarProps {
+    breadcrumb: Array<string>;
+    onMenuClick: () => void;
+    show: boolean;
+  };
+
+export interface LayoutProps {
+    children: ReactNode
+  }

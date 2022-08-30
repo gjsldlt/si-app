@@ -1,11 +1,8 @@
-import { SvgIconTypeMap } from "@mui/material";
-import { OverridableComponent } from "@mui/material/OverridableComponent";
-
-export let SidebarCallerType = function (newState: Boolean): Boolean {
+export const SidebarCallerType = function (newState: boolean): boolean {
     return false;
 };
 
-export type RouteItem = {
+export interface RouteItem {
     roles: any;
     name: string,
     displayName: string,
@@ -13,45 +10,40 @@ export type RouteItem = {
     icon: JSX.Element //OverridableComponent<SvgIconTypeMap<{}, "svg">>
 }
 
-export type UserDataType = {
+export interface LoginDetails {
+    email: string,
+    password: string
+}
+
+
+export interface UserDataType {
     role: string;
-    firstName: String,
-    lastName: String,
-    email: String,
-    userId: String,
-    token: String,
-    managerId: String,
-    employeeId: String,
-    roles: [String],
+    firstName: string,
+    lastName: string,
+    email: string,
+    userId: string,
+    token: string,
+    managerId: string,
+    employeeId: string,
+    roles: string,
 }
 
-export type ManagerType = {
-    _id: String,
-    firstName: String,
-    lastName: String,
-    email: String,
-    password: String,
-    createdAt: String,
-    userId: String,
+
+export interface UserType {
+    _id: string,
+    firstName: string,
+    lastName: string,
+    email: string,
+    password?: string,
+    userId?: string
 }
 
-export type EmployeeType = {
-    _id: String,
-    firstName: String,
-    lastName: String,
-    email: String,
-    password: String,
-    createdAt: String,
-    userId: String,
+export interface EmployeeType extends UserType {
+    createdAt: string,
 }
 
-export type UserType = {
-    _id?: String,
-    firstName: String,
-    lastName: String,
-    email: String,
-    password?: String,
-    userId?: String
+export interface ManagerType extends UserType {
+    createdAt: string,
 }
 
 export interface Metadata {
