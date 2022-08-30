@@ -6,18 +6,21 @@ export interface CustomAppProps extends AppProps {
     getLayout(page: AppProps): AppProps;
 }
 
-export type MetadataComponentProps = {
+export interface MetadataComponentProps {
     type: "skill" | "industry" | "capability"
+    onMetadataClick: React.Dispatch<React.SetStateAction<Metadata | undefined>>
+    enableRowActions: boolean
+    activeMetadata?: Metadata
 }
 
-export type FormProps = {
-    renderData: () => {}
-    setLoadState: React.Dispatch<React.SetStateAction<Boolean>>
+export interface FormProps {
+    renderData: () => Promise<void>
+    setLoadState: React.Dispatch<React.SetStateAction<boolean>>
     metadataToEdit?: Metadata
     metadataType: string
 }
 
-export type PopupProps = {
-    renderData: () => {}
+export interface PopupProps {
+    renderData: () => Promise<void>
     metadataToDelete?: Metadata
 }

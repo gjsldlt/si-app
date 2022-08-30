@@ -12,7 +12,7 @@ axios.defaults.headers.common['Accept'] = `application/json, text/plain, applica
 
 //call API to post data from input box
 const addMetadata = async (mtdtName: string, mtdtDesc: string, mtdtType: string) => {
-	let response = await axios
+	const response = await axios
 		.post(
 			GLOBALHELPER.APIURL,
 			{
@@ -30,16 +30,17 @@ const addMetadata = async (mtdtName: string, mtdtDesc: string, mtdtType: string)
 
 //Create function to get metdata from API
 const getMetadata = async (mtdtType: string) => {
-	let response = await axios.get(
-		GLOBALHELPER.APIURL,
-		{
-			params: {
-				query: getMetadataQuery,
-				variables: {
-					type: mtdtType
-				},
-			}
-		})
+	const response = await axios
+		.get(
+			GLOBALHELPER.APIURL,
+			{
+				params: {
+					query: getMetadataQuery,
+					variables: {
+						type: mtdtType
+					},
+				}
+			})
 	return response.data.data.metadataByType;
 }
 //UPDATE METADATA FROM API
@@ -47,7 +48,7 @@ const getMetadata = async (mtdtType: string) => {
 //Create function to update metadata in API
 //uses POST instead of PUT as PUT is not allowed by the API
 const updateMetadata = async (mtdtId: string, mtdtName: string, mtdtDesc: string) => {
-	let response = await axios
+	const response = await axios
 		.post(
 			GLOBALHELPER.APIURL,
 			{
@@ -65,17 +66,17 @@ const updateMetadata = async (mtdtId: string, mtdtName: string, mtdtDesc: string
 //DELETE METADATA FROM API
 
 const deleteMetadata = async (mtdtId: string) => {
-	let response = await axios
-	.post(
-		GLOBALHELPER.APIURL,
-		{
-			query: deleteMetadataQuery,
-			variables: {
-				id: mtdtId
+	const response = await axios
+		.post(
+			GLOBALHELPER.APIURL,
+			{
+				query: deleteMetadataQuery,
+				variables: {
+					id: mtdtId
+				}
 			}
-		}
 
-	)
+		)
 	return response.data.data;
 }
 

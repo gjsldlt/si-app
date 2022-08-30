@@ -2,16 +2,22 @@ import { FC, useState, useEffect, useCallback } from 'react';
 
 import MetadataForm from './metadataForm.component';
 import MetadataPopup from './metadataPopup.component';
+
 import { getMetadata } from '../../services/metadata.service';
-import { PlusIcon, XIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
 
 import { MetadataComponentProps } from '../../types/MasterPageComponent.type';
-
-
-import LoaderComponent from '../loader/loader.component';
 import { Metadata } from '../../types/MasterTypes.types';
 
-const MetadataComponent: FC<MetadataComponentProps> = ({ type, activeMetadata, onMetadataClick, enableRowActions }: MetadataComponentProps) => {
+import LoaderComponent from '../loader/loader.component';
+import { PlusIcon, XIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
+
+const MetadataComponent: FC<MetadataComponentProps> = ({
+  type,
+  activeMetadata,
+  onMetadataClick,
+  enableRowActions
+}: MetadataComponentProps) => {
+
   const tailwindClasses = {
     container: "relative flex-grow flex flex-col bg-white p-1 min-h-[200px] md:min-h-100 md:w-[47vw] lg:w-[27vw] border-[1px] shadow-lg",
     toolbar: "flex flex-row",
@@ -27,6 +33,7 @@ const MetadataComponent: FC<MetadataComponentProps> = ({ type, activeMetadata, o
     description: "block w-full text-xs",
     name: "p-0 m-0",
   }
+
   //state hook to capture api response to SkillType array
   const [metadataList, setMetadataList] = useState<Metadata[]>([])
   //state hook to capture skill to edit on click of pencil icon
@@ -34,11 +41,11 @@ const MetadataComponent: FC<MetadataComponentProps> = ({ type, activeMetadata, o
   //state hook to capture skill to delete on click of trash icon
   const [metadataToDelete, setMetadataToDelete] = useState<Metadata>()
   //state hook to display form containing input fields
-  const [displayForm, setDisplayForm] = useState<Boolean>(false)
+  const [displayForm, setDisplayForm] = useState<boolean>(false)
   //state hook to display delete confirmation
-  const [displayPopup, setDisplayPopup] = useState<Boolean>(false)
+  const [displayPopup, setDisplayPopup] = useState<boolean>(false)
   //state hook to show loadscreen component
-  const [loadState, setLoadState] = useState<Boolean>(true)
+  const [loadState, setLoadState] = useState<boolean>(true)
 
   const showMetadataForm = () => {
     setMetadataToEdit(undefined)
@@ -88,7 +95,7 @@ const MetadataComponent: FC<MetadataComponentProps> = ({ type, activeMetadata, o
       return <div className={tailwindClasses.list}>
         {
           metadataList.map((metadata) => {
-            let activeLine = activeMetadata?._id === metadata._id
+            const activeLine = activeMetadata?._id === metadata._id
             return <div key={`${type}-line-item-${metadata._id}`} className={`${tailwindClasses.lineItem} ${activeLine ? tailwindClasses.lineItemActive : ''}`}>
               <div className={`${tailwindClasses.lineDetails}`} onClick={() => { clickMetadataRow(metadata) }}>
                 <p className={tailwindClasses.name}>

@@ -1,11 +1,11 @@
-import Link from "next/link";
 import { useState } from "react";
 
 import PageBanner from "../components/pageBanner/pageBanner.component";
-
 import MetadataComponent from "../components/metadata/metadata.component";
 
-function Metadata() {
+import { Metadata } from '../types/MasterTypes.types';
+
+const MetadataPage = () => {
   const tailwindClasses = {
     customBanner: 'h-full w-full flex items-center justify-start p-[2rem]',
     content: 'flex relative mx-1 md:mx-0 md:mr-4 md:pl-[1rem] pt-1 md:py-[1rem] flex flex-col md:flex-row gap-1 md:gap-[1rem] z-[1] md:flex-grow',
@@ -17,17 +17,17 @@ function Metadata() {
     mobileTabOption: '',
     formButton: 'm-[10px] bg-transparent hover:bg-sidebar text-sidebar font-semibold hover:text-white py-2 px-4 border border-sidebar hover:border-transparent rounded'
   }
-  const [activeSkill, setActiveSkill] = useState(undefined);
-  const [activeCapability, setActiveCapability] = useState(undefined);
-  const [activeIndustry, setActiveIndustry] = useState(undefined);
-  const [activeMobileTab, setActiveMobileTab] = useState<String>('Skills');
+  const [activeSkill, setActiveSkill] = useState<Metadata>();
+  const [activeCapability, setActiveCapability] = useState<Metadata>();
+  const [activeIndustry, setActiveIndustry] = useState<Metadata>();
+  const [activeMobileTab, setActiveMobileTab] = useState<string>('Skills');
   const mobileTabs = [
     "Skills",
     "Capabilities",
     "Industries"
   ]
 
-  const onMobileTabClick = (tab: String) => {
+  const onMobileTabClick = (tab: string) => {
     setActiveMobileTab(tab);
   }
 
@@ -46,13 +46,12 @@ function Metadata() {
             <div
               key={`mobile-tab-${index}`}
               className={tailwindClasses.mobileTab}
-              onClick={(e) => onMobileTabClick(tab)}>
+              onClick={() => onMobileTabClick(tab)}>
               <button className={tailwindClasses.formButton}>
                 {tab}
               </button>
             </div>
-          )
-          )
+          ))
         }
       </div>
 
@@ -71,5 +70,5 @@ function Metadata() {
   );
 }
 
-export default Metadata;
+export default MetadataPage;
 
