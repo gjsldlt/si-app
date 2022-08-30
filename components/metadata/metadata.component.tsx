@@ -41,11 +41,11 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
   //state hook to capture skill to delete on click of trash icon
   const [metadataToDelete, setMetadataToDelete] = useState<Metadata>()
   //state hook to display form containing input fields
-  const [displayForm, setDisplayForm] = useState<Boolean>(false)
+  const [displayForm, setDisplayForm] = useState<boolean>(false)
   //state hook to display delete confirmation
-  const [displayPopup, setDisplayPopup] = useState<Boolean>(false)
+  const [displayPopup, setDisplayPopup] = useState<boolean>(false)
   //state hook to show loadscreen component
-  const [loadState, setLoadState] = useState<Boolean>(true)
+  const [loadState, setLoadState] = useState<boolean>(true)
 
   const showMetadataForm = () => {
     setMetadataToEdit(undefined)
@@ -95,7 +95,7 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
       return <div className={tailwindClasses.list}>
         {
           metadataList.map((metadata) => {
-            let activeLine = activeMetadata?._id === metadata._id
+            const activeLine = activeMetadata?._id === metadata._id
             return <div key={`${type}-line-item-${metadata._id}`} className={`${tailwindClasses.lineItem} ${activeLine ? tailwindClasses.lineItemActive : ''}`}>
               <div className={`${tailwindClasses.lineDetails}`} onClick={() => { clickMetadataRow(metadata) }}>
                 <p className={tailwindClasses.name}>

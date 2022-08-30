@@ -9,18 +9,18 @@ export interface CustomAppProps extends AppProps {
 export interface MetadataComponentProps {
     type: "skill" | "industry" | "capability"
     onMetadataClick: React.Dispatch<React.SetStateAction<Metadata | undefined>>
-    enableRowActions: Boolean
+    enableRowActions: boolean
     activeMetadata?: Metadata
 }
 
 export interface FormProps {
-    renderData: () => {}
-    setLoadState: React.Dispatch<React.SetStateAction<Boolean>>
+    renderData: () => Promise<void>
+    setLoadState: React.Dispatch<React.SetStateAction<boolean>>
     metadataToEdit?: Metadata
     metadataType: string
 }
 
 export interface PopupProps {
-    renderData: () => {}
+    renderData: () => Promise<void>
     metadataToDelete?: Metadata
 }
