@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useState } from "react";
 
 import PageBanner from "../components/pageBanner/pageBanner.component";
@@ -21,14 +20,14 @@ const MetadataPage = () => {
   const [activeSkill, setActiveSkill] = useState<Metadata>();
   const [activeCapability, setActiveCapability] = useState<Metadata>();
   const [activeIndustry, setActiveIndustry] = useState<Metadata>();
-  const [activeMobileTab, setActiveMobileTab] = useState<String>('Skills');
+  const [activeMobileTab, setActiveMobileTab] = useState<string>('Skills');
   const mobileTabs = [
     "Skills",
     "Capabilities",
     "Industries"
   ]
 
-  const onMobileTabClick = (tab: String) => {
+  const onMobileTabClick = (tab: string) => {
     setActiveMobileTab(tab);
   }
 
@@ -47,7 +46,7 @@ const MetadataPage = () => {
             <div
               key={`mobile-tab-${index}`}
               className={tailwindClasses.mobileTab}
-              onClick={(e) => onMobileTabClick(tab)}>
+              onClick={() => onMobileTabClick(tab)}>
               <button className={tailwindClasses.formButton}>
                 {tab}
               </button>
