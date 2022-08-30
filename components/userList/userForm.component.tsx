@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { PlusIcon, XIcon } from "@heroicons/react/solid";
 
 import LoaderComponent from "../loader/loader.component";
+import SkillManager from "../skillManager/skillManager.component";
 import { UserType, ManagerType, Metadata } from "../../types/MasterTypes.types";
 import { USER_ROLES } from '../../helpers/constants.helper';
 import { getAllManagers, getEmployeeByUserId } from '../../services/user.service';
@@ -193,7 +194,7 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
                     className={tailwindClasses.input}
                     value={manager ? manager?._id : ''}
                     id="grid-managerId-name">
-                    <option value={''} disabled selected={parentUser === undefined}>Select a Manager</option>
+                    <option value={''} disabled>Select a Manager</option>
                     {
                         managerList.map((item, index) => (
                             <option key={`manager-option-${index}`} value={item._id!} >
@@ -212,10 +213,9 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
                     name="capability"
                     onChange={onInputChange}
                     className={tailwindClasses.input}
-                    value={employeeData ? employeeData?.capability?._id : null}
+                    value={employeeData ? employeeData?.capability?._id : ''}
                     id="grid-capability-name">
-                    <option value={''} disabled selected={parentUser === undefined}>Select a Capability</option>
-                    <option value={null} selected={parentUser === undefined}>-</option>
+                    <option value={''}>-</option>
                     {
                         capabilityList.map((item, index) => (
                             <option key={`capability-option-${index}`} value={item._id!} >
@@ -233,10 +233,9 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
                     name="primarySkill"
                     onChange={onInputChange}
                     className={tailwindClasses.input}
-                    value={employeeData ? employeeData?.primarySkill?._id : null}
+                    value={employeeData ? employeeData?.primarySkill?._id : ''}
                     id="grid-primarySkill-name">
-                    <option value={''} disabled selected={parentUser === undefined}>Select a Primary Skill</option>
-                    <option value={null} selected={parentUser === undefined}>-</option>
+                    <option value={''}>-</option>
                     {
                         skillList.map((item, index) => (
                             <option key={`skill-option-${index}`} value={item._id!} >
@@ -254,10 +253,9 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
                     name="secondarySkill"
                     onChange={onInputChange}
                     className={tailwindClasses.input}
-                    value={employeeData ? employeeData?.secondarySkill?._id : null}
+                    value={employeeData ? employeeData?.secondarySkill?._id : ''}
                     id="grid-secondarySkill-name">
-                    <option value={''} disabled selected={parentUser === undefined}>Select a Primary Skill</option>
-                    <option value={null} selected={parentUser === undefined}>-</option>
+                    <option value={''}>-</option>
                     {
                         skillList.map((item, index) => (
                             <option key={`skill-option-${index}`} value={item._id!} >
@@ -267,6 +265,7 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
                     }
                 </select>
             </div>
+            <SkillManager employee={employeeData} setEmployee={setEmployeeData} />
             {/* <div className={`${tailwindClasses.formItem} ${tailwindClasses.skillsContainer}`}>
                 <div className={tailwindClasses.formChipContainer}>
                     <div className={tailwindClasses.chipForm}>
@@ -281,7 +280,7 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
                                 className={tailwindClasses.input}
                                 value={activeSkill?.skill?._id}
                                 id="grid-skills-name">
-                                <option value={null} selected={parentUser === undefined}>-</option>
+                                <option value={null}>-</option>
                                 {
                                     skillList.map((item, index) => (
                                         <option key={`active-skill-option-${index}`} value={item._id!} >

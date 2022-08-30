@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import PageBanner from '../components/pageBanner/pageBanner.component';
 import UserList from '../components/userList/userList.component';
+import SkillManager from '../components/skillManager/skillManager.component';
 import EmployeeDetail from '../components/employeeDetail/employeeDetail.component';
 import ManagerWidget from '../components/managerWidget/managerWidget.component';
 import { UserType } from '../types/MasterTypes.types';
@@ -51,8 +52,11 @@ function Users() {
                         parentUser={activeManager}
                         enableRowActions={true} />
                 </div>
-                <div className={tailwindClasses.box}>
-                </div>
+                {/* {
+                    activeEmployee && <div className={tailwindClasses.box}>
+                        <SkillManager employee={activeEmployee!} />
+                    </div>
+                } */}
                 {/* <div className={`${tailwindClasses.box} flex-grow`}>
                     <div className={tailwindClasses.statsBox}>
                         {
