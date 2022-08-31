@@ -8,7 +8,7 @@ import Layout from '../components/layout/layout.component'
 import { accessUserInSession } from '../services/user.service';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  let user = accessUserInSession();
+  const user = accessUserInSession();
   const router = useRouter();
   const noLayoutFlag = router.pathname === '/login' || router.pathname === '/_error';
 

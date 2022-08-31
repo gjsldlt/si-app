@@ -10,9 +10,9 @@ import { RouteItem } from '../../types/MasterTypes.types';
 import { accessUserInSession } from '../../services/user.service';
 
 export default function Layout({ children }: LayoutProps) {
-  let router = useRouter();
-  let [sidebarShow, setSidebarShow] = useState(false)
-  let [breadcrumb, setBreadcrumb] = useState(['home'])
+  const router = useRouter();
+  const [sidebarShow, setSidebarShow] = useState(false)
+  const [breadcrumb, setBreadcrumb] = useState(['home'])
 
   const tailwindClasses = {
     layout: 'layout-container flex',

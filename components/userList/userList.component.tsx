@@ -26,8 +26,8 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
   }
   const [userToEdit, setUserToEdit] = useState<UserType>();
   const [userList, setUserList] = useState<UserType[]>([]);
-  const [loadState, setLoadState] = useState<Boolean>(true);
-  const [addState, setAddState] = useState<Boolean>(false);
+  const [loadState, setLoadState] = useState<boolean>(true);
+  const [addState, setAddState] = useState<boolean>(false);
 
   const renderData = async () => {
     if (!addState) {
@@ -83,7 +83,7 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
     setLoadState(false);
   }
 
-  const registerUser = async (newUser: UserType, managerId?: String, employee?:EmployeeType) => {
+  const registerUser = async (newUser: UserType, managerId?: string, employee?: EmployeeType) => {
     setLoadState(true);
     if (role === USER_ROLES.MANAGERS) {
       console.log('register new manager', newUser)
@@ -100,10 +100,10 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
     setLoadState(false);
   }
 
-  const updateUser = async (updatedUser: UserType, managerId?: String) => {
+  const updateUser = async (updatedUser: UserType, managerId?: string) => {
     setLoadState(true);
     if (role === USER_ROLES.MANAGERS) {
-      let response = await updateManager(userToEdit?.userId!, updatedUser);
+      let response = await updateManager(userToEdit ? (userToEdit?.userId ? userToEdit?.userId : '') : '', updatedUser);
       if (response.error) {
         window.alert('Something went wrong. Please contact administrator of tool.');
       }
@@ -206,9 +206,9 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
 
 type PageProps = {
   activeUser: UserType,
-  onClick: Function,
-  enableRowActions: Boolean
-  role?: String,
+  onClick: () => void,
+  enableRowActions: boolean
+  role?: string,
   parentUser?: UserType,
 }
 UserList.defaultProps = {

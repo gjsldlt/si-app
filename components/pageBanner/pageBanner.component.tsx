@@ -28,8 +28,8 @@ export default function PageBanner({ bgImage, title, content, height }: PageProp
 }
 
 type PageProps = {
-  bgImage?: String,
-  title?: String,
+  bgImage?: string,
+  title?: string,
   content?: any,
   height: string,
 }
