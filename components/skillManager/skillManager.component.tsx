@@ -71,7 +71,7 @@ export default function SkillManager({ employee }: PageProps) {
       setActiveSkills(tempActiveSkills)
       setRate(0);
       setDescription('');
-      setSkill({ _id: '' });
+      setSkill({ _id: '', name: '', description: '' });
       setYearsExperience(0);
     }
   }
