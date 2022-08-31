@@ -33,7 +33,8 @@ const MetadataForm: FC<FormProps> = ({
     }
   }
 
-  //form submit
+  //function when submitting the form containing data from input fields
+  //action depends if add or update is selected
   const formSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setLoadState(true)
@@ -44,15 +45,14 @@ const MetadataForm: FC<FormProps> = ({
       setNewMetadataDesc('')
       renderData()
     }
-    else {
-      //submit to create
-      if (newMetadataName && newMetadataDesc) {
-        await addMetadata(newMetadataName, newMetadataDesc, metadataType)
-        setNewMetadataName('')
-        setNewMetadataDesc('')
-        renderData()
-      }
+    //submit to create
+    else if (newMetadataName && newMetadataDesc) {
+      await addMetadata(newMetadataName, newMetadataDesc, metadataType)
+      setNewMetadataName('')
+      setNewMetadataDesc('')
+      renderData()
     }
+
   }
 
   return (

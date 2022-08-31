@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     } else if (user !== null && router.pathname === '/login') {
       router.replace('/');
     }
-  }, [router])
+  }, [router, user])
 
   return (
     <>
