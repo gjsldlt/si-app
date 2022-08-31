@@ -2,18 +2,17 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import type { NextPage } from 'next'
 import { getSkills } from "../services/skill.service";
 import { accessUserInSession } from "../services/user.service";
 import { AccountType } from "../types/MasterTypes.types";
 import PageBanner from "../components/pageBanner/pageBanner.component";
+import ButtonComponent from "../components/ButtonComponent";
 
 import HomeSVG from "../public/assets/images/home-alt.svg";
 
 import styles from "../styles/Home.module.css";
 import { setuid } from "process";
 import { Button } from "@mui/material";
-
 
 const Home: NextPage = () => {
   //let user: AccountType = accessUserInSession();
@@ -76,7 +75,10 @@ const Home: NextPage = () => {
         </div>
         <div className="">Introduction to Admin Home</div>
         <div>
-          <Button variant="text">test button</Button>
+          <ButtonComponent
+            variant="outlined"
+            text={["test"]}
+          />
         </div>
       </div>
     </div>
