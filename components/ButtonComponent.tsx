@@ -1,4 +1,3 @@
-import React from "react";
 import { FC } from "react";
 import { Button, ButtonGroup } from "@mui/material";
 
@@ -22,8 +21,10 @@ const ButtonComponent: FC<ButtonType> = ({
         <ButtonGroup variant={variant}>
           {text?.map((item, index) => (
             <Button
+              key={index}
               onClick={handleClick ? handleClick[index] : undefined}
               type={type}
+              sx={{ paddingX: `${text.length === 2 ? "4rem" : "2rem"}` }}
             >
               {item}
             </Button>

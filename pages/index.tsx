@@ -13,8 +13,17 @@ import HomeSVG from "../public/assets/images/home-alt.svg";
 import styles from "../styles/Home.module.css";
 import { setuid } from "process";
 import { Button } from "@mui/material";
+import PopupComponent from "../components/PopupComponent";
 
 const Home: NextPage = () => {
+  //state to show popup component
+  const [open, setOpen] = useState<boolean>(false);
+  const handleOpen = (): void => {
+    setOpen(true);
+  };
+  const handleClose = (): void => {
+    setOpen(false);
+  };
   //let user: AccountType = accessUserInSession();
   const [user, setUser] = useState({
     firstName: "",
@@ -78,8 +87,18 @@ const Home: NextPage = () => {
           <ButtonComponent
             variant="outlined"
             text={["test"]}
+            handleClick={[handleOpen]}
           />
         </div>
+        <PopupComponent title="TEST" open={open} close={handleClose}>
+          <div className='flex justify-center'>
+            <ButtonComponent
+              text={["close"]}
+              variant="outlined"
+              handleClick={[handleClose]}
+            />
+          </div>
+        </PopupComponent>
       </div>
     </div>
   );
