@@ -40,7 +40,7 @@ function Users() {
                     <UserList
                         role="managers"
                         activeUser={activeManager}
-                        onClick={selectManager}
+                        onClickItem={selectManager}
                         enableRowActions={true} />
                 </div>
                 <div className={tailwindClasses.box}>
@@ -48,7 +48,7 @@ function Users() {
                     <UserList
                         role={activeManager ? 'employeesof' : 'employees'}
                         activeUser={activeEmployee}
-                        onClick={setActiveEmployee}
+                        onClickItem={setActiveEmployee}
                         parentUser={activeManager}
                         enableRowActions={true} />
                 </div>

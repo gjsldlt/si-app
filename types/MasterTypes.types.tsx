@@ -70,7 +70,7 @@ export interface Metadata {
 }
 
 export interface EmployeeType {
-    _id: string,
+    _id?: string,
     firstName: string,
     lastName: string,
     email: string,

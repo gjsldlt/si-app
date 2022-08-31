@@ -165,7 +165,7 @@ export default function SkillManager({ employee }: PageProps) {
           activeSkills?.map((item, index) => (
             <div className={tailwindClasses.chip} key={`skill-chip-${index}`}>
               <span className={tailwindClasses.name}>{item.skill?.name}</span>
-              <XIcon className={tailwindClasses.chipDeleteIcon} onClick={() => removeActiveSkill(item.skill?._id)} />
+              <XIcon className={tailwindClasses.chipDeleteIcon} onClick={() => removeActiveSkill(item.skill ? item.skill._id : '')} />
             </div>
           ))
         }
@@ -175,5 +175,6 @@ export default function SkillManager({ employee }: PageProps) {
 }
 
 type PageProps = {
-  employee: EmployeeType
+  employee?: EmployeeType
+  setEmployee: (emp: EmployeeType) => void
 }
