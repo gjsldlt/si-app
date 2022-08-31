@@ -10,7 +10,6 @@ import {
 } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
 import Swal from 'sweetalert2'
-import Swal from 'sweetalert2'
 
 import { authLogin, saveUserInSession } from '../../services/user.service'
 
@@ -65,15 +64,6 @@ const Form: React.FC = () => {
     const [repeatPasswordRegister, setRepeatPasswordRegister] = useState('')
     const [contactNumber, setContactNumber] = useState('')
 
-    const [emailLogin, setEmailLogin] = useState('')
-    const [passwordLogin, setpasswordLogin] = useState('')
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [emailRegister, setEmailRegister] = useState('')
-    const [passwordRegister, setPasswordRegister] = useState('')
-    const [repeatPasswordRegister, setRepeatPasswordRegister] = useState('')
-    const [contactNumber, setContactNumber] = useState('')
-
     const loginForm = async () => {
         if (displayLogin === false) {
             setDisplayLogin(true)
@@ -82,7 +72,7 @@ const Form: React.FC = () => {
             setDisplayLogin(false)
             setDisplayRegister(true)
         }
-    };;
+    };
 
     const registerForm = async () => {
         if (displayRegister === false) {
@@ -92,7 +82,7 @@ const Form: React.FC = () => {
             setDisplayRegister(false)
             setDisplayLogin(true)
         }
-    };;
+    };
 
     const passwordInput = async () => {
         if (displayPassword === false) {
@@ -116,21 +106,7 @@ const Form: React.FC = () => {
         }
     };
 
-    const onChange = (e) => {
-        switch (e.target.name) {
-            case 'emailLogin': setEmailLogin(e.target.value); break
-            case 'passwordLogin': setpasswordLogin(e.target.value); break
-            case 'firstName': setFirstName(e.target.value); break
-            case 'lastName': setLastName(e.target.value); break
-            case 'emailRegister': setEmailRegister(e.target.value); break
-            case 'passwordRegister': setPasswordRegister(e.target.value); break
-            case 'repeatPasswordRegister': setRepeatPasswordRegister(e.target.value); break
-            case 'contactNumber': setContactNumber(e.target.value); break
-            default: break
-        }
-    }
-
-    const login = async (ee) => {
+    const login = async (e) => {
         e.preventDefault()
         e.preventDefault()
         const loginData = await authLogin({
@@ -166,11 +142,6 @@ const Form: React.FC = () => {
             })
             router.push("/")
         }
-    }
-
-    const register = async (e) => {
-        e.preventDefault()
-        console.log(firstName, lastName, emailRegister, passwordRegister, repeatPasswordRegister, contactNumber)
     }
 
     const register = async (e) => {
