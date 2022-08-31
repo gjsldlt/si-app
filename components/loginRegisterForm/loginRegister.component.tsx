@@ -10,6 +10,7 @@ import {
 } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
 import Swal from 'sweetalert2'
+import Swal from 'sweetalert2'
 
 import { authLogin, saveUserInSession } from '../../services/user.service'
 
@@ -64,6 +65,15 @@ const Form: React.FC = () => {
     const [repeatPasswordRegister, setRepeatPasswordRegister] = useState('')
     const [contactNumber, setContactNumber] = useState('')
 
+    const [emailLogin, setEmailLogin] = useState('')
+    const [passwordLogin, setpasswordLogin] = useState('')
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [emailRegister, setEmailRegister] = useState('')
+    const [passwordRegister, setPasswordRegister] = useState('')
+    const [repeatPasswordRegister, setRepeatPasswordRegister] = useState('')
+    const [contactNumber, setContactNumber] = useState('')
+
     const loginForm = async () => {
         if (displayLogin === false) {
             setDisplayLogin(true)
@@ -72,7 +82,7 @@ const Form: React.FC = () => {
             setDisplayLogin(false)
             setDisplayRegister(true)
         }
-    };
+    };;
 
     const registerForm = async () => {
         if (displayRegister === false) {
@@ -82,7 +92,7 @@ const Form: React.FC = () => {
             setDisplayRegister(false)
             setDisplayLogin(true)
         }
-    };
+    };;
 
     const passwordInput = async () => {
         if (displayPassword === false) {
@@ -104,9 +114,24 @@ const Form: React.FC = () => {
             case 'contactNumber': setContactNumber(e.target.value); break
             default: break
         }
+    };
+
+    const onChange = (e) => {
+        switch (e.target.name) {
+            case 'emailLogin': setEmailLogin(e.target.value); break
+            case 'passwordLogin': setpasswordLogin(e.target.value); break
+            case 'firstName': setFirstName(e.target.value); break
+            case 'lastName': setLastName(e.target.value); break
+            case 'emailRegister': setEmailRegister(e.target.value); break
+            case 'passwordRegister': setPasswordRegister(e.target.value); break
+            case 'repeatPasswordRegister': setRepeatPasswordRegister(e.target.value); break
+            case 'contactNumber': setContactNumber(e.target.value); break
+            default: break
+        }
     }
 
-    const login = async (e) => {
+    const login = async (ee) => {
+        e.preventDefault()
         e.preventDefault()
         const loginData = await authLogin({
             'email': emailLogin,
@@ -137,9 +162,15 @@ const Form: React.FC = () => {
                 managerId: loginData.login.managerId,
                 employeeId: loginData.login.employeeId,
                 roles: ''
+                roles: ''
             })
             router.push("/")
         }
+    }
+
+    const register = async (e) => {
+        e.preventDefault()
+        console.log(firstName, lastName, emailRegister, passwordRegister, repeatPasswordRegister, contactNumber)
     }
 
     const register = async (e) => {
@@ -190,18 +221,29 @@ const Form: React.FC = () => {
                 </span>
             </div>
             <form
+               
                 action="submit"
+               
                 className={displayLogin === true ? "block" : "hidden"}
+            
             >
                 <div className={`${tailwindClasses.loginFormContainer}`}>
                     <label
+                       
                         htmlFor="emailLogin"
+                       
                         className={`${tailwindClasses.loginLabel}`}
+                    
                     >
                         <MailIcon
+                           
                             className={`${tailwindClasses.iconProperties} ${tailwindClasses.leftIcon}`}
+                       
                         />
                         <input
+                            onChange={onChange}
+                            value={emailLogin}
+                            name="emailLogin"
                             onChange={onChange}
                             value={emailLogin}
                             name="emailLogin"
@@ -214,13 +256,21 @@ const Form: React.FC = () => {
                         />
                     </label>
                     <label
+                       
                         htmlFor="passwordLogin"
+                       
                         className={`${tailwindClasses.loginLabel}`}
+                    
                     >
                         <LockClosedIcon
+                           
                             className={`${tailwindClasses.iconProperties} ${tailwindClasses.leftIcon}`}
+                       
                         />
                         <input
+                            onChange={onChange}
+                            value={passwordLogin}
+                            name="passwordLogin"
                             onChange={onChange}
                             value={passwordLogin}
                             name="passwordLogin"
@@ -230,6 +280,7 @@ const Form: React.FC = () => {
                             className={`${tailwindClasses.loginInputBox}`}
                             placeholder="Password"
                             required
+                       
                         />
                         {displayPassword === false ? (
                             <EyeOffIcon
@@ -254,15 +305,21 @@ const Form: React.FC = () => {
                             </label>
                         </span>
                         <a href="#" className={`${tailwindClasses.forgotPass}`}>
+                            
                             Forgot Password?
+                        
                         </a>
                     </div>
                     <div className={`${tailwindClasses.formSubmitBtnContainer}`}>
                         <button
+                           
                             onClick={login}
+                           
                             className={`${tailwindClasses.formSubmitBtn} ${tailwindClasses.submitLoginSpacing}`}
+                        
                         >
                             LOGIN{" "}
+                           {" "}
                             <ChevronRightIcon className={`${tailwindClasses.submitIcon}`} />
                         </button>
                     </div>
@@ -287,6 +344,9 @@ const Form: React.FC = () => {
                         onChange={onChange}
                         value={firstName}
                         name="firstName"
+                        onChange={onChange}
+                        value={firstName}
+                        name="firstName"
                         type="text"
                         id="firstName"
                         className={`${tailwindClasses.registerInputBox} ${tailwindClasses.topRounded}`}
@@ -295,13 +355,21 @@ const Form: React.FC = () => {
                     />
                 </label>
                 <label
+                   
                     htmlFor="lastName"
+                   
                     className={`${tailwindClasses.registerLabel}`}
+                
                 >
                     <IdentificationIcon
+                       
                         className={`${tailwindClasses.iconProperties} ${tailwindClasses.leftIcon}`}
+                   
                     />
                     <input
+                        onChange={onChange}
+                        value={lastName}
+                        name="lastName"
                         onChange={onChange}
                         value={lastName}
                         name="lastName"
@@ -313,13 +381,21 @@ const Form: React.FC = () => {
                     />
                 </label>
                 <label
+                   
                     htmlFor="emailRegister"
+                   
                     className={`${tailwindClasses.registerLabel}`}
+                
                 >
                     <MailIcon
+                       
                         className={`${tailwindClasses.iconProperties} ${tailwindClasses.leftIcon}`}
+                   
                     />
                     <input
+                        onChange={onChange}
+                        value={emailRegister}
+                        name="emailRegister"
                         onChange={onChange}
                         value={emailRegister}
                         name="emailRegister"
@@ -331,13 +407,21 @@ const Form: React.FC = () => {
                     />
                 </label>
                 <label
+                   
                     htmlFor="passwordRegister"
+                   
                     className={`${tailwindClasses.registerLabel}`}
+                
                 >
                     <LockClosedIcon
+                       
                         className={`${tailwindClasses.iconProperties} ${tailwindClasses.leftIcon}`}
+                   
                     />
                     <input
+                        onChange={onChange}
+                        value={passwordRegister}
+                        name="passwordRegister"
                         onChange={onChange}
                         value={passwordRegister}
                         name="passwordRegister"
@@ -360,13 +444,21 @@ const Form: React.FC = () => {
                     )}
                 </label>
                 <label
+                   
                     htmlFor="repeatPasswordRegister"
+                   
                     className={`${tailwindClasses.registerLabel}`}
+                
                 >
                     <LockClosedIcon
+                       
                         className={`${tailwindClasses.iconProperties} ${tailwindClasses.leftIcon}`}
+                   
                     />
                     <input
+                        onChange={onChange}
+                        value={repeatPasswordRegister}
+                        name="repeatPasswordRegister"
                         onChange={onChange}
                         value={repeatPasswordRegister}
                         name="repeatPasswordRegister"
@@ -388,16 +480,21 @@ const Form: React.FC = () => {
                         />
                     )}
                 </label>
-                <label htmlFor="contactNumber" className={`${tailwindClasses.registerLabel}`}>
+                <label htmlFor="contactNumberNumber" className={`${tailwindClasses.registerLabel}`}>
                     <PhoneIcon
+                       
                         className={`${tailwindClasses.iconProperties} ${tailwindClasses.leftIcon}`}
+                   
                     />
                     <input
                         onChange={onChange}
                         value={contactNumber}
                         name="contactNumber"
+                        onChange={onChange}
+                        value={contactNumber}
+                        name="contactNumber"
                         type="number"
-                        id="contactNumber"
+                        id="contactNumberNumber"
                         className={`${tailwindClasses.registerInputBox} ${tailwindClasses.bottomRounded}`}
                         placeholder="Contact Number"
                         required
@@ -406,9 +503,13 @@ const Form: React.FC = () => {
                 <div className={`${tailwindClasses.formSubmitBtnContainer}`}>
                     <button
                         onClick={register}
+                       
+                        onClick={register}
                         className={`${tailwindClasses.formSubmitBtn} ${tailwindClasses.submitRegisterSpacing}`}
+                    
                     >
                         REGISTER{" "}
+                       {" "}
                         <ChevronRightIcon className={`${tailwindClasses.submitIcon}`} />
                     </button>
                 </div>
