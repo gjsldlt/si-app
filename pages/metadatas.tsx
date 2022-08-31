@@ -8,14 +8,16 @@ import { Metadata } from '../types/MasterTypes.types';
 const MetadataPage = () => {
   const tailwindClasses = {
     customBanner: 'h-full w-full flex items-center justify-start p-[2rem]',
-    content: 'flex relative mx-1 md:mx-0 md:mr-4 md:pl-[1rem] pt-1 md:py-[1rem] flex flex-col md:flex-row gap-1 md:gap-[1rem] z-[1] md:flex-grow',
+    content: 'flex relative mx-1 md:mx-0 md:mr-4 md:pl-[1rem] pt-1 md:py-[1rem] flex flex-col md:flex-row gap-1 md:gap-[1rem] z-[1] md:flex-grow h-full mb-1',
     header: 'text-2xl text-white z-[5]',
     box: 'flex flex-grow overflow-auto ',
     mobileBoxShow: 'flex',
     mobileBoxHidden: 'md:flex hidden',
     mobileTab: 'md:hidden flex justify-center',
     mobileTabOption: '',
-    formButton: 'm-[10px] bg-transparent hover:bg-sidebar text-sidebar font-semibold hover:text-white py-2 px-4 border border-sidebar hover:border-transparent rounded'
+    formButton: 'm-[10px] font-semibold hover:text-white py-2 px-4 border border-sidebar hover:border-transparent rounded',
+    formButtonActive: 'bg-sidebar text-white',
+    formButtonInactive: 'bg-transparent text-white hover:bg-sidebar text-sidebar',
   }
   const [activeSkill, setActiveSkill] = useState<Metadata>();
   const [activeCapability, setActiveCapability] = useState<Metadata>();
@@ -29,6 +31,9 @@ const MetadataPage = () => {
 
   const onMobileTabClick = (tab: string) => {
     setActiveMobileTab(tab);
+    setActiveCapability(undefined);
+    setActiveIndustry(undefined);
+    setActiveSkill(undefined);
   }
 
   return (
