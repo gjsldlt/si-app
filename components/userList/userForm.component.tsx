@@ -3,10 +3,11 @@ import { PlusIcon, XIcon } from "@heroicons/react/solid";
 
 import LoaderComponent from "../loader/loader.component";
 import SkillManager from "../skillManager/skillManager.component";
-import { UserType, ManagerType, Metadata } from "../../types/MasterTypes.types";
+import { UserType, ManagerType, Metadata, EmployeeType } from "../../types/MasterTypes.types";
 import { USER_ROLES } from '../../helpers/constants.helper';
 import { getAllManagers, getEmployeeByUserId } from '../../services/user.service';
 import { getMetadata } from '../../services/metadata.service';
+import Employee from "../../pages/manager/[employee]";
 
 export default function UserList({ userToEdit, updateUser, registerUser, parentUser, setLoadState, role }: PageProps) {
     const [firstName, setFirstName] = useState<string>(userToEdit ? userToEdit.firstName : '');
@@ -16,7 +17,7 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
     const [confirmPassword, setConfirmPassword] = useState<string>('');
     const [managerId, setManagerId] = useState<string>('');
     const [managerList, setManagerList] = useState<ManagerType[]>([]);
-    const [employeeData, setEmployeeData] = useState<EmployeeData>();
+    const [employeeData, setEmployeeData] = useState<EmployeeType>();
     const [skillList, setSkillList] = useState<Metadata[]>([]);
     const [activeSkillList, setActiveSkillList] = useState<{
         skill: Metadata,
@@ -30,7 +31,7 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
         yearsExperience: string,
         description: string,
     }>({
-        skill: null,
+        skill: undefined,
         rate: '',
         yearsExperience: '',
         description: '',
@@ -74,7 +75,7 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
         }
     }
 
-    const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
         switch (e.target.name) {
             case "firstName": setFirstName(e.target.value); break;
             case "lastName": setLastName(e.target.value); break;
@@ -84,30 +85,40 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
             default: break;
         }
         if (role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF) {
+            let tempEmp = employeeData;
             switch (e.target.name) {
-                case "firstName": setEmployeeData({ ...employeeData, firstName: e.target.value }); break;
-                case "lastName": setEmployeeData({ ...employeeData, lastName: e.target.value }); break;
-                case "email": setEmployeeData({ ...employeeData, email: e.target.value }); break;
-                case "password": setEmployeeData({ ...employeeData, password: e.target.value }); break;
+                case "firstName":
+                    tempEmp?.firstName != e.target.value;
+                    break;
+                case "lastName":
+                    tempEmp?.lastName != e.target.value;
+                    break;
+                case "email":
+                    tempEmp?.email != e.target.value;
+                    break;
+                case "password":
+                    tempEmp?.password != e.target.value;
+                    break;
                 case "confirmPassword": setConfirmPassword(e.target.value); break;
                 case "managerId":
                     let manager = managerList.find(item => item._id === e.target.value);
                     setManagerId(e.target.value);
-                    setEmployeeData({ ...employeeData, manager: manager })
+                    tempEmp?.manager != manager;
                     break;
                 case "primarySkill":
                     const primarySkill = skillList.find(item => item._id === e.target.value);
-                    setEmployeeData({ ...employeeData, primarySkill: primarySkill })
+                    tempEmp?.primarySkill != primarySkill;
                     break;
                 case "secondarySkill":
                     const secondarySkill = skillList.find(item => item._id === e.target.value);
-                    setEmployeeData({ ...employeeData, secondarySkill: secondarySkill })
+                    tempEmp?.secondarySkill != secondarySkill;
                     break;
                 case "capability":
                     const capability = capabilityList.find(item => item._id === e.target.value);
-                    setEmployeeData({ ...employeeData, capability: capability })
+                    tempEmp?.capability != capability;
                     break;
             }
+            setEmployeeData(tempEmp);
         }
     }
 
@@ -133,23 +144,23 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
         setLoadState(false);
     }
 
-    const renderSelectInput = (name: string, value: string, optionList) => {
-        return <div className={tailwindClasses.formItem}>
-            <label className={tailwindClasses.inputLabel} htmlFor={name}>
-                Manager *
-            </label>
-            <select
-                disabled={Boolean(parentUser)}
-                required
-                name={name}
-                onChange={onInputChange}
-                className={tailwindClasses.input}
-                value={value}
-                id={name}>
-                {optionList}
-            </select>
-        </div>
-    }
+    // const renderSelectInput = (name: string, value: string, optionList) => {
+    //     return <div className={tailwindClasses.formItem}>
+    //         <label className={tailwindClasses.inputLabel} htmlFor={name}>
+    //             Manager *
+    //         </label>
+    //         <select
+    //             disabled={Boolean(parentUser)}
+    //             required
+    //             name={name}
+    //             onChange={onInputChange}
+    //             className={tailwindClasses.input}
+    //             value={value}
+    //             id={name}>
+    //             {optionList}
+    //         </select>
+    //     </div>
+    // }
 
     const onActiveSkillAdd = () => {
         console.log(activeSkill);
@@ -187,7 +198,7 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
                     Manager *
                 </label>
                 <select
-                    disabled={boolean(parentUser)}
+                    disabled={Boolean(parentUser)}
                     required
                     name="managerId"
                     onChange={onInputChange}
@@ -453,8 +464,9 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
 
 type PageProps = {
     userToEdit?: UserType,
-    registerUser: (newUser: UserType) => void,
+    registerUser: (newUser: UserType, managerId?: string, employee?: EmployeeType) => void,
     parentUser?: UserType,
     setLoadState: (newState: boolean) => void,
-    role: string
+    role?: string,
+    updateUser: (updatedUser: UserType, managerId?: string) => void
 }
