@@ -249,7 +249,6 @@ const Form: React.FC = () => {
                             name="emailLogin"
                             type="email"
                             id="emailLogin"
-                            onChange={onChange}
                             className={`${tailwindClasses.loginInputBox}`}
                             placeholder="Email Address"
                             required
@@ -276,7 +275,6 @@ const Form: React.FC = () => {
                             name="passwordLogin"
                             type={displayPassword === true ? "text" : "password"}
                             id="passwordLogin"
-                            onChange={onChange}
                             className={`${tailwindClasses.loginInputBox}`}
                             placeholder="Password"
                             required

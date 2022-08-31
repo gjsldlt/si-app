@@ -1,6 +1,6 @@
 import styles from './sample.module.scss';
 
-export default function Sample({ }: PageProps) {
+export default function Sample() {
   const tailwindClasses = {
     container: ''
   }
@@ -11,5 +11,5 @@ export default function Sample({ }: PageProps) {
   )
 }
 
-type PageProps = {
-}
+// type PageProps = {
+// }

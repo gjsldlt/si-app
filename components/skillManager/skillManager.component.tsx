@@ -21,21 +21,21 @@ export default function SkillManager({ employee }: PageProps) {
     name: '',
     chipDeleteIcon: 'h-[20px] ml-2 hover:text-current cursor-pointer',
   }
-  const [loadState, setLoadState] = useState<Boolean>(false);
+  const [loadState, setLoadState] = useState<boolean>(false);
   const [metadataSkills, setMetadataSkills] = useState<Metadata[]>([]);
   const [primarySkill, setPrimarySkill] = useState<Metadata>();
   const [secondarySkill, setSecondarySkill] = useState<Metadata>();
   const [activeSkills, setActiveSkills] = useState<{
-    rate: Number,
-    yearsExperience: Number,
-    description: String,
+    rate: number,
+    yearsExperience: number,
+    description: string,
     skill?: Metadata
   }[]>([]);
-  let filteredMetadataSkills = metadataSkills.filter(mskill => activeSkills.map(item => item.skill).map(item => item?._id).indexOf(mskill._id) === -1);
+  const filteredMetadataSkills = metadataSkills.filter(mskill => activeSkills.map(item => item.skill).map(item => item?._id).indexOf(mskill._id) === -1);
 
-  const [rate, setRate] = useState<Number>(0);
-  const [yearsExperience, setYearsExperience] = useState<Number>(0);
-  const [description, setDescription] = useState<String>('');
+  const [rate, setRate] = useState<number>(0);
+  const [yearsExperience, setYearsExperience] = useState<number>(0);
+  const [description, setDescription] = useState<string>('');
   const [skill, setSkill] = useState<Metadata>();
 
   const renderData = async () => {
@@ -55,7 +55,7 @@ export default function SkillManager({ employee }: PageProps) {
   }
 
   const addActiveSkill = () => {
-    let tempActiveSkills = activeSkills;
+    const tempActiveSkills = activeSkills;
     if (
       Boolean(skill) &&
       rate > 0 &&
@@ -76,7 +76,7 @@ export default function SkillManager({ employee }: PageProps) {
     }
   }
 
-  const removeActiveSkill = (id: String) => {
+  const removeActiveSkill = (id: string) => {
     setActiveSkills(activeSkills.filter(item => item.skill?._id !== id))
   }
 

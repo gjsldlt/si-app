@@ -16,7 +16,7 @@ function Skill() {
     return (
         <>
             <PageBanner content={<div className={tailwindClasses.customBanner}>
-                <h1 className={tailwindClasses.header}>Manager's View of {employee}'s Skill specific to {skill}</h1>
+                <h1 className={tailwindClasses.header}>Manager&apos; View of {employee}&apos; Skill specific to {skill}</h1>
             </div>} />
             <div className={tailwindClasses.content}>
                 <p>
