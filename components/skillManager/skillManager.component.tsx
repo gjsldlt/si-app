@@ -44,7 +44,7 @@ export default function SkillManager({ employee }: PageProps) {
     setLoadState(false);
   }
 
-  const onFormSkillInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onFormSkillInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     switch (e.target.name) {
       case 'rate': setRate(parseInt(e.target.value)); break;
       case 'yearsExperience': setYearsExperience(parseInt(e.target.value)); break;
@@ -71,7 +71,7 @@ export default function SkillManager({ employee }: PageProps) {
       setActiveSkills(tempActiveSkills)
       setRate(0);
       setDescription('');
-      setSkill({ _id: '' });
+      setSkill({ _id: '', name: '', description: '' });
       setYearsExperience(0);
     }
   }
@@ -149,7 +149,6 @@ export default function SkillManager({ employee }: PageProps) {
             name="description"
             onChange={onFormSkillInputChange}
             value={description}
-            row={4}
             className={tailwindClasses.input}
             id="grid-description"
             placeholder="Indicate your experience here." />
@@ -166,7 +165,7 @@ export default function SkillManager({ employee }: PageProps) {
           activeSkills?.map((item, index) => (
             <div className={tailwindClasses.chip} key={`skill-chip-${index}`}>
               <span className={tailwindClasses.name}>{item.skill?.name}</span>
-              <XIcon className={tailwindClasses.chipDeleteIcon} onClick={() => removeActiveSkill(item.skill?._id)} />
+              <XIcon className={tailwindClasses.chipDeleteIcon} onClick={() => removeActiveSkill(item.skill ? item.skill._id : '')} />
             </div>
           ))
         }
@@ -176,5 +175,6 @@ export default function SkillManager({ employee }: PageProps) {
 }
 
 type PageProps = {
-  employee: EmployeeType
+  employee?: EmployeeType
+  setEmployee: (emp: EmployeeType) => void
 }

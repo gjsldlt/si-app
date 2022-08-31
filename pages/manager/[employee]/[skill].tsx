@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router'
 
 import PageBanner from '../../../components/pageBanner/pageBanner.component';
-import PeopleList from '../../../components/peopleList/peopleList.component';
 
 function Skill() {
     const router = useRouter()

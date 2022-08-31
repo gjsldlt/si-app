@@ -6,11 +6,11 @@ import UserList from '../components/userList/userList.component';
 import SkillManager from '../components/skillManager/skillManager.component';
 import EmployeeDetail from '../components/employeeDetail/employeeDetail.component';
 import ManagerWidget from '../components/managerWidget/managerWidget.component';
-import { UserType } from '../types/MasterTypes.types';
+import { EmployeeType, UserType } from '../types/MasterTypes.types';
 
 function Users() {
     const [activeManager, setActiveManager] = useState<UserType>()
-    const [activeEmployee, setActiveEmployee] = useState(undefined)
+    const [activeEmployee, setActiveEmployee] = useState<EmployeeType>()
 
     const tailwindClasses = {
         customBanner: 'h-full w-full flex items-center justify-start p-[2rem]',
@@ -40,7 +40,7 @@ function Users() {
                     <UserList
                         role="managers"
                         activeUser={activeManager}
-                        onClick={selectManager}
+                        onClickItem={(user) => selectManager(user as UserType)}
                         enableRowActions={true} />
                 </div>
                 <div className={tailwindClasses.box}>
@@ -48,7 +48,7 @@ function Users() {
                     <UserList
                         role={activeManager ? 'employeesof' : 'employees'}
                         activeUser={activeEmployee}
-                        onClick={setActiveEmployee}
+                        onClickItem={(user) => setActiveEmployee(user as EmployeeType)}
                         parentUser={activeManager}
                         enableRowActions={true} />
                 </div>

@@ -9,7 +9,7 @@ import { UserType, EmployeeType } from '../../types/MasterTypes.types';
 import UserForm from "./userForm.component";
 import { USER_ROLES } from '../../helpers/constants.helper';
 
-export default function UserList({ role, activeUser, parentUser, onClick, enableRowActions }: PageProps) {
+export default function UserList({ role, activeUser, parentUser, onClickItem, enableRowActions }: PageProps) {
   const tailwindClasses = {
     container: 'container relative flex flex-grow flex-col bg-white p-1 min-h-[200px] md:min-h-100 border-[1px] shadow-lg items-stretch',
     toolbar: 'toolbar flex flex-row grow-0 basis-[content]',
@@ -59,9 +59,9 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
   const clickUserRow = (user: UserType) => {
     if (enableRowActions) {
       if (activeUser?._id === user._id) {
-        onClick(undefined);
+        onClickItem(undefined);
       } else {
-        onClick(user);
+        onClickItem(user);
       }
     }
   }
@@ -93,7 +93,7 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
       window.alert(`${newUser.firstName} ${newUser.lastName} is now registered as a Manager.`)
     } else {
       console.log(`register new employee of ${managerId}`, newUser, employee)
-      await registerEmployee(employee, managerId!);
+      await registerEmployee(employee!, managerId!);
       await renderData();
       setAddState(false);
     }
@@ -206,15 +206,16 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
 
 type PageProps = {
   activeUser: UserType,
-  onClick: () => void,
+  onClickItem: (user: UserType | React.Dispatch<React.SetStateAction<undefined>> | undefined) => void,
   enableRowActions: boolean
   role?: string,
   parentUser?: UserType,
+  registerEmployee?: (emp: EmployeeType, managerId: string) => void,
 }
 UserList.defaultProps = {
   role: USER_ROLES.ALL,
   activeUser: null,
-  onClick: () => { console.log('done nothing.') },
+  onClickItem: (user: UserType | React.Dispatch<React.SetStateAction<undefined>> | undefined) => { console.log('done nothing.') },
   enableRowActions: false,
   parentUser: undefined
 }
