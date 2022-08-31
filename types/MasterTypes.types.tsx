@@ -16,7 +16,7 @@ export interface RouteItem {
 export interface AccountType extends UserType {
     role: string;
     token: string,
-    roles: [string],
+    roles: [string?],
 }
 
 export interface ManagerType {
@@ -60,7 +60,7 @@ export interface UserType {
     password?: string,
     userId?: string,
     managerId?: string,
-    employeeI?: string,
+    employeeId?: string,
 }
 
 export interface Metadata {
