@@ -44,7 +44,7 @@ export default function SkillManager({ employee }: PageProps) {
     setLoadState(false);
   }
 
-  const onFormSkillInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onFormSkillInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     switch (e.target.name) {
       case 'rate': setRate(parseInt(e.target.value)); break;
       case 'yearsExperience': setYearsExperience(parseInt(e.target.value)); break;
@@ -149,7 +149,6 @@ export default function SkillManager({ employee }: PageProps) {
             name="description"
             onChange={onFormSkillInputChange}
             value={description}
-            row={4}
             className={tailwindClasses.input}
             id="grid-description"
             placeholder="Indicate your experience here." />
