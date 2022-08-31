@@ -1,7 +1,7 @@
 import { SvgIconTypeMap } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 
-export let SidebarCallerType = function (newState: Boolean): Boolean {
+export let SidebarCallerType = function (newState: boolean): boolean {
     return false;
 };
 
@@ -15,34 +15,34 @@ export interface RouteItem {
 
 export interface AccountType extends UserType {
     role: string;
-    token: String,
-    roles: [String],
+    token: string,
+    roles: [string],
 }
 
 export interface ManagerType {
-    _id: String,
-    firstName: String,
-    lastName: String,
-    email: String,
-    password: String,
-    createdAt: String,
-    userId: String,
+    _id: string,
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+    createdAt: string,
+    userId: string,
 }
 
 // export interface EmployeeType  {
-//     _id: String,
-//     firstName: String,
-//     lastName: String,
-//     email: String,
-//     password: String,
-//     createdAt: String,
-//     userId: String,
+//     _id: string,
+//     firstName: string,
+//     lastName: string,
+//     email: string,
+//     password: string,
+//     createdAt: string,
+//     userId: string,
 // }
 
 export interface CapabilityType {
-    _id: String;
-    name: String;
-    description: String;
+    _id: string;
+    name: string;
+    description: string;
 };
 
 
@@ -53,14 +53,14 @@ export interface SkillType {
 }
 
 export interface UserType {
-    _id?: String,
-    firstName: String,
-    lastName: String,
-    email: String,
-    password?: String,
-    userId?: String,
-    managerId?: String,
-    employeeI?: String,
+    _id?: string,
+    firstName: string,
+    lastName: string,
+    email: string,
+    password?: string,
+    userId?: string,
+    managerId?: string,
+    employeeI?: string,
 }
 
 export interface Metadata {
@@ -70,45 +70,45 @@ export interface Metadata {
 }
 
 export interface EmployeeType {
-    _id: String,
-    firstName: String,
-    lastName: String,
-    email: String,
-    password?: String,
+    _id: string,
+    firstName: string,
+    lastName: string,
+    email: string,
+    password?: string,
     manager: {
-        _id: String,
-        userId: String,
-        firstName: String,
-        lastName: String,
-        email: String,
+        _id: string,
+        userId: string,
+        firstName: string,
+        lastName: string,
+        email: string,
     },
     capability?: {
-        _id: String,
-        name: String,
-        id: String,
-        description: String,
+        _id: string,
+        name: string,
+        id: string,
+        description: string,
     }
     primarySkill?: {
-        _id: String,
-        name: String,
-        id: String,
-        description: String,
+        _id: string,
+        name: string,
+        id: string,
+        description: string,
     }
     secondarySkill?: {
-        _id: String,
-        name: String,
-        id: String,
-        description: String,
+        _id: string,
+        name: string,
+        id: string,
+        description: string,
     }
     skills?: [{
-        name: String,
-        rate: String,
-        yearsExperience: String,
+        name: string,
+        rate: string,
+        yearsExperience: string,
         skill: {
-            _id: String,
-            name: String,
-            id: String,
-            description: String,
+            _id: string,
+            name: string,
+            id: string,
+            description: string,
         }
     }]
 }

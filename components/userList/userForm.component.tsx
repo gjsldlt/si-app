@@ -9,26 +9,26 @@ import { getAllManagers, getEmployeeByUserId } from '../../services/user.service
 import { getMetadata } from '../../services/metadata.service';
 
 export default function UserList({ userToEdit, updateUser, registerUser, parentUser, setLoadState, role }: PageProps) {
-    const [firstName, setFirstName] = useState<String>(userToEdit ? userToEdit.firstName : '');
-    const [lastName, setLastName] = useState<String>(userToEdit ? userToEdit.lastName : '');
-    const [email, setEmail] = useState<String>(userToEdit ? userToEdit.email : '');
-    const [password, setPassword] = useState<String>('');
-    const [confirmPassword, setConfirmPassword] = useState<String>('');
-    const [managerId, setManagerId] = useState<String>('');
+    const [firstName, setFirstName] = useState<string>(userToEdit ? userToEdit.firstName : '');
+    const [lastName, setLastName] = useState<string>(userToEdit ? userToEdit.lastName : '');
+    const [email, setEmail] = useState<string>(userToEdit ? userToEdit.email : '');
+    const [password, setPassword] = useState<string>('');
+    const [confirmPassword, setConfirmPassword] = useState<string>('');
+    const [managerId, setManagerId] = useState<string>('');
     const [managerList, setManagerList] = useState<ManagerType[]>([]);
     const [employeeData, setEmployeeData] = useState<EmployeeData>();
     const [skillList, setSkillList] = useState<Metadata[]>([]);
     const [activeSkillList, setActiveSkillList] = useState<{
         skill: Metadata,
-        rate: String,
-        yearsExperience: String,
-        description: String,
+        rate: string,
+        yearsExperience: string,
+        description: string,
     }[]>([]);
     const [activeSkill, setActiveSkill] = useState<{
         skill?: Metadata,
-        rate: String,
-        yearsExperience: String,
-        description: String,
+        rate: string,
+        yearsExperience: string,
+        description: string,
     }>({
         skill: null,
         rate: '',
@@ -55,7 +55,7 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
         e.preventDefault();
         if (userToEdit) {
             //  submit to update pemp
-            let newUser = {
+            const newUser = {
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
@@ -64,7 +64,7 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
             updateUser(newUser, managerId)
         } else {
             // submit to create
-            let newUser = {
+            const newUser = {
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
@@ -96,22 +96,22 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
                     setEmployeeData({ ...employeeData, manager: manager })
                     break;
                 case "primarySkill":
-                    let primarySkill = skillList.find(item => item._id === e.target.value);
+                    const primarySkill = skillList.find(item => item._id === e.target.value);
                     setEmployeeData({ ...employeeData, primarySkill: primarySkill })
                     break;
                 case "secondarySkill":
-                    let secondarySkill = skillList.find(item => item._id === e.target.value);
+                    const secondarySkill = skillList.find(item => item._id === e.target.value);
                     setEmployeeData({ ...employeeData, secondarySkill: secondarySkill })
                     break;
                 case "capability":
-                    let capability = capabilityList.find(item => item._id === e.target.value);
+                    const capability = capabilityList.find(item => item._id === e.target.value);
                     setEmployeeData({ ...employeeData, capability: capability })
                     break;
             }
         }
     }
 
-    const onManagerSelect = (id: String) => {
+    const onManagerSelect = (id: string) => {
         console.log(id);
     }
 
@@ -126,14 +126,14 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
     const renderEmployeeData = async () => {
         setLoadState(true);
         setManagerList(await getAllManagers());
-        setEmployeeData(await getEmployeeByUserId(userToEdit?._id!));
+        setEmployeeData(await getEmployeeByUserId(userToEdit ? (userToEdit?._id ? userToEdit?._id : '') : ''));
         setSkillList(await getMetadata('skill'))
         setCapabilityList(await getMetadata('capability'))
         console.log(employeeData)
         setLoadState(false);
     }
 
-    const renderSelectInput = (name: String, value: String, optionList) => {
+    const renderSelectInput = (name: string, value: string, optionList) => {
         return <div className={tailwindClasses.formItem}>
             <label className={tailwindClasses.inputLabel} htmlFor={name}>
                 Manager *
@@ -157,7 +157,7 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
 
     const onActiveSkillInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log(e.target.name, e.target.value)
-        let tempSkill = activeSkill;
+        const tempSkill = activeSkill;
         switch (e.target.name) {
             case 'skill':
                 tempSkill.skill = skillList.find(itm => itm._id === e.target.value);
@@ -187,7 +187,7 @@ export default function UserList({ userToEdit, updateUser, registerUser, parentU
                     Manager *
                 </label>
                 <select
-                    disabled={Boolean(parentUser)}
+                    disabled={boolean(parentUser)}
                     required
                     name="managerId"
                     onChange={onInputChange}
@@ -455,6 +455,6 @@ type PageProps = {
     userToEdit?: UserType,
     registerUser: (newUser: UserType) => void,
     parentUser?: UserType,
-    setLoadState: (newState: Boolean) => void,
-    role: String
+    setLoadState: (newState: boolean) => void,
+    role: string
 }

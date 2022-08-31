@@ -13,7 +13,7 @@ function Employee() {
     return (
         <>
             <PageBanner content={<div className={tailwindClasses.customBanner}>
-                <h1 className={tailwindClasses.header}>Manager's View of {employee}'s' Skills and Details</h1>
+                <h1 className={tailwindClasses.header}>Manager&apos; View of {employee}&apos; Skills and Details</h1>
             </div>} />
             <div className={tailwindClasses.content}>
                 <p>

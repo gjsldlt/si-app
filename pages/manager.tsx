@@ -13,13 +13,13 @@ function Manager() {
     return (
         <>
             <PageBanner content={<div className={tailwindClasses.customBanner}>
-                <h1 className={tailwindClasses.header}>Manager's Employee List</h1>
+                <h1 className={tailwindClasses.header}>Manager&apos; Employee List</h1>
             </div>} />
             <div className={tailwindClasses.content}>
                 <p>
-                    <a href="/manager/juan">Juan De la Cruz</a>
+                    <Link href="/manager/juan">Juan De la Cruz</Link>
                     <br />
-                    <a href="/manager/maria">Maria De la Paz</a>
+                    <Link href="/manager/maria">Maria De la Paz</Link>
                 </p>
             </div>
         </>

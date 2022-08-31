@@ -5,13 +5,13 @@ import { UserType } from '../../types/MasterTypes.types';
 import styles from './managerWidget.module.scss';
 
 export default function ManagerWidget({ activeManager, height }: PageProps) {
-  let tailwindClasses = {
+  const tailwindClasses = {
     container: `container flex h-[${height}] bg-white p-1 border-[1px] shadow-lg`,
     widget: 'widget flex flex-grow',
     default: 'default w-full flex flex-row justify-center items-center',
     active: 'active ',
   }
-  const [loadState, setLoadState] = useState<Boolean>(false);
+  const [loadState, setLoadState] = useState<boolean>(false);
 
   const renderDefaultData = () => {
     return <div className={tailwindClasses.default}>
@@ -24,9 +24,9 @@ export default function ManagerWidget({ activeManager, height }: PageProps) {
     </div>
   }
 
-  useEffect(() => {
+  // useEffect(() => {
 
-  }, [activeManager])
+  // }, [activeManager])
 
   return (
     <div className={tailwindClasses.container}>
@@ -40,7 +40,7 @@ export default function ManagerWidget({ activeManager, height }: PageProps) {
 
 type PageProps = {
   activeManager?: UserType,
-  height?: String
+  height?: string
 }
 ManagerWidget.defaultProps = {
   height: '20vh'
