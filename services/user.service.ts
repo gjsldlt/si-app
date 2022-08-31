@@ -1,6 +1,6 @@
 import axios from 'axios';
 import GLOBALHELPER from '../helpers/global.helper';
-import { UserDataType, UserType, EmployeeType } from '../types/MasterTypes.types';
+import { AccountType, UserType, EmployeeType } from '../types/MasterTypes.types';
 
 
 axios.defaults.headers.common['Content-Type'] = `application/json`;
@@ -36,7 +36,7 @@ export async function authLogin({ email, password }: LoginDetails) {
     return response.data.data;
 }
 
-export const saveUserInSession = (UserData: UserDataType) => {
+export const saveUserInSession = (UserData: AccountType) => {
     sessionStorage.setItem('user', JSON.stringify(UserData));
 }
 
