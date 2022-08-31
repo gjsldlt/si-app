@@ -10,7 +10,6 @@ import {
 } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
 import Swal from 'sweetalert2'
-import Swal from 'sweetalert2'
 
 import { authLogin, saveUserInSession } from '../../services/user.service'
 
@@ -55,15 +54,6 @@ const Form: React.FC = () => {
     const [displayLogin, setDisplayLogin] = useState(true)
     const [displayRegister, setDisplayRegister] = useState(false)
     const [displayPassword, setDisplayPassword] = useState(false)
-
-    const [emailLogin, setEmailLogin] = useState('')
-    const [passwordLogin, setpasswordLogin] = useState('')
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [emailRegister, setEmailRegister] = useState('')
-    const [passwordRegister, setPasswordRegister] = useState('')
-    const [repeatPasswordRegister, setRepeatPasswordRegister] = useState('')
-    const [contactNumber, setContactNumber] = useState('')
 
     const [emailLogin, setEmailLogin] = useState('')
     const [passwordLogin, setpasswordLogin] = useState('')
@@ -151,11 +141,6 @@ const Form: React.FC = () => {
             })
             router.push("/")
         }
-    }
-
-    const register = async (e) => {
-        e.preventDefault()
-        console.log(firstName, lastName, emailRegister, passwordRegister, repeatPasswordRegister, contactNumber)
     }
 
     const register = async (e) => {
