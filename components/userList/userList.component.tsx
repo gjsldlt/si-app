@@ -210,7 +210,7 @@ type PageProps = {
   enableRowActions: boolean
   role?: string,
   parentUser?: UserType,
-  registerEmployee: (emp: EmployeeType, managerId: string) => void,
+  registerEmployee?: (emp: EmployeeType, managerId: string) => void,
 }
 UserList.defaultProps = {
   role: USER_ROLES.ALL,
