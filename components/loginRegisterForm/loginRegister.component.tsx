@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import {
     MailIcon,
     LockClosedIcon,
@@ -92,7 +92,7 @@ const Form: React.FC = () => {
         }
     };
 
-    const onChange = (e) => {
+    const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         switch (e.target.name) {
             case 'emailLogin': setEmailLogin(e.target.value); break
             case 'passwordLogin': setpasswordLogin(e.target.value); break
