@@ -137,8 +137,7 @@ const Form: React.FC = () => {
                 token: loginData.login.token,
                 managerId: loginData.login.managerId,
                 employeeId: loginData.login.employeeId,
-                roles: ''
-                roles: ''
+                roles: '',
             })
             router.push("/")
         }
