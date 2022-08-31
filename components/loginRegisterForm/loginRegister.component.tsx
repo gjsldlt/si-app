@@ -116,21 +116,7 @@ const Form: React.FC = () => {
         }
     };
 
-    const onChange = (e) => {
-        switch (e.target.name) {
-            case 'emailLogin': setEmailLogin(e.target.value); break
-            case 'passwordLogin': setpasswordLogin(e.target.value); break
-            case 'firstName': setFirstName(e.target.value); break
-            case 'lastName': setLastName(e.target.value); break
-            case 'emailRegister': setEmailRegister(e.target.value); break
-            case 'passwordRegister': setPasswordRegister(e.target.value); break
-            case 'repeatPasswordRegister': setRepeatPasswordRegister(e.target.value); break
-            case 'contactNumber': setContactNumber(e.target.value); break
-            default: break
-        }
-    }
-
-    const login = async (ee) => {
+    const login = async (e) => {
         e.preventDefault()
         e.preventDefault()
         const loginData = await authLogin({
@@ -243,9 +229,6 @@ const Form: React.FC = () => {
                             onChange={onChange}
                             value={emailLogin}
                             name="emailLogin"
-                            onChange={onChange}
-                            value={emailLogin}
-                            name="emailLogin"
                             type="email"
                             id="emailLogin"
                             className={`${tailwindClasses.loginInputBox}`}
@@ -266,9 +249,6 @@ const Form: React.FC = () => {
                        
                         />
                         <input
-                            onChange={onChange}
-                            value={passwordLogin}
-                            name="passwordLogin"
                             onChange={onChange}
                             value={passwordLogin}
                             name="passwordLogin"
@@ -341,9 +321,6 @@ const Form: React.FC = () => {
                         onChange={onChange}
                         value={firstName}
                         name="firstName"
-                        onChange={onChange}
-                        value={firstName}
-                        name="firstName"
                         type="text"
                         id="firstName"
                         className={`${tailwindClasses.registerInputBox} ${tailwindClasses.topRounded}`}
@@ -364,9 +341,6 @@ const Form: React.FC = () => {
                    
                     />
                     <input
-                        onChange={onChange}
-                        value={lastName}
-                        name="lastName"
                         onChange={onChange}
                         value={lastName}
                         name="lastName"
@@ -393,9 +367,6 @@ const Form: React.FC = () => {
                         onChange={onChange}
                         value={emailRegister}
                         name="emailRegister"
-                        onChange={onChange}
-                        value={emailRegister}
-                        name="emailRegister"
                         type="email"
                         id="emailRegister"
                         className={`${tailwindClasses.registerInputBox}`}
@@ -416,9 +387,6 @@ const Form: React.FC = () => {
                    
                     />
                     <input
-                        onChange={onChange}
-                        value={passwordRegister}
-                        name="passwordRegister"
                         onChange={onChange}
                         value={passwordRegister}
                         name="passwordRegister"
@@ -456,9 +424,6 @@ const Form: React.FC = () => {
                         onChange={onChange}
                         value={repeatPasswordRegister}
                         name="repeatPasswordRegister"
-                        onChange={onChange}
-                        value={repeatPasswordRegister}
-                        name="repeatPasswordRegister"
                         type={displayPassword === true ? "text" : "password"}
                         id="repeatPasswordRegister"
                         className={`${tailwindClasses.registerInputBox}`}
@@ -487,9 +452,6 @@ const Form: React.FC = () => {
                         onChange={onChange}
                         value={contactNumber}
                         name="contactNumber"
-                        onChange={onChange}
-                        value={contactNumber}
-                        name="contactNumber"
                         type="number"
                         id="contactNumberNumber"
                         className={`${tailwindClasses.registerInputBox} ${tailwindClasses.bottomRounded}`}
@@ -499,8 +461,6 @@ const Form: React.FC = () => {
                 </label>
                 <div className={`${tailwindClasses.formSubmitBtnContainer}`}>
                     <button
-                        onClick={register}
-                       
                         onClick={register}
                         className={`${tailwindClasses.formSubmitBtn} ${tailwindClasses.submitRegisterSpacing}`}
                     
