@@ -4,18 +4,18 @@ import { PlusIcon, XIcon, PencilIcon, TrashIcon } from '@heroicons/react/solid';
 import styles from './managerList.module.scss';
 import LoaderComponent from '../loader/loader.component';
 import { getAllManagers } from '../../services/user.service';
-import { getEmployees, getEmployeesOfManager, deleteUser, registerManager, registerEmployee } from '../../services/user.service';
-import { UserType } from '../../types/MasterTypes.types';
+import { getEmployees, getEmployeesOfManager, deleteUser, registerManager, registerEmployee, updateManager } from '../../services/user.service';
+import { UserType, EmployeeType } from '../../types/MasterTypes.types';
 import UserForm from "./userForm.component";
 import { USER_ROLES } from '../../helpers/constants.helper';
 
-export default function UserList({ role, activeUser, parentUser, onClick, enableRowActions }: PageProps) {
+export default function UserList({ role, activeUser, parentUser, onClickItem, enableRowActions }: PageProps) {
   const tailwindClasses = {
-    container: 'container relative flex flex-col bg-white p-1 min-h-[200px] md:h-full md:min-h-100 md:w-[47vw] lg:w-[27vw] border-[1px] shadow-lg',
-    toolbar: 'toolbar flex flex-row',
+    container: 'container relative flex flex-grow flex-col bg-white p-1 min-h-[200px] md:min-h-100 border-[1px] shadow-lg items-stretch',
+    toolbar: 'toolbar flex flex-row grow-0 basis-[content]',
     title: 'title flex-1',
     addButton: 'addbutton h-iconbutton w-iconbutton flex items-center justify-center p-0',
-    list: 'list flex-grow flex flex-col overflow-auto max-h-[300px] md:max-h-unset',
+    list: 'list grow-0 flex flex-col overflow-auto basis-[90%]',
     lineItem: 'lineitem transition-all duration-500 rounded py-1 px-2 flex flex-row',
     lineItemActive: 'active bg-sidebar text-white',
     lineDetails: 'name flex flex-col justify-start justify-center flex-grow cursor-pointer',
@@ -26,8 +26,8 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
   }
   const [userToEdit, setUserToEdit] = useState<UserType>();
   const [userList, setUserList] = useState<UserType[]>([]);
-  const [loadState, setLoadState] = useState<Boolean>(true);
-  const [addState, setAddState] = useState<Boolean>(false);
+  const [loadState, setLoadState] = useState<boolean>(true);
+  const [addState, setAddState] = useState<boolean>(false);
 
   const renderData = async () => {
     if (!addState) {
@@ -59,9 +59,9 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
   const clickUserRow = (user: UserType) => {
     if (enableRowActions) {
       if (activeUser?._id === user._id) {
-        onClick(undefined);
+        onClickItem(undefined);
       } else {
-        onClick(user);
+        onClickItem(user);
       }
     }
   }
@@ -83,7 +83,7 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
     setLoadState(false);
   }
 
-  const registerUser = async (newUser: UserType, managerId?: String) => {
+  const registerUser = async (newUser: UserType, managerId?: string, employee?: EmployeeType) => {
     setLoadState(true);
     if (role === USER_ROLES.MANAGERS) {
       console.log('register new manager', newUser)
@@ -92,23 +92,28 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
       setAddState(false);
       window.alert(`${newUser.firstName} ${newUser.lastName} is now registered as a Manager.`)
     } else {
-      //registerEmployee
-      console.log(`register new employee of ${managerId}`, newUser)
-      await registerEmployee(newUser, managerId!);
+      console.log(`register new employee of ${managerId}`, newUser, employee)
+      await registerEmployee(employee!, managerId!);
       await renderData();
       setAddState(false);
     }
     setLoadState(false);
   }
 
-  const updateUser = async (updatedUser: UserType, managerId?: String) => {
+  const updateUser = async (updatedUser: UserType, managerId?: string) => {
     setLoadState(true);
     if (role === USER_ROLES.MANAGERS) {
-
-     }
-    else { 
-      
+      let response = await updateManager(userToEdit ? (userToEdit?.userId ? userToEdit?.userId : '') : '', updatedUser);
+      if (response.error) {
+        window.alert('Something went wrong. Please contact administrator of tool.');
+      }
     }
+    else {
+      console.log('Submit to update -- employee')
+    }
+    setAddState(false);
+    setUserToEdit(undefined);
+    setLoadState(false);
   }
 
   const renderList = () => {
@@ -201,15 +206,16 @@ export default function UserList({ role, activeUser, parentUser, onClick, enable
 
 type PageProps = {
   activeUser: UserType,
-  onClick: Function,
-  enableRowActions: Boolean
-  role?: String,
+  onClickItem: (user: UserType | React.Dispatch<React.SetStateAction<undefined>> | undefined) => void,
+  enableRowActions: boolean
+  role?: string,
   parentUser?: UserType,
+  registerEmployee?: (emp: EmployeeType, managerId: string) => void,
 }
 UserList.defaultProps = {
   role: USER_ROLES.ALL,
   activeUser: null,
-  onClick: () => { console.log('done nothing.') },
+  onClickItem: (user: UserType | React.Dispatch<React.SetStateAction<undefined>> | undefined) => { console.log('done nothing.') },
   enableRowActions: false,
   parentUser: undefined
 }

@@ -7,7 +7,7 @@ import { accessUserInSession, clearUserSession } from "../../services/user.servi
 import { useEffect, useState } from 'react';
 
 export default function Sidebar({ onRouteClick, routes, show }: SidebarProps) {
-  let authorizedUser = accessUserInSession();
+  const authorizedUser = accessUserInSession();
   const router = useRouter();
   const tailwindClasses = {
     sidebar: 'tailwind-sidebar transition-all pt-header-height duration-500 shadow-lg fixed right-0 min-h-full fixed md:left-[0] z-[100] md:h-screen bg-sidebar text-grey1 overflow-hidden shadow-2xl flex-col',
