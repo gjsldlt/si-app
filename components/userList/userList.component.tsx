@@ -50,6 +50,10 @@ export default function UserList({
   const [addState, setAddState] = useState<boolean>(false);
   const [userToDelete, setUserToDelete] = useState<UserType | undefined>();
   const [popUp, setPopup] = useState<boolean>(false);
+  const [managerRegistered, setManagerRegistered] = useState<boolean>(false);
+  const [userToBeRegistered, setUserToRegister] = useState<
+    UserType | undefined
+  >();
 
   const handleOpen = (user: UserType) => {
     setUserToDelete(user);
@@ -102,12 +106,12 @@ export default function UserList({
 
   const deleteUserHandler = async (user: UserType) => {
     setLoadState(true);
+    handleClose();
 
     if (userToDelete) {
       let result = await deleteUser(userToDelete.userId!);
       await renderData();
     }
-    handleClose();
 
     setLoadState(false);
   };
@@ -123,9 +127,8 @@ export default function UserList({
       await registerManager(newUser);
       await renderData();
       setAddState(false);
-      window.alert(
-        `${newUser.firstName} ${newUser.lastName} is now registered as a Manager.`
-      );
+      setUserToRegister(newUser);
+      setManagerRegistered(true);
     } else {
       console.log(`register new employee of ${managerId}`, newUser, employee);
       await registerEmployee(employee!, managerId!);
@@ -241,12 +244,23 @@ export default function UserList({
         title={`Are you sure you want to delete this user?:`}
         entry={`${userToDelete?.firstName} ${userToDelete?.lastName}`}
         open={popUp}
-        close={handleClose}
       >
         <div className="flex justify-center">
           <ButtonComponent
             text={["yes", "no"]}
             handleClick={[deleteUserHandler, handleClose]}
+            variant="outlined"
+          />
+        </div>
+      </PopupComponent>
+      <PopupComponent
+        title={`${userToBeRegistered?.firstName} ${userToBeRegistered?.lastName} is now registered as Manager.`}
+        open={managerRegistered}
+      >
+        <div className="flex justify-center">
+          <ButtonComponent
+            text={["confirm"]}
+            handleClick={[() => setManagerRegistered(false)]}
             variant="outlined"
           />
         </div>

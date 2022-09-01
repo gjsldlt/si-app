@@ -7,6 +7,7 @@ import { accessUserInSession } from "../services/user.service";
 import { AccountType } from "../types/MasterTypes.types";
 import PageBanner from "../components/pageBanner/pageBanner.component";
 import ButtonComponent from "../components/ButtonComponent";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import HomeSVG from "../public/assets/images/home-alt.svg";
 
@@ -91,13 +92,12 @@ const Home: NextPage = () => {
           />
         </div>
         <PopupComponent title="TEST" open={open} close={handleClose}>
-          <div className='flex justify-center'>
-            <ButtonComponent
-              text={["close"]}
-              variant="outlined"
-              handleClick={[handleClose]}
-            />
-          </div>
+          <ButtonComponent
+            text={['test']}
+            icon={<DeleteIcon />}
+            style='icon'
+            handleClick={[handleClose]}
+          />
         </PopupComponent>
       </div>
     </div>

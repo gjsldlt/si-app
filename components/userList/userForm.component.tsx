@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { PlusIcon, XIcon } from "@heroicons/react/solid";
+import { PlusIcon, XIcon, PencilIcon } from "@heroicons/react/solid";
 
 import LoaderComponent from "../loader/loader.component";
 import SkillManager from "../skillManager/skillManager.component";

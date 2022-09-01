@@ -1,5 +1,6 @@
 import { FC } from "react";
-import { Button, ButtonGroup } from "@mui/material";
+import { Button, ButtonGroup, IconButton } from "@mui/material";
+import { ImportContacts } from "@mui/icons-material";
 
 type ButtonType = {
   type?: "button" | "submit" | "reset" | undefined;
@@ -7,15 +8,21 @@ type ButtonType = {
   variant?: "text" | "outlined" | "contained" | undefined;
   text: string[];
   secondText?: string;
-  disabled?:boolean;
+  disabled?: boolean;
+  icon?: any;
+  style?: string;
+  color?: string;
 };
 
 const ButtonComponent: FC<ButtonType> = ({
+  icon,
   type,
   variant,
   text,
   handleClick,
-  disabled
+  disabled,
+  style,
+  color,
 }) => {
   return (
     <>
@@ -33,13 +40,27 @@ const ButtonComponent: FC<ButtonType> = ({
           ))}
         </ButtonGroup>
       ) : (
-        <Button
-          variant={variant}
-          type={type}
-          onClick={handleClick ? handleClick[0] : undefined}
-        >
-          {text[0]}
-        </Button>
+        <>
+          {style === "icon" ? (
+            <IconButton
+              onClick={handleClick ? handleClick[0] : undefined}
+              size="small"
+              sx={{ color: color }}
+            >
+              {icon}
+            </IconButton>
+          ) : (
+            <Button
+              variant={variant}
+              type={type}
+              onClick={handleClick ? handleClick[0] : undefined}
+              disabled={disabled}
+              startIcon={icon}
+            >
+              {text[0]}
+            </Button>
+          )}
+        </>
       )}
     </>
   );
