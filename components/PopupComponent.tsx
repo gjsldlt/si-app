@@ -4,10 +4,17 @@ type PopupType = {
   open: boolean;
   close?: any;
   title: string | any;
+  entry?: string;
   children?: any;
 };
 
-const PopupComponent: FC<PopupType> = ({ open, close, title, children }) => {
+const PopupComponent: FC<PopupType> = ({
+  open,
+  close,
+  title,
+  children,
+  entry,
+}) => {
   const style = {
     position: "absolute",
     top: "50%",
@@ -16,7 +23,7 @@ const PopupComponent: FC<PopupType> = ({ open, close, title, children }) => {
     width: 400,
     bgcolor: "background.paper",
     boxShadow: 24,
-    p: 4,
+    p: 3,
     borderRadius: "5px",
   };
 
@@ -24,9 +31,8 @@ const PopupComponent: FC<PopupType> = ({ open, close, title, children }) => {
     <>
       <Modal open={open}>
         <Box sx={style}>
-          <Typography variant="h6" component="h2">
-            <div className="text-center">{title}</div>
-          </Typography>
+          <div className="text-lg font-bold">{title}</div>
+          <div className='text-center text-lg'>{entry}</div>
           {children}
         </Box>
       </Modal>

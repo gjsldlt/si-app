@@ -188,12 +188,8 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
       <div className={tailwindClasses.toolbar}>
         <p className={tailwindClasses.title}>{metadataTitle()}</p>
         <PopupComponent
-          title={
-            <>
-              <p>Are you sure you want to delete this entry?:</p>
-              <p>{metadataToDelete?.name}</p>
-            </>
-          }
+          title="Are you sure you want to delete this entry?:"
+          entry={metadataToDelete?.name}
           open={displayPopup}
           close={handleClose}
         >

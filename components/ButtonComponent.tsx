@@ -7,6 +7,7 @@ type ButtonType = {
   variant?: "text" | "outlined" | "contained" | undefined;
   text: string[];
   secondText?: string;
+  disabled?:boolean;
 };
 
 const ButtonComponent: FC<ButtonType> = ({
@@ -14,11 +15,12 @@ const ButtonComponent: FC<ButtonType> = ({
   variant,
   text,
   handleClick,
+  disabled
 }) => {
   return (
     <>
       {text.length > 1 ? (
-        <ButtonGroup variant={variant}>
+        <ButtonGroup variant={variant} disabled={disabled}>
           {text?.map((item, index) => (
             <Button
               key={index}
