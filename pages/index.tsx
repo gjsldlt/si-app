@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+
 import Head from "next/head";
 import Image from "next/image";
 import type { NextPage } from 'next'
@@ -22,7 +22,6 @@ import CardComponents from "../components/cardComponents";
 
 import styles from "../styles/Home.module.css";
 import { setuid } from "process";
-import { Button } from "@mui/material";
 import PopupComponent from "../components/PopupComponent";
 
 
