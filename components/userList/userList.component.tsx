@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { PlusIcon, XIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
+import CreateIcon from "@mui/icons-material/Create";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import styles from "./managerList.module.scss";
 import LoaderComponent from "../loader/loader.component";
@@ -183,17 +185,19 @@ export default function UserList({
                 </div>
                 {enableRowActions ? (
                   <div className={tailwindClasses.lineActions}>
-                    <PencilIcon
-                      className={tailwindClasses.lineButton}
-                      onClick={() => {
-                        editUser(item);
-                      }}
+                    <ButtonComponent
+                      style="icon"
+                      icon={<CreateIcon />}
+                      text={["Edit"]}
+                      color={activeLine ? "white" : ""}
+                      handleClick={[() => editUser(item)]}
                     />
-                    <TrashIcon
-                      className={tailwindClasses.lineButton}
-                      onClick={() => {
-                        handleOpen(item);
-                      }}
+                    <ButtonComponent
+                      style="icon"
+                      icon={<DeleteIcon />}
+                      text={["Remove"]}
+                      color={activeLine ? "white" : ""}
+                      handleClick={[() => handleOpen(item)]}
                     />
                   </div>
                 ) : null}
@@ -245,7 +249,7 @@ export default function UserList({
         entry={`${userToDelete?.firstName} ${userToDelete?.lastName}`}
         open={popUp}
       >
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-2">
           <ButtonComponent
             text={["yes", "no"]}
             handleClick={[deleteUserHandler, handleClose]}
@@ -257,7 +261,7 @@ export default function UserList({
         title={`${userToBeRegistered?.firstName} ${userToBeRegistered?.lastName} is now registered as Manager.`}
         open={managerRegistered}
       >
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-2">
           <ButtonComponent
             text={["confirm"]}
             handleClick={[() => setManagerRegistered(false)]}

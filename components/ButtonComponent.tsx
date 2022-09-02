@@ -45,7 +45,11 @@ const ButtonComponent: FC<ButtonType> = ({
             <IconButton
               onClick={handleClick ? handleClick[0] : undefined}
               size="small"
-              sx={{ color: color }}
+              sx={{
+                width: "34px",
+                height: "34px",
+                color: color,
+              }}
             >
               {icon}
             </IconButton>

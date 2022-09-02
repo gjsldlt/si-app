@@ -2,7 +2,8 @@ import { FC, useState, useEffect, useCallback } from "react";
 
 import MetadataForm from "./metadataForm.component";
 import MetadataPopup from "./metadataPopup.component";
-
+import CreateIcon from "@mui/icons-material/Create";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { getMetadata } from "../../services/metadata.service";
 
 import { MetadataComponentProps } from "../../types/MasterPageComponent.type";
@@ -27,10 +28,10 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
     title: "flex-1",
     submitButton:
       "h-iconbutton w-iconbutton flex items-center justify-center p-0",
-    list: "list flex-grow flex flex-col overflow-auto max-h-[300px] md:max-h-unset",
+    list: "list flex-grow flex flex-col overflow-auto max-h-[300px] md:max-h-full",
     lineItem:
       "lineitem transition-all duration-500 rounded py-1 px-2 flex flex-row",
-    lineItemActive: "active bg-sidebar text-white min-h-0",
+    lineItemActive: "active bg-sidebar text-white",
     lineDetails:
       "name flex flex-col justify-start justify-center flex-grow cursor-pointer",
     lineActions: "lineActions flex flex-row justify-center items-center",
@@ -137,17 +138,19 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
                 </div>
                 {enableRowActions ? (
                   <div className={tailwindClasses.lineActions}>
-                    <PencilIcon
-                      className={tailwindClasses.lineButton}
-                      onClick={() => {
-                        editMetadata(metadata);
-                      }}
+                    <ButtonComponent
+                      style="icon"
+                      icon={<CreateIcon />}
+                      text={["Edit"]}
+                      color={activeLine ? "white" : ""}
+                      handleClick={[() => editMetadata(metadata)]}
                     />
-                    <TrashIcon
-                      className={tailwindClasses.lineButton}
-                      onClick={() => {
-                        removeMetadata(metadata);
-                      }}
+                    <ButtonComponent
+                      style="icon"
+                      icon={<DeleteIcon />}
+                      text={["Remove"]}
+                      color={activeLine ? "white" : ""}
+                      handleClick={[() => removeMetadata(metadata)]}
                     />
                   </div>
                 ) : null}
