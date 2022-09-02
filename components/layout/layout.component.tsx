@@ -38,3 +38,4 @@ export default function Layout({ children }: LayoutProps) {
 
 type LayoutProps = {
   children: any
+}

@@ -73,7 +73,7 @@ export const getAllManagers = async () => {
     return data.data.data.managers;
 }
 
-export const getEmployeesOfManager = async (managerId: String) => {
+export const getEmployeesOfManager = async (managerId: string) => {
     let data = await axios.get(
         GLOBALHELPER.APIURL, {
         params: {
@@ -171,7 +171,7 @@ export const registerManager = async (user: UserType) => {
     return response.data.data.addManager;
 }
 
-export const registerEmployee = async (emp: EmployeeType, managerId: String) => {
+export const registerEmployee = async (emp: EmployeeType, managerId: string) => {
     let response = await axios.post(
         GLOBALHELPER.APIURL,
         {
@@ -215,7 +215,7 @@ export const registerEmployee = async (emp: EmployeeType, managerId: String) => 
     return response.data.data.addEmployee;
 }
 
-export const deleteUser = async (id: String) => {
+export const deleteUser = async (id: string) => {
     let response = await axios.post(
         GLOBALHELPER.APIURL,
         {
@@ -234,7 +234,7 @@ export const deleteUser = async (id: String) => {
     return response.data.data.deleteUser;
 }
 
-export const getEmployeeByUserId = async (id: String) => {
+export const getEmployeeByUserId = async (id: string) => {
 
     let data = await axios.get(
         GLOBALHELPER.APIURL, {
@@ -285,7 +285,7 @@ export const getEmployeeByUserId = async (id: String) => {
     return data.data.data.employeeById;
 }
 
-export const updateManager = async (id: String, user: UserType) => {
+export const updateManager = async (id: string, user: UserType) => {
     try {
         delete user.password;
         console.log(id, user)
@@ -322,6 +322,6 @@ export const updateManager = async (id: String, user: UserType) => {
 
 
 type LoginDetails = {
-    email: String,
-    password: String
+    email: string,
+    password: string
 }
