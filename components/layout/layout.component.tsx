@@ -32,7 +32,10 @@ export default function Layout({ children }: LayoutProps) {
     <div>
       <SidebarComponent />
 
-      <div className="ml-20 mt-8 ">{children}</div>
+      <div className="ml-20 mt-8 min-h-[100vh]">{children}</div>
+      <div className=" text-center w-full bg-black text-white font-bold py-2 relative z-0">
+        iFED 2022
+      </div>
     </div>
     // <div className={tailwindClasses.layout}>
     //   <HeaderBar
