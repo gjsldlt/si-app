@@ -4,8 +4,8 @@
 
 html,
 body {
-  height:100vh;
-  width:100vw;
+  height: 100vh;
+  width: 100vw;
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
@@ -29,4 +29,19 @@ a {
 .login-bg {
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+/* Sidebar */
+.MuiDrawer-paperAnchorDockedLeft {
+  background: #1c1c1e;
+}
+
+.MuiCardHeader-title {
+  font-size: 14px;
+  color: white;
+}
+
+.MuiCardHeader-subheader {
+  font-size: 12px;
+  color: #939294;
 }
