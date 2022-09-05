@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+
 import Head from "next/head";
 import Image from "next/image";
 import type { NextPage } from 'next'
@@ -7,6 +7,8 @@ import { getSkills } from "../services/skill.service";
 import { accessUserInSession } from "../services/user.service";
 import { AccountType } from "../types/MasterTypes.types";
 import PageBanner from "../components/pageBanner/pageBanner.component";
+import ButtonComponent from "../components/ButtonComponent";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import HomeSVG from "../public/assets/images/home-alt.svg";
 import {
@@ -20,8 +22,18 @@ import CardComponents from "../components/cardComponents";
 
 import styles from "../styles/Home.module.css";
 import { setuid } from "process";
+import PopupComponent from "../components/PopupComponent";
+
 
 const Home: NextPage = () => {
+  //state to show popup component
+  const [open, setOpen] = useState<boolean>(false);
+  const handleOpen = (): void => {
+    setOpen(true);
+  };
+  const handleClose = (): void => {
+    setOpen(false);
+  };
   //let user: AccountType = accessUserInSession();
   const [user, setUser] = useState({
     firstName: "",
@@ -55,6 +67,7 @@ const Home: NextPage = () => {
   }, []);
 
   return (
+
     <Grid container spacing={2}>
       <Grid item xs={12} md={4} lg={4}>
         <CardComponents>

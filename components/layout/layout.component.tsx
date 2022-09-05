@@ -32,7 +32,7 @@ export default function Layout({ children }: LayoutProps) {
     <div>
       <SidebarComponent />
 
-      <div className="mt-8 mx-4">{children}</div>
+      <div className="ml-20 mt-8 ">{children}</div>
     </div>
     // <div className={tailwindClasses.layout}>
     //   <HeaderBar
