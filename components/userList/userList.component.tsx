@@ -57,6 +57,9 @@ export default function UserList({
     UserType | undefined
   >();
 
+  // state hook to show succesfull  message
+  const [success, setSuccess] = useState<boolean>(false);
+
   const handleOpen = (user: UserType) => {
     setUserToDelete(user);
     setPopup(true);
@@ -114,7 +117,7 @@ export default function UserList({
       let result = await deleteUser(userToDelete.userId!);
       await renderData();
     }
-
+    setSuccess(true);
     setLoadState(false);
   };
 
@@ -258,7 +261,24 @@ export default function UserList({
         </div>
       </PopupComponent>
       <PopupComponent
-        title={`${userToBeRegistered?.firstName} ${userToBeRegistered?.lastName} is now registered as Manager.`}
+        title={`Successfully deleted user:`}
+        entry={`${userToDelete?.firstName} ${userToDelete?.lastName}`}
+        open={success}
+      >
+        <div className="flex justify-center mt-2">
+          <ButtonComponent
+            text={["confirm"]}
+            handleClick={[() => setSuccess(false)]}
+            variant="outlined"
+          />
+        </div>
+      </PopupComponent>
+      <PopupComponent
+        title={`${userToBeRegistered?.firstName} ${
+          userToBeRegistered?.lastName
+        } is now registered as ${
+          role === "managers" ? "manager" : "employee"
+        }.`}
         open={managerRegistered}
       >
         <div className="flex justify-center mt-2">
