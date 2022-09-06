@@ -19,6 +19,7 @@ import UserForm from "./userForm.component";
 import { USER_ROLES } from "../../helpers/constants.helper";
 import PopupComponent from "../PopupComponent";
 import ButtonComponent from "../ButtonComponent";
+import { CircularProgress } from "@mui/material";
 
 export default function UserList({
   role,
@@ -59,6 +60,8 @@ export default function UserList({
 
   // state hook to show succesfull  message
   const [success, setSuccess] = useState<boolean>(false);
+  // state hook to show loader on popup
+  const [popupLoading, setPopupLoading] = useState<boolean>(false);
 
   const handleOpen = (user: UserType) => {
     setUserToDelete(user);
@@ -111,12 +114,13 @@ export default function UserList({
 
   const deleteUserHandler = async (user: UserType) => {
     setLoadState(true);
-    handleClose();
+    setPopupLoading(true);
 
     if (userToDelete) {
       let result = await deleteUser(userToDelete.userId!);
       await renderData();
     }
+    handleClose();
     setSuccess(true);
     setLoadState(false);
   };
@@ -248,16 +252,26 @@ export default function UserList({
   return (
     <div className={tailwindClasses.container}>
       <PopupComponent
-        title={`Are you sure you want to delete this user?:`}
-        entry={`${userToDelete?.firstName} ${userToDelete?.lastName}`}
+        title={`${
+          !popupLoading ? "Are you sure you want to delete this user?:" : ""
+        }`}
+        entry={`${
+          !popupLoading
+            ? `${userToDelete?.firstName} ${userToDelete?.lastName}`
+            : ""
+        }`}
         open={popUp}
       >
         <div className="flex justify-center mt-2">
-          <ButtonComponent
-            text={["yes", "no"]}
-            handleClick={[deleteUserHandler, handleClose]}
-            variant="outlined"
-          />
+          {!popupLoading ? (
+            <ButtonComponent
+              text={["yes", "no"]}
+              handleClick={[deleteUserHandler, handleClose]}
+              variant="outlined"
+            />
+          ) : (
+            <CircularProgress />
+          )}
         </div>
       </PopupComponent>
       <PopupComponent
