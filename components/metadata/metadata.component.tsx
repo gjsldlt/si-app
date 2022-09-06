@@ -14,6 +14,7 @@ import LoaderComponent from "../loader/loader.component";
 import { PlusIcon, XIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
 import PopupComponent from "../PopupComponent";
 import ButtonComponent from "../ButtonComponent";
+import { CircularProgress } from "@mui/material";
 
 const MetadataComponent: FC<MetadataComponentProps> = ({
   type,
@@ -55,8 +56,12 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
   //state hook to show loadscreen component
   const [loadState, setLoadState] = useState<boolean>(true);
 
-  // state hook to show succesfully deleted message
-  const [deleted, setDeleted] = useState<boolean>(false);
+  // state hook to show succesfull  message
+  const [success, setSuccess] = useState<boolean>(false);
+  // state hook to show what action the metadata will be done
+  const [metadataAction, setAction] = useState<string>("");
+  // state hook to show loader on popup
+  const [popupLoading, setPopupLoading] = useState<boolean>(false);
 
   const showMetadataForm = () => {
     setMetadataToEdit(undefined);
@@ -112,6 +117,8 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
           setLoadState={setLoadState}
           metadataToEdit={metadataToEdit}
           metadataType={type}
+          setAction={setAction}
+          setSuccess={setSuccess}
         />
       );
     } else {
@@ -183,9 +190,12 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
   };
 
   const clickYes = async () => {
+    setAction("delete");
     if (metadataToDelete) {
+      setPopupLoading(true);
       await deleteMetadata(metadataToDelete._id);
-      setDeleted(true);
+      setPopupLoading(false);
+      setSuccess(true);
       renderData();
     }
   };
@@ -195,24 +205,39 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
       <div className={tailwindClasses.toolbar}>
         <p className={tailwindClasses.title}>{metadataTitle()}</p>
         <PopupComponent
-          title="Are you sure you want to delete this entry?:"
-          entry={metadataToDelete?.name}
+          title={`${
+            !popupLoading ? "Are you sure you want to delete this entry?:" : ""
+          }`}
+          entry={!popupLoading ? metadataToDelete?.name : ""}
           open={displayPopup}
         >
           <div className="flex justify-center mt-2">
-            <ButtonComponent
-              text={["yes", "no"]}
-              variant="outlined"
-              handleClick={[clickYes, renderData]}
-            />
+            {!popupLoading ? (
+              <ButtonComponent
+                text={["yes", "no"]}
+                variant="outlined"
+                handleClick={[clickYes, () => setDisplayPopup(false)]}
+              />
+            ) : (
+              <CircularProgress />
+            )}
           </div>
         </PopupComponent>
-        <PopupComponent title="Entry successfully deleted" open={deleted}>
+        <PopupComponent
+          title={`Entry successfully ${
+            metadataAction === "add"
+              ? "added"
+              : metadataAction === "update"
+              ? "updated"
+              : "deleted"
+          }`}
+          open={success}
+        >
           <div className="flex justify-center mt-2">
             <ButtonComponent
               text={["confirm"]}
               variant="outlined"
-              handleClick={[() => setDeleted(false)]}
+              handleClick={[() => setSuccess(false)]}
             />
           </div>
         </PopupComponent>

@@ -18,6 +18,8 @@ export interface FormProps {
     setLoadState: React.Dispatch<React.SetStateAction<boolean>>
     metadataToEdit?: Metadata
     metadataType: string
+    setAction?: any
+    setSuccess?:any
 }
 
 export interface PopupProps {

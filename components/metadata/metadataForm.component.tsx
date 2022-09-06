@@ -1,3 +1,4 @@
+import { SettingsApplications } from "@mui/icons-material";
 import { FC, useState, ChangeEvent, FormEvent } from "react";
 
 import { addMetadata, updateMetadata } from "../../services/metadata.service";
@@ -9,6 +10,8 @@ const MetadataForm: FC<FormProps> = ({
   renderData,
   setLoadState,
   metadataToEdit,
+  setAction,
+  setSuccess,
 }: FormProps) => {
   const tailwindClasses = {
     form: "flex flex-wrap w-full",
@@ -52,14 +55,18 @@ const MetadataForm: FC<FormProps> = ({
     setLoadState(true);
     //submit to update
     if (metadataToEdit) {
+      setAction("update");
       await updateMetadata(metadataId, newMetadataName, newMetadataDesc);
+      setSuccess(true);
       setNewMetadataName("");
       setNewMetadataDesc("");
       renderData();
     }
     //submit to create
     else if (newMetadataName && newMetadataDesc) {
+      setAction("add");
       await addMetadata(newMetadataName, newMetadataDesc, metadataType);
+      setSuccess(true);
       setNewMetadataName("");
       setNewMetadataDesc("");
       renderData();
