@@ -3,6 +3,7 @@ import { FC } from "react";
 import { deleteMetadata } from "../../services/metadata.service";
 
 import { PopupProps } from "../../types/MasterPageComponent.type";
+import ButtonComponent from "../ButtonComponent";
 
 const MetadataPopup: FC<PopupProps> = ({
   renderData,
@@ -36,13 +37,12 @@ const MetadataPopup: FC<PopupProps> = ({
       <p className={tailwindClasses.container}>
         Are you sure you want to delete {metadataToDelete?.name}?
       </p>
-      <div className={tailwindClasses.container}>
-        <button onClick={clickYes} className={tailwindClasses.formButton}>
-          Yes
-        </button>
-        <button onClick={exitDeletion} className={tailwindClasses.formButton}>
-          No
-        </button>
+      <div className={tailwindClasses.container + " mt-2"}>
+        <ButtonComponent
+          text={["yes", "no"]}
+          variant="outlined"
+          handleClick={[clickYes, exitDeletion]}
+        />
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import { FC, useState, ChangeEvent, FormEvent } from "react";
 
 import { addMetadata, updateMetadata } from "../../services/metadata.service";
 import { FormProps } from "../../types/MasterPageComponent.type";
+import ButtonComponent from "../ButtonComponent";
 
 const MetadataForm: FC<FormProps> = ({
   metadataType,
@@ -100,9 +101,11 @@ const MetadataForm: FC<FormProps> = ({
         />
       </div>
       <div className={`${tailwindClasses.formItem} mt-1 flex justify-end`}>
-        <button type="submit" className={tailwindClasses.formButton}>
-          {metadataToEdit ? "Update" : "Add"}
-        </button>
+        <ButtonComponent
+          text={[`${metadataToEdit ? "Update" : "Add"}`]}
+          type="submit"
+          variant="outlined"
+        />
       </div>
     </form>
   );
