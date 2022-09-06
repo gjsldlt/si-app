@@ -97,8 +97,8 @@ const Drawer = styled(MuiDrawer, {
 
 const menuList = [
   { name: "Home", icon: <HomeIcon />, link: "/" },
-  { name: "Employees", icon: <UserGroupIcon />, link: "users" },
-  { name: "Metadata", icon: <DatabaseIcon />, link: "metadatas" },
+  { name: "Employees", icon: <UserGroupIcon />, link: "/users" },
+  { name: "Metadata", icon: <DatabaseIcon />, link: "/metadatas" },
 ];
 
 export default function MiniDrawer() {
@@ -111,7 +111,7 @@ export default function MiniDrawer() {
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     index: number,
-    link: URL
+    link: string
   ) => {
     setSelectedIndex(index);
     router.push(link);
@@ -179,7 +179,7 @@ export default function MiniDrawer() {
               className="hover:bg-[#323335]  "
             >
               <ListItemButton
-                selected={selectedIndex === i}
+                selected={router.pathname === item.link}
                 onClick={(event) => handleListItemClick(event, i, item.link)}
                 sx={{
                   minHeight: 48,
@@ -187,12 +187,12 @@ export default function MiniDrawer() {
                   px: 2.5,
                 }}
                 className={`${
-                  selectedIndex === i && "!bg-main text-black"
+                  router.pathname === item.link && "!bg-main text-black"
                 } group`}
               >
                 <ListItemIcon
                   className={`${
-                    selectedIndex === i && "text-black"
+                    router.pathname === item.link && "text-black"
                   } text-gray group-hover:text-white w-7`}
                   sx={{
                     minWidth: 0,
@@ -204,7 +204,7 @@ export default function MiniDrawer() {
                 </ListItemIcon>
                 <ListItemText
                   className={`${
-                    selectedIndex === i && "text-black"
+                    router.pathname === item.link && "text-black"
                   } text-gray group-hover:text-white `}
                   primary={item.name}
                   sx={{ opacity: open ? 1 : 0 }}
