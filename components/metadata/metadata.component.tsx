@@ -55,6 +55,9 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
   //state hook to show loadscreen component
   const [loadState, setLoadState] = useState<boolean>(true);
 
+  // state hook to show succesfully deleted message
+  const [deleted, setDeleted] = useState<boolean>(false);
+
   const showMetadataForm = () => {
     setMetadataToEdit(undefined);
     setDisplayForm(!displayForm);
@@ -182,6 +185,7 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
   const clickYes = async () => {
     if (metadataToDelete) {
       await deleteMetadata(metadataToDelete._id);
+      setDeleted(true);
       renderData();
     }
   };
@@ -194,13 +198,21 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
           title="Are you sure you want to delete this entry?:"
           entry={metadataToDelete?.name}
           open={displayPopup}
-          close={handleClose}
         >
           <div className="flex justify-center mt-2">
             <ButtonComponent
               text={["yes", "no"]}
               variant="outlined"
               handleClick={[clickYes, renderData]}
+            />
+          </div>
+        </PopupComponent>
+        <PopupComponent title="Entry successfully deleted" open={deleted}>
+          <div className="flex justify-center mt-2">
+            <ButtonComponent
+              text={["confirm"]}
+              variant="outlined"
+              handleClick={[() => setDeleted(false)]}
             />
           </div>
         </PopupComponent>

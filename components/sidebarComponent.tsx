@@ -193,7 +193,9 @@ export default function MiniDrawer() {
                 <ListItemIcon
                   className={`${
                     router.pathname === item.link && "text-black"
-                  } text-gray group-hover:text-white w-7`}
+                  } text-gray ${
+                    router.pathname !== item.link && "group-hover:text-white"
+                  } w-7`}
                   sx={{
                     minWidth: 0,
                     mr: open ? 3 : "auto",
@@ -205,7 +207,9 @@ export default function MiniDrawer() {
                 <ListItemText
                   className={`${
                     router.pathname === item.link && "text-black"
-                  } text-gray group-hover:text-white `}
+                  } text-gray ${
+                    router.pathname !== item.link && "group-hover:text-white"
+                  } `}
                   primary={item.name}
                   sx={{ opacity: open ? 1 : 0 }}
                 />
