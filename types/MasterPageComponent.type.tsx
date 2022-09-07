@@ -1,16 +1,16 @@
-import type { AppProps } from 'next/app';
-import type { NextPage } from 'next'
-import { Metadata } from './MasterTypes.types';
+import type { AppProps } from "next/app";
+import { Metadata } from "./MasterTypes.types";
+import { ReactNode } from "react";
 
 export interface CustomAppProps extends AppProps {
-    getLayout(page: AppProps): AppProps;
+  getLayout(page: AppProps): AppProps;
 }
 
 export interface MetadataComponentProps {
-    type: "skill" | "industry" | "capability"
-    onMetadataClick: React.Dispatch<React.SetStateAction<Metadata | undefined>>
-    enableRowActions: boolean
-    activeMetadata?: Metadata
+  type: "skill" | "industry" | "capability";
+  onMetadataClick: React.Dispatch<React.SetStateAction<Metadata | undefined>>;
+  enableRowActions: boolean;
+  activeMetadata?: Metadata;
 }
 
 export interface FormProps {
@@ -23,6 +23,16 @@ export interface FormProps {
 }
 
 export interface PopupProps {
-    renderData: () => Promise<void>
-    metadataToDelete?: Metadata
+  renderData: () => Promise<void>;
+  metadataToDelete?: Metadata;
 }
+
+export interface HeaderBarProps {
+    breadcrumb: Array<string>;
+    onMenuClick: () => void;
+    show: boolean;
+  };
+
+export interface LayoutProps {
+    children: ReactNode
+  }
