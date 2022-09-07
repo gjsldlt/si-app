@@ -17,6 +17,13 @@ import {
 import { getMetadata } from "../../services/metadata.service";
 import Employee from "../../pages/manager/[employee]";
 import ButtonComponent from "../ButtonComponent";
+import Box from '@mui/material/Box'
+import TextField from '@mui/material/TextField'
+import Select from '@mui/material/Select'
+import InputLabel from '@mui/material/InputLabel'
+import FormControl from '@mui/material/FormControl'
+import MenuItem from '@mui/material/MenuItem'
+import InputAdornment from "@mui/material/InputAdornment";
 
 export default function UserList({
   userToEdit,
@@ -71,12 +78,9 @@ export default function UserList({
     chip: "chip",
     chipForm: "chipForm flex flex-col items-stretch",
     chipFormRow: "flex flex-col pt-3",
-    inputLabel:
-      "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mr-1",
-    input:
-      "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-    formButton:
-      "bg-transparent hover:bg-sidebar text-sidebar font-semibold hover:text-white py-2 px-4 border border-sidebar hover:border-transparent rounded",
+    inputLabel: "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mr-1",
+    input: "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+    formButton: "bg-transparent hover:bg-sidebar text-sidebar font-semibold hover:text-white py-2 px-4 border border-sidebar hover:border-transparent rounded",
   };
 
   const onSubmitForm = (e: any) => {
@@ -199,24 +203,6 @@ export default function UserList({
     setLoadState(false);
   };
 
-  // const renderSelectInput = (name: string, value: string, optionList) => {
-  //     return <div className={tailwindClasses.formItem}>
-  //         <label className={tailwindClasses.inputLabel} htmlFor={name}>
-  //             Manager *
-  //         </label>
-  //         <select
-  //             disabled={Boolean(parentUser)}
-  //             required
-  //             name={name}
-  //             onChange={onInputChange}
-  //             className={tailwindClasses.input}
-  //             value={value}
-  //             id={name}>
-  //             {optionList}
-  //         </select>
-  //     </div>
-  // }
-
   const onActiveSkillAdd = () => {
     console.log(activeSkill);
   };
@@ -259,183 +245,85 @@ export default function UserList({
     return (
       <>
         <div className={tailwindClasses.formItemHalf}>
-          <label
-            className={tailwindClasses.inputLabel}
-            htmlFor="grid-managerId-name"
-          >
-            Manager *
-          </label>
-          <select
-            disabled={Boolean(parentUser)}
-            required
-            name="managerId"
-            onChange={onInputChange}
-            className={tailwindClasses.input}
-            value={manager ? manager?._id : ""}
-            id="grid-managerId-name"
-          >
-            <option value={""} disabled>
-              Select a Manager
-            </option>
-            {managerList.map((item, index) => (
-              <option key={`manager-option-${index}`} value={item._id!}>
-                {`${item.firstName} ${item.lastName}`}
-              </option>
-            ))}
-          </select>
+          <FormControl fullWidth>
+            <InputLabel htmlFor="grid-managerId-name">Manager</InputLabel>
+            <Select
+              disabled={Boolean(parentUser)}
+              required
+              labelId="grid-managerId-name"
+              id="grid-managerId-name"
+              name="managerId"
+              value={manager ? manager?._id : ""}
+              label="Manager"
+              onChange={onInputChange}
+            >
+              {managerList.map((item, index) => (
+                <MenuItem key={`manager-option-${index}`} value={item._id!}>
+                  {`${item.firstName} ${item.lastName}`}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </div>
         <div className={tailwindClasses.formItemHalf}>
-          <label
-            className={tailwindClasses.inputLabel}
-            htmlFor="grid-capability-name"
-          >
-            Capability *
-          </label>
-          <select
-            required
-            name="capability"
-            onChange={onInputChange}
-            className={tailwindClasses.input}
-            value={employeeData ? employeeData?.capability?._id : ""}
-            id="grid-capability-name"
-          >
-            <option value={""}>-</option>
-            {capabilityList.map((item, index) => (
-              <option key={`capability-option-${index}`} value={item._id!}>
-                {`${item.name}`}
-              </option>
-            ))}
-          </select>
+          <FormControl fullWidth>
+            <InputLabel htmlFor="grid-capability-name">Capability</InputLabel>
+            <Select
+              required
+              labelId="grid-capability-name"
+              id="grid-capability-name"
+              name="capability"
+              value={employeeData ? employeeData?.capability?._id : ""}
+              label="Capability"
+              onChange={onInputChange}
+            >
+              {capabilityList.map((item, index) => (
+                <MenuItem key={`capability-option-${index}`} value={item._id!}>
+                  {`${item.name}`}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </div>
         <div className={tailwindClasses.formItemHalf}>
-          <label
-            className={tailwindClasses.inputLabel}
-            htmlFor="grid-primarySkill-name"
-          >
-            Primary Skill
-          </label>
-          <select
-            name="primarySkill"
-            onChange={onInputChange}
-            className={tailwindClasses.input}
-            value={employeeData ? employeeData?.primarySkill?._id : ""}
-            id="grid-primarySkill-name"
-          >
-            <option value={""}>-</option>
-            {skillList.map((item, index) => (
-              <option key={`skill-option-${index}`} value={item._id!}>
-                {`${item.name}`}
-              </option>
-            ))}
-          </select>
+          <FormControl fullWidth>
+            <InputLabel htmlFor="grid-primarySkill-name">Primary Skill</InputLabel>
+            <Select
+              labelId="grid-primarySkill-name"
+              id="grid-primarySkill-name"
+              name="primarySkill"
+              value={employeeData ? employeeData?.primarySkill?._id : ""}
+              label="Primary Skill"
+              onChange={onInputChange}
+            >
+              {skillList.map((item, index) => (
+                <MenuItem key={`skill-option-${index}`} value={item._id!}>
+                  {`${item.name}`}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </div>
         <div className={tailwindClasses.formItemHalf}>
-          <label
-            className={tailwindClasses.inputLabel}
-            htmlFor="grid-secondarySkill-name"
-          >
-            Secondary Skill
-          </label>
-          <select
-            name="secondarySkill"
-            onChange={onInputChange}
-            className={tailwindClasses.input}
-            value={employeeData ? employeeData?.secondarySkill?._id : ""}
-            id="grid-secondarySkill-name"
-          >
-            <option value={""}>-</option>
-            {skillList.map((item, index) => (
-              <option key={`skill-option-${index}`} value={item._id!}>
-                {`${item.name}`}
-              </option>
-            ))}
-          </select>
+          <FormControl fullWidth>
+            <InputLabel htmlFor="grid-secondarySkill-name">Secondary Skill</InputLabel>
+            <Select
+              labelId="grid-secondarySkill-name"
+              id="grid-secondarySkill-name"
+              name="secondarySkill"
+              value={employeeData ? employeeData?.secondarySkill?._id : ""}
+              label="Secondary Skill"
+              onChange={onInputChange}
+            >
+              {skillList.map((item, index) => (
+                <MenuItem key={`skill-option-${index}`} value={item._id!}>
+                  {`${item.name}`}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </div>
         <SkillManager employee={employeeData} setEmployee={setEmployeeData} />
-        {/* <div className={`${tailwindClasses.formItem} ${tailwindClasses.skillsContainer}`}>
-                <div className={tailwindClasses.formChipContainer}>
-                    <div className={tailwindClasses.chipForm}>
-                        <div className={tailwindClasses.chipFormRow}>
-                            <span className={tailwindClasses.inputLabel}>
-                                Skill
-                            </span>
-                            <select
-                                required
-                                name="skills"
-                                onChange={onActiveSkillInputChange}
-                                className={tailwindClasses.input}
-                                value={activeSkill?.skill?._id}
-                                id="grid-skills-name">
-                                <option value={null}>-</option>
-                                {
-                                    skillList.map((item, index) => (
-                                        <option key={`active-skill-option-${index}`} value={item._id!} >
-                                            {`${item.name}`}
-                                        </option>
-                                    ))
-                                }
-                            </select>
-                        </div>
-                        <div className={tailwindClasses.chipFormRow}>
-                            <label className={tailwindClasses.inputLabel} htmlFor="grid-first-name">
-                                Rate (out of 10)
-                            </label>
-                            <input
-                                required
-                                name="rate"
-                                onChange={onActiveSkillInputChange}
-                                value={activeSkill?.rate}
-                                className={tailwindClasses.input}
-                                id="grid-first-name"
-                                type="number"
-                                placeholder="-"
-                            />
-                        </div>
-                        <div className={tailwindClasses.chipFormRow}>
-                            <label className={tailwindClasses.inputLabel} htmlFor="grid-first-name">
-                                Years Experience
-                            </label>
-                            <input
-                                required
-                                name="yearsExperience"
-                                onChange={onActiveSkillInputChange}
-                                value={activeSkill?.yearsExperience}
-                                className={tailwindClasses.input}
-                                id="grid-yearsExperience-name"
-                                type="number"
-                                placeholder="-"
-                            />
-                        </div>
-                        <div className={tailwindClasses.chipFormRow}>
-                            <label className={tailwindClasses.inputLabel} htmlFor="grid-first-name">
-                                Description
-                            </label>
-                            <input
-                                required
-                                name="description"
-                                onChange={onActiveSkillInputChange}
-                                value={activeSkill?.description}
-                                className={tailwindClasses.input}
-                                id="grid-description-name"
-                                type="text"
-                                placeholder="-"
-                            />
-                        </div>
-                        <div className={tailwindClasses.chipFormRow}>
-                            <button className={tailwindClasses.formButton} onClick={onActiveSkillAdd} type="button">
-                                Add Skill
-                            </button>
-                        </div>
-                    </div>
-                    <div className={tailwindClasses.chips}>
-                        <span className={tailwindClasses.inputLabel}>
-                            Skills
-                        </span>
-                        <div className={tailwindClasses.chip}>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
       </>
     );
   };
@@ -453,89 +341,119 @@ export default function UserList({
   return (
     <form className={tailwindClasses.form} onSubmit={onSubmitForm}>
       <div className={tailwindClasses.formItemHalf}>
-        <label className={tailwindClasses.inputLabel} htmlFor="grid-first-name">
-          First Name *
-        </label>
-        <input
-          required
-          name="firstName"
-          onChange={onInputChange}
-          value={firstName}
-          className={tailwindClasses.input}
-          id="grid-first-name"
-          type="text"
-          placeholder="Jane"
-        />
+        <Box
+          sx={{
+            width: '100%',
+            maxWidth: '100%'
+          }}
+        >
+          <TextField
+            required
+            name="firstName"
+            onChange={onInputChange}
+            fullWidth
+            value={firstName}
+            id="grid-first-name"
+            type="text"
+            variant="outlined"
+            InputProps={{
+              startAdornment: <InputAdornment position="start">First Name:</InputAdornment>,
+            }}
+          />
+        </Box>
       </div>
       <div className={tailwindClasses.formItemHalf}>
-        <label className={tailwindClasses.inputLabel} htmlFor="grid-last-name">
-          Last Name *
-        </label>
-        <input
-          required
-          name="lastName"
-          onChange={onInputChange}
-          value={lastName}
-          className={tailwindClasses.input}
-          id="grid-last-name"
-          type="text"
-          placeholder="Doe"
-        />
+        <Box
+          sx={{
+            width: '100%',
+            maxWidth: '100%'
+          }}
+        >
+          <TextField
+            required
+            name="lastName"
+            onChange={onInputChange}
+            fullWidth
+            value={lastName}
+            id="grid-last-name"
+            type="text"
+            variant="outlined"
+            InputProps={{
+              startAdornment: <InputAdornment position="start">Last Name:</InputAdornment>,
+            }}
+          />
+        </Box>
       </div>
       <div className={tailwindClasses.formItem}>
-        <label className={tailwindClasses.inputLabel} htmlFor="grid-email-name">
-          Email *
-        </label>
-        <input
-          required
-          name="email"
-          onChange={onInputChange}
-          value={email}
-          className={tailwindClasses.input}
-          id="grid-email-name"
-          type="email"
-          placeholder="email@email.com"
-        />
+        <Box
+          sx={{
+            width: '100%',
+            maxWidth: '100%'
+          }}
+        >
+          <TextField
+            required
+            name="email"
+            onChange={onInputChange}
+            fullWidth
+            value={email}
+            id="grid-email-name"
+            type="email"
+            variant="outlined"
+            InputProps={{
+              startAdornment: <InputAdornment position="start">Email:</InputAdornment>,
+            }}
+          />
+        </Box>
       </div>
       {role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF
         ? renderEmployeeFormFields()
         : null}
       {userToEdit === undefined && (
         <>
-          <div className={tailwindClasses.formItem}>
-            <label
-              className={tailwindClasses.inputLabel}
-              htmlFor="grid-password-name"
+          <div className={tailwindClasses.formItemHalf}>
+            <Box
+              sx={{
+                width: '100%',
+                maxWidth: '100%'
+              }}
             >
-              Password *
-            </label>
-            <input
-              required
-              name="password"
-              onChange={onInputChange}
-              value={password}
-              className={tailwindClasses.input}
-              id="grid-password-name"
-              type="password"
-            />
+              <TextField
+                required
+                name="password"
+                onChange={onInputChange}
+                fullWidth
+                value={password}
+                id="grid-password-name"
+                type="password"
+                variant="outlined"
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">Password:</InputAdornment>,
+                }}
+              />
+            </Box>
           </div>
-
-          <div className={tailwindClasses.formItem}>
-            <label
-              className={tailwindClasses.inputLabel}
-              htmlFor="grid-confirmPassword-name"
+          <div className={tailwindClasses.formItemHalf}>
+            <Box
+              sx={{
+                width: '100%',
+                maxWidth: '100%'
+              }}
             >
-              Confirm Password *
-            </label>
-            <input
-              required
-              name="confirmPassword"
-              onChange={onInputChange}
-              value={confirmPassword}
-              className={tailwindClasses.input}
-              id="grid-confirmPassword-name"
-              type="password"
-            />
+              <TextField
+                required
+                name="confirmPassword"
+                onChange={onInputChange}
+                fullWidth
+                value={confirmPassword}
+                id="grid-confirmPassword-name"
+                type="password"
+                variant="outlined"
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">Confirm Password:</InputAdornment>,
+                }}
+              />
+            </Box>
           </div>
         </>
       )}

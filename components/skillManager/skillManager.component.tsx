@@ -7,23 +7,28 @@ import { Metadata, EmployeeType } from "../../types/MasterTypes.types";
 import Loader from "../loader/loader.component";
 import styles from "./skillManager.module.scss";
 import ButtonComponent from "../ButtonComponent";
+import Select from '@mui/material/Select'
+import InputLabel from '@mui/material/InputLabel'
+import FormControl from '@mui/material/FormControl'
+import MenuItem from '@mui/material/MenuItem'
+import Box from '@mui/material/Box'
+import TextField from '@mui/material/TextField'
+import InputAdornment from "@mui/material/InputAdornment";
 
 export default function SkillManager({ employee }: PageProps) {
   const tailwindClasses = {
-    //border border-[gray]
-    container: "rounded  w-full m-2 p-2 flex flex-row",
+    container: "rounded  w-full m-2 p-2 flex flex-row bg-[#FAF9F9]",
     list: "h-full basis-[50%] flex flex-wrap gap-1 pt-5 pl-3",
     formRow: "flex flex-col pt-1",
     form: "h-full basis-[50%] pr-2",
-    inputLabel:
-      "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mr-1",
-    input:
-      "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-    formButton:
-      "bg-transparent hover:bg-sidebar text-sidebar font-semibold hover:text-white py-2 px-4 border border-sidebar hover:border-transparent rounded",
+    inputLabel: "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mr-1",
+    input: "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+    formButton: "bg-transparent hover:bg-sidebar text-sidebar font-semibold hover:text-white py-2 px-4 border border-sidebar hover:border-transparent rounded",
     chip: "p-1 border border-black rounded-xl bg-sidebar text-white px-2 flex items-center",
     name: "",
     chipDeleteIcon: "h-[20px] ml-2 hover:text-current cursor-pointer",
+    test: "flex",
+    test2: "w-full"
   };
   const [loadState, setLoadState] = useState<boolean>(false);
   const [metadataSkills, setMetadataSkills] = useState<Metadata[]>([]);
@@ -115,75 +120,97 @@ export default function SkillManager({ employee }: PageProps) {
       <div className={tailwindClasses.form}>
         <div className={tailwindClasses.formRow}>
           <span className={tailwindClasses.inputLabel}>Skill</span>
-          <select
-            disabled={filteredMetadataSkills.length === 0}
-            required
-            name="skill"
-            onChange={onFormSkillInputChange}
-            className={tailwindClasses.input}
-            value={skill?._id}
-            id="grid-skills-name"
-          >
-            <option value={""}>-</option>
-            {filteredMetadataSkills.map((item, index) => (
-              <option key={`active-skill-option-${index}`} value={item._id!}>
-                {`${item.name}`}
-              </option>
-            ))}
-          </select>
+          <FormControl fullWidth>
+            <InputLabel htmlFor="grid-skills-name">Skill</InputLabel>
+            <Select
+              disabled={filteredMetadataSkills.length === 0}
+              required
+              labelId="grid-skills-name"
+              id="grid-skills-name"
+              name="skill"
+              value={skill?._id}
+              label="Skill"
+              onChange={onFormSkillInputChange}
+            >
+              {filteredMetadataSkills.map((item, index) => (
+                <MenuItem key={`active-skill-option-${index}`} value={item._id!}>
+                  {`${item.name}`}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+        <div className={tailwindClasses.test}>
+          <div className={tailwindClasses.test2}>
+            <Box
+              sx={{
+                width: '100%',
+                maxWidth: '100%'
+              }}
+            >
+              <TextField
+                disabled={filteredMetadataSkills.length === 0}
+                required
+                name="rate"
+                onChange={onFormSkillInputChange}
+                fullWidth
+                value={rate}
+                id="grid-rate"
+                type="number"
+                variant="outlined"
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">Rate:</InputAdornment>,
+                }}
+              />
+            </Box>
+          </div>
+          <div className={tailwindClasses.test2}>
+            <Box
+              sx={{
+                width: '100%',
+                maxWidth: '100%'
+              }}
+            >
+              <TextField
+                disabled={filteredMetadataSkills.length === 0}
+                required
+                name="yearsExperience"
+                onChange={onFormSkillInputChange}
+                fullWidth
+                value={yearsExperience}
+                id="grid-years-experience"
+                type="number"
+                variant="outlined"
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">Years of Experience:</InputAdornment>,
+                }}
+              />
+            </Box>
+          </div>
         </div>
         <div className={tailwindClasses.formRow}>
-          <label className={tailwindClasses.inputLabel} htmlFor="grid-rate">
-            Rate
-          </label>
-          <input
-            disabled={filteredMetadataSkills.length === 0}
-            required
-            name="rate"
-            onChange={onFormSkillInputChange}
-            value={rate}
-            className={tailwindClasses.input}
-            id="grid-rate"
-            type="number"
-            placeholder="0"
-          />
-        </div>
-        <div className={tailwindClasses.formRow}>
-          <label
-            className={tailwindClasses.inputLabel}
-            htmlFor="grid-years-experience"
+          <Box
+            sx={{
+              width: '100%',
+              maxWidth: '100%'
+            }}
           >
-            Years Experience
-          </label>
-          <input
-            disabled={filteredMetadataSkills.length === 0}
-            required
-            name="yearsExperience"
-            onChange={onFormSkillInputChange}
-            value={yearsExperience}
-            className={tailwindClasses.input}
-            id="grid-years-experience"
-            type="number"
-            placeholder="0"
-          />
-        </div>
-        <div className={tailwindClasses.formRow}>
-          <label
-            className={tailwindClasses.inputLabel}
-            htmlFor="grid-description"
-          >
-            Description
-          </label>
-          <textarea
-            disabled={filteredMetadataSkills.length === 0}
-            required
-            name="description"
-            onChange={onFormSkillInputChange}
-            value={description}
-            className={tailwindClasses.input}
-            id="grid-description"
-            placeholder="Indicate your experience here."
-          />
+            <TextField
+              disabled={filteredMetadataSkills.length === 0}
+              required
+              name="description"
+              onChange={onFormSkillInputChange}
+              fullWidth
+              value={description}
+              id="grid-description"
+              type="text"
+              variant="outlined"
+              InputProps={{
+                startAdornment: <InputAdornment position="start">Description:</InputAdornment>,
+              }}
+              placeholder="Indicate your experience here"
+            />
+          </Box>
         </div>
         <div className={tailwindClasses.formRow}>
           <ButtonComponent

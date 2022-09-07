@@ -13,14 +13,15 @@ function Users() {
     const [activeEmployee, setActiveEmployee] = useState<EmployeeType>()
 
     const tailwindClasses = {
-        customBanner: 'h-full w-full flex items-center justify-start p-[2rem]',
-        content: 'flex relative mx-1 mb-1 md:mx-0 md:pl-[1rem] md:mr-4 md:w-full pt-1 md:py-[1rem] flex flex-col md:flex-row gap-1 md:gap-[1rem] z-[1] md:grow-0 items-stretch h-full overflow-hidden',
-        header: 'text-2xl text-white z-[5]',
-        box: 'flex flex-col gap-1 shrink-0 grow-0 md:basis-[31.25vw] basis-1/2',
-        subtitle: 'italic text-sm text-[gray]',
-        statsBox: 'flex flex-grow w-[unset] flex-col items-stretch',
-        managerStats: 'flex h-[30%] justify-center items-center',
-        employeeStats: 'flex flex-grow justify-center items-center',
+        customBanner: 'customBanner h-full w-full flex items-center justify-start p-[2rem]',
+        content: 'content flex',
+        header: 'header text-2xl text-white z-[5]',
+        box1: 'box1 w-1/3 pl-[25px] pr-[12.5px] py-[25px]',
+        box2: 'box2 w-2/3 pl-[12.5px] pr-[25px] py-[25px]',
+        subtitle: 'subtitle italic text-sm text-[gray]',
+        statsBox: 'statsBox flex flex-grow w-[unset] flex-col items-stretch',
+        managerStats: 'managerStats flex h-[30%] justify-center items-center',
+        employeeStats: 'employeeStats flex flex-grow justify-center items-center',
     }
 
     const selectManager = (manager: UserType) => {
@@ -34,7 +35,7 @@ function Users() {
                 <h1 className={tailwindClasses.header}>User List</h1>
             </div>} />
             <div className={tailwindClasses.content}>
-                <div className={tailwindClasses.box}>
+                <div className={tailwindClasses.box1}>
                     {/* Manager List */}
                     {/* <ManagerWidget activeManager={activeManager} height='10vh' /> */}
                     <UserList
@@ -43,7 +44,7 @@ function Users() {
                         onClickItem={(user) => selectManager(user as UserType)}
                         enableRowActions={true} />
                 </div>
-                <div className={tailwindClasses.box}>
+                <div className={tailwindClasses.box2}>
                     {/* Employee List */}
                     <UserList
                         role={activeManager ? 'employeesof' : 'employees'}
