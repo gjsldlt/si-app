@@ -19,9 +19,9 @@ export const addMetadataQuery = `mutation CreateMetadata
       name
       description
     }
-  }`
+  }`;
 //query string for API get request
-export const getMetadataQuery =  `query
+export const getMetadataQuery = `query
   (
     $type: String!
   )
@@ -34,7 +34,7 @@ export const getMetadataQuery =  `query
       name 
       description
     }
-  }`
+  }`;
 
 //query string for API put request
 export const updateMetadataQuery = `mutation UpdateMetadata
@@ -54,7 +54,7 @@ export const updateMetadataQuery = `mutation UpdateMetadata
       type
       createdAt
     }
-  }`
+  }`;
 
 export const deleteMetadataQuery = `mutation DeleteMetadata
   (
@@ -67,5 +67,4 @@ export const deleteMetadataQuery = `mutation DeleteMetadata
     {
       message
     }
-  }`
-
+  }`;

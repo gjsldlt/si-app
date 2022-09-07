@@ -15,6 +15,8 @@ import { PlusIcon, XIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
 import PopupComponent from "../PopupComponent";
 import ButtonComponent from "../ButtonComponent";
 
+import { Card, CardActions, CardContent, Typography, List, ListItem, ListItemButton, ListItemText, Container, IconButton} from "@mui/material";
+
 const MetadataComponent: FC<MetadataComponentProps> = ({
   type,
   activeMetadata,
@@ -183,15 +185,71 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
     if (metadataToDelete) {
       await deleteMetadata(metadataToDelete._id);
       renderData();
+    };
+
+  const cardBody = () => {
+    if (displayForm) {
+      return (
+        <MetadataForm
+          renderData={renderData}
+          setLoadState={setLoadState}
+          metadataToEdit={metadataToEdit}
+          metadataType={type}
+        />
+      );
+    } else if (displayPopup) {
+      return (
+        <MetadataPopup
+          renderData={renderData}
+          metadataToDelete={metadataToDelete}
+        />
+      );
+    } else {
+      return (
+        <List>
+          {metadataList.map((metadata) => {
+            const activeLine = activeMetadata?._id === metadata._id;
+            return (
+              <ListItem key={`${type}-line-item-${metadata._id}`} component="div" disablePadding
+                secondaryAction={enableRowActions ? (
+                  <>
+                    <IconButton>
+                      <CreateIcon
+                        onClick={() => {
+                          editMetadata(metadata);
+                        }}
+                      />
+                    </IconButton>
+                    <IconButton>
+                      <DeleteIcon onClick={() => {
+                        removeMetadata(metadata);
+                      }} />
+                    </IconButton>
+                  </>
+                ) : null
+                }>
+                <ListItemButton>
+                  <ListItemText primary={metadata.name} />
+                </ListItemButton>
+                <span>
+                  {activeLine ? metadata.description : ""}
+                </span>
+              </ListItem>
+            );
+          })}
+        </List>
+      );
     }
+  };
   };
 
   return (
-    <div className={tailwindClasses.container}>
-      <div className={tailwindClasses.toolbar}>
+    <Container sx={{ px: 1 }} disableGutters>
+      <Card variant="outlined">
+      <CardActions sx={{ p: 1 }}>
         <p className={tailwindClasses.title}>{metadataTitle()}</p>
         <PopupComponent
-          title="Are you sure you want to delete this entry?:"
+          title="Are you sure you want to delete this entry?"
           entry={metadataToDelete?.name}
           open={displayPopup}
           close={handleClose}
@@ -204,10 +262,7 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
             />
           </div>
         </PopupComponent>
-        {displayPopup ? (
-          <p></p>
-        ) : (
-          <button
+        <button
             className={tailwindClasses.submitButton}
             onClick={showMetadataForm}
           >
@@ -217,11 +272,12 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
               <PlusIcon className={tailwindClasses.icon} />
             )}
           </button>
-        )}
-      </div>
+      </CardActions>
       {loadState ? <LoaderComponent /> : handleFormDisplay()}
-    </div>
+      </Card>
+    </Container>
   );
 };
+
 
 export default MetadataComponent;

@@ -3,6 +3,8 @@ import { useState } from "react";
 import PageBanner from "../components/pageBanner/pageBanner.component";
 import MetadataComponent from "../components/metadata/metadata.component";
 
+import { Box } from "@mui/material";
+
 import { Metadata } from '../types/MasterTypes.types';
 
 const MetadataPage = () => {
@@ -60,7 +62,7 @@ const MetadataPage = () => {
         }
       </div>
 
-      <div className={tailwindClasses.content}>
+      <Box sx={{ p: 2, display: 'flex', flexDirection: 'row' }}>
         <div className={`${tailwindClasses.box} ${activeMobileTab === 'Skills' ? tailwindClasses.mobileBoxShow : tailwindClasses.mobileBoxHidden}`}>
           <MetadataComponent type="skill" activeMetadata={activeSkill} onMetadataClick={setActiveSkill} enableRowActions={true} />
         </div>
@@ -70,10 +72,13 @@ const MetadataPage = () => {
         <div className={`${tailwindClasses.box} ${activeMobileTab === 'Industries' ? tailwindClasses.mobileBoxShow : tailwindClasses.mobileBoxHidden}`}>
           <MetadataComponent type="industry" activeMetadata={activeIndustry} onMetadataClick={setActiveIndustry} enableRowActions={true} />
         </div>
-      </div>
+      </Box>
     </>
   );
 }
 
 export default MetadataPage;
+
+
+
 
