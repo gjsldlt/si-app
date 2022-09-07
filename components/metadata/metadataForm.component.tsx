@@ -4,6 +4,7 @@ import { FC, useState, ChangeEvent, FormEvent } from "react";
 import { addMetadata, updateMetadata } from "../../services/metadata.service";
 import { FormProps } from "../../types/MasterPageComponent.type";
 import ButtonComponent from "../ButtonComponent";
+import TextFieldComponent from "../TextFieldComponent";
 
 const MetadataForm: FC<FormProps> = ({
   metadataType,
@@ -80,7 +81,7 @@ const MetadataForm: FC<FormProps> = ({
       onSubmit={formSubmit}
     >
       <div className={tailwindClasses.formItem}>
-        <label className={tailwindClasses.inputLabel}>
+        {/* <label className={tailwindClasses.inputLabel}>
           {metadataType.charAt(0).toUpperCase() + metadataType.slice(1)}
         </label>
         <input
@@ -92,10 +93,20 @@ const MetadataForm: FC<FormProps> = ({
           id="metadataName"
           name="metadataName"
           placeholder="ex. JavaScript"
+        /> */}
+        <TextFieldComponent
+          className={"w-full"}
+          id="metadataName"
+          name="metadataName"
+          label={metadataType.charAt(0).toUpperCase() + metadataType.slice(1)}
+          required={true}
+          onChange={inputChange}
+          value={newMetadataName}
+          placeholder="ex. JavaScript"
         />
       </div>
       <div className={tailwindClasses.formItem}>
-        <label className={tailwindClasses.inputLabel}>Description</label>
+        {/* <label className={tailwindClasses.inputLabel}>Description</label>
         <input
           required
           onChange={inputChange}
@@ -105,6 +116,16 @@ const MetadataForm: FC<FormProps> = ({
           id="metadataDesc"
           name="metadataDesc"
           placeholder="ex. Scripting language for web pages"
+        /> */}
+        <TextFieldComponent
+          className={"w-full"}
+          id="metadataDesc"
+          name="metadataDesc"
+          label="Description"
+          required={true}
+          onChange={inputChange}
+          value={newMetadataDesc}
+          placeholder="ex. JavaScript"
         />
       </div>
       <div className={`${tailwindClasses.formItem} mt-1 flex justify-end`}>
