@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import {
     MailIcon,
     LockClosedIcon,
@@ -7,11 +7,11 @@ import {
     ChevronRightIcon,
     IdentificationIcon,
     PhoneIcon,
-} from '@heroicons/react/solid'
-import { useRouter } from 'next/router'
-import Swal from 'sweetalert2'
+} from '@heroicons/react/solid';
+import { useRouter } from 'next/router';
+import Swal from 'sweetalert2';
 
-import { authLogin, saveUserInSession } from '../../services/user.service'
+import { authLogin, saveUserInSession } from '../../services/user.service';
 
 const Form: React.FC = () => {
     const tailwindClasses = {
@@ -48,70 +48,87 @@ const Form: React.FC = () => {
         submitLoginSpacing: `mt-[30px] md:mt-[50px]`,
         submitRegisterSpacing: `mt-[32px]`,
         submitIcon: `w-[40px] h-[40px]`,
-    };;
+    };
 
-    const router = useRouter()
-    const [displayLogin, setDisplayLogin] = useState(true)
-    const [displayRegister, setDisplayRegister] = useState(false)
-    const [displayPassword, setDisplayPassword] = useState(false)
+    const router = useRouter();
+    const [displayLogin, setDisplayLogin] = useState(true);
+    const [displayRegister, setDisplayRegister] = useState(false);
+    const [displayPassword, setDisplayPassword] = useState(false);
 
-    const [emailLogin, setEmailLogin] = useState('')
-    const [passwordLogin, setpasswordLogin] = useState('')
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [emailRegister, setEmailRegister] = useState('')
-    const [passwordRegister, setPasswordRegister] = useState('')
-    const [repeatPasswordRegister, setRepeatPasswordRegister] = useState('')
-    const [contactNumber, setContactNumber] = useState('')
+    const [emailLogin, setEmailLogin] = useState('');
+    const [passwordLogin, setpasswordLogin] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [emailRegister, setEmailRegister] = useState('');
+    const [passwordRegister, setPasswordRegister] = useState('');
+    const [repeatPasswordRegister, setRepeatPasswordRegister] = useState('');
+    const [contactNumber, setContactNumber] = useState('');
 
     const loginForm = async () => {
         if (displayLogin === false) {
-            setDisplayLogin(true)
-            setDisplayRegister(false)
+            setDisplayLogin(true);
+            setDisplayRegister(false);
         } else {
-            setDisplayLogin(false)
-            setDisplayRegister(true)
+            setDisplayLogin(false);
+            setDisplayRegister(true);
         }
     };
 
     const registerForm = async () => {
         if (displayRegister === false) {
-            setDisplayRegister(true)
-            setDisplayLogin(false)
+            setDisplayRegister(true);
+            setDisplayLogin(false);
         } else {
-            setDisplayRegister(false)
-            setDisplayLogin(true)
+            setDisplayRegister(false);
+            setDisplayLogin(true);
         }
     };
 
     const passwordInput = async () => {
         if (displayPassword === false) {
-            setDisplayPassword(true)
+            setDisplayPassword(true);
         } else {
-            setDisplayPassword(false)
+            setDisplayPassword(false);
         }
     };
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         switch (e.target.name) {
-            case 'emailLogin': setEmailLogin(e.target.value); break
-            case 'passwordLogin': setpasswordLogin(e.target.value); break
-            case 'firstName': setFirstName(e.target.value); break
-            case 'lastName': setLastName(e.target.value); break
-            case 'emailRegister': setEmailRegister(e.target.value); break
-            case 'passwordRegister': setPasswordRegister(e.target.value); break
-            case 'repeatPasswordRegister': setRepeatPasswordRegister(e.target.value); break
-            case 'contactNumber': setContactNumber(e.target.value); break
-            default: break
+            case 'emailLogin':
+                setEmailLogin(e.target.value);
+                break;
+            case 'passwordLogin':
+                setpasswordLogin(e.target.value);
+                break;
+            case 'firstName':
+                setFirstName(e.target.value);
+                break;
+            case 'lastName':
+                setLastName(e.target.value);
+                break;
+            case 'emailRegister':
+                setEmailRegister(e.target.value);
+                break;
+            case 'passwordRegister':
+                setPasswordRegister(e.target.value);
+                break;
+            case 'repeatPasswordRegister':
+                setRepeatPasswordRegister(e.target.value);
+                break;
+            case 'contactNumber':
+                setContactNumber(e.target.value);
+                break;
+            default:
+                break;
         }
     };
 
     const login = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        e.preventDefault()
-        e.preventDefault()
+        e.preventDefault();
+        e.preventDefault();
         const loginData = await authLogin({
-            'email': emailLogin,
-            'password': passwordLogin
+            email: emailLogin,
+            password: passwordLogin,
         });
         if (loginData.login === null) {
             Swal.fire({
@@ -120,13 +137,13 @@ const Form: React.FC = () => {
                 title: 'Login Unsuccessful',
                 text: 'Incorrect email or password',
                 showConfirmButton: false,
-                timer: 1500
-            })
+                timer: 1500,
+            });
         } else {
-            let role = "";
-            if (loginData.login.isAdmin) role = 'admin'
-            else if (loginData.login.employeeId === null) role = 'manager'
-            else role = 'employee'
+            let role = '';
+            if (loginData.login.isAdmin) role = 'admin';
+            else if (loginData.login.employeeId === null) role = 'manager';
+            else role = 'employee';
 
             saveUserInSession({
                 role: role,
@@ -138,15 +155,24 @@ const Form: React.FC = () => {
                 managerId: loginData.login.managerId,
                 employeeId: loginData.login.employeeId,
                 roles: [],
-            })
-            router.push("/")
+            });
+            router.push('/');
         }
-    }
+    };
 
-    const register = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        e.preventDefault()
-        console.log(firstName, lastName, emailRegister, passwordRegister, repeatPasswordRegister, contactNumber)
-    }
+    const register = async (
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
+        e.preventDefault();
+        console.log(
+            firstName,
+            lastName,
+            emailRegister,
+            passwordRegister,
+            repeatPasswordRegister,
+            contactNumber
+        );
+    };
 
     return (
         <div className={`${tailwindClasses.container}`}>
@@ -191,58 +217,44 @@ const Form: React.FC = () => {
                 </span>
             </div>
             <form
-
-                action="submit"
-
-                className={displayLogin === true ? "block" : "hidden"}
-
+                action='submit'
+                className={displayLogin === true ? 'block' : 'hidden'}
             >
                 <div className={`${tailwindClasses.loginFormContainer}`}>
                     <label
-
-                        htmlFor="emailLogin"
-
+                        htmlFor='emailLogin'
                         className={`${tailwindClasses.loginLabel}`}
-
                     >
                         <MailIcon
-
                             className={`${tailwindClasses.iconProperties} ${tailwindClasses.leftIcon}`}
-
                         />
                         <input
                             onChange={onChange}
                             value={emailLogin}
-                            name="emailLogin"
-                            type="email"
-                            id="emailLogin"
+                            name='emailLogin'
+                            type='email'
+                            id='emailLogin'
                             className={`${tailwindClasses.loginInputBox}`}
-                            placeholder="Email Address"
+                            placeholder='Email Address'
                             required
                         />
                     </label>
                     <label
-
-                        htmlFor="passwordLogin"
-
+                        htmlFor='passwordLogin'
                         className={`${tailwindClasses.loginLabel}`}
-
                     >
                         <LockClosedIcon
-
                             className={`${tailwindClasses.iconProperties} ${tailwindClasses.leftIcon}`}
-
                         />
                         <input
                             onChange={onChange}
                             value={passwordLogin}
-                            name="passwordLogin"
-                            type={displayPassword === true ? "text" : "password"}
-                            id="passwordLogin"
+                            name='passwordLogin'
+                            type={displayPassword === true ? 'text' : 'password'}
+                            id='passwordLogin'
                             className={`${tailwindClasses.loginInputBox}`}
-                            placeholder="Password"
+                            placeholder='Password'
                             required
-
                         />
                         {displayPassword === false ? (
                             <EyeOffIcon
@@ -258,45 +270,39 @@ const Form: React.FC = () => {
                     </label>
                     <div className={`${tailwindClasses.optionsContainer}`}>
                         <span>
-                            <input type="checkbox" id="remember" />
+                            <input type='checkbox' id='remember' />
                             <label
-                                htmlFor="remember"
+                                htmlFor='remember'
                                 className={`${tailwindClasses.rememberMe}`}
                             >
                                 Remember me
                             </label>
                         </span>
-                        <a href="#" className={`${tailwindClasses.forgotPass}`}>
-
+                        <a href='#' className={`${tailwindClasses.forgotPass}`}>
                             Forgot Password?
-
                         </a>
                     </div>
                     <div className={`${tailwindClasses.formSubmitBtnContainer}`}>
                         <button
-
                             onClick={login}
-
                             className={`${tailwindClasses.formSubmitBtn} ${tailwindClasses.submitLoginSpacing}`}
-
                         >
-                            LOGIN{" "}
-                            {" "}
+                            LOGIN{' '}
                             <ChevronRightIcon className={`${tailwindClasses.submitIcon}`} />
                         </button>
                     </div>
                 </div>
             </form>
             <form
-                action="submit"
+                action='submit'
                 className={
                     displayRegister === true
                         ? `${tailwindClasses.registerFormContainer}`
-                        : "hidden"
+                        : 'hidden'
                 }
             >
                 <label
-                    htmlFor="firstName"
+                    htmlFor='firstName'
                     className={`${tailwindClasses.registerLabel}`}
                 >
                     <IdentificationIcon
@@ -305,80 +311,65 @@ const Form: React.FC = () => {
                     <input
                         onChange={onChange}
                         value={firstName}
-                        name="firstName"
-                        type="text"
-                        id="firstName"
+                        name='firstName'
+                        type='text'
+                        id='firstName'
                         className={`${tailwindClasses.registerInputBox} ${tailwindClasses.topRounded}`}
-                        placeholder="First Name"
+                        placeholder='First Name'
                         required
                     />
                 </label>
                 <label
-
-                    htmlFor="lastName"
-
+                    htmlFor='lastName'
                     className={`${tailwindClasses.registerLabel}`}
-
                 >
                     <IdentificationIcon
-
                         className={`${tailwindClasses.iconProperties} ${tailwindClasses.leftIcon}`}
-
                     />
                     <input
                         onChange={onChange}
                         value={lastName}
-                        name="lastName"
-                        type="text"
-                        id="lastName"
+                        name='lastName'
+                        type='text'
+                        id='lastName'
                         className={`${tailwindClasses.registerInputBox}`}
-                        placeholder="Last Name"
+                        placeholder='Last Name'
                         required
                     />
                 </label>
                 <label
-
-                    htmlFor="emailRegister"
-
+                    htmlFor='emailRegister'
                     className={`${tailwindClasses.registerLabel}`}
-
                 >
                     <MailIcon
-
                         className={`${tailwindClasses.iconProperties} ${tailwindClasses.leftIcon}`}
-
                     />
                     <input
                         onChange={onChange}
                         value={emailRegister}
-                        name="emailRegister"
-                        type="email"
-                        id="emailRegister"
+                        name='emailRegister'
+                        type='email'
+                        id='emailRegister'
                         className={`${tailwindClasses.registerInputBox}`}
-                        placeholder="Email Address"
+                        placeholder='Email Address'
                         required
                     />
                 </label>
                 <label
-
-                    htmlFor="passwordRegister"
-
+                    htmlFor='passwordRegister'
                     className={`${tailwindClasses.registerLabel}`}
-
                 >
                     <LockClosedIcon
-
                         className={`${tailwindClasses.iconProperties} ${tailwindClasses.leftIcon}`}
-
                     />
                     <input
                         onChange={onChange}
                         value={passwordRegister}
-                        name="passwordRegister"
-                        type={displayPassword === true ? "text" : "password"}
-                        id="passwordRegister"
+                        name='passwordRegister'
+                        type={displayPassword === true ? 'text' : 'password'}
+                        id='passwordRegister'
                         className={`${tailwindClasses.registerInputBox}`}
-                        placeholder="Password"
+                        placeholder='Password'
                         required
                     />
                     {displayPassword === false ? (
@@ -394,25 +385,20 @@ const Form: React.FC = () => {
                     )}
                 </label>
                 <label
-
-                    htmlFor="repeatPasswordRegister"
-
+                    htmlFor='repeatPasswordRegister'
                     className={`${tailwindClasses.registerLabel}`}
-
                 >
                     <LockClosedIcon
-
                         className={`${tailwindClasses.iconProperties} ${tailwindClasses.leftIcon}`}
-
                     />
                     <input
                         onChange={onChange}
                         value={repeatPasswordRegister}
-                        name="repeatPasswordRegister"
-                        type={displayPassword === true ? "text" : "password"}
-                        id="repeatPasswordRegister"
+                        name='repeatPasswordRegister'
+                        type={displayPassword === true ? 'text' : 'password'}
+                        id='repeatPasswordRegister'
                         className={`${tailwindClasses.registerInputBox}`}
-                        placeholder="Repeat Password"
+                        placeholder='Repeat Password'
                         required
                     />
                     {displayPassword === false ? (
@@ -427,20 +413,21 @@ const Form: React.FC = () => {
                         />
                     )}
                 </label>
-                <label htmlFor="contactNumberNumber" className={`${tailwindClasses.registerLabel}`}>
+                <label
+                    htmlFor='contactNumberNumber'
+                    className={`${tailwindClasses.registerLabel}`}
+                >
                     <PhoneIcon
-
                         className={`${tailwindClasses.iconProperties} ${tailwindClasses.leftIcon}`}
-
                     />
                     <input
                         onChange={onChange}
                         value={contactNumber}
-                        name="contactNumber"
-                        type="number"
-                        id="contactNumberNumber"
+                        name='contactNumber'
+                        type='number'
+                        id='contactNumberNumber'
                         className={`${tailwindClasses.registerInputBox} ${tailwindClasses.bottomRounded}`}
-                        placeholder="Contact Number"
+                        placeholder='Contact Number'
                         required
                     />
                 </label>
@@ -448,10 +435,8 @@ const Form: React.FC = () => {
                     <button
                         onClick={register}
                         className={`${tailwindClasses.formSubmitBtn} ${tailwindClasses.submitRegisterSpacing}`}
-
                     >
-                        REGISTER{" "}
-                        {" "}
+                        REGISTER{' '}
                         <ChevronRightIcon className={`${tailwindClasses.submitIcon}`} />
                     </button>
                 </div>

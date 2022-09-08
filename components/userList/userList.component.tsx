@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { PlusIcon, XIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
-import CreateIcon from "@mui/icons-material/Create";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { useEffect, useState } from 'react';
+import { PlusIcon, XIcon, PencilIcon, TrashIcon } from '@heroicons/react/solid';
+import CreateIcon from '@mui/icons-material/Create';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-import styles from "./managerList.module.scss";
-import LoaderComponent from "../loader/loader.component";
-import { getAllManagers } from "../../services/user.service";
+import styles from './managerList.module.scss';
+import LoaderComponent from '../loader/loader.component';
+import { getAllManagers } from '../../services/user.service';
 import {
   getEmployees,
   getEmployeesOfManager,
@@ -13,12 +13,12 @@ import {
   registerManager,
   registerEmployee,
   updateManager,
-} from "../../services/user.service";
-import { UserType, EmployeeType } from "../../types/MasterTypes.types";
-import UserForm from "./userForm.component";
-import { USER_ROLES } from "../../helpers/constants.helper";
-import PopupComponent from "../PopupComponent";
-import ButtonComponent from "../ButtonComponent";
+} from '../../services/user.service';
+import { UserType, EmployeeType } from '../../types/MasterTypes.types';
+import UserForm from './userForm.component';
+import { USER_ROLES } from '../../helpers/constants.helper';
+import PopupComponent from '../PopupComponent';
+import ButtonComponent from '../ButtonComponent';
 
 export default function UserList({
   role,
@@ -29,22 +29,22 @@ export default function UserList({
 }: PageProps) {
   const tailwindClasses = {
     container:
-      "container relative flex flex-grow flex-col bg-white p-1 min-h-[200px] md:min-h-100 border-[1px] shadow-lg items-stretch",
-    toolbar: "toolbar flex flex-row grow-0 basis-[content]",
-    title: "title flex-1",
+      'container relative flex flex-grow flex-col bg-white p-1 min-h-[200px] md:min-h-100 border-[1px] shadow-lg items-stretch',
+    toolbar: 'toolbar flex flex-row grow-0 basis-[content]',
+    title: 'title flex-1',
     addButton:
-      "addbutton h-iconbutton w-iconbutton flex items-center justify-center p-0",
-    list: "list grow-0 flex flex-col overflow-auto basis-[90%]",
+      'addbutton h-iconbutton w-iconbutton flex items-center justify-center p-0',
+    list: 'list grow-0 flex flex-col overflow-auto basis-[90%]',
     lineItem:
-      "lineitem transition-all duration-500 rounded py-1 px-2 flex flex-row",
-    lineItemActive: "active bg-sidebar text-white",
+      'lineitem transition-all duration-500 rounded py-1 px-2 flex flex-row',
+    lineItemActive: 'active bg-sidebar text-white',
     lineDetails:
-      "name flex flex-col justify-start justify-center flex-grow cursor-pointer",
-    lineActions: "lineActions flex flex-row justify-center items-center",
+      'name flex flex-col justify-start justify-center flex-grow cursor-pointer',
+    lineActions: 'lineActions flex flex-row justify-center items-center',
     lineButton:
-      "lineButton h-[20px] w-[20px] cursor-pointer hover:text-current",
-    email: "block w-full text-xs",
-    name: "p-0 m-0",
+      'lineButton h-[20px] w-[20px] cursor-pointer hover:text-current',
+    email: 'block w-full text-xs',
+    name: 'p-0 m-0',
   };
   const [userToEdit, setUserToEdit] = useState<UserType>();
   const [userList, setUserList] = useState<UserType[]>([]);
@@ -69,13 +69,13 @@ export default function UserList({
       setAddState(false);
       setLoadState(true);
       switch (role) {
-        case "employees":
+        case 'employees':
           setUserList(await getEmployees());
           break;
-        case "employeesof":
-          setUserList(await getEmployeesOfManager(parentUser?._id || ""));
+        case 'employeesof':
+          setUserList(await getEmployeesOfManager(parentUser?._id || ''));
           break;
-        case "managers":
+        case 'managers':
           setUserList(await getAllManagers());
           break;
         case USER_ROLES.ALL:
@@ -125,7 +125,7 @@ export default function UserList({
   ) => {
     setLoadState(true);
     if (role === USER_ROLES.MANAGERS) {
-      console.log("register new manager", newUser);
+      console.log('register new manager', newUser);
       await registerManager(newUser);
       await renderData();
       setAddState(false);
@@ -144,16 +144,16 @@ export default function UserList({
     setLoadState(true);
     if (role === USER_ROLES.MANAGERS) {
       let response = await updateManager(
-        userToEdit ? (userToEdit?.userId ? userToEdit?.userId : "") : "",
+        userToEdit ? (userToEdit?.userId ? userToEdit?.userId : '') : '',
         updatedUser
       );
       if (response.error) {
         window.alert(
-          "Something went wrong. Please contact administrator of tool."
+          'Something went wrong. Please contact administrator of tool.'
         );
       }
     } else {
-      console.log("Submit to update -- employee");
+      console.log('Submit to update -- employee');
     }
     setAddState(false);
     setUserToEdit(undefined);
@@ -170,7 +170,7 @@ export default function UserList({
               <div
                 key={`manager-line-item-${index}`}
                 className={`${tailwindClasses.lineItem} ${
-                  activeLine ? tailwindClasses.lineItemActive : ""
+                  activeLine ? tailwindClasses.lineItemActive : ''
                 }`}
               >
                 <div
@@ -186,17 +186,17 @@ export default function UserList({
                 {enableRowActions ? (
                   <div className={tailwindClasses.lineActions}>
                     <ButtonComponent
-                      style="icon"
+                      style='icon'
                       icon={<CreateIcon />}
-                      text={["Edit"]}
-                      color={activeLine ? "white" : ""}
+                      text={['Edit']}
+                      color={activeLine ? 'white' : ''}
                       handleClick={[() => editUser(item)]}
                     />
                     <ButtonComponent
-                      style="icon"
+                      style='icon'
                       icon={<DeleteIcon />}
-                      text={["Remove"]}
-                      color={activeLine ? "white" : ""}
+                      text={['Remove']}
+                      color={activeLine ? 'white' : ''}
                       handleClick={[() => handleOpen(item)]}
                     />
                   </div>
@@ -212,26 +212,26 @@ export default function UserList({
     if (addState && userToEdit === undefined) {
       switch (role) {
         case USER_ROLES.EMPLOYEES:
-          return "New Employee";
+          return 'New Employee';
         case USER_ROLES.EMPLOYEESOF:
           return `New Employee of ${parentUser?.firstName} ${parentUser?.lastName}`;
         case USER_ROLES.MANAGERS:
-          return "New Manager";
+          return 'New Manager';
         case USER_ROLES.ALL:
         default:
-          return "New User";
+          return 'New User';
       }
     } else if (!addState && userToEdit === undefined) {
       switch (role) {
         case USER_ROLES.EMPLOYEES:
-          return "Employees";
+          return 'Employees';
         case USER_ROLES.EMPLOYEESOF:
           return `Employees of ${parentUser?.firstName} ${parentUser?.lastName}`;
         case USER_ROLES.MANAGERS:
-          return "Managers";
+          return 'Managers';
         case USER_ROLES.ALL:
         default:
-          return "Users";
+          return 'Users';
       }
     } else {
       return `Updating: ${userToEdit?.firstName}  ${userToEdit?.lastName}`;
@@ -249,11 +249,11 @@ export default function UserList({
         entry={`${userToDelete?.firstName} ${userToDelete?.lastName}`}
         open={popUp}
       >
-        <div className="flex justify-center mt-2">
+        <div className='flex justify-center mt-2'>
           <ButtonComponent
-            text={["yes", "no"]}
+            text={['yes', 'no']}
             handleClick={[deleteUserHandler, handleClose]}
-            variant="outlined"
+            variant='outlined'
           />
         </div>
       </PopupComponent>
@@ -261,11 +261,11 @@ export default function UserList({
         title={`${userToBeRegistered?.firstName} ${userToBeRegistered?.lastName} is now registered as Manager.`}
         open={managerRegistered}
       >
-        <div className="flex justify-center mt-2">
+        <div className='flex justify-center mt-2'>
           <ButtonComponent
-            text={["confirm"]}
+            text={['confirm']}
             handleClick={[() => setManagerRegistered(false)]}
-            variant="outlined"
+            variant='outlined'
           />
         </div>
       </PopupComponent>
@@ -274,9 +274,9 @@ export default function UserList({
         <p className={tailwindClasses.title}>{boxTitle()}</p>
         <button className={tailwindClasses.addButton} onClick={addNewUser}>
           {addState ? (
-            <XIcon className="h-5 w-5 text-gray" />
+            <XIcon className='h-5 w-5 text-gray' />
           ) : (
-            <PlusIcon className="h-5 w-5 text-gray" />
+            <PlusIcon className='h-5 w-5 text-gray' />
           )}
         </button>
       </div>
@@ -312,7 +312,7 @@ UserList.defaultProps = {
   onClickItem: (
     user: UserType | React.Dispatch<React.SetStateAction<undefined>> | undefined
   ) => {
-    console.log("done nothing.");
+    console.log('done nothing.');
   },
   enableRowActions: false,
   parentUser: undefined,

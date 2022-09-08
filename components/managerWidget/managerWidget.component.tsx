@@ -10,19 +10,15 @@ export default function ManagerWidget({ activeManager, height }: PageProps) {
     widget: 'widget flex flex-grow',
     default: 'default w-full flex flex-row justify-center items-center',
     active: 'active ',
-  }
+  };
   const [loadState, setLoadState] = useState<boolean>(false);
 
   const renderDefaultData = () => {
-    return <div className={tailwindClasses.default}>
-    asd
-    </div>
-  }
+    return <div className={tailwindClasses.default}>asd</div>;
+  };
   const renderActiveData = () => {
-    return <div className={tailwindClasses.active}>
-    asd
-    </div>
-  }
+    return <div className={tailwindClasses.active}>asd</div>;
+  };
 
   // useEffect(() => {
 
@@ -35,13 +31,13 @@ export default function ManagerWidget({ activeManager, height }: PageProps) {
         {activeManager ? renderActiveData() : renderDefaultData()}
       </div>
     </div>
-  )
+  );
 }
 
 type PageProps = {
-  activeManager?: UserType,
-  height?: string
-}
+  activeManager?: UserType;
+  height?: string;
+};
 ManagerWidget.defaultProps = {
-  height: '20vh'
-}
+  height: '20vh',
+};
