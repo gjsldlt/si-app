@@ -17,9 +17,12 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint"],
-  "rules":{
-    "prefer-const":0,
-    "ban-ts-comment":0
+  "plugins": ["@typescript-eslint", "prettier"],
+  "rules": {
+    "prefer-const": 0,
+    "ban-ts-comment": 0,
+    "func-style": 1,
+    "prefer-arrow-callback": 1,
+    "allowArrowFunctions": true
   }
 }

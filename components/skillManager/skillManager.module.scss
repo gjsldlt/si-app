@@ -1,27 +1,24 @@
 @import '../../styles/variable';
 
-.skillManager{
-    display:flex;
-    flex-direction: column;
+.skillManager {
+  display: flex;
+  flex-direction: column;
 }
 
 /* Mobile CSS */
 @media (max-width: $mobile-width) {
-    .skillManager{
-
-    }
+  .skillManager {
+  }
 }
 
 /* Tablet CSS */
 @media (max-width: $mobile-width) {
-    .skillManager{
-        
-    }
+  .skillManager {
+  }
 }
 
 /* Laptop and above CSS */
 @media (max-width: $mobile-width) {
-    .skillManager{
-        
-    }
+  .skillManager {
+  }
 }

@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { Box, Modal, Typography } from "@mui/material";
+import { FC } from 'react';
+import { Box, Modal, Typography } from '@mui/material';
 type PopupType = {
   open: boolean;
   close?: any;
@@ -16,22 +16,22 @@ const PopupComponent: FC<PopupType> = ({
   entry,
 }) => {
   const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
     width: 400,
-    bgcolor: "background.paper",
+    bgcolor: 'background.paper',
     boxShadow: 24,
     p: 3,
-    borderRadius: "5px",
+    borderRadius: '5px',
   };
 
   return (
     <>
       <Modal open={open}>
         <Box sx={style}>
-          <div className="text-lg font-bold">{title}</div>
+          <div className='text-lg font-bold'>{title}</div>
           <div className='text-center text-lg'>{entry}</div>
           {children}
         </Box>

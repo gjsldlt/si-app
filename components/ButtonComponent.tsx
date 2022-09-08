@@ -1,11 +1,11 @@
-import { FC } from "react";
-import { Button, ButtonGroup, IconButton } from "@mui/material";
-import { ImportContacts } from "@mui/icons-material";
+import { FC } from 'react';
+import { Button, ButtonGroup, IconButton } from '@mui/material';
+import { ImportContacts } from '@mui/icons-material';
 
 type ButtonType = {
-  type?: "button" | "submit" | "reset" | undefined;
+  type?: 'button' | 'submit' | 'reset' | undefined;
   handleClick?: any;
-  variant?: "text" | "outlined" | "contained" | undefined;
+  variant?: 'text' | 'outlined' | 'contained' | undefined;
   text: string[];
   secondText?: string;
   disabled?: boolean;
@@ -33,7 +33,7 @@ const ButtonComponent: FC<ButtonType> = ({
               key={index}
               onClick={handleClick ? handleClick[index] : undefined}
               type={type}
-              sx={{ paddingX: `${text.length === 2 ? "4rem" : "2rem"}` }}
+              sx={{ paddingX: `${text.length === 2 ? '4rem' : '2rem'}` }}
             >
               {item}
             </Button>
@@ -41,13 +41,13 @@ const ButtonComponent: FC<ButtonType> = ({
         </ButtonGroup>
       ) : (
         <>
-          {style === "icon" ? (
+          {style === 'icon' ? (
             <IconButton
               onClick={handleClick ? handleClick[0] : undefined}
-              size="small"
+              size='small'
               sx={{
-                width: "34px",
-                height: "34px",
+                width: '34px',
+                height: '34px',
                 color: color,
               }}
             >

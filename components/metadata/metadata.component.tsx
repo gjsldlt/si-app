@@ -1,12 +1,12 @@
-import { FC, useState, useEffect, useCallback } from "react";
+import { FC, useState, useEffect, useCallback } from 'react';
 
-import MetadataForm from "./metadataForm.component";
-import CreateIcon from "@mui/icons-material/Create";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AddBoxIcon from "@mui/icons-material/AddBox";
-import CancelIcon from "@mui/icons-material/Cancel";
-import SearchIcon from "@mui/icons-material/Search";
-import TuneIcon from "@mui/icons-material/Tune";
+import MetadataForm from './metadataForm.component';
+import CreateIcon from '@mui/icons-material/Create';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import CancelIcon from '@mui/icons-material/Cancel';
+import SearchIcon from '@mui/icons-material/Search';
+import TuneIcon from '@mui/icons-material/Tune';
 import {
   Card,
   CardActions,
@@ -18,16 +18,16 @@ import {
   ListItemText,
   Container,
   Box,
-} from "@mui/material";
+} from '@mui/material';
 
-import { getMetadata } from "../../services/metadata.service";
-import { MetadataComponentProps } from "../../types/MasterPageComponent.type";
-import { Metadata } from "../../types/MasterTypes.types";
-import { deleteMetadata } from "../../services/metadata.service";
+import { getMetadata } from '../../services/metadata.service';
+import { MetadataComponentProps } from '../../types/MasterPageComponent.type';
+import { Metadata } from '../../types/MasterTypes.types';
+import { deleteMetadata } from '../../services/metadata.service';
 
-import LoaderComponent from "../loader/loader.component";
-import PopupComponent from "../PopupComponent";
-import ButtonComponent from "../ButtonComponent";
+import LoaderComponent from '../loader/loader.component';
+import PopupComponent from '../PopupComponent';
+import ButtonComponent from '../ButtonComponent';
 
 const MetadataComponent: FC<MetadataComponentProps> = ({
   type,
@@ -88,14 +88,14 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
   const metadataTitle = () => {
     let title: string;
     switch (type) {
-      case "skill":
-        title = "Skills";
+      case 'skill':
+        title = 'Skills';
         return title;
-      case "capability":
-        title = "Capabilities";
+      case 'capability':
+        title = 'Capabilities';
         return title;
-      case "industry":
-        title = "Industries";
+      case 'industry':
+        title = 'Industries';
         return title;
       default:
         break;
@@ -124,16 +124,16 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
         <List
           sx={{
             p: 0,
-            position: "relative",
-            overflow: "auto",
+            position: 'relative',
+            overflow: 'auto',
           }}
         >
           {metadataList.map((metadata) => {
             const activeLine = activeMetadata?._id === metadata._id;
             let shortDesc: string | undefined = undefined;
 
-            if (metadata.description.length > 27) {
-              shortDesc = metadata.description.substring(0, 27) + "...";
+            if (metadata.description.length > 45) {
+              shortDesc = metadata.description.substring(0, 45) + '...';
             } else {
               shortDesc = metadata.description;
             }
@@ -141,23 +141,23 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
             return (
               <ListItem
                 key={`${type}-line-item-${metadata._id}`}
-                component="div"
+                component='div'
                 disablePadding
                 secondaryAction={
                   enableRowActions ? (
                     <>
                       <ButtonComponent
-                        style="icon"
+                        style='icon'
                         icon={<CreateIcon />}
-                        text={["Edit"]}
-                        color={activeLine ? "white" : "#0E2040"}
+                        text={['Edit']}
+                        color={activeLine ? 'white' : '#0E2040'}
                         handleClick={[() => editMetadata(metadata)]}
                       />
                       <ButtonComponent
-                        style="icon"
+                        style='icon'
                         icon={<DeleteIcon />}
-                        text={["Remove"]}
-                        color={activeLine ? "white" : "#0E2040"}
+                        text={['Remove']}
+                        color={activeLine ? 'white' : '#0E2040'}
                         handleClick={[() => removeMetadata(metadata)]}
                       />
                     </>
@@ -165,7 +165,20 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
                 }
               >
                 <ListItemButton
-                  sx={activeLine ? { backgroundColor: "#0E2040" } : null}
+                  sx={[
+                    {
+                      m: 1,
+                      backgroundColor: '#FAF9F9',
+                      borderRadius: '10px',
+                      '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.1)' },
+                    },
+                    activeLine
+                      ? {
+                          backgroundColor: '#0E2040',
+                          '&:hover': { backgroundColor: '#0E2040' },
+                        }
+                      : null,
+                  ]}
                   key={`${type}-line-item-${metadata._id}`}
                   onClick={() => {
                     clickMetadataRow(metadata);
@@ -176,19 +189,25 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
                     disableTypography={false}
                     primary={
                       <Typography
-                        variant="h6"
-                        component="h6"
-                        color={activeLine ? "white" : "black"}
+                        sx={{ fontSize: '14px', fontWeight: 700 }}
+                        variant='subtitle1'
+                        component='div'
+                        color={activeLine ? 'white' : 'black'}
                       >
                         {metadata.name}
                       </Typography>
                     }
                     secondary={
                       <Typography
-                        variant="body2"
-                        component="span"
-                        fontStyle="italic"
-                        color={activeLine ? "white" : "gray"}
+                        sx={{
+                          fontSize: '12px',
+                          fontWeight: 400,
+                          lineHeight: '15px',
+                        }}
+                        variant='body2'
+                        component='span'
+                        fontStyle='italic'
+                        color={activeLine ? 'white' : 'gray'}
                       >
                         {activeLine ? metadata.description : shortDesc}
                       </Typography>
@@ -206,45 +225,49 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
 
   return (
     <>
-      <Card sx={{ flexGrow: 1 }} variant="outlined" raised={true}>
-        <CardActions sx={{ p: 1, display: "flex" }}>
-          <Typography variant="h5" component="div">
+      <Card sx={{ flexGrow: 1, borderRadius: '10px' }}>
+        <CardActions sx={{ p: 1, display: 'flex' }}>
+          <Typography
+            sx={{ fontSize: '14px', fontWeight: 700 }}
+            variant='h5'
+            component='div'
+          >
             {metadataTitle()}
           </Typography>
           <Container
-            sx={{ p: 0, display: "flex", justifyContent: "flex-end" }}
+            sx={{ p: 0, display: 'flex', justifyContent: 'flex-end' }}
             disableGutters
           >
             <ButtonComponent
-              style="icon"
-              text={["Search"]}
-              color={"#0E2040"}
+              style='icon'
+              text={['Search']}
+              color={'#0E2040'}
               icon={<SearchIcon />}
             />
             <ButtonComponent
-              style="icon"
-              text={["Filter"]}
-              color={"#0E2040"}
+              style='icon'
+              text={['Filter']}
+              color={'#0E2040'}
               icon={<TuneIcon />}
             />
             <ButtonComponent
-              style="icon"
-              text={["Add"]}
-              color={"#0E2040"}
+              style='icon'
+              text={['Add']}
+              color={'#0E2040'}
               icon={displayForm ? <CancelIcon /> : <AddBoxIcon />}
               handleClick={[() => showMetadataForm()]}
             />
           </Container>
         </CardActions>
         <PopupComponent
-          title="Are you sure you want to delete this entry?"
+          title='Are you sure you want to delete this entry?'
           entry={metadataToDelete?.name}
           open={displayPopup}
         >
-          <Box sx={{ mt: 1, display: "flex", justifyContent: "center" }}>
+          <Box sx={{ mt: 1, display: 'flex', justifyContent: 'center' }}>
             <ButtonComponent
-              text={["yes", "no"]}
-              variant="outlined"
+              text={['yes', 'no']}
+              variant='outlined'
               handleClick={[confirmDelete, renderData]}
             />
           </Box>
