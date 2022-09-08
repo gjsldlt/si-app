@@ -174,9 +174,9 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
                     },
                     activeLine
                       ? {
-                          backgroundColor: '#0E2040',
-                          '&:hover': { backgroundColor: '#0E2040' },
-                        }
+                        backgroundColor: '#0E2040',
+                        '&:hover': { backgroundColor: '#0E2040' },
+                      }
                       : null,
                   ]}
                   key={`${type}-line-item-${metadata._id}`}
