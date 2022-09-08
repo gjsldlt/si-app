@@ -17,6 +17,7 @@ type TextFieldType = {
   validation?: { error: boolean | undefined; errorMsg?: string };
   multiline?: { enabled: boolean | undefined; rows: number };
   className?: string;
+  ariaLabel?: string;
 };
 
 const TextFieldComponent: FC<TextFieldType> = ({
@@ -35,6 +36,7 @@ const TextFieldComponent: FC<TextFieldType> = ({
   validation,
   multiline,
   className,
+  ariaLabel,
 }) => {
   return (
     <>
@@ -55,6 +57,7 @@ const TextFieldComponent: FC<TextFieldType> = ({
         helperText={validation?.errorMsg ? validation?.errorMsg : ""}
         multiline={multiline?.enabled}
         rows={multiline?.rows}
+        inputProps={{ "aria-label": ariaLabel }}
       >
         {children}
       </TextField>
