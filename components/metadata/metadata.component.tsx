@@ -1,33 +1,22 @@
 import { FC, useState, useEffect, useCallback } from 'react';
 
 import MetadataForm from './metadataForm.component';
-import CreateIcon from '@mui/icons-material/Create';
-import DeleteIcon from '@mui/icons-material/Delete';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import CancelIcon from '@mui/icons-material/Cancel';
 import SearchIcon from '@mui/icons-material/Search';
 import TuneIcon from '@mui/icons-material/Tune';
-import {
-  Card,
-  CardActions,
-  CardContent,
-  Typography,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Container,
-  Box,
-} from '@mui/material';
+import { Box } from '@mui/material';
 
 import { getMetadata } from '../../services/metadata.service';
 import { MetadataComponentProps } from '../../types/MasterPageComponent.type';
-import { Metadata } from '../../types/MasterTypes.types';
+import { MetadataType } from '../../types/MasterTypes.types';
 import { deleteMetadata } from '../../services/metadata.service';
 
 import LoaderComponent from '../loader/loader.component';
 import PopupComponent from '../PopupComponent';
 import ButtonComponent from '../ButtonComponent';
+import CardComponent from '../CardComponent';
+import ListComponent from '../ListComponent';
 
 const MetadataComponent: FC<MetadataComponentProps> = ({
   type,
@@ -36,11 +25,11 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
   enableRowActions,
 }: MetadataComponentProps) => {
   //state hook to capture api response to SkillType array
-  const [metadataList, setMetadataList] = useState<Metadata[]>([]);
+  const [metadataList, setMetadataList] = useState<MetadataType[]>([]);
   //state hook to capture skill to edit on click of pencil icon
-  const [metadataToEdit, setMetadataToEdit] = useState<Metadata>();
+  const [metadataToEdit, setMetadataToEdit] = useState<MetadataType>();
   //state hook to capture skill to delete on click of trash icon
-  const [metadataToDelete, setMetadataToDelete] = useState<Metadata>();
+  const [metadataToDelete, setMetadataToDelete] = useState<MetadataType>();
   //state hook to display form containing input fields
   const [displayForm, setDisplayForm] = useState<boolean>(false);
   //state hook to display delete confirmation
@@ -53,22 +42,12 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
     setDisplayForm(!displayForm);
   };
 
-  const clickMetadataRow = (metadata: Metadata) => {
-    if (enableRowActions) {
-      if (activeMetadata?._id === metadata._id) {
-        onMetadataClick(undefined);
-      } else {
-        onMetadataClick(metadata);
-      }
-    }
-  };
-
-  const editMetadata = (metadata: Metadata) => {
+  const editMetadata = (metadata: MetadataType) => {
     setDisplayForm(true);
     setMetadataToEdit(metadata);
   };
 
-  const removeMetadata = (metadata: Metadata) => {
+  const removeMetadata = (metadata: MetadataType) => {
     setDisplayPopup(true);
     setMetadataToDelete(metadata);
   };
@@ -121,123 +100,25 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
       );
     } else {
       return (
-        <List
-          sx={{
-            p: 0,
-            position: 'relative',
-            overflow: 'auto',
-          }}
-        >
-          {metadataList.map((metadata) => {
-            const activeLine = activeMetadata?._id === metadata._id;
-            let shortDesc: string | undefined = undefined;
-
-            if (metadata.description.length > 45) {
-              shortDesc = metadata.description.substring(0, 45) + '...';
-            } else {
-              shortDesc = metadata.description;
-            }
-
-            return (
-              <ListItem
-                key={`${type}-line-item-${metadata._id}`}
-                component='div'
-                disablePadding
-                secondaryAction={
-                  enableRowActions ? (
-                    <>
-                      <ButtonComponent
-                        style='icon'
-                        icon={<CreateIcon />}
-                        text={['Edit']}
-                        color={activeLine ? 'white' : '#0E2040'}
-                        handleClick={[() => editMetadata(metadata)]}
-                      />
-                      <ButtonComponent
-                        style='icon'
-                        icon={<DeleteIcon />}
-                        text={['Remove']}
-                        color={activeLine ? 'white' : '#0E2040'}
-                        handleClick={[() => removeMetadata(metadata)]}
-                      />
-                    </>
-                  ) : null
-                }
-              >
-                <ListItemButton
-                  sx={[
-                    {
-                      m: 1,
-                      backgroundColor: '#FAF9F9',
-                      borderRadius: '10px',
-                      '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.1)' },
-                    },
-                    activeLine
-                      ? {
-                        backgroundColor: '#0E2040',
-                        '&:hover': { backgroundColor: '#0E2040' },
-                      }
-                      : null,
-                  ]}
-                  key={`${type}-line-item-${metadata._id}`}
-                  onClick={() => {
-                    clickMetadataRow(metadata);
-                  }}
-                >
-                  <ListItemText
-                    sx={{ mr: 5 }}
-                    disableTypography={false}
-                    primary={
-                      <Typography
-                        sx={{ fontSize: '14px', fontWeight: 700 }}
-                        variant='subtitle1'
-                        component='div'
-                        color={activeLine ? 'white' : 'black'}
-                      >
-                        {metadata.name}
-                      </Typography>
-                    }
-                    secondary={
-                      <Typography
-                        sx={{
-                          fontSize: '12px',
-                          fontWeight: 400,
-                          lineHeight: '15px',
-                        }}
-                        variant='body2'
-                        component='span'
-                        fontStyle='italic'
-                        color={activeLine ? 'white' : 'gray'}
-                      >
-                        {activeLine ? metadata.description : shortDesc}
-                      </Typography>
-                    }
-                    secondaryTypographyProps={{}}
-                  />
-                </ListItemButton>
-              </ListItem>
-            );
-          })}
-        </List>
+        <ListComponent
+          data={metadataList}
+          listItemType={type}
+          enableItemActions={enableRowActions}
+          activeItem={activeMetadata}
+          editFunction={editMetadata}
+          deleteFunction={removeMetadata}
+          onListItemClick={onMetadataClick}
+        />
       );
     }
   };
 
   return (
     <>
-      <Card sx={{ flexGrow: 1, borderRadius: '10px' }}>
-        <CardActions sx={{ p: 1, display: 'flex' }}>
-          <Typography
-            sx={{ fontSize: '14px', fontWeight: 700 }}
-            variant='h5'
-            component='div'
-          >
-            {metadataTitle()}
-          </Typography>
-          <Container
-            sx={{ p: 0, display: 'flex', justifyContent: 'flex-end' }}
-            disableGutters
-          >
+      <CardComponent
+        title={metadataTitle()}
+        actions={
+          <>
             <ButtonComponent
               style='icon'
               text={['Search']}
@@ -257,25 +138,23 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
               icon={displayForm ? <CancelIcon /> : <AddBoxIcon />}
               handleClick={[() => showMetadataForm()]}
             />
-          </Container>
-        </CardActions>
-        <PopupComponent
-          title='Are you sure you want to delete this entry?'
-          entry={metadataToDelete?.name}
-          open={displayPopup}
-        >
-          <Box sx={{ mt: 1, display: 'flex', justifyContent: 'center' }}>
-            <ButtonComponent
-              text={['yes', 'no']}
-              variant='outlined'
-              handleClick={[confirmDelete, renderData]}
-            />
-          </Box>
-        </PopupComponent>
-        <CardContent sx={{ p: 0 }}>
-          {loadState ? <LoaderComponent /> : cardBody()}
-        </CardContent>
-      </Card>
+          </>
+        }
+        content={loadState ? <LoaderComponent /> : cardBody()}
+      />
+      <PopupComponent
+        title='Are you sure you want to delete this entry?'
+        entry={metadataToDelete?.name}
+        open={displayPopup}
+      >
+        <Box sx={{ mt: 1, display: 'flex', justifyContent: 'center' }}>
+          <ButtonComponent
+            text={['yes', 'no']}
+            variant='outlined'
+            handleClick={[confirmDelete, renderData]}
+          />
+        </Box>
+      </PopupComponent>
     </>
   );
 };

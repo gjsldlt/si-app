@@ -162,9 +162,8 @@ export default function MiniDrawer() {
           />
           <IconButton
             onClick={handleDrawerClose}
-            className={`${
-              !open && 'hidden'
-            } text-gray hover:text-white absolute top-2 right-0`}
+            className={`${!open && 'hidden'
+              } text-gray hover:text-white absolute top-2 right-0`}
           >
             <ChevronLeftIcon />
           </IconButton>
@@ -186,14 +185,12 @@ export default function MiniDrawer() {
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
-                className={`${
-                  selectedIndex === i && '!bg-main text-black'
-                } group`}
+                className={`${selectedIndex === i && '!bg-main text-black'
+                  } group`}
               >
                 <ListItemIcon
-                  className={`${
-                    selectedIndex === i && 'text-black'
-                  } text-gray group-hover:text-white w-7`}
+                  className={`${selectedIndex === i && 'text-black'
+                    } text-gray group-hover:text-white w-7`}
                   sx={{
                     minWidth: 0,
                     mr: open ? 3 : 'auto',
@@ -203,9 +200,8 @@ export default function MiniDrawer() {
                   {item.icon}
                 </ListItemIcon>
                 <ListItemText
-                  className={`${
-                    selectedIndex === i && 'text-black'
-                  } text-gray group-hover:text-white `}
+                  className={`${selectedIndex === i && 'text-black'
+                    } text-gray group-hover:text-white `}
                   primary={item.name}
                   sx={{ opacity: open ? 1 : 0 }}
                 />
@@ -233,7 +229,7 @@ export default function MiniDrawer() {
           </div>
         )}
       </Drawer>
-      <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
+      <Box component='main' sx={{ flexGrow: 1, p: 0 }}>
         {/* <DrawerHeader /> */}
       </Box>
     </Box>

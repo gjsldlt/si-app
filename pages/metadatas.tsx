@@ -3,15 +3,15 @@ import { useState } from 'react';
 import PageBanner from '../components/pageBanner/pageBanner.component';
 import MetadataComponent from '../components/metadata/metadata.component';
 
-import { Box, Container } from '@mui/material';
+import { Grid } from '@mui/material';
 
-import { Metadata } from '../types/MasterTypes.types';
+import { MetadataType } from '../types/MasterTypes.types';
 
 const MetadataPage = () => {
   const tailwindClasses = {
     customBanner: 'h-full w-full flex items-center justify-start p-[2rem]',
     content:
-      'flex relative mx-1 md:mx-0 md:mr-4 md:pl-[1rem] pt-1 md:py-[1rem] flex flex-col md:flex-row gap-1 md:gap-[1rem] z-[1] md:flex-grow h-full mb-1',
+      'flex relative md:mx-0 md:mr-4 md:pl-[1rem] pt-1 md:py-[1rem] flex flex-col md:flex-row gap-1 md:gap-[1rem] z-[1] md:flex-grow h-full mb-1',
     header: 'text-2xl text-white z-[5]',
     box: 'flex flex-grow overflow-auto ',
     mobileBoxShow: 'flex',
@@ -24,9 +24,9 @@ const MetadataPage = () => {
     formButtonInactive:
       'bg-transparent text-white hover:bg-sidebar text-sidebar',
   };
-  const [activeSkill, setActiveSkill] = useState<Metadata>();
-  const [activeCapability, setActiveCapability] = useState<Metadata>();
-  const [activeIndustry, setActiveIndustry] = useState<Metadata>();
+  const [activeSkill, setActiveSkill] = useState<MetadataType>();
+  const [activeCapability, setActiveCapability] = useState<MetadataType>();
+  const [activeIndustry, setActiveIndustry] = useState<MetadataType>();
   const [activeMobileTab, setActiveMobileTab] = useState<string>('Skills');
   const mobileTabs = ['Skills', 'Capabilities', 'Industries'];
 
@@ -59,48 +59,39 @@ const MetadataPage = () => {
         ))}
       </div>
 
-      <Box
+      <Grid
+        container
+        spacing={2}
         sx={{
-          pt: 2,
-          display: 'flex',
-          alignItems: 'stretch',
+          p: 2,
           backgroundColor: '#F7F7F7',
         }}
       >
-        <Container
-          sx={{ display: 'flex', pl: '16px', flexGrow: 1 }}
-          disableGutters
-        >
+        <Grid item xs={12} md={4}>
           <MetadataComponent
             type='skill'
             activeMetadata={activeSkill}
             onMetadataClick={setActiveSkill}
             enableRowActions={true}
           />
-        </Container>
-        <Container
-          sx={{ display: 'flex', pl: '16px', flexGrow: 1 }}
-          disableGutters
-        >
+        </Grid>
+        <Grid item xs={12} md={4}>
           <MetadataComponent
             type='capability'
             activeMetadata={activeCapability}
             onMetadataClick={setActiveCapability}
             enableRowActions={true}
           />
-        </Container>
-        <Container
-          sx={{ display: 'flex', pl: '16px', flexGrow: 1 }}
-          disableGutters
-        >
+        </Grid>
+        <Grid item xs={12} md={4}>
           <MetadataComponent
             type='industry'
             activeMetadata={activeIndustry}
             onMetadataClick={setActiveIndustry}
             enableRowActions={true}
           />
-        </Container>
-      </Box>
+        </Grid>
+      </Grid>
     </>
   );
 };

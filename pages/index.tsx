@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
-import { getSkills } from '../services/skill.service';
+import CardComponent from '../components/CardComponent';
 import { accessUserInSession } from '../services/user.service';
 import { AccountType } from '../types/MasterTypes.types';
 import PageBanner from '../components/pageBanner/pageBanner.component';
@@ -17,7 +17,7 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
-import CardComponents from '../components/cardComponents';
+import CardComponents from '../components/CardComponent';
 
 import styles from '../styles/Home.module.css';
 import { setuid } from 'process';
@@ -67,7 +67,31 @@ const Home: NextPage = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={4} lg={4}>
-        <CardComponents>
+        <CardComponent
+          actions={
+            <Button size='small'>sample</Button>
+          }
+          content={
+            <>
+              <Typography
+                sx={{ fontSize: 14 }}
+                color='text.secondary'
+                gutterBottom
+              >
+                Word of the Day
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} color='text.secondary'>
+                adjective
+              </Typography>
+              <Typography variant='body2'>
+                well meaning and kindly.
+                <br />
+                {'"a benevolent smile"'}
+              </Typography>
+            </>
+          }
+        />
+        {/* <CardComponents>
           <CardContent>
             <Typography
               sx={{ fontSize: 14 }}
@@ -88,7 +112,7 @@ const Home: NextPage = () => {
           <CardActions>
             <Button size='small'>sample</Button>
           </CardActions>
-        </CardComponents>
+        </CardComponents> */}
       </Grid>
       <Grid item xs={12} md={4} lg={4}>
         <p className=''>
