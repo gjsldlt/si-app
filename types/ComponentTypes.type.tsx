@@ -8,8 +8,8 @@ export interface ListType {
   enableItemActions: boolean;
   onListItemClick: Dispatch<SetStateAction<MetadataType | undefined>>
   listItemType?: string;
-  editFunction: (arg: MetadataType) => void;
-  deleteFunction: (arg: MetadataType) => void;
+  editFunction?: <T extends MetadataType>(arg: T) => void;
+  deleteFunction?: <T extends MetadataType>(arg: T) => void;
 }
 
 export interface CardType {

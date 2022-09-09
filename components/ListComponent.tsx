@@ -80,7 +80,11 @@ const ListComponent: FC<ListType> = ({
                     color={activeLine ? 'white' : '#0E2040'}
                     handleClick={[
                       //call update function of metadata
-                      isMetadata(data) ? () => editFunction(data) : null,
+                      editFunction
+                        ? isMetadata(data)
+                          ? () => editFunction(data)
+                          : null
+                        : null,
                     ]}
                   />
                   <ButtonComponent
@@ -90,7 +94,11 @@ const ListComponent: FC<ListType> = ({
                     color={activeLine ? 'white' : '#0E2040'}
                     handleClick={[
                       //call delete function of metadata
-                      isMetadata(data) ? () => deleteFunction(data) : null,
+                      deleteFunction
+                        ? isMetadata(data)
+                          ? () => deleteFunction(data)
+                          : null
+                        : null,
                     ]}
                   />
                 </>
