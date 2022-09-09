@@ -21,8 +21,11 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { DatabaseIcon, HomeIcon, UserGroupIcon } from "@heroicons/react/solid";
-import { Avatar, Button, Card, CardHeader } from "@mui/material";
+import { Avatar, Button, Card, CardHeader, Tooltip } from "@mui/material";
 import { clearUserSession } from "../services/user.service";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import ButtonComponent from "./ButtonComponent";
 
 const drawerWidth = 240;
 
@@ -217,25 +220,42 @@ export default function MiniDrawer() {
             </ListItem>
           ))}
         </List>
-        {open && (
-          <div className="text-white flex flex-col mt-auto mb-4 lg:mb-12">
+
+        <div className="text-white flex flex-col mt-auto mb-4 lg:mb-12">
+          {open && (
             <p className="text-[#4F4F51] uppercase text-xs ml-4">Profile</p>
-            <Card sx={{ maxWidth: 345 }} className="bg-transparent shadow-none">
-              <CardHeader
-                avatar={
-                  <Avatar className="-mr-2" aria-label="recipe">
-                    R
+          )}
+          <Card sx={{ maxWidth: 345 }} className="bg-transparent shadow-none">
+            <CardHeader
+              avatar={
+                <Tooltip
+                  disableHoverListener={open ? true : false}
+                  placement={open ? undefined : "right"}
+                  title={"Juan Dela Cruz"}
+                >
+                  <Avatar
+                    className={`-mr-2 ${!open && "-ml-2 md:-ml-1"}`}
+                    aria-label="recipe"
+                  >
+                    <AccountCircleOutlinedIcon />
                   </Avatar>
-                }
-                title="Juan Dela Cruz"
-                subheader="Front-end Developer"
-              />
-            </Card>
-            <div className="self-center mt-0 lg:mt-4">
-              <Button onClick={handleLogout}>Logout</Button>
-            </div>
+                </Tooltip>
+              }
+              title={open ? "Juan Dela Cruz" : ""}
+              subheader={open ? "Front-end Developer" : ""}
+            />
+          </Card>
+          <div className="self-center mt-0 lg:mt-4 w-full flex justify-center">
+            <ButtonComponent
+              text={["Logout"]}
+              handleClick={[handleLogout]}
+              icon={<LogoutIcon />}
+              style={open ? "" : "icon"}
+              color="white"
+              placement={"right"}
+            />
           </div>
-        )}
+        </div>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         {/* <DrawerHeader /> */}
