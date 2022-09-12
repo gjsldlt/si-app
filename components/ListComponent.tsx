@@ -46,7 +46,6 @@ const ListComponent: FC<ListType> = ({
       sx={{
         p: 0,
         position: 'relative',
-        overflow: 'auto',
       }}
     >
       {data.map((data) => {

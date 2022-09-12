@@ -6,14 +6,9 @@ import { Typography, Container } from '@mui/material';
 
 import { CardType } from '../types/ComponentTypes.type';
 
-
-const CardComponent: FC<CardType> = ({
-  title,
-  actions,
-  content
-}) => {
+const CardComponent: FC<CardType> = ({ title, actions, content }) => {
   return (
-    <Card sx={{ flexGrow: 1, borderRadius: '10px' }}>
+    <Card sx={{ borderRadius: '10px' }}>
       <CardActions sx={{ p: 1, display: 'flex' }}>
         <Typography
           sx={{ fontSize: '14px', fontWeight: 700 }}
@@ -29,11 +24,9 @@ const CardComponent: FC<CardType> = ({
           {actions}
         </Container>
       </CardActions>
-      <CardContent sx={{ p: 0 }}>
-        {content}
-      </CardContent>
+      <CardContent sx={{ p: 0, maxHeight: '32vw', overflow: 'auto' }}>{content}</CardContent>
     </Card>
-  )
-}
+  );
+};
 
-export default CardComponent
+export default CardComponent;

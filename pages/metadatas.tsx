@@ -3,7 +3,7 @@ import { useState } from 'react';
 import PageBanner from '../components/pageBanner/pageBanner.component';
 import MetadataComponent from '../components/metadata/metadata.component';
 
-import { Grid } from '@mui/material';
+import { Container, Typography, Grid } from '@mui/material';
 
 import { MetadataType } from '../types/MasterTypes.types';
 
@@ -41,9 +41,19 @@ const MetadataPage = () => {
     <>
       <PageBanner
         content={
-          <div className={tailwindClasses.customBanner}>
-            <h1 className={tailwindClasses.header}>Metadata List</h1>
-          </div>
+          <Container
+            sx={{
+              height: '15vh',
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+            }}
+          >
+            <Typography sx={{ zIndex: '5' }} variant='h4' component='h4'>
+              Metadata List
+            </Typography>
+          </Container>
         }
       />
 
