@@ -245,7 +245,7 @@ export default function MiniDrawer() {
               subheader={open ? "Front-end Developer" : ""}
             />
           </Card>
-          <div className="self-center mt-0 lg:mt-4 w-full flex justify-center">
+          <div className={`self-center mt-0 lg:mt-4 w-full flex justify-center ${!open && 'pt-[2px]'}`}>
             <ButtonComponent
               text={["Logout"]}
               handleClick={[handleLogout]}
