@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { PlusIcon, XIcon, PencilIcon } from "@heroicons/react/solid";
+import React, { useEffect, useState } from 'react';
+import { PlusIcon, XIcon, PencilIcon } from '@heroicons/react/solid';
 
-import LoaderComponent from "../loader/loader.component";
-import SkillManager from "../skillManager/skillManager.component";
+import LoaderComponent from '../loader/loader.component';
+import SkillManager from '../skillManager/skillManager.component';
 import {
   UserType,
   ManagerType,
   Metadata,
   EmployeeType,
-} from "../../types/MasterTypes.types";
-import { USER_ROLES } from "../../helpers/constants.helper";
+} from '../../types/MasterTypes.types';
+import { USER_ROLES } from '../../helpers/constants.helper';
 import {
   getAllManagers,
   getEmployeeByUserId,
@@ -29,17 +29,17 @@ export default function UserList({
   role,
 }: PageProps) {
   const [firstName, setFirstName] = useState<string>(
-    userToEdit ? userToEdit.firstName : ""
+    userToEdit ? userToEdit.firstName : ''
   );
   const [lastName, setLastName] = useState<string>(
-    userToEdit ? userToEdit.lastName : ""
+    userToEdit ? userToEdit.lastName : ''
   );
   const [email, setEmail] = useState<string>(
-    userToEdit ? userToEdit.email : ""
+    userToEdit ? userToEdit.email : ''
   );
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [managerId, setManagerId] = useState<string>("");
+  const [password, setPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [managerId, setManagerId] = useState<string>('');
   const [managerList, setManagerList] = useState<ManagerType[]>([]);
   const [employeeData, setEmployeeData] = useState<EmployeeType>();
   const [skillList, setSkillList] = useState<Metadata[]>([]);
@@ -58,27 +58,27 @@ export default function UserList({
     description: string;
   }>({
     skill: undefined,
-    rate: "",
-    yearsExperience: "",
-    description: "",
+    rate: '',
+    yearsExperience: '',
+    description: '',
   });
   const [capabilityList, setCapabilityList] = useState<Metadata[]>([]);
   const tailwindClasses = {
-    form: "flex flex-1 flex-grow justify-start items-start flex-wrap w-full content-start overflow-auto pb-2",
-    formItemHalf: "w-full md:w-1/2 px-3 pt-1 md:pt-1 grow-0",
-    formItem: "w-full px-3 pt-1 grow-0",
-    skillsContainer: "flex-grow",
-    formChipContainer: "flex flex-row",
-    chips: "chips overflow-auto",
-    chip: "chip",
-    chipForm: "chipForm flex flex-col items-stretch",
-    chipFormRow: "flex flex-col pt-3",
+    form: 'flex flex-1 flex-grow justify-start items-start flex-wrap w-full content-start overflow-auto pb-2',
+    formItemHalf: 'w-full md:w-1/2 px-3 pt-1 md:pt-1 grow-0',
+    formItem: 'w-full px-3 pt-1 grow-0',
+    skillsContainer: 'flex-grow',
+    formChipContainer: 'flex flex-row',
+    chips: 'chips overflow-auto',
+    chip: 'chip',
+    chipForm: 'chipForm flex flex-col items-stretch',
+    chipFormRow: 'flex flex-col pt-3',
     inputLabel:
-      "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mr-1",
+      'block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mr-1',
     input:
-      "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+      'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500',
     formButton:
-      "bg-transparent hover:bg-sidebar text-sidebar font-semibold hover:text-white py-2 px-4 border border-sidebar hover:border-transparent rounded",
+      'bg-transparent hover:bg-sidebar text-sidebar font-semibold hover:text-white py-2 px-4 border border-sidebar hover:border-transparent rounded',
   };
 
   const onSubmitForm = (e: any) => {
@@ -111,19 +111,19 @@ export default function UserList({
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     switch (e.target.name) {
-      case "firstName":
+      case 'firstName':
         setFirstName(e.target.value);
         break;
-      case "lastName":
+      case 'lastName':
         setLastName(e.target.value);
         break;
-      case "email":
+      case 'email':
         setEmail(e.target.value);
         break;
-      case "password":
+      case 'password':
         setPassword(e.target.value);
         break;
-      case "confirmPassword":
+      case 'confirmPassword':
         setConfirmPassword(e.target.value);
         break;
       default:
@@ -132,39 +132,39 @@ export default function UserList({
     if (role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF) {
       let tempEmp = employeeData;
       switch (e.target.name) {
-        case "firstName":
+        case 'firstName':
           tempEmp?.firstName != e.target.value;
           break;
-        case "lastName":
+        case 'lastName':
           tempEmp?.lastName != e.target.value;
           break;
-        case "email":
+        case 'email':
           tempEmp?.email != e.target.value;
           break;
-        case "password":
+        case 'password':
           tempEmp?.password != e.target.value;
           break;
-        case "confirmPassword":
+        case 'confirmPassword':
           setConfirmPassword(e.target.value);
           break;
-        case "managerId":
+        case 'managerId':
           let manager = managerList.find((item) => item._id === e.target.value);
           setManagerId(e.target.value);
           tempEmp?.manager != manager;
           break;
-        case "primarySkill":
+        case 'primarySkill':
           const primarySkill = skillList.find(
             (item) => item._id === e.target.value
           );
           tempEmp?.primarySkill != primarySkill;
           break;
-        case "secondarySkill":
+        case 'secondarySkill':
           const secondarySkill = skillList.find(
             (item) => item._id === e.target.value
           );
           tempEmp?.secondarySkill != secondarySkill;
           break;
-        case "capability":
+        case 'capability':
           const capability = capabilityList.find(
             (item) => item._id === e.target.value
           );
@@ -182,8 +182,8 @@ export default function UserList({
   const renderManagerListForNewEmployee = async () => {
     setLoadState(true);
     setManagerList(await getAllManagers());
-    setSkillList(await getMetadata("skill"));
-    setCapabilityList(await getMetadata("capability"));
+    setSkillList(await getMetadata('skill'));
+    setCapabilityList(await getMetadata('capability'));
     setLoadState(false);
   };
 
@@ -192,11 +192,11 @@ export default function UserList({
     setManagerList(await getAllManagers());
     setEmployeeData(
       await getEmployeeByUserId(
-        userToEdit ? (userToEdit?._id ? userToEdit?._id : "") : ""
+        userToEdit ? (userToEdit?._id ? userToEdit?._id : '') : ''
       )
     );
-    setSkillList(await getMetadata("skill"));
-    setCapabilityList(await getMetadata("capability"));
+    setSkillList(await getMetadata('skill'));
+    setCapabilityList(await getMetadata('capability'));
     console.log(employeeData);
     setLoadState(false);
   };
@@ -227,16 +227,16 @@ export default function UserList({
     console.log(e.target.name, e.target.value);
     const tempSkill = activeSkill;
     switch (e.target.name) {
-      case "skill":
+      case 'skill':
         tempSkill.skill = skillList.find((itm) => itm._id === e.target.value);
         break;
-      case "rate":
+      case 'rate':
         tempSkill.rate = e.target.value;
         break;
-      case "yearsExperience":
+      case 'yearsExperience':
         tempSkill.yearsExperience = e.target.value;
         break;
-      case "description":
+      case 'description':
         tempSkill.description = e.target.value;
         break;
       default:
@@ -263,20 +263,20 @@ export default function UserList({
         <div className={tailwindClasses.formItemHalf}>
           {/* <label
             className={tailwindClasses.inputLabel}
-            htmlFor="grid-managerId-name"
+            htmlFor='grid-managerId-name'
           >
             Manager *
           </label>
           <select
             disabled={Boolean(parentUser)}
             required
-            name="managerId"
+            name='managerId'
             onChange={onInputChange}
             className={tailwindClasses.input}
-            value={manager ? manager?._id : ""}
-            id="grid-managerId-name"
+            value={manager ? manager?._id : ''}
+            id='grid-managerId-name'
           >
-            <option value={""} disabled>
+            <option value={''} disabled>
               Select a Manager
             </option>
             {managerList.map((item, index) => (
@@ -306,19 +306,19 @@ export default function UserList({
         <div className={tailwindClasses.formItemHalf}>
           {/* <label
             className={tailwindClasses.inputLabel}
-            htmlFor="grid-capability-name"
+            htmlFor='grid-capability-name'
           >
             Capability *
           </label>
           <select
             required
-            name="capability"
+            name='capability'
             onChange={onInputChange}
             className={tailwindClasses.input}
-            value={employeeData ? employeeData?.capability?._id : ""}
-            id="grid-capability-name"
+            value={employeeData ? employeeData?.capability?._id : ''}
+            id='grid-capability-name'
           >
-            <option value={""}>-</option>
+            <option value={''}>-</option>
             {capabilityList.map((item, index) => (
               <option key={`capability-option-${index}`} value={item._id!}>
                 {`${item.name}`}
@@ -345,18 +345,18 @@ export default function UserList({
         <div className={tailwindClasses.formItemHalf}>
           {/* <label
             className={tailwindClasses.inputLabel}
-            htmlFor="grid-primarySkill-name"
+            htmlFor='grid-primarySkill-name'
           >
             Primary Skill
           </label>
           <select
-            name="primarySkill"
+            name='primarySkill'
             onChange={onInputChange}
             className={tailwindClasses.input}
-            value={employeeData ? employeeData?.primarySkill?._id : ""}
-            id="grid-primarySkill-name"
+            value={employeeData ? employeeData?.primarySkill?._id : ''}
+            id='grid-primarySkill-name'
           >
-            <option value={""}>-</option>
+            <option value={''}>-</option>
             {skillList.map((item, index) => (
               <option key={`skill-option-${index}`} value={item._id!}>
                 {`${item.name}`}
@@ -382,18 +382,18 @@ export default function UserList({
         <div className={tailwindClasses.formItemHalf}>
           {/* <label
             className={tailwindClasses.inputLabel}
-            htmlFor="grid-secondarySkill-name"
+            htmlFor='grid-secondarySkill-name'
           >
             Secondary Skill
           </label>
           <select
-            name="secondarySkill"
+            name='secondarySkill'
             onChange={onInputChange}
             className={tailwindClasses.input}
-            value={employeeData ? employeeData?.secondarySkill?._id : ""}
-            id="grid-secondarySkill-name"
+            value={employeeData ? employeeData?.secondarySkill?._id : ''}
+            id='grid-secondarySkill-name'
           >
-            <option value={""}>-</option>
+            <option value={''}>-</option>
             {skillList.map((item, index) => (
               <option key={`skill-option-${index}`} value={item._id!}>
                 {`${item.name}`}
@@ -518,12 +518,13 @@ export default function UserList({
   return (
     <form className={tailwindClasses.form} onSubmit={onSubmitForm}>
       <div className={tailwindClasses.formItemHalf}>
+
         {/* <label className={tailwindClasses.inputLabel} htmlFor="grid-first-name">
           First Name *
         </label>
         <input
           required
-          name="firstName"
+          name='firstName'
           onChange={onInputChange}
           value={firstName}
           className={tailwindClasses.input}
@@ -548,7 +549,7 @@ export default function UserList({
         </label>
         <input
           required
-          name="lastName"
+          name='lastName'
           onChange={onInputChange}
           value={lastName}
           className={tailwindClasses.input}
@@ -573,7 +574,7 @@ export default function UserList({
         </label>
         <input
           required
-          name="email"
+          name='email'
           onChange={onInputChange}
           value={email}
           className={tailwindClasses.input}
@@ -601,13 +602,13 @@ export default function UserList({
           <div className={tailwindClasses.formItem}>
             {/* <label
               className={tailwindClasses.inputLabel}
-              htmlFor="grid-password-name"
+              htmlFor='grid-password-name'
             >
               Password *
             </label>
             <input
               required
-              name="password"
+              name='password'
               onChange={onInputChange}
               value={password}
               className={tailwindClasses.input}
@@ -629,13 +630,13 @@ export default function UserList({
           <div className={tailwindClasses.formItem}>
             {/* <label
               className={tailwindClasses.inputLabel}
-              htmlFor="grid-confirmPassword-name"
+              htmlFor='grid-confirmPassword-name'
             >
               Confirm Password *
             </label>
             <input
               required
-              name="confirmPassword"
+              name='confirmPassword'
               onChange={onInputChange}
               value={confirmPassword}
               className={tailwindClasses.input}
@@ -657,9 +658,9 @@ export default function UserList({
       )}
       <div className={`${tailwindClasses.formItem} mt-1 flex justify-end`}>
         <ButtonComponent
-          type="submit"
-          text={userToEdit === undefined ? ["Create"] : ["Update"]}
-          variant="outlined"
+          type='submit'
+          text={userToEdit === undefined ? ['Create'] : ['Update']}
+          variant='outlined'
         />
       </div>
     </form>

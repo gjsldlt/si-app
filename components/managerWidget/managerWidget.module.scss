@@ -1,27 +1,24 @@
 @import '../../styles/variable';
 
-.managerWidget{
-    display:flex;
-    flex-direction: column;
+.managerWidget {
+  display: flex;
+  flex-direction: column;
 }
 
 /* Mobile CSS */
 @media (max-width: $mobile-width) {
-    .managerWidget{
-
-    }
+  .managerWidget {
+  }
 }
 
 /* Tablet CSS */
 @media (max-width: $mobile-width) {
-    .managerWidget{
-        
-    }
+  .managerWidget {
+  }
 }
 
 /* Laptop and above CSS */
 @media (max-width: $mobile-width) {
-    .managerWidget{
-        
-    }
+  .managerWidget {
+  }
 }

@@ -1,27 +1,24 @@
 @import '../../styles/variable';
 
-.managerList{
-    display:flex;
-    flex-direction: column;
+.managerList {
+  display: flex;
+  flex-direction: column;
 }
 
 /* Mobile CSS */
 @media (max-width: $mobile-width) {
-    .managerList{
-
-    }
+  .managerList {
+  }
 }
 
 /* Tablet CSS */
 @media (max-width: $mobile-width) {
-    .managerList{
-        
-    }
+  .managerList {
+  }
 }
 
 /* Laptop and above CSS */
 @media (max-width: $mobile-width) {
-    .managerList{
-        
-    }
+  .managerList {
+  }
 }

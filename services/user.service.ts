@@ -1,17 +1,20 @@
 import axios from 'axios';
 import GLOBALHELPER from '../helpers/global.helper';
-import { AccountType, UserType, EmployeeType } from '../types/MasterTypes.types';
-
+import {
+  AccountType,
+  UserType,
+  EmployeeType,
+} from '../types/MasterTypes.types';
 
 axios.defaults.headers.common['Content-Type'] = `application/json`;
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = `*`;
-axios.defaults.headers.common['Accept'] = `application/json, text/plain, application/graphql, */*`;
+axios.defaults.headers.common[
+  'Accept'
+] = `application/json, text/plain, application/graphql, */*`;
 
 export async function authLogin({ email, password }: LoginDetails) {
-    let response = await axios.post(
-        GLOBALHELPER.APIURL,
-        {
-            query: `mutation(
+  let response = await axios.post(GLOBALHELPER.APIURL, {
+    query: `mutation(
                 $email:String!, 
                 $password:String!
                 ) { 
@@ -27,36 +30,35 @@ export async function authLogin({ email, password }: LoginDetails) {
                         }
                     }
                 }`,
-            variables: {
-                email: email,
-                password: password
-            },
-        })
-    console.log(response.data.data);
-    return response.data.data;
+    variables: {
+      email: email,
+      password: password,
+    },
+  });
+  console.log(response.data.data);
+  return response.data.data;
 }
 
 export const saveUserInSession = (UserData: AccountType) => {
-    sessionStorage.setItem('user', JSON.stringify(UserData));
-}
+  sessionStorage.setItem('user', JSON.stringify(UserData));
+};
 
 export const accessUserInSession = () => {
-    try {
-        return JSON.parse(sessionStorage.getItem('user') || '');
-    } catch (e) {
-        return null;
-    }
-}
+  try {
+    return JSON.parse(sessionStorage.getItem('user') || '');
+  } catch (e) {
+    return null;
+  }
+};
 
 export const clearUserSession = () => {
-    sessionStorage.removeItem('user')
-}
+  sessionStorage.removeItem('user');
+};
 
 export const getAllManagers = async () => {
-    let data = await axios.get(
-        GLOBALHELPER.APIURL, {
-        params: {
-            query: `query GetAllManagers{
+  let data = await axios.get(GLOBALHELPER.APIURL, {
+    params: {
+      query: `query GetAllManagers{
                 managers{
                   _id
                   firstName
@@ -66,18 +68,16 @@ export const getAllManagers = async () => {
                   userId
                 }
               }`,
-            variables: {
-            },
-        }
-    })
-    return data.data.data.managers;
-}
+      variables: {},
+    },
+  });
+  return data.data.data.managers;
+};
 
-export const getEmployeesOfManager = async (managerId: String) => {
-    let data = await axios.get(
-        GLOBALHELPER.APIURL, {
-        params: {
-            query: `query GetAllEmployeesOfManager($managerId: String!){
+export const getEmployeesOfManager = async (managerId: string) => {
+  let data = await axios.get(GLOBALHELPER.APIURL, {
+    params: {
+      query: `query GetAllEmployeesOfManager($managerId: String!){
                 employeesPerManager(managerId:$managerId){
                     _id
                     firstName
@@ -92,19 +92,18 @@ export const getEmployeesOfManager = async (managerId: String) => {
                     }
                   }
               }`,
-            variables: {
-                managerId: managerId
-            },
-        }
-    })
-    return data.data.data.employeesPerManager;
-}
+      variables: {
+        managerId: managerId,
+      },
+    },
+  });
+  return data.data.data.employeesPerManager;
+};
 
 export const getEmployees = async () => {
-    let data = await axios.get(
-        GLOBALHELPER.APIURL, {
-        params: {
-            query: `query GetAllEmployees{
+  let data = await axios.get(GLOBALHELPER.APIURL, {
+    params: {
+      query: `query GetAllEmployees{
                 employees{
                     _id
                     userId
@@ -137,18 +136,15 @@ export const getEmployees = async () => {
                     }
                   }
               }`,
-            variables: {
-            },
-        }
-    })
-    return data.data.data.employees;
-}
+      variables: {},
+    },
+  });
+  return data.data.data.employees;
+};
 
 export const registerManager = async (user: UserType) => {
-    let response = await axios.post(
-        GLOBALHELPER.APIURL,
-        {
-            query: `
+  let response = await axios.post(GLOBALHELPER.APIURL, {
+    query: `
             mutation NewManager($manager:ManagerInput){
                 addManager(manager:$manager){
                     _id
@@ -158,24 +154,25 @@ export const registerManager = async (user: UserType) => {
                     email
                 }
             }`,
-            variables: {
-                manager: {
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    email: user.email,
-                    password: user.password
-                }
-            },
-        })
-    console.log(response.data.data.addManager);
-    return response.data.data.addManager;
-}
+    variables: {
+      manager: {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: user.password,
+      },
+    },
+  });
+  console.log(response.data.data.addManager);
+  return response.data.data.addManager;
+};
 
-export const registerEmployee = async (emp: EmployeeType, managerId: String) => {
-    let response = await axios.post(
-        GLOBALHELPER.APIURL,
-        {
-            query: `
+export const registerEmployee = async (
+  emp: EmployeeType,
+  managerId: string
+) => {
+  let response = await axios.post(GLOBALHELPER.APIURL, {
+    query: `
             mutation NewEmployee(
                 $firstName: String!
                 $lastName: String!
@@ -203,43 +200,39 @@ export const registerEmployee = async (emp: EmployeeType, managerId: String) => 
                     email
                 }
             }`,
-            variables: {
-                ...emp,
-                capabilityId: emp.capability?._id,
-                primarySkillId: emp.primarySkill?._id,
-                secondarySkillId: emp.secondarySkill?._id,
-                managerId: managerId,
-            },
-        })
-    console.log(response.data.data.addEmployee);
-    return response.data.data.addEmployee;
-}
+    variables: {
+      ...emp,
+      capabilityId: emp.capability?._id,
+      primarySkillId: emp.primarySkill?._id,
+      secondarySkillId: emp.secondarySkill?._id,
+      managerId: managerId,
+    },
+  });
+  console.log(response.data.data.addEmployee);
+  return response.data.data.addEmployee;
+};
 
-export const deleteUser = async (id: String) => {
-    let response = await axios.post(
-        GLOBALHELPER.APIURL,
-        {
-            query: `
+export const deleteUser = async (id: string) => {
+  let response = await axios.post(GLOBALHELPER.APIURL, {
+    query: `
         mutation DeleteUser($id:String!){
           deleteUser(id:$id){
             message
             success
           }
         }`,
-            variables: {
-                id: id,
-            },
-        })
-    console.log(response.data.data.deleteUser);
-    return response.data.data.deleteUser;
-}
+    variables: {
+      id: id,
+    },
+  });
+  console.log(response.data.data.deleteUser);
+  return response.data.data.deleteUser;
+};
 
-export const getEmployeeByUserId = async (id: String) => {
-
-    let data = await axios.get(
-        GLOBALHELPER.APIURL, {
-        params: {
-            query: `
+export const getEmployeeByUserId = async (id: string) => {
+  let data = await axios.get(GLOBALHELPER.APIURL, {
+    params: {
+      query: `
             query GetEmployeeByID($employeeId:String!){
                 employeeById(employeeId:$employeeId){
                     _id
@@ -277,22 +270,20 @@ export const getEmployeeByUserId = async (id: String) => {
                     }
                 }
             }`,
-            variables: {
-                employeeId: id
-            },
-        }
-    })
-    return data.data.data.employeeById;
-}
+      variables: {
+        employeeId: id,
+      },
+    },
+  });
+  return data.data.data.employeeById;
+};
 
-export const updateManager = async (id: String, user: UserType) => {
-    try {
-        delete user.password;
-        console.log(id, user)
-        let response = await axios.post(
-            GLOBALHELPER.APIURL,
-            {
-                query: `mutation UpdateUser(
+export const updateManager = async (id: string, user: UserType) => {
+  try {
+    delete user.password;
+    console.log(id, user);
+    let response = await axios.post(GLOBALHELPER.APIURL, {
+      query: `mutation UpdateUser(
                     $id:String!
                     $user: UserUpdateFields!
                   ){
@@ -306,22 +297,21 @@ export const updateManager = async (id: String, user: UserType) => {
                       email
                     }
                   }`,
-                variables: {
-                    id: id,
-                    user: user
-                },
-            })
-        console.log(response.data.data);
-        return response.data.data;
-    } catch (e) {
-        return {
-            error: e
-        }
-    }
-}
-
+      variables: {
+        id: id,
+        user: user,
+      },
+    });
+    console.log(response.data.data);
+    return response.data.data;
+  } catch (e) {
+    return {
+      error: e,
+    };
+  }
+};
 
 type LoginDetails = {
-    email: String,
-    password: String
-}
+  email: string;
+  password: string;
+};

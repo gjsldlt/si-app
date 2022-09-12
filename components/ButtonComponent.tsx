@@ -2,10 +2,11 @@ import { FC } from "react";
 import { Button, ButtonGroup, IconButton, Tooltip } from "@mui/material";
 import { ImportContacts } from "@mui/icons-material";
 
+
 type ButtonType = {
-  type?: "button" | "submit" | "reset" | undefined;
+  type?: 'button' | 'submit' | 'reset' | undefined;
   handleClick?: any;
-  variant?: "text" | "outlined" | "contained" | undefined;
+  variant?: 'text' | 'outlined' | 'contained' | undefined;
   text: string[];
   disabled?: boolean;
   icon?: any;
@@ -97,7 +98,7 @@ const ButtonComponent: FC<ButtonType> = ({
               key={index}
               onClick={handleClick ? handleClick[index] : undefined}
               type={type}
-              sx={{ paddingX: `${text.length === 2 ? "4rem" : "2rem"}` }}
+              sx={{ paddingX: `${text.length === 2 ? '4rem' : '2rem'}` }}
             >
               {item}
             </Button>

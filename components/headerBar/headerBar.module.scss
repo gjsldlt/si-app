@@ -1,60 +1,57 @@
 @import '../../styles/variable';
 
-.header{
-    position:fixed;
-    width:100vw;
-    border:1px solid black;
-    height:$header-height;
+.header {
+  position: fixed;
+  width: 100vw;
+  border: 1px solid black;
+  height: $header-height;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  button {
+    width: 45px;
+    height: $header-height;
+  }
+  .menuButton {
+    height: $header-height;
+    width: 45px;
+    flex: 0 0 auto;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-
-    button{
-        width:45px;
-        height:$header-height;
+    transition: background-color 1s;
+    cursor: pointer;
+    &:hover {
+      background-color: $primary-color;
     }
-    .menuButton{
-        height:$header-height;
-        width:45px;
-        flex: 0 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition:background-color 1s;
-        cursor: pointer;
-        &:hover{
-            background-color:$primary-color;
-        }
-    }
+  }
 
-    p{
-        flex:1 0;
-        margin: 0 5px;
-        padding:0;
-        height:100%;
-        display:flex;
-        align-items: center;
-    }
-
+  p {
+    flex: 1 0;
+    margin: 0 5px;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
 }
 
 /* Mobile CSS */
 @media (max-width: $mobile-width) {
-    .header{
-        flex-direction: row-reverse;
-    }
+  .header {
+    flex-direction: row-reverse;
+  }
 }
 
 /* Tablet CSS */
 @media (max-width: $mobile-width) {
-    .header{
-        
-    }
+  .header {
+  }
 }
 
 /* Laptop and above CSS */
 @media (max-width: $mobile-width) {
-    .header{
-        
-    }
+  .header {
+  }
 }
