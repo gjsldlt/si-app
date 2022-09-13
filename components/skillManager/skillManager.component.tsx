@@ -14,21 +14,22 @@ import MenuItem from '@mui/material/MenuItem'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import InputAdornment from "@mui/material/InputAdornment";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function SkillManager({ employee }: PageProps) {
   const tailwindClasses = {
-    container: "rounded  w-full m-2 p-2 flex flex-row bg-[#FAF9F9]",
-    list: "h-full basis-[50%] flex flex-wrap gap-1 pt-5 pl-3",
-    formRow: "flex flex-col pt-1",
-    form: "h-full basis-[50%] pr-2",
+    container: "container rounded w-full m-2 p-2 flex flex-row bg-[#FAF9F9]",
+    list: "h-full w-2/3 flex flex-wrap gap-1 pt-5 pl-3",
+    formRow: "flex flex-col pt-1 m-[5px]",
+    form: "h-full pr-2 w-1/3",
     inputLabel: "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mr-1",
     input: "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
     formButton: "bg-transparent hover:bg-sidebar text-sidebar font-semibold hover:text-white py-2 px-4 border border-sidebar hover:border-transparent rounded",
-    chip: "p-1 border border-black rounded-xl bg-sidebar text-white px-2 flex items-center",
-    name: "",
-    chipDeleteIcon: "h-[20px] ml-2 hover:text-current cursor-pointer",
+    chip: "chip flex justify-between p-1 h-[50px] rounded-[10px] bg-white text-sidebar px-2 flex items-center w-full",
+    name: "flex justify-between w-full",
+    chipDeleteIcon: "chipDeleteIcon w-[30px] h-[30px] ml-[25px] p-[7px] text-[#1C1B1F] bg-white rounded-[25px] drop-shadow-[0_1px_1px_rgba(0,0,0,0.25)]",
     test: "flex",
-    test2: "w-full"
+    test2: "w-full m-[5px]"
   };
   const [loadState, setLoadState] = useState<boolean>(false);
   const [metadataSkills, setMetadataSkills] = useState<Metadata[]>([]);
@@ -158,9 +159,7 @@ export default function SkillManager({ employee }: PageProps) {
                 id="grid-rate"
                 type="number"
                 variant="outlined"
-                InputProps={{
-                  startAdornment: <InputAdornment position="start">Rate:</InputAdornment>,
-                }}
+                label="Rate"
               />
             </Box>
           </div>
@@ -181,9 +180,7 @@ export default function SkillManager({ employee }: PageProps) {
                 id="grid-years-experience"
                 type="number"
                 variant="outlined"
-                InputProps={{
-                  startAdornment: <InputAdornment position="start">Years of Experience:</InputAdornment>,
-                }}
+                label="Years of Exp"
               />
             </Box>
           </div>
@@ -205,9 +202,7 @@ export default function SkillManager({ employee }: PageProps) {
               id="grid-description"
               type="text"
               variant="outlined"
-              InputProps={{
-                startAdornment: <InputAdornment position="start">Description:</InputAdornment>,
-              }}
+              label="Description"
               placeholder="Indicate your experience here"
             />
           </Box>
@@ -222,11 +217,16 @@ export default function SkillManager({ employee }: PageProps) {
           />
         </div>
       </div>
+
       <div className={tailwindClasses.list}>
         {activeSkills?.map((item, index) => (
           <div className={tailwindClasses.chip} key={`skill-chip-${index}`}>
-            <span className={tailwindClasses.name}>{item.skill?.name}</span>
-            <XIcon
+            <div className={tailwindClasses.name}>
+              <div>{item.skill?.name}</div>
+              <div>{item.rate}</div>
+              <div>{item.yearsExperience}</div>
+            </div>
+            <DeleteIcon
               className={tailwindClasses.chipDeleteIcon}
               onClick={() =>
                 removeActiveSkill(item.skill ? item.skill._id : "")
@@ -235,6 +235,7 @@ export default function SkillManager({ employee }: PageProps) {
           </div>
         ))}
       </div>
+
     </div>
   );
 }

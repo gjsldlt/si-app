@@ -70,8 +70,9 @@ export default function UserList({
   const [capabilityList, setCapabilityList] = useState<Metadata[]>([]);
   const tailwindClasses = {
     form: "flex flex-1 flex-grow justify-start items-start flex-wrap w-full content-start overflow-auto pb-2",
-    formItemHalf: "w-full md:w-1/2 px-3 pt-1 md:pt-1 grow-0",
-    formItem: "w-full px-3 pt-1 grow-0",
+    formItemThird: "formItemThird w-1/3 px-3 pt-1 md:pt-1 grow-0 my-[5px]",
+    formItemFourth: "formItemFourth w-1/4 px-3 pt-1 md:pt-1 grow-0 my-[5px]",
+    formItem: "formItem w-full px-3 pt-1 grow-0 my-[5px]",
     skillsContainer: "flex-grow",
     formChipContainer: "flex flex-row",
     chips: "chips overflow-auto",
@@ -244,7 +245,7 @@ export default function UserList({
 
     return (
       <>
-        <div className={tailwindClasses.formItemHalf}>
+        <div className={tailwindClasses.formItemFourth}>
           <FormControl fullWidth>
             <InputLabel htmlFor="grid-managerId-name">Manager</InputLabel>
             <Select
@@ -265,7 +266,7 @@ export default function UserList({
             </Select>
           </FormControl>
         </div>
-        <div className={tailwindClasses.formItemHalf}>
+        <div className={tailwindClasses.formItemFourth}>
           <FormControl fullWidth>
             <InputLabel htmlFor="grid-capability-name">Capability</InputLabel>
             <Select
@@ -285,7 +286,7 @@ export default function UserList({
             </Select>
           </FormControl>
         </div>
-        <div className={tailwindClasses.formItemHalf}>
+        <div className={tailwindClasses.formItemFourth}>
           <FormControl fullWidth>
             <InputLabel htmlFor="grid-primarySkill-name">Primary Skill</InputLabel>
             <Select
@@ -304,7 +305,7 @@ export default function UserList({
             </Select>
           </FormControl>
         </div>
-        <div className={tailwindClasses.formItemHalf}>
+        <div className={tailwindClasses.formItemFourth}>
           <FormControl fullWidth>
             <InputLabel htmlFor="grid-secondarySkill-name">Secondary Skill</InputLabel>
             <Select
@@ -340,7 +341,7 @@ export default function UserList({
 
   return (
     <form className={tailwindClasses.form} onSubmit={onSubmitForm}>
-      <div className={tailwindClasses.formItemHalf}>
+      <div className={tailwindClasses.formItemThird}>
         <Box
           sx={{
             width: '100%',
@@ -356,13 +357,11 @@ export default function UserList({
             id="grid-first-name"
             type="text"
             variant="outlined"
-            InputProps={{
-              startAdornment: <InputAdornment position="start">First Name:</InputAdornment>,
-            }}
+            label="First Name"
           />
         </Box>
       </div>
-      <div className={tailwindClasses.formItemHalf}>
+      <div className={tailwindClasses.formItemThird}>
         <Box
           sx={{
             width: '100%',
@@ -378,13 +377,11 @@ export default function UserList({
             id="grid-last-name"
             type="text"
             variant="outlined"
-            InputProps={{
-              startAdornment: <InputAdornment position="start">Last Name:</InputAdornment>,
-            }}
+            label="Last Name"
           />
         </Box>
       </div>
-      <div className={tailwindClasses.formItem}>
+      <div className={tailwindClasses.formItemThird}>
         <Box
           sx={{
             width: '100%',
@@ -400,9 +397,7 @@ export default function UserList({
             id="grid-email-name"
             type="email"
             variant="outlined"
-            InputProps={{
-              startAdornment: <InputAdornment position="start">Email:</InputAdornment>,
-            }}
+            label="Email"
           />
         </Box>
       </div>
@@ -411,7 +406,7 @@ export default function UserList({
         : null}
       {userToEdit === undefined && (
         <>
-          <div className={tailwindClasses.formItemHalf}>
+          <div className={tailwindClasses.formItemThird}>
             <Box
               sx={{
                 width: '100%',
@@ -427,13 +422,11 @@ export default function UserList({
                 id="grid-password-name"
                 type="password"
                 variant="outlined"
-                InputProps={{
-                  startAdornment: <InputAdornment position="start">Password:</InputAdornment>,
-                }}
+                label="Password"
               />
             </Box>
           </div>
-          <div className={tailwindClasses.formItemHalf}>
+          <div className={tailwindClasses.formItemThird}>
             <Box
               sx={{
                 width: '100%',
@@ -449,9 +442,7 @@ export default function UserList({
                 id="grid-confirmPassword-name"
                 type="password"
                 variant="outlined"
-                InputProps={{
-                  startAdornment: <InputAdornment position="start">Confirm Password:</InputAdornment>,
-                }}
+                label="Confirm Password"
               />
             </Box>
           </div>

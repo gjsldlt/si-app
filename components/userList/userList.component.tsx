@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { PlusIcon, XIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
+import IconButton from '@mui/material/IconButton'
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
+import SearchIcon from '@mui/icons-material/Search';
+import TuneIcon from '@mui/icons-material/Tune';
 
 import styles from "./managerList.module.scss";
 import LoaderComponent from "../loader/loader.component";
@@ -31,7 +34,7 @@ export default function UserList({
 }: PageProps) {
   const tailwindClasses = {
     container: "container relative flex flex-grow flex-col bg-white min-h-[660px] md:min-h-100 items-stretch rounded-[10px]",
-    toolbar: "toolbar flex flex-row grow-0 basis-[content]",
+    toolbar: "toolbar flex flex-row grow-0 basis-[content] items-center",
     title: "title flex-1 font-bold text-sm m-[15px]",
     addButton: "addbutton h-iconbutton w-iconbutton flex items-center justify-center p-0 m-[15px]",
     list: "list grow-0 flex flex-col overflow-auto basis-[90%]",
@@ -268,6 +271,18 @@ export default function UserList({
       {loadState ? <LoaderComponent /> : null}
       <div className={tailwindClasses.toolbar}>
         <p className={tailwindClasses.title}>{boxTitle()}</p>
+        {addState ?
+          "" : (
+            <div>
+              <IconButton>
+                <SearchIcon />
+              </IconButton>
+              <IconButton>
+                <TuneIcon />
+              </IconButton>
+            </div>
+          )}
+
         <button className={tailwindClasses.addButton} onClick={addNewUser}>
           {addState ? (
             <XIcon className={tailwindClasses.addCloseIcon} />
