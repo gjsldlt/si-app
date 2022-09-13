@@ -39,13 +39,13 @@ const MetadataPage = () => {
 
   return (
     <>
-      <PageBanner
+      {/* <PageBanner
         content={
           <div className={tailwindClasses.customBanner}>
             <h1 className={tailwindClasses.header}>Metadata List</h1>
           </div>
         }
-      />
+      /> */}
 
       <div className={tailwindClasses.mobileTab}>
         {mobileTabs.map((tab, index) => (
@@ -62,9 +62,13 @@ const MetadataPage = () => {
       <Box
         sx={{
           pt: 2,
+          pb: 2,
+          pr: 2,
           display: 'flex',
           alignItems: 'stretch',
           backgroundColor: '#F7F7F7',
+          flex:'1 0',
+          height:'100%'
         }}
       >
         <Container
