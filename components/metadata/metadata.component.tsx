@@ -158,6 +158,24 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
 
       />
       <PopupComponent
+        title={`${!popupLoading ? "Are you sure you want to delete this entry?:" : ""
+          }`}
+        entry={!popupLoading ? metadataToDelete?.name : ""}
+        open={displayPopup}
+      >
+        <div className="flex justify-center mt-2">
+          {!popupLoading ? (
+            <ButtonComponent
+              text={["yes", "no"]}
+              variant="outlined"
+              handleClick={[clickYes, () => setDisplayPopup(false)]}
+            />
+          ) : (
+            <CircularProgress />
+          )}
+        </div>
+      </PopupComponent>
+      <PopupComponent
         title={`Entry successfully ${metadataAction === "add"
           ? "added"
           : metadataAction === "update"
