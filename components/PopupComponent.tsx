@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { Box, Modal, Typography } from "@mui/material";
+import { FC } from 'react';
+import { Box, Modal, Typography } from '@mui/material';
 type PopupType = {
   open: boolean;
   close?: any;
@@ -24,7 +24,7 @@ const PopupComponent: FC<PopupType> = ({
     bgcolor: "background.paper",
     boxShadow: 24,
     p: 3,
-    borderRadius: "5px",
+    borderRadius: '5px',
   };
 
   return (

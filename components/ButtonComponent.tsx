@@ -1,16 +1,31 @@
 import { FC } from "react";
-import { Button, ButtonGroup, IconButton } from "@mui/material";
+import { Button, ButtonGroup, IconButton, Tooltip } from "@mui/material";
 import { ImportContacts } from "@mui/icons-material";
 
+
 type ButtonType = {
-  type?: "button" | "submit" | "reset" | undefined;
+  type?: 'button' | 'submit' | 'reset' | undefined;
   handleClick?: any;
-  variant?: "text" | "outlined" | "contained" | undefined;
+  variant?: 'text' | 'outlined' | 'contained' | undefined;
   text: string[];
   disabled?: boolean;
   icon?: any;
   style?: string;
   color?: string;
+  placement?:
+    | "bottom-end"
+    | "bottom-start"
+    | "bottom"
+    | "left-end"
+    | "left-start"
+    | "left"
+    | "right-end"
+    | "right-start"
+    | "right"
+    | "top-end"
+    | "top-start"
+    | "top"
+    | undefined;
 };
 
 // HOW THIS COMPONENT WORK
@@ -20,6 +35,7 @@ type ButtonType = {
 // - accepts array of string
 // - becomes a button group when initialized with multiple strings  (e.g. text={['yes', 'no']})
 // - renders button text left to right, based on index of the array
+// - optionally used as tooltip text for IconButton
 //
 // TYPE PROP:
 // - optional
@@ -43,6 +59,12 @@ type ButtonType = {
 // - used to pass imported MUI icons to use by MUI Button and IconButton components
 // - use the imported MUI icon tag to pass the icon (e.g. icon={<DeleteIcon />})
 //
+// PLACEMENT PROP:
+// - optional
+// - accepts string values "bottom-end","bottom-start","bottom","left-end",
+//   "left-start","left","right-end","right-start","right","top-end","top-start" or "top"
+//   for placement of tooltip text for IconButton
+//
 // DISABLED PROP:
 // - accepts conditions, variables or functions that returns either true or false (e.g. disabled={false}, disabled={index === 0 ? true : false} )
 //
@@ -54,6 +76,9 @@ type ButtonType = {
 // COLOR PROP:
 // - optional
 // - currently being used by IconButton for dynamically changing color of icons
+// - accepts string values
+// - used for changing text/icon color statically or dynamically (e.g. color='red', color={active ? 'blue' : 'red'})
+
 
 const ButtonComponent: FC<ButtonType> = ({
   icon,
@@ -64,6 +89,7 @@ const ButtonComponent: FC<ButtonType> = ({
   disabled,
   style,
   color,
+  placement,
 }) => {
   return (
     <>
@@ -74,7 +100,7 @@ const ButtonComponent: FC<ButtonType> = ({
               key={index}
               onClick={handleClick ? handleClick[index] : undefined}
               type={type}
-              sx={{ paddingX: `${text.length === 2 ? "4rem" : "2rem"}` }}
+              sx={{ paddingX: `${text.length === 2 ? '4rem' : '2rem'}` }}
             >
               {item}
             </Button>
@@ -83,17 +109,19 @@ const ButtonComponent: FC<ButtonType> = ({
       ) : (
         <>
           {style === "icon" ? (
-            <IconButton
-              onClick={handleClick ? handleClick[0] : undefined}
-              size="small"
-              sx={{
-                width: "34px",
-                height: "34px",
-                color: color,
-              }}
-            >
-              {icon}
-            </IconButton>
+            <Tooltip title={text} placement={placement}>
+              <IconButton
+                onClick={handleClick ? handleClick[0] : undefined}
+                size="small"
+                sx={{
+                  width: "34px",
+                  height: "34px",
+                  color: color,
+                }}
+              >
+                {icon}
+              </IconButton>
+            </Tooltip>
           ) : (
             <Button
               variant={variant}
@@ -101,6 +129,7 @@ const ButtonComponent: FC<ButtonType> = ({
               onClick={handleClick ? handleClick[0] : undefined}
               disabled={disabled}
               startIcon={icon}
+              sx={{ color: color }}
             >
               {text[0]}
             </Button>

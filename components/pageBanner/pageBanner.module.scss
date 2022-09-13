@@ -1,27 +1,24 @@
 @import '../../styles/variable';
 
-.page-banner{
-    display:flex;
-    flex-direction: column;
+.page-banner {
+  display: flex;
+  flex-direction: column;
 }
 
 /* Mobile CSS */
 @media (max-width: $mobile-width) {
-    .page-banner{
-
-    }
+  .page-banner {
+  }
 }
 
 /* Tablet CSS */
 @media (max-width: $mobile-width) {
-    .page-banner{
-        
-    }
+  .page-banner {
+  }
 }
 
 /* Laptop and above CSS */
 @media (max-width: $mobile-width) {
-    .page-banner{
-        
-    }
+  .page-banner {
+  }
 }
