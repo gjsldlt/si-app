@@ -37,6 +37,29 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
   onMetadataClick,
   enableRowActions,
 }: MetadataComponentProps) => {
+
+  const tailwindClasses = {
+    container:
+      "relative flex-grow flex flex-col bg-white p-1 min-h-[200px] md:min-h-100 md:w-[47vw] lg:w-[27vw] border-[1px] shadow-lg",
+    toolbar: "flex flex-row",
+    title: "flex-1",
+    submitButton:
+      "h-iconbutton w-iconbutton flex items-center justify-center p-0",
+    list: "list flex-grow flex flex-col overflow-auto max-h-[300px] md:max-h-full",
+    lineItem:
+      "lineitem transition-all duration-500 rounded py-1 px-2 flex flex-row",
+    lineItemActive: "active bg-sidebar text-white",
+    lineDetails:
+      "name flex flex-col justify-start justify-center flex-grow cursor-pointer",
+    lineActions: "lineActions flex flex-row justify-center items-center",
+    lineButton:
+      "lineButton h-[20px] w-[20px] cursor-pointer hover:text-current",
+    icon: "h-5 w-5 text-gray",
+    description: "block w-full text-xs",
+    name: "p-0 m-0",
+  };
+
+
   //state hook to capture api response to SkillType array
   const [metadataList, setMetadataList] = useState<Metadata[]>([]);
   //state hook to capture skill to edit on click of pencil icon
@@ -298,17 +321,6 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
           })}
         </List>
       );
-    }
-  };
-
-  const clickYes = async () => {
-    setAction("delete");
-    if (metadataToDelete) {
-      setPopupLoading(true);
-      await deleteMetadata(metadataToDelete._id);
-      setPopupLoading(false);
-      setSuccess(true);
-      renderData();
     }
   };
 
