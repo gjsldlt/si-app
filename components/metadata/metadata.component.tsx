@@ -17,7 +17,7 @@ import PopupComponent from '../PopupComponent';
 import ButtonComponent from '../ButtonComponent';
 import CardComponent from '../CardComponent';
 import ListComponent from '../ListComponent';
-
+import { CircularProgress } from "@mui/material";
 const MetadataComponent: FC<MetadataComponentProps> = ({
   type,
   activeMetadata,
@@ -36,6 +36,13 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
   const [displayPopup, setDisplayPopup] = useState<boolean>(false);
   //state hook to show loadscreen component
   const [loadState, setLoadState] = useState<boolean>(true);
+
+  // state hook to show succesfull  message
+  const [success, setSuccess] = useState<boolean>(false);
+  // state hook to show what action the metadata will be done
+  const [metadataAction, setAction] = useState<string>("");
+  // state hook to show loader on popup
+  const [popupLoading, setPopupLoading] = useState<boolean>(false);
 
   const showMetadataForm = () => {
     setMetadataToEdit(undefined);
@@ -81,9 +88,13 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
     }
   };
 
-  const confirmDelete = async () => {
+  const clickYes = async () => {
+    setAction("delete");
     if (metadataToDelete) {
+      setPopupLoading(true);
       await deleteMetadata(metadataToDelete._id);
+      setPopupLoading(false);
+      setSuccess(true);
       renderData();
     }
   };
@@ -96,6 +107,8 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
           setLoadState={setLoadState}
           metadataToEdit={metadataToEdit}
           metadataType={type}
+          setAction={setAction}
+          setSuccess={setSuccess}
         />
       );
     } else {
@@ -138,20 +151,47 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
               icon={displayForm ? <CancelIcon /> : <AddBoxIcon />}
               handleClick={[() => showMetadataForm()]}
             />
-          </>
+          </>}
+        content={
+          loadState ? <LoaderComponent /> : cardBody()
         }
-        content={loadState ? <LoaderComponent /> : cardBody()}
+
       />
       <PopupComponent
-        title='Are you sure you want to delete this entry?'
-        entry={metadataToDelete?.name}
-        open={displayPopup}
+        title={`Entry successfully ${metadataAction === "add"
+          ? "added"
+          : metadataAction === "update"
+            ? "updated"
+            : "deleted"
+          }`}
+        open={success}
+      >
+        <div className="flex justify-center mt-2">
+          {!popupLoading ? (
+            <ButtonComponent
+              text={["yes", "no"]}
+              variant="outlined"
+              handleClick={[clickYes, () => setDisplayPopup(false)]}
+            />
+          ) : (
+            <CircularProgress />
+          )}
+        </div>
+      </PopupComponent>
+      <PopupComponent
+        title={`Entry successfully ${metadataAction === "add"
+          ? "added"
+          : metadataAction === "update"
+            ? "updated"
+            : "deleted"
+          }`}
+        open={success}
       >
         <Box sx={{ mt: 1, display: 'flex', justifyContent: 'center' }}>
           <ButtonComponent
-            text={['yes', 'no']}
-            variant='outlined'
-            handleClick={[confirmDelete, renderData]}
+            text={["confirm"]}
+            variant="outlined"
+            handleClick={[() => setSuccess(false)]}
           />
         </Box>
       </PopupComponent>

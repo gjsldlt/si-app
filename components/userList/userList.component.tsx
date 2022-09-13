@@ -13,12 +13,13 @@ import {
   registerManager,
   registerEmployee,
   updateManager,
-} from '../../services/user.service';
-import { UserType, EmployeeType } from '../../types/MasterTypes.types';
-import UserForm from './userForm.component';
-import { USER_ROLES } from '../../helpers/constants.helper';
-import PopupComponent from '../PopupComponent';
-import ButtonComponent from '../ButtonComponent';
+} from "../../services/user.service";
+import { UserType, EmployeeType } from "../../types/MasterTypes.types";
+import UserForm from "./userForm.component";
+import { USER_ROLES } from "../../helpers/constants.helper";
+import PopupComponent from "../PopupComponent";
+import ButtonComponent from "../ButtonComponent";
+import { CircularProgress } from "@mui/material";
 
 export default function UserList({
   role,
@@ -56,6 +57,11 @@ export default function UserList({
   const [userToBeRegistered, setUserToRegister] = useState<
     UserType | undefined
   >();
+
+  // state hook to show succesfull  message
+  const [success, setSuccess] = useState<boolean>(false);
+  // state hook to show loader on popup
+  const [popupLoading, setPopupLoading] = useState<boolean>(false);
 
   const handleOpen = (user: UserType) => {
     setUserToDelete(user);
@@ -108,13 +114,14 @@ export default function UserList({
 
   const deleteUserHandler = async (user: UserType) => {
     setLoadState(true);
-    handleClose();
+    setPopupLoading(true);
 
     if (userToDelete) {
       let result = await deleteUser(userToDelete.userId!);
       await renderData();
     }
-
+    handleClose();
+    setSuccess(true);
     setLoadState(false);
   };
 
@@ -245,20 +252,47 @@ export default function UserList({
   return (
     <div className={tailwindClasses.container}>
       <PopupComponent
-        title={`Are you sure you want to delete this user?:`}
-        entry={`${userToDelete?.firstName} ${userToDelete?.lastName}`}
+        title={`${
+          !popupLoading ? "Are you sure you want to delete this user?:" : ""
+        }`}
+        entry={`${
+          !popupLoading
+            ? `${userToDelete?.firstName} ${userToDelete?.lastName}`
+            : ""
+        }`}
         open={popUp}
       >
-        <div className='flex justify-center mt-2'>
+        <div className="flex justify-center mt-2">
+          {!popupLoading ? (
+            <ButtonComponent
+              text={["yes", "no"]}
+              handleClick={[deleteUserHandler, handleClose]}
+              variant="outlined"
+            />
+          ) : (
+            <CircularProgress />
+          )}
+        </div>
+      </PopupComponent>
+      <PopupComponent
+        title={`Successfully deleted user:`}
+        entry={`${userToDelete?.firstName} ${userToDelete?.lastName}`}
+        open={success}
+      >
+        <div className="flex justify-center mt-2">
           <ButtonComponent
-            text={['yes', 'no']}
-            handleClick={[deleteUserHandler, handleClose]}
-            variant='outlined'
+            text={["confirm"]}
+            handleClick={[() => setSuccess(false)]}
+            variant="outlined"
           />
         </div>
       </PopupComponent>
       <PopupComponent
-        title={`${userToBeRegistered?.firstName} ${userToBeRegistered?.lastName} is now registered as Manager.`}
+        title={`${userToBeRegistered?.firstName} ${
+          userToBeRegistered?.lastName
+        } is now registered as ${
+          role === "managers" ? "manager" : "employee"
+        }.`}
         open={managerRegistered}
       >
         <div className='flex justify-center mt-2'>

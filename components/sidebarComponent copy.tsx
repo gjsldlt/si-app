@@ -30,8 +30,10 @@ export default function SidebarComponent() {
     setOpen(!open);
   };
 
-  const redirect = (url: URL) => {
-    router.push(url);
+  const redirect = (url: string) => {
+    router.push({
+      pathname: url
+    });
   };
 
   const list = (

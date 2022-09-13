@@ -39,7 +39,7 @@ const MetadataPage = () => {
 
   return (
     <>
-      <PageBanner
+      {/* <PageBanner
         content={
           <Container
             sx={{
@@ -56,7 +56,7 @@ const MetadataPage = () => {
             </Typography>
           </Container>
         }
-      />
+      /> */}
 
       <div className={tailwindClasses.mobileTab}>
         {mobileTabs.map((tab, index) => (
@@ -74,9 +74,14 @@ const MetadataPage = () => {
         container
         spacing={2}
         sx={{
-          p: 2,
+          pt: 2,
+          pb: 2,
+          pr: 2,
+          display: 'flex',
+          alignItems: 'stretch',
           backgroundColor: '#F7F7F7',
-          minHeight: '70vh'
+          flex: '1 0',
+          height: '100%'
         }}
       >
         <Grid item xs={12} md={4}>
