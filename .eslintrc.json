@@ -23,6 +23,6 @@
     "ban-ts-comment": 0,
     "func-style": 1,
     "prefer-arrow-callback": 1,
-    "allowArrowFunctions": 1
+    "allowArrowFunctions": 0
   }
 }
