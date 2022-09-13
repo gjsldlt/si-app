@@ -24,12 +24,14 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
   onMetadataClick,
   enableRowActions,
 }: MetadataComponentProps) => {
+
   //state hook to capture api response to MetadataType array
   const [metadataList, setMetadataList] = useState<MetadataType[]>([]);
   //state hook to capture metadata to edit on click of pencil icon
   const [metadataToEdit, setMetadataToEdit] = useState<MetadataType>();
   //state hook to capture metadala to delete on click of trash icon
   const [metadataToDelete, setMetadataToDelete] = useState<MetadataType>();
+
   //state hook to display form containing input fields
   const [displayForm, setDisplayForm] = useState<boolean>(false);
   //state hook to display delete confirmation
