@@ -74,9 +74,7 @@ const MetadataPage = () => {
         container
         spacing={2}
         sx={{
-          pt: 2,
-          pb: 2,
-          pr: 2,
+          p: 2,
           display: 'flex',
           alignItems: 'stretch',
           backgroundColor: '#F7F7F7',
