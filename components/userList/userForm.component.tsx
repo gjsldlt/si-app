@@ -13,10 +13,12 @@ import { USER_ROLES } from '../../helpers/constants.helper';
 import {
   getAllManagers,
   getEmployeeByUserId,
-} from '../../services/user.service';
-import { getMetadata } from '../../services/metadata.service';
-import Employee from '../../pages/manager/[employee]';
-import ButtonComponent from '../ButtonComponent';
+} from "../../services/user.service";
+import { getMetadata } from "../../services/metadata.service";
+import Employee from "../../pages/manager/[employee]";
+import ButtonComponent from "../ButtonComponent";
+import TextFieldComponent from "../TextFieldComponent";
+import { MenuItem } from "@mui/material";
 
 export default function UserList({
   userToEdit,
@@ -259,7 +261,7 @@ export default function UserList({
     return (
       <>
         <div className={tailwindClasses.formItemHalf}>
-          <label
+          {/* <label
             className={tailwindClasses.inputLabel}
             htmlFor='grid-managerId-name'
           >
@@ -282,10 +284,27 @@ export default function UserList({
                 {`${item.firstName} ${item.lastName}`}
               </option>
             ))}
-          </select>
+          </select> */}
+          <TextFieldComponent
+            className={"w-full mt-2"}
+            label="Manager"
+            disabled={Boolean(parentUser)}
+            required={true}
+            id="grid-managerId-name"
+            name="managerId"
+            select={true}
+            onChange={onInputChange}
+            value={manager ? manager?._id : ""}
+          >
+            {managerList.map((item, index) => (
+              <MenuItem key={`manager-option-${index}`} value={item._id!}>
+                {`${item.firstName} ${item.lastName}`}
+              </MenuItem>
+            ))}
+          </TextFieldComponent>
         </div>
         <div className={tailwindClasses.formItemHalf}>
-          <label
+          {/* <label
             className={tailwindClasses.inputLabel}
             htmlFor='grid-capability-name'
           >
@@ -305,10 +324,26 @@ export default function UserList({
                 {`${item.name}`}
               </option>
             ))}
-          </select>
+          </select> */}
+          <TextFieldComponent
+            select={true}
+            label="Capability"
+            required={true}
+            id="grid-capability-name"
+            name="capability"
+            onChange={onInputChange}
+            className={"w-full mt-2"}
+            value={employeeData ? employeeData?.capability?._id : ""}
+          >
+            {capabilityList.map((item, index) => (
+              <MenuItem key={`capability-option-${index}`} value={item._id!}>
+                {`${item.name}`}
+              </MenuItem>
+            ))}
+          </TextFieldComponent>
         </div>
         <div className={tailwindClasses.formItemHalf}>
-          <label
+          {/* <label
             className={tailwindClasses.inputLabel}
             htmlFor='grid-primarySkill-name'
           >
@@ -327,10 +362,25 @@ export default function UserList({
                 {`${item.name}`}
               </option>
             ))}
-          </select>
+          </select> */}
+          <TextFieldComponent
+            select={true}
+            label="Primary Skill"
+            id="grid-primarySkill-name"
+            name="primarySkill"
+            onChange={onInputChange}
+            className={"w-full mt-2"}
+            value={employeeData ? employeeData?.primarySkill?._id : ""}
+          >
+            {skillList.map((item, index) => (
+              <MenuItem key={`skill-option-${index}`} value={item._id!}>
+                {`${item.name}`}
+              </MenuItem>
+            ))}
+          </TextFieldComponent>
         </div>
         <div className={tailwindClasses.formItemHalf}>
-          <label
+          {/* <label
             className={tailwindClasses.inputLabel}
             htmlFor='grid-secondarySkill-name'
           >
@@ -349,7 +399,22 @@ export default function UserList({
                 {`${item.name}`}
               </option>
             ))}
-          </select>
+          </select> */}
+          <TextFieldComponent
+            select={true}
+            label="Secondary Skill"
+            id="grid-secondarySkill-name"
+            name="secondarySkill"
+            onChange={onInputChange}
+            className={"w-full mt-2"}
+            value={employeeData ? employeeData?.secondarySkill?._id : ""}
+          >
+            {skillList.map((item, index) => (
+              <MenuItem key={`skill-option-${index}`} value={item._id!}>
+                {`${item.name}`}
+              </MenuItem>
+            ))}
+          </TextFieldComponent>
         </div>
         <SkillManager employee={employeeData} setEmployee={setEmployeeData} />
         {/* <div className={`${tailwindClasses.formItem} ${tailwindClasses.skillsContainer}`}>
@@ -453,7 +518,8 @@ export default function UserList({
   return (
     <form className={tailwindClasses.form} onSubmit={onSubmitForm}>
       <div className={tailwindClasses.formItemHalf}>
-        <label className={tailwindClasses.inputLabel} htmlFor='grid-first-name'>
+
+        {/* <label className={tailwindClasses.inputLabel} htmlFor="grid-first-name">
           First Name *
         </label>
         <input
@@ -462,13 +528,23 @@ export default function UserList({
           onChange={onInputChange}
           value={firstName}
           className={tailwindClasses.input}
-          id='grid-first-name'
-          type='text'
-          placeholder='Jane'
+          id="grid-first-name"
+          type="text"
+          placeholder="Jane"
+        /> */}
+        <TextFieldComponent
+          label="First Name"
+          required={true}
+          id="grid-first-name"
+          name="firstName"
+          onChange={onInputChange}
+          value={firstName}
+          className={"w-full mt-2"}
+          placeholder="Jane"
         />
       </div>
       <div className={tailwindClasses.formItemHalf}>
-        <label className={tailwindClasses.inputLabel} htmlFor='grid-last-name'>
+        {/* <label className={tailwindClasses.inputLabel} htmlFor="grid-last-name">
           Last Name *
         </label>
         <input
@@ -477,13 +553,23 @@ export default function UserList({
           onChange={onInputChange}
           value={lastName}
           className={tailwindClasses.input}
-          id='grid-last-name'
-          type='text'
-          placeholder='Doe'
+          id="grid-last-name"
+          type="text"
+          placeholder="Doe"
+        /> */}
+        <TextFieldComponent
+          label="Last Name"
+          required={true}
+          id="grid-last-name"
+          name="lastName"
+          onChange={onInputChange}
+          value={lastName}
+          className={"w-full mt-2"}
+          placeholder="Doe"
         />
       </div>
       <div className={tailwindClasses.formItem}>
-        <label className={tailwindClasses.inputLabel} htmlFor='grid-email-name'>
+        {/* <label className={tailwindClasses.inputLabel} htmlFor="grid-email-name">
           Email *
         </label>
         <input
@@ -492,9 +578,20 @@ export default function UserList({
           onChange={onInputChange}
           value={email}
           className={tailwindClasses.input}
-          id='grid-email-name'
-          type='email'
-          placeholder='email@email.com'
+          id="grid-email-name"
+          type="email"
+          placeholder="email@email.com"
+        /> */}
+        <TextFieldComponent
+          label="Email"
+          required={true}
+          id="grid-email-name"
+          name="email"
+          type="email"
+          onChange={onInputChange}
+          value={email}
+          className={"w-full mt-2"}
+          placeholder="janedoe@email.com"
         />
       </div>
       {role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF
@@ -503,7 +600,7 @@ export default function UserList({
       {userToEdit === undefined && (
         <>
           <div className={tailwindClasses.formItem}>
-            <label
+            {/* <label
               className={tailwindClasses.inputLabel}
               htmlFor='grid-password-name'
             >
@@ -515,13 +612,23 @@ export default function UserList({
               onChange={onInputChange}
               value={password}
               className={tailwindClasses.input}
-              id='grid-password-name'
-              type='password'
+              id="grid-password-name"
+              type="password"
+            /> */}
+            <TextFieldComponent
+              label="Password"
+              required={true}
+              type="password"
+              id="grid-password-name"
+              name="password"
+              onChange={onInputChange}
+              value={password}
+              className={"w-full mt-2"}
             />
           </div>
 
           <div className={tailwindClasses.formItem}>
-            <label
+            {/* <label
               className={tailwindClasses.inputLabel}
               htmlFor='grid-confirmPassword-name'
             >
@@ -533,8 +640,18 @@ export default function UserList({
               onChange={onInputChange}
               value={confirmPassword}
               className={tailwindClasses.input}
-              id='grid-confirmPassword-name'
-              type='password'
+              id="grid-confirmPassword-name"
+              type="password"
+            /> */}
+            <TextFieldComponent
+              label="Confirm Password"
+              required={true}
+              type="password"
+              id="grid-confirmPassword-name"
+              name="confirmPassword"
+              onChange={onInputChange}
+              value={confirmPassword}
+              className={"w-full mt-2"}
             />
           </div>
         </>

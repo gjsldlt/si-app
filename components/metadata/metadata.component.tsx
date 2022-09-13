@@ -24,10 +24,12 @@ import { getMetadata } from '../../services/metadata.service';
 import { MetadataComponentProps } from '../../types/MasterPageComponent.type';
 import { Metadata } from '../../types/MasterTypes.types';
 import { deleteMetadata } from '../../services/metadata.service';
+import LoaderComponent from "../loader/loader.component";
+import { PlusIcon, XIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
+import PopupComponent from "../PopupComponent";
+import ButtonComponent from "../ButtonComponent";
+import { CircularProgress } from "@mui/material";
 
-import LoaderComponent from '../loader/loader.component';
-import PopupComponent from '../PopupComponent';
-import ButtonComponent from '../ButtonComponent';
 
 const MetadataComponent: FC<MetadataComponentProps> = ({
   type,
@@ -47,6 +49,13 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
   const [displayPopup, setDisplayPopup] = useState<boolean>(false);
   //state hook to show loadscreen component
   const [loadState, setLoadState] = useState<boolean>(true);
+
+  // state hook to show succesfull  message
+  const [success, setSuccess] = useState<boolean>(false);
+  // state hook to show what action the metadata will be done
+  const [metadataAction, setAction] = useState<string>("");
+  // state hook to show loader on popup
+  const [popupLoading, setPopupLoading] = useState<boolean>(false);
 
   const showMetadataForm = () => {
     setMetadataToEdit(undefined);
@@ -117,6 +126,8 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
           setLoadState={setLoadState}
           metadataToEdit={metadataToEdit}
           metadataType={type}
+          setAction={setAction}
+          setSuccess={setSuccess}
         />
       );
     } else {
@@ -223,6 +234,34 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
     }
   };
 
+  const metadataTitle = () => {
+    let title: string;
+    switch (type) {
+      case "skill":
+        title = "Skills";
+        return title;
+      case "capability":
+        title = "Capabilities";
+        return title;
+      case "industry":
+        title = "Industries";
+        return title;
+      default:
+        break;
+    }
+  };
+
+  const clickYes = async () => {
+    setAction("delete");
+    if (metadataToDelete) {
+      setPopupLoading(true);
+      await deleteMetadata(metadataToDelete._id);
+      setPopupLoading(false);
+      setSuccess(true);
+      renderData();
+    }
+  };
+
   return (
     <>
       <Card sx={{ flexGrow: 1, borderRadius: '10px' }}>
@@ -260,15 +299,39 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
           </Container>
         </CardActions>
         <PopupComponent
-          title='Are you sure you want to delete this entry?'
-          entry={metadataToDelete?.name}
+          title={`${
+            !popupLoading ? "Are you sure you want to delete this entry?:" : ""
+          }`}
+          entry={!popupLoading ? metadataToDelete?.name : ""}
           open={displayPopup}
+        >
+          <div className="flex justify-center mt-2">
+            {!popupLoading ? (
+              <ButtonComponent
+                text={["yes", "no"]}
+                variant="outlined"
+                handleClick={[clickYes, () => setDisplayPopup(false)]}
+              />
+            ) : (
+              <CircularProgress />
+            )}
+          </div>
+        </PopupComponent>
+        <PopupComponent
+          title={`Entry successfully ${
+            metadataAction === "add"
+              ? "added"
+              : metadataAction === "update"
+              ? "updated"
+              : "deleted"
+          }`}
+          open={success}
         >
           <Box sx={{ mt: 1, display: 'flex', justifyContent: 'center' }}>
             <ButtonComponent
-              text={['yes', 'no']}
-              variant='outlined'
-              handleClick={[confirmDelete, renderData]}
+              text={["confirm"]}
+              variant="outlined"
+              handleClick={[() => setSuccess(false)]}
             />
           </Box>
         </PopupComponent>

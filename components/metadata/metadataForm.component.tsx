@@ -1,14 +1,18 @@
-import { FC, useState, ChangeEvent, FormEvent } from 'react';
 
-import { addMetadata, updateMetadata } from '../../services/metadata.service';
-import { FormProps } from '../../types/MasterPageComponent.type';
-import ButtonComponent from '../ButtonComponent';
+import { SettingsApplications } from "@mui/icons-material";
+import { FC, useState, ChangeEvent, FormEvent } from "react";
+import { addMetadata, updateMetadata } from "../../services/metadata.service";
+import { FormProps } from "../../types/MasterPageComponent.type";
+import ButtonComponent from "../ButtonComponent";
+import TextFieldComponent from "../TextFieldComponent";
 
 const MetadataForm: FC<FormProps> = ({
   metadataType,
   renderData,
   setLoadState,
   metadataToEdit,
+  setAction,
+  setSuccess,
 }: FormProps) => {
   const tailwindClasses = {
     form: 'flex flex-wrap w-full',
@@ -52,16 +56,20 @@ const MetadataForm: FC<FormProps> = ({
     setLoadState(true);
     //submit to update
     if (metadataToEdit) {
+      setAction("update");
       await updateMetadata(metadataId, newMetadataName, newMetadataDesc);
-      setNewMetadataName('');
-      setNewMetadataDesc('');
+      setSuccess(true);
+      setNewMetadataName("");
+      setNewMetadataDesc("");
       renderData();
     }
     //submit to create
     else if (newMetadataName && newMetadataDesc) {
+      setAction("add");
       await addMetadata(newMetadataName, newMetadataDesc, metadataType);
-      setNewMetadataName('');
-      setNewMetadataDesc('');
+      setSuccess(true);
+      setNewMetadataName("");
+      setNewMetadataDesc("");
       renderData();
     }
   };
@@ -73,7 +81,7 @@ const MetadataForm: FC<FormProps> = ({
       onSubmit={formSubmit}
     >
       <div className={tailwindClasses.formItem}>
-        <label className={tailwindClasses.inputLabel}>
+        {/* <label className={tailwindClasses.inputLabel}>
           {metadataType.charAt(0).toUpperCase() + metadataType.slice(1)}
         </label>
         <input
@@ -81,23 +89,44 @@ const MetadataForm: FC<FormProps> = ({
           onChange={inputChange}
           className={tailwindClasses.input}
           value={newMetadataName}
-          type='text'
-          id='metadataName'
-          name='metadataName'
-          placeholder='ex. JavaScript'
+          type="text"
+          id="metadataName"
+          name="metadataName"
+          placeholder="ex. JavaScript"
+        /> */}
+        <TextFieldComponent
+          className={"w-full"}
+          id="metadataName"
+          name="metadataName"
+          label={metadataType.charAt(0).toUpperCase() + metadataType.slice(1)}
+          required={true}
+          onChange={inputChange}
+          value={newMetadataName}
+          placeholder="ex. JavaScript"
+
         />
       </div>
       <div className={tailwindClasses.formItem}>
-        <label className={tailwindClasses.inputLabel}>Description</label>
+        {/* <label className={tailwindClasses.inputLabel}>Description</label>
         <input
           required
           onChange={inputChange}
           className={tailwindClasses.input}
           value={newMetadataDesc}
-          type='text'
-          id='metadataDesc'
-          name='metadataDesc'
-          placeholder='ex. Scripting language for web pages'
+          type="text"
+          id="metadataDesc"
+          name="metadataDesc"
+          placeholder="ex. Scripting language for web pages"
+        /> */}
+        <TextFieldComponent
+          className={"w-full"}
+          id="metadataDesc"
+          name="metadataDesc"
+          label="Description"
+          required={true}
+          onChange={inputChange}
+          value={newMetadataDesc}
+          placeholder="ex. JavaScript"
         />
       </div>
       <div className={`${tailwindClasses.formItem} mt-1 flex justify-end`}>

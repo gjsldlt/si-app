@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import { XIcon } from '@heroicons/react/solid';
 // import _ from 'lodash';
 
-import { getMetadata } from '../../services/metadata.service';
-import { Metadata, EmployeeType } from '../../types/MasterTypes.types';
-import Loader from '../loader/loader.component';
-import styles from './skillManager.module.scss';
-import ButtonComponent from '../ButtonComponent';
+import { getMetadata } from "../../services/metadata.service";
+import { Metadata, EmployeeType } from "../../types/MasterTypes.types";
+import Loader from "../loader/loader.component";
+import styles from "./skillManager.module.scss";
+import ButtonComponent from "../ButtonComponent";
+import TextFieldComponent from "../TextFieldComponent";
+import { MenuItem } from "@mui/material";
 
 export default function SkillManager({ employee }: PageProps) {
   const tailwindClasses = {
@@ -112,9 +114,9 @@ export default function SkillManager({ employee }: PageProps) {
 
   return (
     <div className={tailwindClasses.container}>
-      <div className={tailwindClasses.form}>
+      <div className={tailwindClasses.form + " space-y-2"}>
         <div className={tailwindClasses.formRow}>
-          <span className={tailwindClasses.inputLabel}>Skill</span>
+          {/* <span className={tailwindClasses.inputLabel}>Skill</span>
           <select
             disabled={filteredMetadataSkills.length === 0}
             required
@@ -130,10 +132,26 @@ export default function SkillManager({ employee }: PageProps) {
                 {`${item.name}`}
               </option>
             ))}
-          </select>
+          </select> */}
+          <TextFieldComponent
+            select={true}
+            label="Skill"
+            disabled={filteredMetadataSkills.length === 0}
+            required={true}
+            id="grid-skills-name"
+            name="skill"
+            onChange={onFormSkillInputChange}
+            value={skill ? skill?._id : ""}
+          >
+            {filteredMetadataSkills.map((item, index) => (
+              <MenuItem key={`active-skill-option-${index}`} value={item._id!}>
+                {`${item.name}`}
+              </MenuItem>
+            ))}
+          </TextFieldComponent>
         </div>
         <div className={tailwindClasses.formRow}>
-          <label className={tailwindClasses.inputLabel} htmlFor='grid-rate'>
+          {/* <label className={tailwindClasses.inputLabel} htmlFor="grid-rate">
             Rate
           </label>
           <input
@@ -143,13 +161,24 @@ export default function SkillManager({ employee }: PageProps) {
             onChange={onFormSkillInputChange}
             value={rate}
             className={tailwindClasses.input}
-            id='grid-rate'
-            type='number'
-            placeholder='0'
+            id="grid-rate"
+            type="number"
+            placeholder="0"
+          /> */}
+          <TextFieldComponent
+            label="Rate"
+            required={true}
+            disabled={filteredMetadataSkills.length === 0}
+            id="grid-rate"
+            name="rate"
+            value={rate}
+            onChange={onFormSkillInputChange}
+            type="number"
+            placeholder="0"
           />
         </div>
         <div className={tailwindClasses.formRow}>
-          <label
+          {/* <label
             className={tailwindClasses.inputLabel}
             htmlFor='grid-years-experience'
           >
@@ -162,13 +191,24 @@ export default function SkillManager({ employee }: PageProps) {
             onChange={onFormSkillInputChange}
             value={yearsExperience}
             className={tailwindClasses.input}
-            id='grid-years-experience'
-            type='number'
-            placeholder='0'
+            id="grid-years-experience"
+            type="number"
+            placeholder="0"
+          /> */}
+          <TextFieldComponent
+            label="Years Experience"
+            required={true}
+            disabled={filteredMetadataSkills.length === 0}
+            id="grid-years-experience"
+            name="yearsExperience"
+            value={yearsExperience}
+            onChange={onFormSkillInputChange}
+            type="number"
+            placeholder="0"
           />
         </div>
         <div className={tailwindClasses.formRow}>
-          <label
+          {/* <label
             className={tailwindClasses.inputLabel}
             htmlFor='grid-description'
           >
@@ -181,8 +221,18 @@ export default function SkillManager({ employee }: PageProps) {
             onChange={onFormSkillInputChange}
             value={description}
             className={tailwindClasses.input}
-            id='grid-description'
-            placeholder='Indicate your experience here.'
+            id="grid-description"
+            placeholder="Indicate your experience here."
+          /> */}
+          <TextFieldComponent
+            label="Description"
+            disabled={filteredMetadataSkills.length === 0}
+            id="grid-description"
+            name="description"
+            value={description}
+            onChange={onFormSkillInputChange}
+            multiline={{ enabled: true, rows: 4 }}
+            className="w-full"
           />
         </div>
         <div className={tailwindClasses.formRow}>

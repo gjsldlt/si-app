@@ -1,28 +1,30 @@
-import * as React from 'react';
-import { useRouter } from 'next/router';
-
-import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import MuiDrawer from '@mui/material/Drawer';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import { DatabaseIcon, HomeIcon, UserGroupIcon } from '@heroicons/react/solid';
-import { Avatar, Button, Card, CardHeader } from '@mui/material';
-import { clearUserSession } from '../services/user.service';
+import * as React from "react";
+import { useRouter } from "next/router";
+import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import MuiDrawer from "@mui/material/Drawer";
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import List from "@mui/material/List";
+import CssBaseline from "@mui/material/CssBaseline";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+import { DatabaseIcon, HomeIcon, UserGroupIcon } from "@heroicons/react/solid";
+import { Avatar, Button, Card, CardHeader, Tooltip } from "@mui/material";
+import { clearUserSession } from "../services/user.service";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import ButtonComponent from "./ButtonComponent";
 
 const drawerWidth = 240;
 
@@ -96,9 +98,9 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const menuList = [
-  { name: 'Home', icon: <HomeIcon />, link: '/' },
-  { name: 'Employees', icon: <UserGroupIcon />, link: 'users' },
-  { name: 'Metadata', icon: <DatabaseIcon />, link: 'metadatas' },
+  { name: "Home", icon: <HomeIcon />, link: "/" },
+  { name: "Employees", icon: <UserGroupIcon />, link: "/users" },
+  { name: "Metadata", icon: <DatabaseIcon />, link: "/metadatas" },
 ];
 
 export default function MiniDrawer() {
@@ -111,7 +113,7 @@ export default function MiniDrawer() {
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     index: number,
-    link: URL
+    link: string
   ) => {
     setSelectedIndex(index);
     router.push(link);
@@ -179,7 +181,7 @@ export default function MiniDrawer() {
               className='hover:bg-[#323335]  '
             >
               <ListItemButton
-                selected={selectedIndex === i}
+                selected={router.pathname === item.link}
                 onClick={(event) => handleListItemClick(event, i, item.link)}
                 sx={{
                   minHeight: 48,
@@ -187,13 +189,16 @@ export default function MiniDrawer() {
                   px: 2.5,
                 }}
                 className={`${
-                  selectedIndex === i && '!bg-main text-black'
+                  router.pathname === item.link && "!bg-main text-black"
                 } group`}
               >
                 <ListItemIcon
                   className={`${
-                    selectedIndex === i && 'text-black'
-                  } text-gray group-hover:text-white w-7`}
+                    router.pathname === item.link && "text-black"
+                  } text-gray ${
+                    router.pathname !== item.link && "group-hover:text-white"
+                  } w-7`}
+                  
                   sx={{
                     minWidth: 0,
                     mr: open ? 3 : 'auto',
@@ -204,8 +209,10 @@ export default function MiniDrawer() {
                 </ListItemIcon>
                 <ListItemText
                   className={`${
-                    selectedIndex === i && 'text-black'
-                  } text-gray group-hover:text-white `}
+                    router.pathname === item.link && "text-black"
+                  } text-gray ${
+                    router.pathname !== item.link && "group-hover:text-white"
+                  } `}
                   primary={item.name}
                   sx={{ opacity: open ? 1 : 0 }}
                 />
@@ -213,25 +220,41 @@ export default function MiniDrawer() {
             </ListItem>
           ))}
         </List>
-        {open && (
-          <div className='text-white flex flex-col mt-auto mb-4 lg:mb-12'>
-            <p className='text-[#4F4F51] uppercase text-xs ml-4'>Profile</p>
-            <Card sx={{ maxWidth: 345 }} className='bg-transparent shadow-none'>
-              <CardHeader
-                avatar={
-                  <Avatar className='-mr-2' aria-label='recipe'>
-                    R
+        <div className="text-white flex flex-col mt-auto mb-4 lg:mb-12">
+          {open && (
+            <p className="text-[#4F4F51] uppercase text-xs ml-4">Profile</p>
+          )}
+          <Card sx={{ maxWidth: 345 }} className="bg-transparent shadow-none">
+            <CardHeader
+              avatar={
+                <Tooltip
+                  disableHoverListener={open ? true : false}
+                  placement={open ? undefined : "right"}
+                  title={"Juan Dela Cruz"}
+                >
+                  <Avatar
+                    className={`-mr-2 ${!open && "-ml-2 md:-ml-1"}`}
+                    aria-label="recipe"
+                  >
+                    <AccountCircleOutlinedIcon />
                   </Avatar>
-                }
-                title='Juan Dela Cruz'
-                subheader='Front-end Developer'
-              />
-            </Card>
-            <div className='self-center mt-0 lg:mt-4'>
-              <Button onClick={handleLogout}>Logout</Button>
-            </div>
+                </Tooltip>
+              }
+              title={open ? "Juan Dela Cruz" : ""}
+              subheader={open ? "Front-end Developer" : ""}
+            />
+          </Card>
+          <div className={`self-center mt-0 lg:mt-4 w-full flex justify-center ${!open && 'pt-[2px]'}`}>
+            <ButtonComponent
+              text={["Logout"]}
+              handleClick={[handleLogout]}
+              icon={<LogoutIcon />}
+              style={open ? "" : "icon"}
+              color="white"
+              placement={"right"}
+            />
           </div>
-        )}
+        </div>
       </Drawer>
       <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
         {/* <DrawerHeader /> */}

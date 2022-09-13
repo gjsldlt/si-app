@@ -31,8 +31,7 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div>
       <SidebarComponent />
-
-      <div className='ml-20 mt-8 '>{children}</div>
+      <div className="ml-20 mt-8 min-h-[100vh]">{children}</div>
     </div>
     // <div className={tailwindClasses.layout}>
     //   <HeaderBar
