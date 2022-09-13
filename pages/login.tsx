@@ -46,7 +46,7 @@ const Home: NextPage = () => {
         <h1 className={`${tailwindClasses.title}`}>iFED</h1>
       </div>
       <main className={`${tailwindClasses.mainContainer}`}>
-        <Form setLoader={setLoader}/>
+        <Form setLoader={setLoader} />
       </main>
     </div>
   );

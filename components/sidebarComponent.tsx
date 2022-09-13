@@ -134,7 +134,7 @@ export default function MiniDrawer() {
   };
 
   return (
-    <Box sx={{ display: 'flex', height:'64px' }}>
+    <Box sx={{ display: 'flex', height: '64px' }}>
       <CssBaseline />
       <AppBar position='fixed' open={open}>
         <Toolbar>
@@ -164,9 +164,8 @@ export default function MiniDrawer() {
           />
           <IconButton
             onClick={handleDrawerClose}
-            className={`${
-              !open && 'hidden'
-            } text-gray hover:text-white absolute top-2 right-0`}
+            className={`${!open && 'hidden'
+              } text-gray hover:text-white absolute top-2 right-0`}
           >
             <ChevronLeftIcon />
           </IconButton>
@@ -188,17 +187,14 @@ export default function MiniDrawer() {
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
-                className={`${
-                  router.pathname === item.link && "!bg-main text-black"
-                } group`}
+                className={`${router.pathname === item.link && "!bg-main text-black"
+                  } group`}
               >
                 <ListItemIcon
-                  className={`${
-                    router.pathname === item.link && "text-black"
-                  } text-gray ${
-                    router.pathname !== item.link && "group-hover:text-white"
-                  } w-7`}
-                  
+                  className={`${router.pathname === item.link && "text-black"
+                    } text-gray ${router.pathname !== item.link && "group-hover:text-white"
+                    } w-7`}
+
                   sx={{
                     minWidth: 0,
                     mr: open ? 3 : 'auto',
@@ -208,11 +204,9 @@ export default function MiniDrawer() {
                   {item.icon}
                 </ListItemIcon>
                 <ListItemText
-                  className={`${
-                    router.pathname === item.link && "text-black"
-                  } text-gray ${
-                    router.pathname !== item.link && "group-hover:text-white"
-                  } `}
+                  className={`${router.pathname === item.link && "text-black"
+                    } text-gray ${router.pathname !== item.link && "group-hover:text-white"
+                    } `}
                   primary={item.name}
                   sx={{ opacity: open ? 1 : 0 }}
                 />
@@ -256,7 +250,7 @@ export default function MiniDrawer() {
           </div>
         </div>
       </Drawer>
-      <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
+      <Box component='main' sx={{ flexGrow: 1, p: 0 }}>
         {/* <DrawerHeader /> */}
       </Box>
     </Box>

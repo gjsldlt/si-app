@@ -39,17 +39,6 @@ export interface ManagerType {
 //     userId: string,
 // }
 
-export interface CapabilityType {
-  _id: string;
-  name: string;
-  description: string;
-}
-
-export interface SkillType {
-  _id: string;
-  name: string;
-  description: string;
-}
 
 export interface UserType {
   _id?: string;
@@ -62,7 +51,7 @@ export interface UserType {
   employeeId?: string;
 }
 
-export interface Metadata {
+export interface MetadataType {
   _id: string;
   name: string;
   description: string;
