@@ -234,23 +234,6 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
     }
   };
 
-  const metadataTitle = () => {
-    let title: string;
-    switch (type) {
-      case "skill":
-        title = "Skills";
-        return title;
-      case "capability":
-        title = "Capabilities";
-        return title;
-      case "industry":
-        title = "Industries";
-        return title;
-      default:
-        break;
-    }
-  };
-
   const clickYes = async () => {
     setAction("delete");
     if (metadataToDelete) {
