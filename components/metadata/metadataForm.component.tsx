@@ -1,7 +1,5 @@
 import { SettingsApplications } from "@mui/icons-material";
 import { FC, useState, ChangeEvent, FormEvent } from "react";
-import { SettingsApplications } from "@mui/icons-material";
-import { FC, useState, ChangeEvent, FormEvent } from "react";
 import { addMetadata, updateMetadata } from "../../services/metadata.service";
 import { FormProps } from "../../types/MasterPageComponent.type";
 import ButtonComponent from "../ButtonComponent";

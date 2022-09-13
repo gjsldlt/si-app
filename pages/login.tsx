@@ -3,11 +3,6 @@ import Head from "next/head";
 import Image from "next/image";
 import AccentBar from "../components/accentBar/accentBar.component";
 import Form from "../components/loginRegisterForm/loginRegister.component";
-import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import AccentBar from "../components/accentBar/accentBar.component";
-import Form from "../components/loginRegisterForm/loginRegister.component";
 import logoDesktopTablet from "../public/assets/images/shared/deloitte-logo-desktop-tablet.png";
 import logoiFED from "../public/assets/images/logo-ifed.png";
 import { useState } from "react";
@@ -51,7 +46,7 @@ const Home: NextPage = () => {
         <h1 className={`${tailwindClasses.title}`}>iFED</h1>
       </div>
       <main className={`${tailwindClasses.mainContainer}`}>
-        <Form setLoader={setLoader}/>
+        <Form setLoader={setLoader} />
       </main>
     </div>
   );

@@ -24,7 +24,7 @@ const CardComponent: FC<CardType> = ({ title, actions, content }) => {
           {actions}
         </Container>
       </CardActions>
-      <CardContent sx={{ p: 0, height: '32vw', overflow: 'auto' }}>{content}</CardContent>
+      <CardContent sx={{ p: 0, height: '40vw', overflow: 'auto' }}>{content}</CardContent>
     </Card>
   );
 };

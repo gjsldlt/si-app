@@ -2,7 +2,6 @@ import Head from 'next/head';
 import Image from 'next/image';
 import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
-import { getSkills } from '../services/skill.service';
 import { accessUserInSession } from '../services/user.service';
 import { AccountType } from '../types/MasterTypes.types';
 import PageBanner from '../components/pageBanner/pageBanner.component';
@@ -17,7 +16,7 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
-import CardComponents from '../components/cardComponents';
+import CardComponent from '../components/CardComponent';
 
 import styles from '../styles/Home.module.css';
 import { setuid } from 'process';
