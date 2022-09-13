@@ -21,7 +21,6 @@ import PopupComponent from "../PopupComponent";
 import ButtonComponent from "../ButtonComponent";
 import { CircularProgress } from "@mui/material";
 
-
 export default function UserList({
   role,
   activeUser,

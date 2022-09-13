@@ -94,6 +94,69 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
     renderData();
   }, [renderData]);
 
+  const handleFormDisplay = () => {
+    if (displayForm) {
+      return (
+        <MetadataForm
+          renderData={renderData}
+          setLoadState={setLoadState}
+          metadataToEdit={metadataToEdit}
+          metadataType={type}
+          setAction={setAction}
+          setSuccess={setSuccess}
+        />
+      );
+    } else {
+      return (
+        <div className={tailwindClasses.list}>
+          {metadataList.map((metadata) => {
+            const activeLine = activeMetadata?._id === metadata._id;
+            return (
+              <div
+                key={`${type}-line-item-${metadata._id}`}
+                className={`${tailwindClasses.lineItem} ${
+                  activeLine ? tailwindClasses.lineItemActive : ""
+                }`}
+              >
+                <div
+                  className={`${tailwindClasses.lineDetails}`}
+                  onClick={() => {
+                    clickMetadataRow(metadata);
+                  }}
+                >
+                  <p className={tailwindClasses.name}>
+                    <span>{metadata.name}</span>
+                  </p>
+                  <span className={tailwindClasses.description}>
+                    {activeLine ? metadata.description : ""}
+                  </span>
+                </div>
+                {enableRowActions ? (
+                  <div className={tailwindClasses.lineActions}>
+                    <ButtonComponent
+                      style="icon"
+                      icon={<CreateIcon />}
+                      text={["Edit"]}
+                      color={activeLine ? "white" : ""}
+                      handleClick={[() => editMetadata(metadata)]}
+                    />
+                    <ButtonComponent
+                      style="icon"
+                      icon={<DeleteIcon />}
+                      text={["Remove"]}
+                      color={activeLine ? "white" : ""}
+                      handleClick={[() => removeMetadata(metadata)]}
+                    />
+                  </div>
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+  };
+
   const metadataTitle = () => {
     let title: string;
     switch (type) {
@@ -111,9 +174,13 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
     }
   };
 
-  const confirmDelete = async () => {
+  const clickYes = async () => {
+    setAction("delete");
     if (metadataToDelete) {
+      setPopupLoading(true);
       await deleteMetadata(metadataToDelete._id);
+      setPopupLoading(false);
+      setSuccess(true);
       renderData();
     }
   };
@@ -287,6 +354,28 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
           }`}
           entry={!popupLoading ? metadataToDelete?.name : ""}
           open={displayPopup}
+        >
+          <div className="flex justify-center mt-2">
+            {!popupLoading ? (
+              <ButtonComponent
+                text={["yes", "no"]}
+                variant="outlined"
+                handleClick={[clickYes, () => setDisplayPopup(false)]}
+              />
+            ) : (
+              <CircularProgress />
+            )}
+          </div>
+        </PopupComponent>
+        <PopupComponent
+          title={`Entry successfully ${
+            metadataAction === "add"
+              ? "added"
+              : metadataAction === "update"
+              ? "updated"
+              : "deleted"
+          }`}
+          open={success}
         >
           <div className="flex justify-center mt-2">
             {!popupLoading ? (

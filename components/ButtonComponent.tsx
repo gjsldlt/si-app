@@ -75,8 +75,10 @@ type ButtonType = {
 //
 // COLOR PROP:
 // - optional
+// - currently being used by IconButton for dynamically changing color of icons
 // - accepts string values
 // - used for changing text/icon color statically or dynamically (e.g. color='red', color={active ? 'blue' : 'red'})
+
 
 const ButtonComponent: FC<ButtonType> = ({
   icon,
