@@ -33,7 +33,7 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <Box sx={{ p: 0, display: 'flex' }}>
       <SidebarComponent />
-      <Container sx={{ pt: "64px" }} maxWidth={false} disableGutters>
+      <Container sx={{ pt: "64px", display: 'flex', flexDirection: 'column' }} maxWidth={false} disableGutters>
         {children}
       </Container>
     </Box>

@@ -43,12 +43,13 @@ const MetadataPage = () => {
         content={
           <Container
             sx={{
+              p: 0,
               height: '15vh',
               width: '100%',
               display: 'flex',
-              justifyContent: 'flex-start',
               alignItems: 'center',
             }}
+            maxWidth={false}
           >
             <Typography sx={{ zIndex: '5' }} variant='h4' component='h4'>
               Metadata List
@@ -75,6 +76,7 @@ const MetadataPage = () => {
         sx={{
           p: 2,
           backgroundColor: '#F7F7F7',
+          minHeight: '70vh'
         }}
       >
         <Grid item xs={12} md={4}>
