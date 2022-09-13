@@ -125,7 +125,7 @@ const ListComponent: FC<ListType> = ({
               }}
             >
               <ListItemText
-                sx={{ mr: 5 }}
+                sx={{ mr: 5, lineHeight: 0, }}
                 disableTypography={false}
                 primary={
                   <Typography
