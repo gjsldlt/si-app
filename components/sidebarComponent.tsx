@@ -134,7 +134,7 @@ export default function MiniDrawer() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', height:'64px' }}>
       <CssBaseline />
       <AppBar position='fixed' open={open}>
         <Toolbar>
@@ -156,7 +156,7 @@ export default function MiniDrawer() {
         </Toolbar>
       </AppBar>
       <Drawer variant='permanent' open={open}>
-        <DrawerHeader className='h-[120px] relative justify-center'>
+        <DrawerHeader className='relative justify-center'>
           <img
             src='/assets/images/deloitte-logo.png'
             alt='DCPDC Logo'
