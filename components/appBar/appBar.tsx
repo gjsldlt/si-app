@@ -19,7 +19,7 @@ import {
   clearUserSession,
 } from '../../services/user.service';
 
-export default function MenuAppBar({ toggleButton }) {
+export default function MenuAppBar({ toggleButton }: Props) {
   const [user, setUser] = React.useState({
     firstName: '',
     lastName: '',
@@ -104,3 +104,7 @@ export default function MenuAppBar({ toggleButton }) {
     </Box>
   );
 }
+
+type Props = {
+  toggleButton?: (event: React.KeyboardEvent | React.MouseEvent) => void
+};
