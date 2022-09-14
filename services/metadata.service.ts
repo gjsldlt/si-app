@@ -1,17 +1,17 @@
-import axios from "axios";
-import GLOBALHELPER from "../helpers/global.helper";
+import axios from 'axios';
+import GLOBALHELPER from '../helpers/global.helper';
 
 import {
   addMetadataQuery,
   getMetadataQuery,
   updateMetadataQuery,
   deleteMetadataQuery,
-} from "../query/metadata.query";
+} from '../query/metadata.query';
 
-axios.defaults.headers.common["Content-Type"] = `application/json`;
-axios.defaults.headers.common["Access-Control-Allow-Origin"] = `*`;
+axios.defaults.headers.common['Content-Type'] = `application/json`;
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = `*`;
 axios.defaults.headers.common[
-  "Accept"
+  'Accept'
 ] = `application/json, text/plain, application/graphql, */*`;
 // axios.defaults.headers.common['Authorization'] = ``;
 

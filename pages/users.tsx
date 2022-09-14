@@ -9,8 +9,8 @@ import ManagerWidget from '../components/managerWidget/managerWidget.component';
 import { EmployeeType, UserType } from '../types/MasterTypes.types';
 
 function Users() {
-    const [activeManager, setActiveManager] = useState<UserType>()
-    const [activeEmployee, setActiveEmployee] = useState<EmployeeType>()
+    const [activeManager, setActiveManager] = useState<UserType>();
+    const [activeEmployee, setActiveEmployee] = useState<EmployeeType>();
 
     const tailwindClasses = {
         customBanner: 'customBanner h-full w-full flex items-center justify-start p-[2rem]',
@@ -27,7 +27,7 @@ function Users() {
     const selectManager = (manager: UserType) => {
         setActiveManager(manager);
         setActiveEmployee(undefined);
-    }
+    };
 
     return (
         <>

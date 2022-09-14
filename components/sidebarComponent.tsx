@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useRouter } from "next/router";
-
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -21,36 +20,39 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { DatabaseIcon, HomeIcon, UserGroupIcon } from "@heroicons/react/solid";
-import { Avatar, Button, Card, CardHeader } from "@mui/material";
+import { Avatar, Button, Card, CardHeader, Tooltip } from "@mui/material";
 import { clearUserSession } from "../services/user.service";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import ButtonComponent from "./ButtonComponent";
 
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
-  transition: theme.transitions.create("width", {
+  transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
   }),
-  overflowX: "hidden",
+  overflowX: 'hidden',
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
-  transition: theme.transitions.create("width", {
+  transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  overflowX: "hidden",
+  overflowX: 'hidden',
   width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up("sm")]: {
+  [theme.breakpoints.up('sm')]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
 });
 
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-end",
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
@@ -61,17 +63,17 @@ interface AppBarProps extends MuiAppBarProps {
 }
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
+  shouldForwardProp: (prop) => prop !== 'open',
 })<AppBarProps>(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(["width", "margin"], {
+  transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
@@ -79,26 +81,26 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
+  shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
   width: drawerWidth,
   flexShrink: 0,
-  whiteSpace: "nowrap",
-  boxSizing: "border-box",
+  whiteSpace: 'nowrap',
+  boxSizing: 'border-box',
   ...(open && {
     ...openedMixin(theme),
-    "& .MuiDrawer-paper": openedMixin(theme),
+    '& .MuiDrawer-paper': openedMixin(theme),
   }),
   ...(!open && {
     ...closedMixin(theme),
-    "& .MuiDrawer-paper": closedMixin(theme),
+    '& .MuiDrawer-paper': closedMixin(theme),
   }),
 }));
 
 const menuList = [
   { name: "Home", icon: <HomeIcon />, link: "/" },
-  { name: "Employees", icon: <UserGroupIcon />, link: "users" },
-  { name: "Metadata", icon: <DatabaseIcon />, link: "metadatas" },
+  { name: "Employees", icon: <UserGroupIcon />, link: "/users" },
+  { name: "Metadata", icon: <DatabaseIcon />, link: "/metadatas" },
 ];
 
 export default function MiniDrawer() {
@@ -111,7 +113,7 @@ export default function MiniDrawer() {
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     index: number,
-    link: URL
+    link: string
   ) => {
     setSelectedIndex(index);
     router.push(link);
@@ -120,7 +122,7 @@ export default function MiniDrawer() {
 
   const handleLogout = () => {
     clearUserSession();
-    router.push("/login");
+    router.push('/login');
   };
 
   const handleDrawerOpen = () => {
@@ -132,38 +134,38 @@ export default function MiniDrawer() {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position='fixed' open={open}>
         <Toolbar>
           <IconButton
-            color="inherit"
-            aria-label="open drawer"
+            color='inherit'
+            aria-label='open drawer'
             onClick={handleDrawerOpen}
-            edge="start"
+            edge='start'
             sx={{
               marginRight: 5,
-              ...(open && { display: "none" }),
+              ...(open && { display: 'none' }),
             }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography variant='h6' noWrap component='div'>
             iFED
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader className="h-[120px] relative justify-center">
+      <Drawer variant='permanent' open={open}>
+        <DrawerHeader className='h-[120px] relative justify-center'>
           <img
-            src="/assets/images/deloitte-logo.png"
-            alt="DCPDC Logo"
-            className={`${!open && "hidden"} w-44`}
+            src='/assets/images/deloitte-logo.png'
+            alt='DCPDC Logo'
+            className={`${!open && 'hidden'} w-44`}
           />
           <IconButton
             onClick={handleDrawerClose}
             className={`${
-              !open && "hidden"
+              !open && 'hidden'
             } text-gray hover:text-white absolute top-2 right-0`}
           >
             <ChevronLeftIcon />
@@ -175,37 +177,42 @@ export default function MiniDrawer() {
             <ListItem
               key={i}
               disablePadding
-              sx={{ display: "block" }}
-              className="hover:bg-[#323335]  "
+              sx={{ display: 'block' }}
+              className='hover:bg-[#323335]  '
             >
               <ListItemButton
-                selected={selectedIndex === i}
+                selected={router.pathname === item.link}
                 onClick={(event) => handleListItemClick(event, i, item.link)}
                 sx={{
                   minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
+                  justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
                 className={`${
-                  selectedIndex === i && "!bg-main text-black"
+                  router.pathname === item.link && "!bg-main text-black"
                 } group`}
               >
                 <ListItemIcon
                   className={`${
-                    selectedIndex === i && "text-black"
-                  } text-gray group-hover:text-white w-7`}
+                    router.pathname === item.link && "text-black"
+                  } text-gray ${
+                    router.pathname !== item.link && "group-hover:text-white"
+                  } w-7`}
+                  
                   sx={{
                     minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
                   }}
                 >
                   {item.icon}
                 </ListItemIcon>
                 <ListItemText
                   className={`${
-                    selectedIndex === i && "text-black"
-                  } text-gray group-hover:text-white `}
+                    router.pathname === item.link && "text-black"
+                  } text-gray ${
+                    router.pathname !== item.link && "group-hover:text-white"
+                  } `}
                   primary={item.name}
                   sx={{ opacity: open ? 1 : 0 }}
                 />
@@ -213,27 +220,43 @@ export default function MiniDrawer() {
             </ListItem>
           ))}
         </List>
-        {open && (
-          <div className="text-white flex flex-col mt-auto mb-4 lg:mb-12">
+        <div className="text-white flex flex-col mt-auto mb-4 lg:mb-12">
+          {open && (
             <p className="text-[#4F4F51] uppercase text-xs ml-4">Profile</p>
-            <Card sx={{ maxWidth: 345 }} className="bg-transparent shadow-none">
-              <CardHeader
-                avatar={
-                  <Avatar className="-mr-2" aria-label="recipe">
-                    R
+          )}
+          <Card sx={{ maxWidth: 345 }} className="bg-transparent shadow-none">
+            <CardHeader
+              avatar={
+                <Tooltip
+                  disableHoverListener={open ? true : false}
+                  placement={open ? undefined : "right"}
+                  title={"Juan Dela Cruz"}
+                >
+                  <Avatar
+                    className={`-mr-2 ${!open && "-ml-2 md:-ml-1"}`}
+                    aria-label="recipe"
+                  >
+                    <AccountCircleOutlinedIcon />
                   </Avatar>
-                }
-                title="Juan Dela Cruz"
-                subheader="Front-end Developer"
-              />
-            </Card>
-            <div className="self-center mt-0 lg:mt-4">
-              <Button onClick={handleLogout}>Logout</Button>
-            </div>
+                </Tooltip>
+              }
+              title={open ? "Juan Dela Cruz" : ""}
+              subheader={open ? "Front-end Developer" : ""}
+            />
+          </Card>
+          <div className={`self-center mt-0 lg:mt-4 w-full flex justify-center ${!open && 'pt-[2px]'}`}>
+            <ButtonComponent
+              text={["Logout"]}
+              handleClick={[handleLogout]}
+              icon={<LogoutIcon />}
+              style={open ? "" : "icon"}
+              color="white"
+              placement={"right"}
+            />
           </div>
-        )}
+        </div>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
         {/* <DrawerHeader /> */}
       </Box>
     </Box>

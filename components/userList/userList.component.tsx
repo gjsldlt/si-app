@@ -8,9 +8,9 @@ import AddIcon from '@mui/icons-material/Add'
 import SearchIcon from '@mui/icons-material/Search';
 import TuneIcon from '@mui/icons-material/Tune';
 
-import styles from "./managerList.module.scss";
-import LoaderComponent from "../loader/loader.component";
-import { getAllManagers } from "../../services/user.service";
+import styles from './managerList.module.scss';
+import LoaderComponent from '../loader/loader.component';
+import { getAllManagers } from '../../services/user.service';
 import {
   getEmployees,
   getEmployeesOfManager,
@@ -24,6 +24,8 @@ import UserForm from "./userForm.component";
 import { USER_ROLES } from "../../helpers/constants.helper";
 import PopupComponent from "../PopupComponent";
 import ButtonComponent from "../ButtonComponent";
+import { CircularProgress } from "@mui/material";
+
 
 export default function UserList({
   role,
@@ -59,6 +61,11 @@ export default function UserList({
     UserType | undefined
   >();
 
+  // state hook to show succesfull  message
+  const [success, setSuccess] = useState<boolean>(false);
+  // state hook to show loader on popup
+  const [popupLoading, setPopupLoading] = useState<boolean>(false);
+
   const handleOpen = (user: UserType) => {
     setUserToDelete(user);
     setPopup(true);
@@ -71,13 +78,13 @@ export default function UserList({
       setAddState(false);
       setLoadState(true);
       switch (role) {
-        case "employees":
+        case 'employees':
           setUserList(await getEmployees());
           break;
-        case "employeesof":
-          setUserList(await getEmployeesOfManager(parentUser?._id || ""));
+        case 'employeesof':
+          setUserList(await getEmployeesOfManager(parentUser?._id || ''));
           break;
-        case "managers":
+        case 'managers':
           setUserList(await getAllManagers());
           break;
         case USER_ROLES.ALL:
@@ -110,13 +117,14 @@ export default function UserList({
 
   const deleteUserHandler = async (user: UserType) => {
     setLoadState(true);
-    handleClose();
+    setPopupLoading(true);
 
     if (userToDelete) {
       let result = await deleteUser(userToDelete.userId!);
       await renderData();
     }
-
+    handleClose();
+    setSuccess(true);
     setLoadState(false);
   };
 
@@ -127,7 +135,7 @@ export default function UserList({
   ) => {
     setLoadState(true);
     if (role === USER_ROLES.MANAGERS) {
-      console.log("register new manager", newUser);
+      console.log('register new manager', newUser);
       await registerManager(newUser);
       await renderData();
       setAddState(false);
@@ -146,16 +154,16 @@ export default function UserList({
     setLoadState(true);
     if (role === USER_ROLES.MANAGERS) {
       let response = await updateManager(
-        userToEdit ? (userToEdit?.userId ? userToEdit?.userId : "") : "",
+        userToEdit ? (userToEdit?.userId ? userToEdit?.userId : '') : '',
         updatedUser
       );
       if (response.error) {
         window.alert(
-          "Something went wrong. Please contact administrator of tool."
+          'Something went wrong. Please contact administrator of tool.'
         );
       }
     } else {
-      console.log("Submit to update -- employee");
+      console.log('Submit to update -- employee');
     }
     setAddState(false);
     setUserToEdit(undefined);
@@ -211,26 +219,26 @@ export default function UserList({
     if (addState && userToEdit === undefined) {
       switch (role) {
         case USER_ROLES.EMPLOYEES:
-          return "New Employee";
+          return 'New Employee';
         case USER_ROLES.EMPLOYEESOF:
           return `New Employee of ${parentUser?.firstName} ${parentUser?.lastName}`;
         case USER_ROLES.MANAGERS:
-          return "New Manager";
+          return 'New Manager';
         case USER_ROLES.ALL:
         default:
-          return "New User";
+          return 'New User';
       }
     } else if (!addState && userToEdit === undefined) {
       switch (role) {
         case USER_ROLES.EMPLOYEES:
-          return "Employees";
+          return 'Employees';
         case USER_ROLES.EMPLOYEESOF:
           return `Employees of ${parentUser?.firstName} ${parentUser?.lastName}`;
         case USER_ROLES.MANAGERS:
-          return "Managers";
+          return 'Managers';
         case USER_ROLES.ALL:
         default:
-          return "Users";
+          return 'Users';
       }
     } else {
       return `Updating: ${userToEdit?.firstName}  ${userToEdit?.lastName}`;
@@ -244,27 +252,50 @@ export default function UserList({
   return (
     <div className={tailwindClasses.container}>
       <PopupComponent
-        title={`Are you sure you want to delete this user?:`}
-        entry={`${userToDelete?.firstName} ${userToDelete?.lastName}`}
+        title={`${!popupLoading ? "Are you sure you want to delete this user?:" : ""
+          }`}
+        entry={`${!popupLoading
+            ? `${userToDelete?.firstName} ${userToDelete?.lastName}`
+            : ""
+          }`}
         open={popUp}
       >
         <div className="flex justify-center mt-2">
+          {!popupLoading ? (
+            <ButtonComponent
+              text={["yes", "no"]}
+              handleClick={[deleteUserHandler, handleClose]}
+              variant="outlined"
+            />
+          ) : (
+            <CircularProgress />
+          )}
+        </div>
+      </PopupComponent>
+      <PopupComponent
+        title={`Successfully deleted user:`}
+        entry={`${userToDelete?.firstName} ${userToDelete?.lastName}`}
+        open={success}
+      >
+        <div className="flex justify-center mt-2">
           <ButtonComponent
-            text={["yes", "no"]}
-            handleClick={[deleteUserHandler, handleClose]}
+            text={["confirm"]}
+            handleClick={[() => setSuccess(false)]}
             variant="outlined"
           />
         </div>
       </PopupComponent>
       <PopupComponent
-        title={`${userToBeRegistered?.firstName} ${userToBeRegistered?.lastName} is now registered as Manager.`}
+        title={`${userToBeRegistered?.firstName} ${userToBeRegistered?.lastName
+          } is now registered as ${role === "managers" ? "manager" : "employee"
+          }.`}
         open={managerRegistered}
       >
-        <div className="flex justify-center mt-2">
+        <div className='flex justify-center mt-2'>
           <ButtonComponent
-            text={["confirm"]}
+            text={['confirm']}
             handleClick={[() => setManagerRegistered(false)]}
-            variant="outlined"
+            variant='outlined'
           />
         </div>
       </PopupComponent>
@@ -323,7 +354,7 @@ UserList.defaultProps = {
   onClickItem: (
     user: UserType | React.Dispatch<React.SetStateAction<undefined>> | undefined
   ) => {
-    console.log("done nothing.");
+    console.log('done nothing.');
   },
   enableRowActions: false,
   parentUser: undefined,

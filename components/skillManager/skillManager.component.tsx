@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { XIcon } from "@heroicons/react/solid";
+import { useEffect, useState } from 'react';
+import { XIcon } from '@heroicons/react/solid';
 // import _ from 'lodash';
 
 import { getMetadata } from "../../services/metadata.service";
@@ -53,12 +53,12 @@ export default function SkillManager({ employee }: PageProps) {
 
   const [rate, setRate] = useState<number>(0);
   const [yearsExperience, setYearsExperience] = useState<number>(0);
-  const [description, setDescription] = useState<string>("");
+  const [description, setDescription] = useState<string>('');
   const [skill, setSkill] = useState<Metadata>();
 
   const renderData = async () => {
     setLoadState(true);
-    setMetadataSkills(await getMetadata("skill"));
+    setMetadataSkills(await getMetadata('skill'));
     setLoadState(false);
   };
 
@@ -69,16 +69,16 @@ export default function SkillManager({ employee }: PageProps) {
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     switch (e.target.name) {
-      case "rate":
+      case 'rate':
         setRate(parseInt(e.target.value));
         break;
-      case "yearsExperience":
+      case 'yearsExperience':
         setYearsExperience(parseInt(e.target.value));
         break;
-      case "description":
+      case 'description':
         setDescription(e.target.value);
         break;
-      case "skill":
+      case 'skill':
         setSkill(metadataSkills.find((item) => item._id === e.target.value));
         break;
       default:
@@ -92,7 +92,7 @@ export default function SkillManager({ employee }: PageProps) {
       Boolean(skill) &&
       rate > 0 &&
       yearsExperience > 0 &&
-      description !== ""
+      description !== ''
     ) {
       tempActiveSkills?.push({
         skill: skill,
@@ -102,8 +102,8 @@ export default function SkillManager({ employee }: PageProps) {
       });
       setActiveSkills(tempActiveSkills);
       setRate(0);
-      setDescription("");
-      setSkill({ _id: "", name: "", description: "" });
+      setDescription('');
+      setSkill({ _id: '', name: '', description: '' });
       setYearsExperience(0);
     }
   };
@@ -118,7 +118,7 @@ export default function SkillManager({ employee }: PageProps) {
 
   return (
     <div className={tailwindClasses.container}>
-      <div className={tailwindClasses.form}>
+      <div className={tailwindClasses.form + " space-y-2"}>
         <div className={tailwindClasses.formRow}>
           <span className={tailwindClasses.inputLabel}>Skill</span>
           <FormControl fullWidth>
@@ -209,11 +209,11 @@ export default function SkillManager({ employee }: PageProps) {
         </div>
         <div className={tailwindClasses.formRow}>
           <ButtonComponent
-            text={["Add Skill"]}
-            type="button"
+            text={['Add Skill']}
+            type='button'
             handleClick={[addActiveSkill]}
             disabled={filteredMetadataSkills.length === 0}
-            variant="outlined"
+            variant='outlined'
           />
         </div>
       </div>
@@ -229,7 +229,7 @@ export default function SkillManager({ employee }: PageProps) {
             <DeleteIcon
               className={tailwindClasses.chipDeleteIcon}
               onClick={() =>
-                removeActiveSkill(item.skill ? item.skill._id : "")
+                removeActiveSkill(item.skill ? item.skill._id : '')
               }
             />
           </div>
