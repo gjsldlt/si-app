@@ -24,12 +24,11 @@ import { getMetadata } from '../../services/metadata.service';
 import { MetadataComponentProps } from '../../types/MasterPageComponent.type';
 import { Metadata } from '../../types/MasterTypes.types';
 import { deleteMetadata } from '../../services/metadata.service';
-import LoaderComponent from "../loader/loader.component";
-import { PlusIcon, XIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
-import PopupComponent from "../PopupComponent";
-import ButtonComponent from "../ButtonComponent";
-import { CircularProgress } from "@mui/material";
-
+import LoaderComponent from '../loader/loader.component';
+import { PlusIcon, XIcon, PencilIcon, TrashIcon } from '@heroicons/react/solid';
+import PopupComponent from '../PopupComponent';
+import ButtonComponent from '../ButtonComponent';
+import { CircularProgress } from '@mui/material';
 
 const MetadataComponent: FC<MetadataComponentProps> = ({
   type,
@@ -37,28 +36,26 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
   onMetadataClick,
   enableRowActions,
 }: MetadataComponentProps) => {
-
   const tailwindClasses = {
     container:
-      "relative flex-grow flex flex-col bg-white p-1 min-h-[200px] md:min-h-100 md:w-[47vw] lg:w-[27vw] border-[1px] shadow-lg",
-    toolbar: "flex flex-row",
-    title: "flex-1",
+      'relative flex-grow flex flex-col bg-white p-1 min-h-[200px] md:min-h-100 md:w-[47vw] lg:w-[27vw] border-[1px] shadow-lg',
+    toolbar: 'flex flex-row',
+    title: 'flex-1',
     submitButton:
-      "h-iconbutton w-iconbutton flex items-center justify-center p-0",
-    list: "list flex-grow flex flex-col overflow-auto max-h-[300px] md:max-h-full",
+      'h-iconbutton w-iconbutton flex items-center justify-center p-0',
+    list: 'list flex-grow flex flex-col overflow-auto max-h-[300px] md:max-h-full',
     lineItem:
-      "lineitem transition-all duration-500 rounded py-1 px-2 flex flex-row",
-    lineItemActive: "active bg-sidebar text-white",
+      'lineitem transition-all duration-500 rounded py-1 px-2 flex flex-row',
+    lineItemActive: 'active bg-sidebar text-white',
     lineDetails:
-      "name flex flex-col justify-start justify-center flex-grow cursor-pointer",
-    lineActions: "lineActions flex flex-row justify-center items-center",
+      'name flex flex-col justify-start justify-center flex-grow cursor-pointer',
+    lineActions: 'lineActions flex flex-row justify-center items-center',
     lineButton:
-      "lineButton h-[20px] w-[20px] cursor-pointer hover:text-current",
-    icon: "h-5 w-5 text-gray",
-    description: "block w-full text-xs",
-    name: "p-0 m-0",
+      'lineButton h-[20px] w-[20px] cursor-pointer hover:text-current',
+    icon: 'h-5 w-5 text-gray',
+    description: 'block w-full text-xs',
+    name: 'p-0 m-0',
   };
-
 
   //state hook to capture api response to SkillType array
   const [metadataList, setMetadataList] = useState<Metadata[]>([]);
@@ -76,7 +73,7 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
   // state hook to show succesfull  message
   const [success, setSuccess] = useState<boolean>(false);
   // state hook to show what action the metadata will be done
-  const [metadataAction, setAction] = useState<string>("");
+  const [metadataAction, setAction] = useState<string>('');
   // state hook to show loader on popup
   const [popupLoading, setPopupLoading] = useState<boolean>(false);
 
@@ -138,7 +135,7 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
               <div
                 key={`${type}-line-item-${metadata._id}`}
                 className={`${tailwindClasses.lineItem} ${
-                  activeLine ? tailwindClasses.lineItemActive : ""
+                  activeLine ? tailwindClasses.lineItemActive : ''
                 }`}
               >
                 <div
@@ -151,23 +148,23 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
                     <span>{metadata.name}</span>
                   </p>
                   <span className={tailwindClasses.description}>
-                    {activeLine ? metadata.description : ""}
+                    {activeLine ? metadata.description : ''}
                   </span>
                 </div>
                 {enableRowActions ? (
                   <div className={tailwindClasses.lineActions}>
                     <ButtonComponent
-                      style="icon"
+                      style='icon'
                       icon={<CreateIcon />}
-                      text={["Edit"]}
-                      color={activeLine ? "white" : ""}
+                      text={['Edit']}
+                      color={activeLine ? 'white' : ''}
                       handleClick={[() => editMetadata(metadata)]}
                     />
                     <ButtonComponent
-                      style="icon"
+                      style='icon'
                       icon={<DeleteIcon />}
-                      text={["Remove"]}
-                      color={activeLine ? "white" : ""}
+                      text={['Remove']}
+                      color={activeLine ? 'white' : ''}
                       handleClick={[() => removeMetadata(metadata)]}
                     />
                   </div>
@@ -198,7 +195,7 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
   };
 
   const clickYes = async () => {
-    setAction("delete");
+    setAction('delete');
     if (metadataToDelete) {
       setPopupLoading(true);
       await deleteMetadata(metadataToDelete._id);
@@ -326,7 +323,14 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
 
   return (
     <>
-      <Card sx={{ flexGrow: 1, borderRadius: '10px' }}>
+      <Card
+        sx={{
+          flexGrow: 1,
+          borderRadius: '10px',
+          maxHeight: '700px',
+          overflowY: 'scroll',
+        }}
+      >
         <CardActions sx={{ p: 1, display: 'flex' }}>
           <Typography
             sx={{ fontSize: '14px', fontWeight: 700 }}
@@ -362,16 +366,16 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
         </CardActions>
         <PopupComponent
           title={`${
-            !popupLoading ? "Are you sure you want to delete this entry?:" : ""
+            !popupLoading ? 'Are you sure you want to delete this entry?:' : ''
           }`}
-          entry={!popupLoading ? metadataToDelete?.name : ""}
+          entry={!popupLoading ? metadataToDelete?.name : ''}
           open={displayPopup}
         >
-          <div className="flex justify-center mt-2">
+          <div className='flex justify-center mt-2'>
             {!popupLoading ? (
               <ButtonComponent
-                text={["yes", "no"]}
-                variant="outlined"
+                text={['yes', 'no']}
+                variant='outlined'
                 handleClick={[clickYes, () => setDisplayPopup(false)]}
               />
             ) : (
@@ -381,19 +385,19 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
         </PopupComponent>
         <PopupComponent
           title={`Entry successfully ${
-            metadataAction === "add"
-              ? "added"
-              : metadataAction === "update"
-              ? "updated"
-              : "deleted"
+            metadataAction === 'add'
+              ? 'added'
+              : metadataAction === 'update'
+              ? 'updated'
+              : 'deleted'
           }`}
           open={success}
         >
-          <div className="flex justify-center mt-2">
+          <div className='flex justify-center mt-2'>
             {!popupLoading ? (
               <ButtonComponent
-                text={["yes", "no"]}
-                variant="outlined"
+                text={['yes', 'no']}
+                variant='outlined'
                 handleClick={[clickYes, () => setDisplayPopup(false)]}
               />
             ) : (
@@ -403,18 +407,18 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
         </PopupComponent>
         <PopupComponent
           title={`Entry successfully ${
-            metadataAction === "add"
-              ? "added"
-              : metadataAction === "update"
-              ? "updated"
-              : "deleted"
+            metadataAction === 'add'
+              ? 'added'
+              : metadataAction === 'update'
+              ? 'updated'
+              : 'deleted'
           }`}
           open={success}
         >
           <Box sx={{ mt: 1, display: 'flex', justifyContent: 'center' }}>
             <ButtonComponent
-              text={["confirm"]}
-              variant="outlined"
+              text={['confirm']}
+              variant='outlined'
               handleClick={[() => setSuccess(false)]}
             />
           </Box>
