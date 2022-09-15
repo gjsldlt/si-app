@@ -1,5 +1,6 @@
 import { MenuItem, TextField } from "@mui/material";
 import React, { ChangeEvent, FormEvent, useState } from "react";
+import SidebarTest from "../components/SidebarTest";
 import TextFieldComponent from "../components/TextFieldComponent";
 
 const Test = () => {
@@ -29,19 +30,7 @@ const Test = () => {
   };
   return (
     <div>
-      <TextFieldComponent
-        select={true}
-        label="TEST"
-        value={selectTest}
-        onChange={handleSelect}
-        className="w-48"
-      >
-        {items.map((item, i) => (
-          <MenuItem key={i} value={item}>
-            {item}
-          </MenuItem>
-        ))}
-      </TextFieldComponent>
+      {/* <SidebarTest /> */}
     </div>
   );
 };

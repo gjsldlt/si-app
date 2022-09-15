@@ -22,6 +22,16 @@ export default function SidebarTest() {
     right: false,
   });
 
+  const [smallDevice, setSmall] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    if (window.innerWidth < 900) {
+      setSmall(true);
+    } else {
+      setSmall(false);
+    }
+  }, []);
+
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -42,13 +52,17 @@ export default function SidebarTest() {
 
   const list = (anchor: Anchor) => (
     <Box
-      sx={{ width: state[anchor] ? 250 : 50, transition: 'all 0.3s ease' }}
+      sx={{ width: state[anchor] ? 250 : 55, transition: 'all 0.3s ease' }}
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem key={text} disablePadding>
+      <List className='flex flex-col items-center justify-center'>
+        {['Inbox', 'Starred', 'Send mail', 'Drafts'].map((text, index) => (
+          <ListItem
+            key={text}
+            disablePadding
+            className='hover:bg-gray transition-all duration-150'
+          >
             <ListItemButton>
               <ListItemIcon>
                 {index % 2 === 0 ? (
@@ -57,17 +71,27 @@ export default function SidebarTest() {
                   <MailIcon sx={{ color: 'white' }} />
                 )}
               </ListItemIcon>
-              <div className={`${state[anchor] ? 'block' : 'hidden'} `}>
+              {/* <div className={`${state[anchor] ? 'block' : 'hidden'} `}>
                {text}
-              </div>
+              </div> */}
+              <ListItemText
+                primary={text}
+                className={`whitespace-nowrap ${
+                  state[anchor] ? 'opacity-100' : 'opacity-0'
+                } transition-all duration-150`}
+              />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
       <Divider />
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
+        {['All', 'Trash', 'Spam'].map((text, index) => (
+          <ListItem
+            key={text}
+            disablePadding
+            className='hover:bg-gray transition-all duration-150'
+          >
             <ListItemButton>
               <ListItemIcon>
                 {index % 2 === 0 ? (
@@ -76,9 +100,15 @@ export default function SidebarTest() {
                   <MailIcon sx={{ color: 'white' }} />
                 )}
               </ListItemIcon>
-              <div className={`${state[anchor] ? 'block' : 'hidden'} `}>
+              {/* <div className={`${state[anchor] ? 'block' : 'hidden'} `}>
                 {text}
-              </div>
+              </div> */}
+              <ListItemText
+                primary={text}
+                className={`whitespace-nowrap ${
+                  state[anchor] ? 'opacity-100' : 'opacity-0'
+                } transition-all duration-150`}
+              />
             </ListItemButton>
           </ListItem>
         ))}
@@ -90,10 +120,21 @@ export default function SidebarTest() {
     <div>
       {(['left'] as const).map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+          <Button
+            onClick={toggleDrawer(anchor, true)}
+            sx={{ marginTop: '25px', zIndex: 3, marginLeft: '50px' }}
+          >
+            {anchor}
+          </Button>
           <Drawer
-            variant='permanent'
-            PaperProps={{ sx: { backgroundColor: 'black', color: 'white' } }}
+            variant={smallDevice ? 'temporary' : 'permanent'}
+            PaperProps={{
+              sx: {
+                backgroundColor: 'black',
+                color: 'white',
+                overflow: 'hidden',
+              },
+            }}
             anchor={anchor}
             open={state[anchor]}
             onClose={toggleDrawer(anchor, false)}
