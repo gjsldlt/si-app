@@ -268,8 +268,8 @@ export default function MiniDrawer() {
           </div>
         </Drawer>
         <div
-          className={`absolute w-full h-full ${
-            open ? 'opacity-50 z-30' : 'opacity-0 z-0'
+          className={`absolute w-full ${
+            open ? 'opacity-50 z-30 h-[150%]' : 'opacity-0 z-0 h-full'
           } bg-black transition-all duration-150`}
           onClick={handleDrawerClose}
         ></div>
