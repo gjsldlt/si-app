@@ -31,8 +31,8 @@ export default function Layout({ children }: LayoutProps) {
   console.log('layout render ');
   return (
     <div>
-      <SidebarComponent />
-      {/* <SidebarTest/> */}
+      {/* <SidebarComponent /> */}
+      <SidebarTest />
       <div className='md:pl-[65px] absolute h-[100vh] pt-[64px] w-[100vw] top-0 flex flex-col'>
         {children}
       </div>

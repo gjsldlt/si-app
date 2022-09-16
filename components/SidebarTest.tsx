@@ -10,16 +10,22 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { styled } from '@mui/system';
 import {
   ChevronLeftIcon,
+  ChevronRightIcon,
   DatabaseIcon,
   HomeIcon,
   MenuIcon,
   UserGroupIcon,
 } from '@heroicons/react/solid';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { useRouter } from 'next/router';
-import { IconButton } from '@mui/material';
+import { Avatar, Card, CardHeader, IconButton, Tooltip } from '@mui/material';
+import ButtonComponent from './ButtonComponent';
+import { AccountCircleOutlined } from '@mui/icons-material';
+import { clearUserSession } from '../services/user.service';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
@@ -49,6 +55,11 @@ export default function SidebarTest() {
     }
   };
 
+  const handleLogout = () => {
+    clearUserSession();
+    router.push('/login');
+  };
+
   React.useEffect(() => {
     updateSidebar();
     window.addEventListener('resize', updateSidebar);
@@ -74,25 +85,31 @@ export default function SidebarTest() {
 
   const list = (anchor: Anchor) => (
     <Box sx={{ width: state[anchor] ? 250 : 55, transition: 'all 0.3s ease' }}>
-      <div className='flex p-3 items-center justify-center'>
+      <div className='flex p-3 h-20 items-center justify-center'>
+        <IconButton
+          onClick={toggleDrawer(anchor, false)}
+          className={`${state['right'] ? 'block' : 'hidden'} absolute left-0`}
+        >
+          <ChevronRightIcon className='text-gray hover:text-white w-6 h-6' />
+        </IconButton>
         <img
           src='/assets/images/deloitte-logo.png'
           alt='DCPDC Logo'
-          className={`${state[anchor] ? 'block' : 'hidden'} w-44`}
+          className={`${!state[anchor] && 'hidden'} w-44`}
         />
 
         <IconButton
           onClick={toggleDrawer(anchor, false)}
-          className={`${state[anchor] ? 'block' : 'hidden'} absolute right-0`}
+          className={`${state['left'] ? 'block' : 'hidden'} absolute right-0`}
         >
-          <ChevronLeftIcon className='text-white w-6 h-6' />
+          <ChevronLeftIcon className='text-gray hover:text-white w-6 h-6' />
         </IconButton>
 
         <IconButton
           onClick={toggleDrawer(anchor, true)}
           className={state[anchor] ? 'hidden' : 'block'}
         >
-          <MenuIcon className='text-white w-6 h-6' />
+          <MenuIcon className='text-gray hover:text-white w-6 h-6' />
         </IconButton>
       </div>
       <Divider />
@@ -101,17 +118,19 @@ export default function SidebarTest() {
           <ListItem
             key={index}
             disablePadding
-            className='hover:bg-gray transition-all duration-150'
+            className='hover:bg-[#323335] transition-all duration-150'
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
           >
             <ListItemButton
-              className={`${router.pathname === item.link && '!bg-main'}`}
+              className={`${router.pathname === item.link && '!bg-main'} group`}
               onClick={() => router.push(item.link)}
             >
               <ListItemIcon
                 className={`${
-                  router.pathname === item.link ? 'text-black' : 'text-white'
+                  router.pathname === item.link
+                    ? 'text-black'
+                    : 'text-gray group-hover:text-white'
                 }  w-6 h-6`}
               >
                 {item.icon}
@@ -122,7 +141,9 @@ export default function SidebarTest() {
               <ListItemText
                 primary={item.name}
                 className={`whitespace-nowrap ${
-                  router.pathname === item.link ? 'text-black' : 'text-white'
+                  router.pathname === item.link
+                    ? 'text-black'
+                    : 'text-gray group-hover:text-white'
                 } ${
                   state[anchor] ? 'opacity-100' : 'opacity-0'
                 } transition-all duration-150`}
@@ -132,12 +153,74 @@ export default function SidebarTest() {
         ))}
       </List>
       <Divider />
+      <div className='text-white flex  flex-col w-full absolute bottom-0 mb-16 space-y-5'>
+        {state[anchor] && (
+          <p className='text-gray uppercase text-xs ml-4'>Profile</p>
+        )}
+        {/* <Card sx={{ maxWidth: 345 }} className='bg-transparent shadow-none flex justify-start items-center border border-white'>
+          <CardHeader
+            avatar={
+            
+                <Avatar
+
+                  aria-label='recipe'
+                >
+                  <AccountCircleOutlinedIcon />
+                </Avatar>
+             
+            }
+            title={'Juan Dela Cruz'}
+            subheader={'Front-End Developer'}
+            className='whitespace-nowrap'
+          />
+        </Card>  */}
+        <Box
+          className={`flex flex-row items-center space-x-5 whitespace-nowrap ${
+            state[anchor] ? 'ml-4' : 'justify-center'
+          }`}
+        >
+          <Tooltip
+            disableHoverListener={state[anchor] ? true : false}
+            placement={state[anchor] ? undefined : 'right'}
+            title={'Juan Dela Cruz'}
+          >
+            <Avatar>
+              <AccountCircleOutlined />
+            </Avatar>
+          </Tooltip>
+
+          {state[anchor] && (
+            <div>
+              <div className='text-sm'>Juan Dela Cruz</div>
+              <div className='text-xs text-gray'>Front-End Developer</div>
+            </div>
+          )}
+        </Box>
+        <div className={`w-full flex justify-center items-center`}>
+          {/* <ButtonComponent
+            text={['Logout']}
+            handleClick={[() => console.log('logout')]}
+            icon={<LogoutIcon />}
+            style={state[anchor] ? '' : 'icon'}
+            color='white'
+            placement={'right'}
+          /> */}
+          <IconButton className='space-x-2 group' onClick={handleLogout}>
+            <LogoutIcon className='text-gray group-hover:text-white' />
+            {state[anchor] && (
+              <span className='text-gray text-lg group-hover:text-white'>
+                Logout
+              </span>
+            )}
+          </IconButton>
+        </div>
+      </div>
       {/* <List>
         {['All', 'Trash', 'Spam'].map((text, index) => (
           <ListItem
             key={text}
             disablePadding
-            className='hover:bg-gray transition-all duration-150'
+            className='hover:bg-[#323335] transition-all duration-150'
           >
             <ListItemButton>
               <ListItemIcon>
@@ -162,16 +245,20 @@ export default function SidebarTest() {
 
   return (
     <div>
-      {(['left'] as const).map((anchor) => (
+      {(['left', 'right'] as const).map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button
-            onClick={toggleDrawer(anchor, true)}
-            sx={{ marginTop: '25px', zIndex: 3, marginLeft: '50px' }}
-          >
-            {anchor}
-          </Button>
+          {anchor === 'right' && (
+            <Button
+              onClick={toggleDrawer(anchor, true)}
+              sx={{ marginTop: '25px', zIndex: 3, marginLeft: '50px' }}
+            >
+              {anchor}
+            </Button>
+          )}
           <Drawer
-            variant={smallDevice ? 'temporary' : 'permanent'}
+            variant={
+              smallDevice || anchor === 'right' ? 'temporary' : 'permanent'
+            }
             PaperProps={{
               sx: {
                 backgroundColor: 'black',
