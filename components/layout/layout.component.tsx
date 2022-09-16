@@ -33,7 +33,9 @@ export default function Layout({ children }: LayoutProps) {
     <div>
       <SidebarComponent />
       {/* <SidebarTest/> */}
-      <div className="md:pl-[65px] absolute h-[100vh] pt-[64px] w-[100vw] top-0 flex flex-col">{children}</div>
+      <div className='md:pl-[65px] absolute h-[100vh] pt-[64px] w-[100vw] top-0 flex flex-col'>
+        {children}
+      </div>
     </div>
     // <div className={tailwindClasses.layout}>
     //   <HeaderBar
