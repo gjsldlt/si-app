@@ -135,9 +135,6 @@ export default function SidebarTest() {
               >
                 {item.icon}
               </ListItemIcon>
-              {/* <div className={`${state[anchor] ? 'block' : 'hidden'} `}>
-               {text}
-              </div> */}
               <ListItemText
                 primary={item.name}
                 className={`whitespace-nowrap ${
@@ -157,23 +154,6 @@ export default function SidebarTest() {
         {state[anchor] && (
           <p className='text-gray uppercase text-xs ml-4'>Profile</p>
         )}
-        {/* <Card sx={{ maxWidth: 345 }} className='bg-transparent shadow-none flex justify-start items-center border border-white'>
-          <CardHeader
-            avatar={
-            
-                <Avatar
-
-                  aria-label='recipe'
-                >
-                  <AccountCircleOutlinedIcon />
-                </Avatar>
-             
-            }
-            title={'Juan Dela Cruz'}
-            subheader={'Front-End Developer'}
-            className='whitespace-nowrap'
-          />
-        </Card>  */}
         <Box
           className={`flex flex-row items-center space-x-5 whitespace-nowrap ${
             state[anchor] ? 'ml-4' : 'justify-center'
@@ -188,7 +168,6 @@ export default function SidebarTest() {
               <AccountCircleOutlined />
             </Avatar>
           </Tooltip>
-
           {state[anchor] && (
             <div>
               <div className='text-sm'>Juan Dela Cruz</div>
@@ -197,14 +176,6 @@ export default function SidebarTest() {
           )}
         </Box>
         <div className={`w-full flex justify-center items-center`}>
-          {/* <ButtonComponent
-            text={['Logout']}
-            handleClick={[() => console.log('logout')]}
-            icon={<LogoutIcon />}
-            style={state[anchor] ? '' : 'icon'}
-            color='white'
-            placement={'right'}
-          /> */}
           <IconButton className='space-x-2 group' onClick={handleLogout}>
             <LogoutIcon className='text-gray group-hover:text-white' />
             {state[anchor] && (
@@ -215,31 +186,6 @@ export default function SidebarTest() {
           </IconButton>
         </div>
       </div>
-      {/* <List>
-        {['All', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem
-            key={text}
-            disablePadding
-            className='hover:bg-[#323335] transition-all duration-150'
-          >
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? (
-                  <InboxIcon sx={{ color: 'white' }} />
-                ) : (
-                  <MailIcon sx={{ color: 'white' }} />
-                )}
-              </ListItemIcon>
-              <ListItemText
-                primary={text}
-                className={`whitespace-nowrap ${
-                  state[anchor] ? 'opacity-100' : 'opacity-0'
-                } transition-all duration-150`}
-              />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List> */}
     </Box>
   );
 
