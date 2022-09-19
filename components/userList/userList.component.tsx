@@ -19,14 +19,28 @@ import {
   registerEmployee,
   updateManager,
 } from "../../services/user.service";
-import { UserType, EmployeeType } from "../../types/MasterTypes.types";
+import {
+  UserType,
+  ManagerType,
+  Metadata,
+  EmployeeType,
+} from "../../types/MasterTypes.types";
+import { getMetadata } from "../../services/metadata.service";
 import UserForm from "./userForm.component";
 import { USER_ROLES } from "../../helpers/constants.helper";
 import PopupComponent from "../PopupComponent";
 import ButtonComponent from "../ButtonComponent";
 import { CircularProgress } from "@mui/material";
-
-
+import Box from '@mui/material/Box';
+import FormLabel from '@mui/material/FormLabel';
+import FormControl from '@mui/material/FormControl';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormHelperText from '@mui/material/FormHelperText';
+import Checkbox from '@mui/material/Checkbox';
+import InputLabel from '@mui/material/InputLabel'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
 export default function UserList({
   role,
   activeUser,
@@ -48,7 +62,9 @@ export default function UserList({
     email: "email block w-full text-xs italic text-[#9999A1]",
     name: "name p-0 m-0 font-bold text-sm",
     addCloseIcon: "addCloseIcon w-[30px] h-[30px] text-white p-[5px] bg-[#0E2040] rounded-[10px]",
-    editDeleteIcon: "editDeleteIcon w-[30px] h-[30px] p-[7px] text-[#1C1B1F] bg-white rounded-[25px] drop-shadow-[0_1px_1px_rgba(0,0,0,0.25)]"
+    editDeleteIcon: "editDeleteIcon w-[30px] h-[30px] p-[7px] text-[#1C1B1F] bg-white rounded-[25px] drop-shadow-[0_1px_1px_rgba(0,0,0,0.25)]",
+    filter: "absolute ml-[-100px] p-[25px] w-max rounded-md z-10 bg-white",
+    formItemFourth: "",
   };
   const [userToEdit, setUserToEdit] = useState<UserType>();
   const [userList, setUserList] = useState<UserType[]>([]);
@@ -60,11 +76,39 @@ export default function UserList({
   const [userToBeRegistered, setUserToRegister] = useState<
     UserType | undefined
   >();
+  const [firstName, setFirstName] = useState<string>(
+    userToEdit ? userToEdit.firstName : ""
+  );
+  const [lastName, setLastName] = useState<string>(
+    userToEdit ? userToEdit.lastName : ""
+  );
+  const [email, setEmail] = useState<string>(
+    userToEdit ? userToEdit.email : ""
+  );
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [managerId, setManagerId] = useState<string>("");
+  const [managerList, setManagerList] = useState<ManagerType[]>([]);
+  const [capabilityList, setCapabilityList] = useState<Metadata[]>([]);
+  const [skillList, setSkillList] = useState<Metadata[]>([]);
+  const [activeSkill, setActiveSkill] = useState<{
+    skill?: Metadata;
+    rate: string;
+    yearsExperience: string;
+    description: string;
+  }>({
+    skill: undefined,
+    rate: "",
+    yearsExperience: "",
+    description: "",
+  });
 
   // state hook to show succesfull  message
   const [success, setSuccess] = useState<boolean>(false);
   // state hook to show loader on popup
   const [popupLoading, setPopupLoading] = useState<boolean>(false);
+  const [toFilter, setToFilter] = useState<boolean>(false)
+  const [employeeData, setEmployeeData] = useState<EmployeeType>();
 
   const handleOpen = (user: UserType) => {
     setUserToDelete(user);
@@ -245,9 +289,120 @@ export default function UserList({
     }
   };
 
+  const onInputChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    switch (e.target.name) {
+      case "firstName":
+        setFirstName(e.target.value);
+        break;
+      case "lastName":
+        setLastName(e.target.value);
+        break;
+      case "email":
+        setEmail(e.target.value);
+        break;
+      case "password":
+        setPassword(e.target.value);
+        break;
+      case "confirmPassword":
+        setConfirmPassword(e.target.value);
+        break;
+      default:
+        break;
+    }
+    if (role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF) {
+      let tempEmp = employeeData;
+      switch (e.target.name) {
+        case "firstName":
+          tempEmp?.firstName != e.target.value;
+          break;
+        case "lastName":
+          tempEmp?.lastName != e.target.value;
+          break;
+        case "email":
+          tempEmp?.email != e.target.value;
+          break;
+        case "password":
+          tempEmp?.password != e.target.value;
+          break;
+        case "confirmPassword":
+          setConfirmPassword(e.target.value);
+          break;
+        case "managerId":
+          let manager = managerList.find((item) => item._id === e.target.value);
+          setManagerId(e.target.value);
+          tempEmp?.manager != manager;
+          break;
+        case "primarySkill":
+          const primarySkill = skillList.find(
+            (item) => item._id === e.target.value
+          );
+          tempEmp?.primarySkill != primarySkill;
+          break;
+        case "secondarySkill":
+          const secondarySkill = skillList.find(
+            (item) => item._id === e.target.value
+          );
+          tempEmp?.secondarySkill != secondarySkill;
+          break;
+        case "capability":
+          const capability = capabilityList.find(
+            (item) => item._id === e.target.value
+          );
+          tempEmp?.capability != capability;
+          break;
+      }
+      setEmployeeData(tempEmp);
+    }
+  };
+
+  const filter = async () => {
+    if (toFilter === false) {
+      setToFilter(true)
+    } else {
+      setToFilter(false)
+    }
+  }
+
+  const renderManagerListForNewEmployee = async () => {
+    setLoadState(true);
+    setManagerList(await getAllManagers());
+    setSkillList(await getMetadata("skill"));
+    setCapabilityList(await getMetadata("capability"));
+    setLoadState(false);
+  };
+
+  const renderEmployeeData = async () => {
+    setLoadState(true);
+    setManagerList(await getAllManagers());
+    setEmployeeData(
+      await getEmployeeByUserId(
+        userToEdit ? (userToEdit?._id ? userToEdit?._id : "") : ""
+      )
+    );
+    setSkillList(await getMetadata("skill"));
+    setCapabilityList(await getMetadata("capability"));
+    console.log(employeeData);
+    setLoadState(false);
+  };
+
   useEffect(() => {
     renderData();
   }, [role, parentUser, addState]);
+
+  useEffect(() => {
+    if (role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF) {
+      if (userToEdit) {
+        renderEmployeeData();
+      } else {
+        renderManagerListForNewEmployee();
+      }
+    }
+  }, [role, parentUser, activeSkill]);
 
   return (
     <div className={tailwindClasses.container}>
@@ -255,8 +410,8 @@ export default function UserList({
         title={`${!popupLoading ? "Are you sure you want to delete this user?:" : ""
           }`}
         entry={`${!popupLoading
-            ? `${userToDelete?.firstName} ${userToDelete?.lastName}`
-            : ""
+          ? `${userToDelete?.firstName} ${userToDelete?.lastName}`
+          : ""
           }`}
         open={popUp}
       >
@@ -308,9 +463,101 @@ export default function UserList({
               <IconButton>
                 <SearchIcon />
               </IconButton>
-              <IconButton>
+              <IconButton onClick={filter}>
                 <TuneIcon />
               </IconButton>
+              {toFilter ?
+                (
+                  <div className={tailwindClasses.filter}>
+                    <Box>
+                      <FormControl>
+                        <FormLabel>Filter</FormLabel>
+                        <FormGroup>
+                          <FormControlLabel
+                            control={
+                              <Checkbox />
+                            }
+                            label="First Name"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox />
+                            }
+                            label="Last Name"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox />
+                            }
+                            label="Email"
+                          />
+                        </FormGroup>
+                        {role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF
+                          ? (<div><div className={tailwindClasses.formItemFourth}>
+                            <FormControl fullWidth>
+                              <InputLabel htmlFor="grid-capability-name">Capability</InputLabel>
+                              <Select
+                                required
+                                labelId="grid-capability-name"
+                                id="grid-capability-name"
+                                name="capability"
+                                value={employeeData ? employeeData?.capability?._id : ""}
+                                label="Capability"
+                                onChange={onInputChange}
+                              >
+                                {capabilityList.map((item, index) => (
+                                  <MenuItem key={`capability-option-${index}`} value={item._id!}>
+                                    {`${item.name}`}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            </FormControl>
+                          </div>
+                            <div className={tailwindClasses.formItemFourth}>
+                              <FormControl fullWidth>
+                                <InputLabel htmlFor="grid-primarySkill-name">Primary Skill</InputLabel>
+                                <Select
+                                  labelId="grid-primarySkill-name"
+                                  id="grid-primarySkill-name"
+                                  name="primarySkill"
+                                  value={employeeData ? employeeData?.primarySkill?._id : ""}
+                                  label="Primary Skill"
+                                  onChange={onInputChange}
+                                >
+                                  {skillList.map((item, index) => (
+                                    <MenuItem key={`skill-option-${index}`} value={item._id!}>
+                                      {`${item.name}`}
+                                    </MenuItem>
+                                  ))}
+                                </Select>
+                              </FormControl>
+                            </div>
+                            <div className={tailwindClasses.formItemFourth}>
+                              <FormControl fullWidth>
+                                <InputLabel htmlFor="grid-secondarySkill-name">Secondary Skill</InputLabel>
+                                <Select
+                                  labelId="grid-secondarySkill-name"
+                                  id="grid-secondarySkill-name"
+                                  name="secondarySkill"
+                                  value={employeeData ? employeeData?.secondarySkill?._id : ""}
+                                  label="Secondary Skill"
+                                  onChange={onInputChange}
+                                >
+                                  {skillList.map((item, index) => (
+                                    <MenuItem key={`skill-option-${index}`} value={item._id!}>
+                                      {`${item.name}`}
+                                    </MenuItem>
+                                  ))}
+                                </Select>
+                              </FormControl>
+                            </div></div>)
+                          : null}
+                      </FormControl>
+                    </Box>
+                  </div>
+                ) : (
+                  null
+                )}
             </div>
           )}
 

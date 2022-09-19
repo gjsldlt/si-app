@@ -70,6 +70,7 @@ export default function UserList({
   const [capabilityList, setCapabilityList] = useState<Metadata[]>([]);
   const tailwindClasses = {
     form: "flex flex-1 flex-grow justify-start items-start flex-wrap w-full content-start overflow-auto pb-2",
+    formItemHalf: "formItemThird w-1/2 px-3 pt-1 md:pt-1 grow-0 my-[5px]",
     formItemThird: "formItemThird w-1/3 px-3 pt-1 md:pt-1 grow-0 my-[5px]",
     formItemFourth: "formItemFourth w-1/4 px-3 pt-1 md:pt-1 grow-0 my-[5px]",
     formItem: "formItem w-full px-3 pt-1 grow-0 my-[5px]",
@@ -97,13 +98,17 @@ export default function UserList({
       updateUser(newUser, managerId);
     } else {
       // submit to create
-      const newUser = {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: password,
-      };
-      registerUser(newUser, managerId, employeeData);
+      if (password !== confirmPassword) {
+        alert("Password does not match! Try again.")
+      } else {
+        const newUser = {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password,
+        };
+        registerUser(newUser, managerId, employeeData);
+      }
     }
   };
 
@@ -341,7 +346,9 @@ export default function UserList({
 
   return (
     <form className={tailwindClasses.form} onSubmit={onSubmitForm}>
-      <div className={tailwindClasses.formItemThird}>
+      <div className={role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF
+        ? tailwindClasses.formItemThird
+        : tailwindClasses.formItemHalf}>
         <Box
           sx={{
             width: '100%',
@@ -361,7 +368,9 @@ export default function UserList({
           />
         </Box>
       </div>
-      <div className={tailwindClasses.formItemThird}>
+      <div className={role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF
+        ? tailwindClasses.formItemThird
+        : tailwindClasses.formItemHalf}>
         <Box
           sx={{
             width: '100%',
@@ -381,7 +390,9 @@ export default function UserList({
           />
         </Box>
       </div>
-      <div className={tailwindClasses.formItemThird}>
+      <div className={role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF
+        ? tailwindClasses.formItemThird
+        : tailwindClasses.formItem}>
         <Box
           sx={{
             width: '100%',
@@ -406,7 +417,9 @@ export default function UserList({
         : null}
       {userToEdit === undefined && (
         <>
-          <div className={tailwindClasses.formItemThird}>
+          <div className={role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF
+            ? tailwindClasses.formItemThird
+            : tailwindClasses.formItemHalf}>
             <Box
               sx={{
                 width: '100%',
@@ -426,7 +439,9 @@ export default function UserList({
               />
             </Box>
           </div>
-          <div className={tailwindClasses.formItemThird}>
+          <div className={role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF
+            ? tailwindClasses.formItemThird
+            : tailwindClasses.formItemHalf}>
             <Box
               sx={{
                 width: '100%',

@@ -19,7 +19,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 export default function SkillManager({ employee }: PageProps) {
   const tailwindClasses = {
     container: "container rounded w-full m-2 p-2 flex flex-row bg-[#FAF9F9]",
-    list: "h-full w-2/3 flex flex-wrap gap-1 pt-5 pl-3",
+    list: "h-[275px] w-2/3 flex flex-wrap gap-1 pt-5 pl-3 overflow-auto",
     formRow: "flex flex-col pt-1 m-[5px]",
     form: "h-full pr-2 w-1/3",
     inputLabel: "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mr-1",
