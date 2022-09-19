@@ -41,6 +41,8 @@ import Checkbox from '@mui/material/Checkbox';
 import InputLabel from '@mui/material/InputLabel'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
+import RSelect from 'react-select';
+import makeAnimated from 'react-select/animated';
 export default function UserList({
   role,
   activeUser,
@@ -109,6 +111,7 @@ export default function UserList({
   const [popupLoading, setPopupLoading] = useState<boolean>(false);
   const [toFilter, setToFilter] = useState<boolean>(false)
   const [employeeData, setEmployeeData] = useState<EmployeeType>();
+  const [employeesData, setEmployeesData] = useState<EmployeeType[]>([]);
 
   const handleOpen = (user: UserType) => {
     setUserToDelete(user);
@@ -390,6 +393,8 @@ export default function UserList({
     setLoadState(false);
   };
 
+  const animatedComponents = makeAnimated();
+
   useEffect(() => {
     renderData();
   }, [role, parentUser, addState]);
@@ -406,6 +411,7 @@ export default function UserList({
 
   return (
     <div className={tailwindClasses.container}>
+      {console.log(employeesData)}
       <PopupComponent
         title={`${!popupLoading ? "Are you sure you want to delete this user?:" : ""
           }`}
@@ -496,6 +502,20 @@ export default function UserList({
                           ? (<div><div className={tailwindClasses.formItemFourth}>
                             <FormControl fullWidth>
                               <InputLabel htmlFor="grid-capability-name">Capability</InputLabel>
+                              {/* {capabilityList.map((item, index) => (
+                                <Select
+                                  required
+                                  labelId="grid-capability-name"
+                                  id="grid-capability-name"ß
+                                  name="capability"
+                                  value={item.name}
+                                  label="Capability"
+                                  onChange={onInputßChange}
+                                  multiple
+                                >
+                                  {item.name}
+                                </Select>
+                              ))} */}
                               <Select
                                 required
                                 labelId="grid-capability-name"
