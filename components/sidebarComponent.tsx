@@ -20,7 +20,14 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { DatabaseIcon, HomeIcon, UserGroupIcon } from '@heroicons/react/solid';
-import { Avatar, Button, Card, CardHeader, Tooltip } from '@mui/material';
+import {
+  // AppBar,
+  Avatar,
+  Button,
+  Card,
+  CardHeader,
+  Tooltip,
+} from '@mui/material';
 import { clearUserSession } from '../services/user.service';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
@@ -136,25 +143,51 @@ export default function MiniDrawer() {
   return (
     <Box sx={{ display: 'flex', height: '64px' }}>
       <CssBaseline />
-      <AppBar position='fixed' open={open}>
-        <Toolbar>
-          <IconButton
-            color='inherit'
-            aria-label='open drawer'
-            onClick={handleDrawerOpen}
-            edge='start'
-            sx={{
-              marginRight: 5,
-              ...(open && { display: 'none' }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant='h6' noWrap component='div'>
-            iFED
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <div className='absolute w-full'>
+        <AppBar position='relative' open={open} className='z-30'>
+          <Toolbar>
+            <IconButton
+              color='inherit'
+              aria-label='open drawer'
+              onClick={handleDrawerOpen}
+              edge='start'
+              sx={{
+                marginRight: 5,
+                ...(open && { display: 'none' }),
+              }}
+              className='visible md:invisible'
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant='h6' noWrap component='div'>
+              iFED
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <AppBar
+          position='relative'
+          open={open}
+          className='z-30 bg-blue-900 pl-20 py-10'
+        >
+          <Toolbar>
+            <Typography
+              variant='h6'
+              noWrap
+              component='div'
+              sx={{
+                color: 'white',
+                fontWeight: 'bold',
+                textTransform: 'uppercase',
+                fontSize:'30px'
+              }}
+            >
+              {router.pathname === '/'
+                ? 'dashboard'
+                : router.pathname.split('/')}
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </div>
       <Drawer variant='permanent' open={open}>
         <DrawerHeader className='relative justify-center'>
           <img
@@ -162,6 +195,14 @@ export default function MiniDrawer() {
             alt='DCPDC Logo'
             className={`${!open && 'hidden'} w-44`}
           />
+          <IconButton
+            onClick={handleDrawerOpen}
+            className={`${
+              open && 'hidden'
+            } text-gray hover:text-white absolute`}
+          >
+            <MenuIcon />
+          </IconButton>
           <IconButton
             onClick={handleDrawerClose}
             className={`${
@@ -171,6 +212,7 @@ export default function MiniDrawer() {
             <ChevronLeftIcon />
           </IconButton>
         </DrawerHeader>
+
         <Divider />
         <List>
           {menuList.map((item, i) => (
@@ -259,6 +301,12 @@ export default function MiniDrawer() {
           </div>
         </div>
       </Drawer>
+      <div
+        className={`${
+          open ? 'absolute z-30 opacity-50' : 'opacity-0'
+        } bg-black  w-full h-full top-0 overflow-hidden transition-all duration-500`}
+        onClick={handleDrawerClose}
+      ></div>
       <Box component='main' sx={{ flexGrow: 1, p: 0 }}>
         {/* <DrawerHeader /> */}
       </Box>
