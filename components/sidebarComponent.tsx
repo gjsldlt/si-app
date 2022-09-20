@@ -1,30 +1,30 @@
-import * as React from "react";
-import { useRouter } from "next/router";
-import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import MuiDrawer from "@mui/material/Drawer";
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import { DatabaseIcon, HomeIcon, UserGroupIcon } from "@heroicons/react/solid";
-import { Avatar, Button, Card, CardHeader, Tooltip } from "@mui/material";
-import { clearUserSession } from "../services/user.service";
-import LogoutIcon from "@mui/icons-material/Logout";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import ButtonComponent from "./ButtonComponent";
+import * as React from 'react';
+import { useRouter } from 'next/router';
+import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import MuiDrawer from '@mui/material/Drawer';
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import CssBaseline from '@mui/material/CssBaseline';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
+import { DatabaseIcon, HomeIcon, UserGroupIcon } from '@heroicons/react/solid';
+import { Avatar, Button, Card, CardHeader, Tooltip } from '@mui/material';
+import { clearUserSession } from '../services/user.service';
+import LogoutIcon from '@mui/icons-material/Logout';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import ButtonComponent from './ButtonComponent';
 
 const drawerWidth = 240;
 
@@ -43,7 +43,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
+  width: `0px`,
   [theme.breakpoints.up('sm')]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
@@ -98,9 +98,9 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const menuList = [
-  { name: "Home", icon: <HomeIcon />, link: "/" },
-  { name: "Employees", icon: <UserGroupIcon />, link: "/users" },
-  { name: "Metadata", icon: <DatabaseIcon />, link: "/metadatas" },
+  { name: 'Home', icon: <HomeIcon />, link: '/' },
+  { name: 'Employees', icon: <UserGroupIcon />, link: '/users' },
+  { name: 'Metadata', icon: <DatabaseIcon />, link: '/metadatas' },
 ];
 
 export default function MiniDrawer() {
@@ -164,8 +164,9 @@ export default function MiniDrawer() {
           />
           <IconButton
             onClick={handleDrawerClose}
-            className={`${!open && 'hidden'
-              } text-gray hover:text-white absolute top-2 right-0`}
+            className={`${
+              !open && 'hidden'
+            } text-gray hover:text-white absolute top-2 right-0`}
           >
             <ChevronLeftIcon />
           </IconButton>
@@ -187,14 +188,16 @@ export default function MiniDrawer() {
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
-                className={`${router.pathname === item.link && "!bg-main text-black"
-                  } group`}
+                className={`${
+                  router.pathname === item.link && '!bg-main text-black'
+                } group`}
               >
                 <ListItemIcon
-                  className={`${router.pathname === item.link && "text-black"
-                    } text-gray ${router.pathname !== item.link && "group-hover:text-white"
-                    } w-7`}
-
+                  className={`${
+                    router.pathname === item.link && 'text-black'
+                  } text-gray ${
+                    router.pathname !== item.link && 'group-hover:text-white'
+                  } w-7`}
                   sx={{
                     minWidth: 0,
                     mr: open ? 3 : 'auto',
@@ -204,9 +207,11 @@ export default function MiniDrawer() {
                   {item.icon}
                 </ListItemIcon>
                 <ListItemText
-                  className={`${router.pathname === item.link && "text-black"
-                    } text-gray ${router.pathname !== item.link && "group-hover:text-white"
-                    } `}
+                  className={`${
+                    router.pathname === item.link && 'text-black'
+                  } text-gray ${
+                    router.pathname !== item.link && 'group-hover:text-white'
+                  } `}
                   primary={item.name}
                   sx={{ opacity: open ? 1 : 0 }}
                 />
@@ -214,38 +219,42 @@ export default function MiniDrawer() {
             </ListItem>
           ))}
         </List>
-        <div className="text-white flex flex-col mt-auto mb-4 lg:mb-12">
+        <div className='text-white flex flex-col mt-auto mb-4 lg:mb-12'>
           {open && (
-            <p className="text-[#4F4F51] uppercase text-xs ml-4">Profile</p>
+            <p className='text-[#4F4F51] uppercase text-xs ml-4'>Profile</p>
           )}
-          <Card sx={{ maxWidth: 345 }} className="bg-transparent shadow-none">
+          <Card sx={{ maxWidth: 345 }} className='bg-transparent shadow-none'>
             <CardHeader
               avatar={
                 <Tooltip
                   disableHoverListener={open ? true : false}
-                  placement={open ? undefined : "right"}
-                  title={"Juan Dela Cruz"}
+                  placement={open ? undefined : 'right'}
+                  title={'Juan Dela Cruz'}
                 >
                   <Avatar
-                    className={`-mr-2 ${!open && "-ml-2 md:-ml-1"}`}
-                    aria-label="recipe"
+                    className={`-mr-2 ${!open && '-ml-2 md:-ml-1'}`}
+                    aria-label='recipe'
                   >
                     <AccountCircleOutlinedIcon />
                   </Avatar>
                 </Tooltip>
               }
-              title={open ? "Juan Dela Cruz" : ""}
-              subheader={open ? "Front-end Developer" : ""}
+              title={open ? 'Juan Dela Cruz' : ''}
+              subheader={open ? 'Front-end Developer' : ''}
             />
           </Card>
-          <div className={`self-center mt-0 lg:mt-4 w-full flex justify-center ${!open && 'pt-[2px]'}`}>
+          <div
+            className={`self-center mt-0 lg:mt-4 w-full flex justify-center ${
+              !open && 'pt-[2px]'
+            }`}
+          >
             <ButtonComponent
-              text={["Logout"]}
+              text={['Logout']}
               handleClick={[handleLogout]}
               icon={<LogoutIcon />}
-              style={open ? "" : "icon"}
-              color="white"
-              placement={"right"}
+              style={open ? '' : 'icon'}
+              color='white'
+              placement={'right'}
             />
           </div>
         </div>

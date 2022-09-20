@@ -57,12 +57,10 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} className='pl-2'>
       <Grid item xs={12} md={4} lg={4}>
         <CardComponent
-          actions={
-            <Button size='small'>sample</Button>
-          }
+          actions={<Button size='small'>sample</Button>}
           content={
             <>
               <Typography
