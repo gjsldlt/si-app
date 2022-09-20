@@ -43,6 +43,8 @@ import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import RSelect from 'react-select';
 import makeAnimated from 'react-select/animated';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 export default function UserList({
   role,
   activeUser,
@@ -51,7 +53,7 @@ export default function UserList({
   enableRowActions,
 }: PageProps) {
   const tailwindClasses = {
-    container: "container relative flex flex-grow flex-col bg-white min-h-[660px] md:min-h-100 items-stretch rounded-[10px]",
+    container: "container relative flex flex-grow flex-col bg-white min-h-[660px] md:min-h-100 items-stretch rounded-[10px] justify-between",
     toolbar: "toolbar flex flex-row grow-0 basis-[content] items-center",
     title: "title flex-1 font-bold text-sm m-[15px]",
     addButton: "addbutton h-iconbutton w-iconbutton flex items-center justify-center p-0 m-[15px]",
@@ -65,7 +67,7 @@ export default function UserList({
     name: "name p-0 m-0 font-bold text-sm",
     addCloseIcon: "addCloseIcon w-[30px] h-[30px] text-white p-[5px] bg-[#0E2040] rounded-[10px]",
     editDeleteIcon: "editDeleteIcon w-[30px] h-[30px] p-[7px] text-[#1C1B1F] bg-white rounded-[25px] drop-shadow-[0_1px_1px_rgba(0,0,0,0.25)]",
-    filter: "absolute ml-[-100px] p-[25px] w-max rounded-md z-10 bg-white",
+    filter: "absolute ml-[-250px] p-[25px] w-[350px] rounded-md z-10 bg-white",
     formItemFourth: "",
   };
   const [userToEdit, setUserToEdit] = useState<UserType>();
@@ -411,196 +413,197 @@ export default function UserList({
 
   return (
     <div className={tailwindClasses.container}>
-      {console.log(employeesData)}
-      <PopupComponent
-        title={`${!popupLoading ? "Are you sure you want to delete this user?:" : ""
-          }`}
-        entry={`${!popupLoading
-          ? `${userToDelete?.firstName} ${userToDelete?.lastName}`
-          : ""
-          }`}
-        open={popUp}
-      >
-        <div className="flex justify-center mt-2">
-          {!popupLoading ? (
+      <div>
+        <PopupComponent
+          title={`${!popupLoading ? "Are you sure you want to delete this user?:" : ""
+            }`}
+          entry={`${!popupLoading
+            ? `${userToDelete?.firstName} ${userToDelete?.lastName}`
+            : ""
+            }`}
+          open={popUp}
+        >
+          <div className="flex justify-center mt-2">
+            {!popupLoading ? (
+              <ButtonComponent
+                text={["yes", "no"]}
+                handleClick={[deleteUserHandler, handleClose]}
+                variant="outlined"
+              />
+            ) : (
+              <CircularProgress />
+            )}
+          </div>
+        </PopupComponent>
+        <PopupComponent
+          title={`Successfully deleted user:`}
+          entry={`${userToDelete?.firstName} ${userToDelete?.lastName}`}
+          open={success}
+        >
+          <div className="flex justify-center mt-2">
             <ButtonComponent
-              text={["yes", "no"]}
-              handleClick={[deleteUserHandler, handleClose]}
+              text={["confirm"]}
+              handleClick={[() => setSuccess(false)]}
               variant="outlined"
             />
-          ) : (
-            <CircularProgress />
-          )}
-        </div>
-      </PopupComponent>
-      <PopupComponent
-        title={`Successfully deleted user:`}
-        entry={`${userToDelete?.firstName} ${userToDelete?.lastName}`}
-        open={success}
-      >
-        <div className="flex justify-center mt-2">
-          <ButtonComponent
-            text={["confirm"]}
-            handleClick={[() => setSuccess(false)]}
-            variant="outlined"
-          />
-        </div>
-      </PopupComponent>
-      <PopupComponent
-        title={`${userToBeRegistered?.firstName} ${userToBeRegistered?.lastName
-          } is now registered as ${role === "managers" ? "manager" : "employee"
-          }.`}
-        open={managerRegistered}
-      >
-        <div className='flex justify-center mt-2'>
-          <ButtonComponent
-            text={['confirm']}
-            handleClick={[() => setManagerRegistered(false)]}
-            variant='outlined'
-          />
-        </div>
-      </PopupComponent>
-      {loadState ? <LoaderComponent /> : null}
-      <div className={tailwindClasses.toolbar}>
-        <p className={tailwindClasses.title}>{boxTitle()}</p>
-        {addState ?
-          "" : (
-            <div>
-              <IconButton>
-                <SearchIcon />
-              </IconButton>
-              <IconButton onClick={filter}>
-                <TuneIcon />
-              </IconButton>
-              {toFilter ?
-                (
-                  <div className={tailwindClasses.filter}>
-                    <Box>
-                      <FormControl>
-                        <FormLabel>Filter</FormLabel>
-                        <FormGroup>
-                          <FormControlLabel
-                            control={
-                              <Checkbox />
-                            }
-                            label="First Name"
-                          />
-                          <FormControlLabel
-                            control={
-                              <Checkbox />
-                            }
-                            label="Last Name"
-                          />
-                          <FormControlLabel
-                            control={
-                              <Checkbox />
-                            }
-                            label="Email"
-                          />
-                        </FormGroup>
-                        {role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF
-                          ? (<div><div className={tailwindClasses.formItemFourth}>
-                            <FormControl fullWidth>
-                              <InputLabel htmlFor="grid-capability-name">Capability</InputLabel>
-                              {/* {capabilityList.map((item, index) => (
-                                <Select
-                                  required
-                                  labelId="grid-capability-name"
-                                  id="grid-capability-name"ß
-                                  name="capability"
-                                  value={item.name}
-                                  label="Capability"
-                                  onChange={onInputßChange}
-                                  multiple
-                                >
-                                  {item.name}
-                                </Select>
-                              ))} */}
-                              <Select
-                                required
-                                labelId="grid-capability-name"
-                                id="grid-capability-name"
-                                name="capability"
-                                value={employeeData ? employeeData?.capability?._id : ""}
-                                label="Capability"
-                                onChange={onInputChange}
-                              >
-                                {capabilityList.map((item, index) => (
-                                  <MenuItem key={`capability-option-${index}`} value={item._id!}>
-                                    {`${item.name}`}
-                                  </MenuItem>
-                                ))}
-                              </Select>
-                            </FormControl>
-                          </div>
-                            <div className={tailwindClasses.formItemFourth}>
-                              <FormControl fullWidth>
-                                <InputLabel htmlFor="grid-primarySkill-name">Primary Skill</InputLabel>
-                                <Select
-                                  labelId="grid-primarySkill-name"
-                                  id="grid-primarySkill-name"
-                                  name="primarySkill"
-                                  value={employeeData ? employeeData?.primarySkill?._id : ""}
-                                  label="Primary Skill"
-                                  onChange={onInputChange}
-                                >
-                                  {skillList.map((item, index) => (
-                                    <MenuItem key={`skill-option-${index}`} value={item._id!}>
-                                      {`${item.name}`}
-                                    </MenuItem>
-                                  ))}
-                                </Select>
-                              </FormControl>
+          </div>
+        </PopupComponent>
+        <PopupComponent
+          title={`${userToBeRegistered?.firstName} ${userToBeRegistered?.lastName
+            } is now registered as ${role === "managers" ? "manager" : "employee"
+            }.`}
+          open={managerRegistered}
+        >
+          <div className='flex justify-center mt-2'>
+            <ButtonComponent
+              text={['confirm']}
+              handleClick={[() => setManagerRegistered(false)]}
+              variant='outlined'
+            />
+          </div>
+        </PopupComponent>
+        {loadState ? <LoaderComponent /> : null}
+        <div className={tailwindClasses.toolbar}>
+          <p className={tailwindClasses.title}>{boxTitle()}</p>
+          {addState ?
+            "" : (
+              <div>
+                <IconButton>
+                  <SearchIcon />
+                </IconButton>
+                <IconButton onClick={filter}>
+                  <TuneIcon />
+                </IconButton>
+                {toFilter ?
+                  (
+                    <div className={tailwindClasses.filter}>
+                      <div>
+                        <Box>
+                          <FormControl className="flex flex-row">
+                            <div className="w-full">
+                              <FormLabel>Filter</FormLabel>
+                              <FormGroup>
+                                <FormControlLabel
+                                  control={
+                                    <Checkbox />
+                                  }
+                                  label="First Name"
+                                />
+                                <FormControlLabel
+                                  control={
+                                    <Checkbox />
+                                  }
+                                  label="Last Name"
+                                />
+                                <FormControlLabel
+                                  control={
+                                    <Checkbox />
+                                  }
+                                  label="Email"
+                                />
+                              </FormGroup>
                             </div>
-                            <div className={tailwindClasses.formItemFourth}>
-                              <FormControl fullWidth>
-                                <InputLabel htmlFor="grid-secondarySkill-name">Secondary Skill</InputLabel>
-                                <Select
-                                  labelId="grid-secondarySkill-name"
-                                  id="grid-secondarySkill-name"
-                                  name="secondarySkill"
-                                  value={employeeData ? employeeData?.secondarySkill?._id : ""}
-                                  label="Secondary Skill"
-                                  onChange={onInputChange}
-                                >
-                                  {skillList.map((item, index) => (
-                                    <MenuItem key={`skill-option-${index}`} value={item._id!}>
-                                      {`${item.name}`}
-                                    </MenuItem>
-                                  ))}
-                                </Select>
-                              </FormControl>
-                            </div></div>)
-                          : null}
-                      </FormControl>
-                    </Box>
-                  </div>
-                ) : (
-                  null
-                )}
-            </div>
-          )}
+                            <div className="w-full">
+                              {role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF
+                                ? (
+                                  <div>
+                                    <div className={tailwindClasses.formItemFourth}>
+                                      <FormControl fullWidth>
+                                        <InputLabel htmlFor="grid-capability-name">Capability</InputLabel>
+                                        <Select
+                                          required
+                                          labelId="grid-capability-name"
+                                          id="grid-capability-name"
+                                          name="capability"
+                                          value={employeeData ? employeeData?.capability?._id : ""}
+                                          label="Capability"
+                                          onChange={onInputChange}
+                                        >
+                                          {capabilityList.map((item, index) => (
+                                            <MenuItem key={`capability-option-${index}`} value={item._id!}>
+                                              {`${item.name}`}
+                                            </MenuItem>
+                                          ))}
+                                        </Select>
+                                      </FormControl>
+                                    </div>
+                                    <div className={tailwindClasses.formItemFourth}>
+                                      <FormControl fullWidth>
+                                        <InputLabel htmlFor="grid-primarySkill-name">Primary Skill</InputLabel>
+                                        <Select
+                                          labelId="grid-primarySkill-name"
+                                          id="grid-primarySkill-name"
+                                          name="primarySkill"
+                                          value={employeeData ? employeeData?.primarySkill?._id : ""}
+                                          label="Primary Skill"
+                                          onChange={onInputChange}
+                                        >
+                                          {skillList.map((item, index) => (
+                                            <MenuItem key={`skill-option-${index}`} value={item._id!}>
+                                              {`${item.name}`}
+                                            </MenuItem>
+                                          ))}
+                                        </Select>
+                                      </FormControl>
+                                    </div>
+                                    <div className={tailwindClasses.formItemFourth}>
+                                      <FormControl fullWidth>
+                                        <InputLabel htmlFor="grid-secondarySkill-name">Secondary Skill</InputLabel>
+                                        <Select
+                                          labelId="grid-secondarySkill-name"
+                                          id="grid-secondarySkill-name"
+                                          name="secondarySkill"
+                                          value={employeeData ? employeeData?.secondarySkill?._id : ""}
+                                          label="Secondary Skill"
+                                          onChange={onInputChange}
+                                        >
+                                          {skillList.map((item, index) => (
+                                            <MenuItem key={`skill-option-${index}`} value={item._id!}>
+                                              {`${item.name}`}
+                                            </MenuItem>
+                                          ))}
+                                        </Select>
+                                      </FormControl>
+                                    </div>
+                                  </div>)
+                                : null}
+                            </div>
+                          </FormControl>
+                        </Box>
+                      </div>
+                    </div>
+                  ) : (
+                    null
+                  )}
+              </div>
+            )}
 
-        <button className={tailwindClasses.addButton} onClick={addNewUser}>
-          {addState ? (
-            <XIcon className={tailwindClasses.addCloseIcon} />
-          ) : (
-            <PlusIcon className={tailwindClasses.addCloseIcon} />
-          )}
-        </button>
+          <button className={tailwindClasses.addButton} onClick={addNewUser}>
+            {addState ? (
+              <XIcon className={tailwindClasses.addCloseIcon} />
+            ) : (
+              <PlusIcon className={tailwindClasses.addCloseIcon} />
+            )}
+          </button>
+        </div>
+        {addState ? (
+          <UserForm
+            role={role}
+            userToEdit={userToEdit}
+            setLoadState={setLoadState}
+            parentUser={parentUser || undefined}
+            registerUser={registerUser}
+            updateUser={updateUser}
+          />
+        ) : (
+          renderList()
+        )}
       </div>
-      {addState ? (
-        <UserForm
-          role={role}
-          userToEdit={userToEdit}
-          setLoadState={setLoadState}
-          parentUser={parentUser || undefined}
-          registerUser={registerUser}
-          updateUser={updateUser}
-        />
-      ) : (
-        renderList()
-      )}
+      <div className="flex justify-center my-[25px]">
+        <Stack spacing={2}>
+          <Pagination count={10} color="secondary" />
+        </Stack>
+      </div>
     </div>
   );
 }

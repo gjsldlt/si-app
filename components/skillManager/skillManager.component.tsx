@@ -222,9 +222,9 @@ export default function SkillManager({ employee }: PageProps) {
         {activeSkills?.map((item, index) => (
           <div className={tailwindClasses.chip} key={`skill-chip-${index}`}>
             <div className={tailwindClasses.name}>
-              <div>{item.skill?.name}</div>
-              <div>{item.rate}</div>
-              <div>{item.yearsExperience}</div>
+              <div className="w-[50px]">{item.skill?.name}</div>
+              <div className="w-[50px] flex justify-center">{item.rate}</div>
+              <div className="w-[50px] flex justify-center">{item.yearsExperience}</div>
             </div>
             <DeleteIcon
               className={tailwindClasses.chipDeleteIcon}
@@ -235,7 +235,6 @@ export default function SkillManager({ employee }: PageProps) {
           </div>
         ))}
       </div>
-
     </div>
   );
 }
