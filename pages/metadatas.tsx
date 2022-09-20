@@ -66,7 +66,6 @@ const MetadataPage = () => {
           pr: 2,
           display: 'flex',
           alignItems: 'stretch',
-          backgroundColor: '#F7F7F7',
           flex:'1 0',
           height:'100%'
         }}

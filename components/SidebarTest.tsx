@@ -8,9 +8,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import AppBar from '@mui/material/AppBar';
 import { styled } from '@mui/system';
 import {
   ChevronLeftIcon,
@@ -22,7 +20,15 @@ import {
 } from '@heroicons/react/solid';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useRouter } from 'next/router';
-import { Avatar, Card, CardHeader, IconButton, Tooltip } from '@mui/material';
+import {
+  Avatar,
+  Card,
+  CardHeader,
+  IconButton,
+  Toolbar,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import ButtonComponent from './ButtonComponent';
 import { AccountCircleOutlined } from '@mui/icons-material';
 import { clearUserSession } from '../services/user.service';
@@ -48,7 +54,7 @@ export default function SidebarTest() {
   const [smallDevice, setSmall] = React.useState<boolean>(true);
 
   const updateSidebar = () => {
-    if (window.innerWidth < 900) {
+    if (window.innerWidth < 768) {
       setSmall(true);
     } else {
       setSmall(false);
@@ -88,9 +94,11 @@ export default function SidebarTest() {
       <div className='flex p-3 h-20 items-center justify-center'>
         <IconButton
           onClick={toggleDrawer(anchor, false)}
-          className={`${state['right'] ? 'block' : 'hidden'} absolute left-0`}
+          className={`${
+            state['right'] ? 'block' : 'hidden'
+          } absolute left-0 group`}
         >
-          <ChevronRightIcon className='text-gray hover:text-white w-6 h-6' />
+          <ChevronRightIcon className='text-gray group-hover:text-white w-6 h-6' />
         </IconButton>
         <img
           src='/assets/images/deloitte-logo.png'
@@ -100,16 +108,18 @@ export default function SidebarTest() {
 
         <IconButton
           onClick={toggleDrawer(anchor, false)}
-          className={`${state['left'] ? 'block' : 'hidden'} absolute right-0`}
+          className={`${
+            state['left'] ? 'block' : 'hidden'
+          } absolute right-0 group`}
         >
-          <ChevronLeftIcon className='text-gray hover:text-white w-6 h-6' />
+          <ChevronLeftIcon className='text-gray group-hover:text-white w-6 h-6' />
         </IconButton>
 
         <IconButton
           onClick={toggleDrawer(anchor, true)}
-          className={state[anchor] ? 'hidden' : 'block'}
+          className={state[anchor] ? 'hidden' : 'block group'}
         >
-          <MenuIcon className='text-gray hover:text-white w-6 h-6' />
+          <MenuIcon className='text-gray group-hover:text-white w-6 h-6' />
         </IconButton>
       </div>
       <Divider />
@@ -193,14 +203,6 @@ export default function SidebarTest() {
     <div>
       {(['left', 'right'] as const).map((anchor) => (
         <React.Fragment key={anchor}>
-          {anchor === 'right' && (
-            <Button
-              onClick={toggleDrawer(anchor, true)}
-              sx={{ marginTop: '25px', zIndex: 3, marginLeft: '50px' }}
-            >
-              {anchor}
-            </Button>
-          )}
           <Drawer
             variant={
               smallDevice || anchor === 'right' ? 'temporary' : 'permanent'
@@ -226,6 +228,41 @@ export default function SidebarTest() {
           ></div>
         </React.Fragment>
       ))}
+      <AppBar className='relative z-20'>
+        <Toolbar>
+          <Typography
+            variant='h6'
+            component='div'
+            sx={{
+              flexGrow: 1,
+            }}
+            className='md:pl-16'
+          >
+            <span
+              onClick={() => router.push('/')}
+              className='hover:cursor-pointer'
+            >
+              iFED
+            </span>
+          </Typography>
+          {/* {anchor === 'right' && (
+            <Button
+              onClick={toggleDrawer(anchor, true)}
+              sx={{ marginTop: '25px', zIndex: 3, marginLeft: '50px' }}
+            >
+              {anchor}
+            </Button>
+          )} */}
+          <div className='block md:hidden'>
+            <IconButton onClick={toggleDrawer('right', true)} className='group'>
+              <MenuIcon className='text-black group-hover:opacity-50 w-6 h-6' />
+            </IconButton>
+          </div>
+        </Toolbar>
+      </AppBar>
+      <div className='bg-blue-900 h-[100px] md:h-[180px] pl-10 md:pl-24 uppercase text-4xl flex items-center font-bold text-white'>
+        {router.pathname === '/' ? 'HOME' : router.pathname.split('/')}
+      </div>
     </div>
   );
 }
