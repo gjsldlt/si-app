@@ -7,7 +7,6 @@ import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
 import SearchIcon from '@mui/icons-material/Search';
 import TuneIcon from '@mui/icons-material/Tune';
-
 import styles from './managerList.module.scss';
 import LoaderComponent from '../loader/loader.component';
 import { getAllManagers } from '../../services/user.service';
