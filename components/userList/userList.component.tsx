@@ -41,8 +41,6 @@ import Checkbox from '@mui/material/Checkbox';
 import InputLabel from '@mui/material/InputLabel'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
-import RSelect from 'react-select';
-import makeAnimated from 'react-select/animated';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 export default function UserList({
@@ -394,8 +392,6 @@ export default function UserList({
     console.log(employeeData);
     setLoadState(false);
   };
-
-  const animatedComponents = makeAnimated();
 
   useEffect(() => {
     renderData();
