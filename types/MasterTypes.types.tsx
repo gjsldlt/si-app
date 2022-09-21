@@ -102,3 +102,10 @@ export interface EmployeeType {
     }
   ];
 }
+
+export interface ActiveSkillType {
+  rate?: number;
+  yearsExperience?: number;
+  description: string;
+  skill?: MetadataType;
+}

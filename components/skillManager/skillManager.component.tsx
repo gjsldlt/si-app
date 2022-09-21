@@ -3,7 +3,7 @@ import { XIcon } from '@heroicons/react/solid';
 // import _ from 'lodash';
 
 import { getMetadata } from "../../services/metadata.service";
-import { MetadataType, EmployeeType } from "../../types/MasterTypes.types";
+import { MetadataType, EmployeeType, ActiveSkillType } from "../../types/MasterTypes.types";
 import Loader from "../loader/loader.component";
 import styles from "./skillManager.module.scss";
 import ButtonComponent from "../ButtonComponent";
@@ -16,7 +16,7 @@ import TextField from '@mui/material/TextField'
 import InputAdornment from "@mui/material/InputAdornment";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-export default function SkillManager({ employee }: PageProps) {
+export default function SkillManager({ employee, activeSkills,setActiveSkills }: PageProps) {
   const tailwindClasses = {
     container: "container rounded w-full m-2 p-2 flex flex-row bg-[#FAF9F9]",
     list: "h-[275px] w-2/3 flex flex-wrap gap-1 pt-5 pl-3 overflow-auto",
@@ -35,14 +35,14 @@ export default function SkillManager({ employee }: PageProps) {
   const [metadataSkills, setMetadataSkills] = useState<MetadataType[]>([]);
   const [primarySkill, setPrimarySkill] = useState<MetadataType>();
   const [secondarySkill, setSecondarySkill] = useState<MetadataType>();
-  const [activeSkills, setActiveSkills] = useState<
-    {
-      rate: number;
-      yearsExperience: number;
-      description: string;
-      skill?: MetadataType;
-    }[]
-  >([]);
+  // const [activeSkills, setActiveSkills] = useState<
+  //   {
+  //     rate: number;
+  //     yearsExperience: number;
+  //     description: string;
+  //     skill?: MetadataType;
+  //   }[]
+  // >([]);
   const filteredMetadataSkills = metadataSkills.filter(
     (mskill) =>
       activeSkills
@@ -242,4 +242,6 @@ export default function SkillManager({ employee }: PageProps) {
 type PageProps = {
   employee?: EmployeeType;
   setEmployee: (emp: EmployeeType) => void;
+  activeSkills: ActiveSkillType[],
+  setActiveSkills: (newActiveSkillList: ActiveSkillType[]) => {}
 };

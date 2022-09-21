@@ -6,7 +6,8 @@ import SkillManager from "../skillManager/skillManager.component";
 import {
   UserType,
   ManagerType,
-  Metadata,
+  MetadataType,
+  ActiveSkillType,
   EmployeeType,
 } from "../../types/MasterTypes.types";
 import { USER_ROLES } from "../../helpers/constants.helper";
@@ -47,27 +48,15 @@ export default function UserList({
   const [managerId, setManagerId] = useState<string>("");
   const [managerList, setManagerList] = useState<ManagerType[]>([]);
   const [employeeData, setEmployeeData] = useState<EmployeeType>();
-  const [skillList, setSkillList] = useState<Metadata[]>([]);
-  const [activeSkillList, setActiveSkillList] = useState<
-    {
-      skill: Metadata;
-      rate: string;
-      yearsExperience: string;
-      description: string;
-    }[]
-  >([]);
-  const [activeSkill, setActiveSkill] = useState<{
-    skill?: Metadata;
-    rate: string;
-    yearsExperience: string;
-    description: string;
-  }>({
+  const [skillList, setSkillList] = useState<MetadataType[]>([]);
+  const [activeSkillList, setActiveSkillList] = useState<ActiveSkillType[]>([]);
+  const [activeSkill, setActiveSkill] = useState<ActiveSkillType>({
     skill: undefined,
-    rate: "",
-    yearsExperience: "",
+    rate: undefined,
+    yearsExperience: undefined,
     description: "",
   });
-  const [capabilityList, setCapabilityList] = useState<Metadata[]>([]);
+  const [capabilityList, setCapabilityList] = useState<MetadataType[]>([]);
   const tailwindClasses = {
     form: "flex flex-1 flex-grow justify-start items-start flex-wrap w-full content-start overflow-auto pb-2",
     formItemHalf: "formItemThird w-1/2 px-3 pt-1 md:pt-1 grow-0 my-[5px]",
@@ -329,7 +318,7 @@ export default function UserList({
             </Select>
           </FormControl>
         </div>
-        <SkillManager employee={employeeData} setEmployee={setEmployeeData} />
+        <SkillManager employee={employeeData} setEmployee={setEmployeeData} setActiveSkills={setActiveSkillList} activeSkills={activeSkillList} />
       </>
     );
   };
