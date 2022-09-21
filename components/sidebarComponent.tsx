@@ -26,6 +26,7 @@ import {
   Button,
   Card,
   CardHeader,
+  GlobalStyles,
   Tooltip,
 } from '@mui/material';
 import { clearUserSession } from '../services/user.service';
@@ -141,175 +142,177 @@ export default function MiniDrawer() {
   };
 
   return (
-    <Box sx={{ display: 'flex', height: '64px' }}>
-      <CssBaseline />
-      <div className='absolute w-full'>
-        <AppBar position='relative' open={open} className='z-30'>
-          <Toolbar>
-            <IconButton
-              color='inherit'
-              aria-label='open drawer'
-              onClick={handleDrawerOpen}
-              edge='start'
-              sx={{
-                marginRight: 5,
-                ...(open && { display: 'none' }),
-              }}
-              className='visible md:invisible'
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant='h6' noWrap component='div'>
-              iFED
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <AppBar
-          position='relative'
-          open={open}
-          className='z-30 bg-blue-900 pl-20 py-10'
-        >
-          <Toolbar>
-            <Typography
-              variant='h6'
-              noWrap
-              component='div'
-              sx={{
-                color: 'white',
-                fontWeight: 'bold',
-                textTransform: 'uppercase',
-                fontSize:'30px'
-              }}
-            >
+    <>
+      <GlobalStyles
+        styles={{
+          html: { overflow: open ? 'hidden' : 'auto' },
+          body: { overflow: open ? 'hidden' : 'auto' },
+        }}
+      />
+      <Box sx={{ display: 'flex', height: '64px' }}>
+        <CssBaseline />
+        <div className='absolute w-full'>
+          <AppBar
+            position='relative'
+            open={open}
+            className='z-30 md:hidden block bg-black'
+          >
+            <Toolbar>
+              <IconButton
+                color='inherit'
+                aria-label='open drawer'
+                onClick={handleDrawerOpen}
+                edge='start'
+                sx={{
+                  marginRight:2,
+                  ...(open && { display: 'none' }),
+                }}
+                className='visible md:invisible text-white'
+              >
+                <MenuIcon />
+              </IconButton>
+              <img
+                src='/assets/images/deloitte-logo.png'
+                alt='DCPDC Logo'
+                className={` w-44`}
+              />
+            </Toolbar>
+          </AppBar>
+          <AppBar
+            position='relative'
+            open={open}
+            className='z-30 bg-blue-900 md:pl-24 py-4 md:py-[66px]'
+          >
+            <div className='text-center md:text-justify  text-white font-bold uppercase text-5xl md:text-[50px]'>
               {router.pathname === '/'
                 ? 'dashboard'
                 : router.pathname.split('/')}
-            </Typography>
-          </Toolbar>
-        </AppBar>
-      </div>
-      <Drawer variant='permanent' open={open}>
-        <DrawerHeader className='relative justify-center'>
-          <img
-            src='/assets/images/deloitte-logo.png'
-            alt='DCPDC Logo'
-            className={`${!open && 'hidden'} w-44`}
-          />
-          <IconButton
-            onClick={handleDrawerOpen}
-            className={`${
-              open && 'hidden'
-            } text-gray hover:text-white absolute`}
-          >
-            <MenuIcon />
-          </IconButton>
-          <IconButton
-            onClick={handleDrawerClose}
-            className={`${
-              !open && 'hidden'
-            } text-gray hover:text-white absolute top-2 right-0`}
-          >
-            <ChevronLeftIcon />
-          </IconButton>
-        </DrawerHeader>
-
-        <Divider />
-        <List>
-          {menuList.map((item, i) => (
-            <ListItem
-              key={i}
-              disablePadding
-              sx={{ display: 'block' }}
-              className='hover:bg-[#323335]  '
-            >
-              <ListItemButton
-                selected={router.pathname === item.link}
-                onClick={(event) => handleListItemClick(event, i, item.link)}
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-                className={`${
-                  router.pathname === item.link && '!bg-main text-black'
-                } group`}
-              >
-                <ListItemIcon
-                  className={`${
-                    router.pathname === item.link && 'text-black'
-                  } text-gray ${
-                    router.pathname !== item.link && 'group-hover:text-white'
-                  } w-7`}
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText
-                  className={`${
-                    router.pathname === item.link && 'text-black'
-                  } text-gray ${
-                    router.pathname !== item.link && 'group-hover:text-white'
-                  } `}
-                  primary={item.name}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <div className='text-white flex flex-col mt-auto mb-4 lg:mb-12'>
-          {open && (
-            <p className='text-[#4F4F51] uppercase text-xs ml-4'>Profile</p>
-          )}
-          <Card sx={{ maxWidth: 345 }} className='bg-transparent shadow-none'>
-            <CardHeader
-              avatar={
-                <Tooltip
-                  disableHoverListener={open ? true : false}
-                  placement={open ? undefined : 'right'}
-                  title={'Juan Dela Cruz'}
-                >
-                  <Avatar
-                    className={`-mr-2 ${!open && '-ml-2 md:-ml-1'}`}
-                    aria-label='recipe'
-                  >
-                    <AccountCircleOutlinedIcon />
-                  </Avatar>
-                </Tooltip>
-              }
-              title={open ? 'Juan Dela Cruz' : ''}
-              subheader={open ? 'Front-end Developer' : ''}
-            />
-          </Card>
-          <div
-            className={`self-center mt-0 lg:mt-4 w-full flex justify-center ${
-              !open && 'pt-[2px]'
-            }`}
-          >
-            <ButtonComponent
-              text={['Logout']}
-              handleClick={[handleLogout]}
-              icon={<LogoutIcon />}
-              style={open ? '' : 'icon'}
-              color='white'
-              placement={'right'}
-            />
-          </div>
+            </div>
+          </AppBar>
         </div>
-      </Drawer>
-      <div
-        className={`${
-          open ? 'absolute z-30 opacity-50' : 'opacity-0'
-        } bg-black  w-full h-full top-0 overflow-hidden transition-all duration-500`}
-        onClick={handleDrawerClose}
-      ></div>
-      <Box component='main' sx={{ flexGrow: 1, p: 0 }}>
-        {/* <DrawerHeader /> */}
+        <Drawer variant='permanent' open={open}>
+          <DrawerHeader className='relative justify-center'>
+            <img
+              src='/assets/images/deloitte-logo.png'
+              alt='DCPDC Logo'
+              className={`${!open ? 'hidden' : 'md:block'} hidden w-44`}
+            />
+            <IconButton
+              onClick={handleDrawerOpen}
+              className={`${
+                open && 'hidden'
+              } text-gray hover:text-white absolute`}
+            >
+              <MenuIcon />
+            </IconButton>
+            <IconButton
+              onClick={handleDrawerClose}
+              className={`${
+                !open && 'hidden'
+              } text-gray hover:text-white absolute top-2 right-0`}
+            >
+              <ChevronLeftIcon />
+            </IconButton>
+          </DrawerHeader>
+
+          <Divider />
+          <List>
+            {menuList.map((item, i) => (
+              <ListItem
+                key={i}
+                disablePadding
+                sx={{ display: 'block' }}
+                className='hover:bg-[#323335]  '
+              >
+                <ListItemButton
+                  selected={router.pathname === item.link}
+                  onClick={(event) => handleListItemClick(event, i, item.link)}
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
+                  }}
+                  className={`${
+                    router.pathname === item.link && '!bg-main text-black'
+                  } group`}
+                >
+                  <ListItemIcon
+                    className={`${
+                      router.pathname === item.link && 'text-black'
+                    } text-gray ${
+                      router.pathname !== item.link && 'group-hover:text-white'
+                    } w-7`}
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    className={`${
+                      router.pathname === item.link && 'text-black'
+                    } text-gray ${
+                      router.pathname !== item.link && 'group-hover:text-white'
+                    } `}
+                    primary={item.name}
+                    sx={{ opacity: open ? 1 : 0 }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+          <div className='text-white flex flex-col mt-auto mb-4 lg:mb-12'>
+            {open && (
+              <p className='text-[#4F4F51] uppercase text-xs ml-4'>Profile</p>
+            )}
+            <Card sx={{ maxWidth: 345 }} className='bg-transparent shadow-none'>
+              <CardHeader
+                avatar={
+                  <Tooltip
+                    disableHoverListener={open ? true : false}
+                    placement={open ? undefined : 'right'}
+                    title={'Juan Dela Cruz'}
+                  >
+                    <Avatar
+                      className={`-mr-2 ${!open && '-ml-2 md:-ml-1'}`}
+                      aria-label='recipe'
+                    >
+                      <AccountCircleOutlinedIcon />
+                    </Avatar>
+                  </Tooltip>
+                }
+                title={open ? 'Juan Dela Cruz' : ''}
+                subheader={open ? 'Front-end Developer' : ''}
+              />
+            </Card>
+            <div
+              className={`self-center mt-0 lg:mt-4 w-full flex justify-center ${
+                !open && 'pt-[2px]'
+              }`}
+            >
+              <ButtonComponent
+                text={['Logout']}
+                handleClick={[handleLogout]}
+                icon={<LogoutIcon />}
+                style={open ? '' : 'icon'}
+                color='white'
+                placement={'right'}
+              />
+            </div>
+          </div>
+        </Drawer>
+        <div
+          className={`${
+            open ? 'absolute z-30 opacity-50' : 'opacity-0'
+          } bg-black  w-full h-full top-0 overflow-hidden transition-all duration-500`}
+          onClick={handleDrawerClose}
+        ></div>
+        <Box component='main' sx={{ flexGrow: 1, p: 0 }}>
+          {/* <DrawerHeader /> */}
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 }
