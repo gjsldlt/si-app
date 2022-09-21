@@ -3,7 +3,7 @@ import { XIcon } from '@heroicons/react/solid';
 // import _ from 'lodash';
 
 import { getMetadata } from "../../services/metadata.service";
-import { Metadata, EmployeeType } from "../../types/MasterTypes.types";
+import { MetadataType, EmployeeType } from "../../types/MasterTypes.types";
 import Loader from "../loader/loader.component";
 import styles from "./skillManager.module.scss";
 import ButtonComponent from "../ButtonComponent";
@@ -32,15 +32,15 @@ export default function SkillManager({ employee }: PageProps) {
     test2: "w-full m-[5px]"
   };
   const [loadState, setLoadState] = useState<boolean>(false);
-  const [metadataSkills, setMetadataSkills] = useState<Metadata[]>([]);
-  const [primarySkill, setPrimarySkill] = useState<Metadata>();
-  const [secondarySkill, setSecondarySkill] = useState<Metadata>();
+  const [metadataSkills, setMetadataSkills] = useState<MetadataType[]>([]);
+  const [primarySkill, setPrimarySkill] = useState<MetadataType>();
+  const [secondarySkill, setSecondarySkill] = useState<MetadataType>();
   const [activeSkills, setActiveSkills] = useState<
     {
       rate: number;
       yearsExperience: number;
       description: string;
-      skill?: Metadata;
+      skill?: MetadataType;
     }[]
   >([]);
   const filteredMetadataSkills = metadataSkills.filter(
@@ -54,7 +54,7 @@ export default function SkillManager({ employee }: PageProps) {
   const [rate, setRate] = useState<number>(0);
   const [yearsExperience, setYearsExperience] = useState<number>(0);
   const [description, setDescription] = useState<string>('');
-  const [skill, setSkill] = useState<Metadata>();
+  const [skill, setSkill] = useState<MetadataType>();
 
   const renderData = async () => {
     setLoadState(true);

@@ -39,7 +39,6 @@ const MetadataPage = () => {
 
   return (
     <>
-<<<<<<< HEAD
       <PageBanner
         content={
           <div className={tailwindClasses.customBanner}>
@@ -58,21 +57,6 @@ const MetadataPage = () => {
             <button className={tailwindClasses.formButton}>{tab}</button>
           </div>
         ))}
-=======
-      <PageBanner content={<div className={tailwindClasses.customBanner}>
-        <h1 className={tailwindClasses.header}>Metadata List</h1>
-      </div>} />
-      <div className={tailwindClasses.content}>
-        <div className={tailwindClasses.box}>
-          <SkillComponent role="skills" activeMetadata={activeSkill} onMetadataClick={setActiveSkill} enableRowActions={true} />
-        </div>
-        <div className={tailwindClasses.box}>
-          <Capability />
-        </div>
-        <div className={tailwindClasses.box}>
-          <Industry />
-        </div>
->>>>>>> 700de63 (style: skill component)
       </div>
 
       <Box

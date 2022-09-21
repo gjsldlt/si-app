@@ -11,6 +11,8 @@ import { accessUserInSession } from '../../services/user.service';
 import SidebarComponent from '../sidebarComponent';
 import { Grid } from '@mui/material';
 
+import { Box, Container } from '@mui/material';
+
 export default function Layout({ children }: LayoutProps) {
   const router = useRouter();
   const [sidebarShow, setSidebarShow] = useState(false);
@@ -29,10 +31,16 @@ export default function Layout({ children }: LayoutProps) {
 
   console.log('layout render ');
   return (
-    <div>
+    <Box sx={{ p: 0, display: 'flex' }}>
       <SidebarComponent />
-      <div className="ml-20 mt-8 min-h-[100vh]">{children}</div>
-    </div>
+      <Container
+        sx={{ pt: '64px', display: 'flex', flexDirection: 'column' }}
+        maxWidth={false}
+        disableGutters
+      >
+        {children}
+      </Container>
+    </Box>
     // <div className={tailwindClasses.layout}>
     //   <HeaderBar
     //     breadcrumb={breadcrumb}

@@ -1,5 +1,5 @@
 import type { AppProps } from 'next/app';
-import { Metadata } from './MasterTypes.types';
+import { MetadataType } from './MasterTypes.types';
 import { ReactNode } from 'react';
 
 export interface CustomAppProps extends AppProps {
@@ -8,23 +8,23 @@ export interface CustomAppProps extends AppProps {
 
 export interface MetadataComponentProps {
   type: 'skill' | 'industry' | 'capability';
-  onMetadataClick: React.Dispatch<React.SetStateAction<Metadata | undefined>>;
+  onMetadataClick: React.Dispatch<React.SetStateAction<MetadataType | undefined>>;
   enableRowActions: boolean;
-  activeMetadata?: Metadata;
+  activeMetadata?: MetadataType;
 }
 
 export interface FormProps {
-    renderData: () => Promise<void>
-    setLoadState: React.Dispatch<React.SetStateAction<boolean>>
-    metadataToEdit?: Metadata
-    metadataType: string
-    setAction?: any
-    setSuccess?:any
+  renderData: () => Promise<void>
+  setLoadState: React.Dispatch<React.SetStateAction<boolean>>
+  metadataToEdit?: Metadata
+  metadataType: string
+  setAction?: any
+  setSuccess?: any
 }
 
 export interface PopupProps {
   renderData: () => Promise<void>;
-  metadataToDelete?: Metadata;
+  metadataToDelete?: MetadataType;
 }
 
 export interface HeaderBarProps {
