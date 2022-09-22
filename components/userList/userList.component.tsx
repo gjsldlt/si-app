@@ -110,7 +110,9 @@ export default function UserList({
   const [popupLoading, setPopupLoading] = useState<boolean>(false);
   const [toFilter, setToFilter] = useState<boolean>(false)
   const [employeeData, setEmployeeData] = useState<EmployeeType>();
-  const [employeesData, setEmployeesData] = useState<EmployeeType[]>([]);
+  const [selectedCapability, setSelectedCapability] = useState<String[]>([])
+  const [selectedPrimarySkill, setSelectedPrimarySkill] = useState<String[]>([])
+  const [selectedSecondarySkill, setSelectedSecondarySkill] = useState<String[]>([])
 
   const handleOpen = (user: UserType) => {
     setUserToDelete(user);
@@ -291,76 +293,20 @@ export default function UserList({
     }
   };
 
-  const onInputChange = (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    switch (e.target.name) {
-      case "firstName":
-        setFirstName(e.target.value);
-        break;
-      case "lastName":
-        setLastName(e.target.value);
-        break;
-      case "email":
-        setEmail(e.target.value);
-        break;
-      case "password":
-        setPassword(e.target.value);
-        break;
-      case "confirmPassword":
-        setConfirmPassword(e.target.value);
-        break;
-      default:
-        break;
-    }
-    if (role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF) {
-      let tempEmp = employeeData;
-      switch (e.target.name) {
-        case "firstName":
-          tempEmp?.firstName != e.target.value;
-          break;
-        case "lastName":
-          tempEmp?.lastName != e.target.value;
-          break;
-        case "email":
-          tempEmp?.email != e.target.value;
-          break;
-        case "password":
-          tempEmp?.password != e.target.value;
-          break;
-        case "confirmPassword":
-          setConfirmPassword(e.target.value);
-          break;
-        case "managerId":
-          let manager = managerList.find((item) => item._id === e.target.value);
-          setManagerId(e.target.value);
-          tempEmp?.manager != manager;
-          break;
-        case "primarySkill":
-          const primarySkill = skillList.find(
-            (item) => item._id === e.target.value
-          );
-          tempEmp?.primarySkill != primarySkill;
-          break;
-        case "secondarySkill":
-          const secondarySkill = skillList.find(
-            (item) => item._id === e.target.value
-          );
-          tempEmp?.secondarySkill != secondarySkill;
-          break;
-        case "capability":
-          const capability = capabilityList.find(
-            (item) => item._id === e.target.value
-          );
-          tempEmp?.capability != capability;
-          break;
-      }
-      setEmployeeData(tempEmp);
-    }
-  };
+  const handleChangeCapability = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value
+    setSelectedCapability(typeof value === 'string' ? value.split(',') : value)
+  }
+
+  const handleChangePrimarySkill = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value
+    setSelectedPrimarySkill(typeof value === 'string' ? value.split(',') : value)
+  }
+
+  const handleChangeSecondarySkill = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value
+    setSelectedSecondarySkill(typeof value === 'string' ? value.split(',') : value)
+  }
 
   const filter = async () => {
     if (toFilter === false) {
@@ -510,9 +456,10 @@ export default function UserList({
                                           labelId="grid-capability-name"
                                           id="grid-capability-name"
                                           name="capability"
-                                          value={employeeData ? employeeData?.capability?._id : ""}
+                                          value={selectedCapability}
                                           label="Capability"
-                                          onChange={onInputChange}
+                                          onChange={handleChangeCapability}
+                                          multiple
                                         >
                                           {capabilityList.map((item, index) => (
                                             <MenuItem key={`capability-option-${index}`} value={item._id!}>
@@ -529,9 +476,10 @@ export default function UserList({
                                           labelId="grid-primarySkill-name"
                                           id="grid-primarySkill-name"
                                           name="primarySkill"
-                                          value={employeeData ? employeeData?.primarySkill?._id : ""}
+                                          value={selectedPrimarySkill}
                                           label="Primary Skill"
-                                          onChange={onInputChange}
+                                          onChange={handleChangePrimarySkill}
+                                          multiple
                                         >
                                           {skillList.map((item, index) => (
                                             <MenuItem key={`skill-option-${index}`} value={item._id!}>
@@ -548,9 +496,10 @@ export default function UserList({
                                           labelId="grid-secondarySkill-name"
                                           id="grid-secondarySkill-name"
                                           name="secondarySkill"
-                                          value={employeeData ? employeeData?.secondarySkill?._id : ""}
+                                          value={selectedSecondarySkill}
                                           label="Secondary Skill"
-                                          onChange={onInputChange}
+                                          onChange={handleChangeSecondarySkill}
+                                          multiple
                                         >
                                           {skillList.map((item, index) => (
                                             <MenuItem key={`skill-option-${index}`} value={item._id!}>

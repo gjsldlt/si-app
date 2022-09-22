@@ -406,9 +406,7 @@ export default function UserList({
         : null}
       {userToEdit === undefined && (
         <>
-          <div className={role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF
-            ? tailwindClasses.formItemThird
-            : tailwindClasses.formItemHalf}>
+          <div className={tailwindClasses.formItemHalf}>
             <Box
               sx={{
                 width: '100%',
@@ -428,9 +426,7 @@ export default function UserList({
               />
             </Box>
           </div>
-          <div className={role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF
-            ? tailwindClasses.formItemThird
-            : tailwindClasses.formItemHalf}>
+          <div className={tailwindClasses.formItemHalf}>
             <Box
               sx={{
                 width: '100%',

@@ -15,11 +15,14 @@ import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import InputAdornment from "@mui/material/InputAdornment";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ChevronUpIcon from '@mui/icons-material/ExpandLess';
+import ChevronDownIcon from '@mui/icons-material/ExpandMore';
+import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
 
-export default function SkillManager({ employee, activeSkills,setActiveSkills }: PageProps) {
+export default function SkillManager({ employee, activeSkills, setActiveSkills }: PageProps) {
   const tailwindClasses = {
     container: "container rounded w-full m-2 p-2 flex flex-row bg-[#FAF9F9]",
-    list: "h-[275px] w-2/3 flex flex-wrap gap-1 pt-5 pl-3 overflow-auto",
+    list: "h-[275px] w-2/3 flex flex-col gap-1 pt-5 pl-3 overflow-auto",
     formRow: "flex flex-col pt-1 m-[5px]",
     form: "h-full pr-2 w-1/3",
     inputLabel: "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mr-1",
@@ -55,6 +58,9 @@ export default function SkillManager({ employee, activeSkills,setActiveSkills }:
   const [yearsExperience, setYearsExperience] = useState<number>(0);
   const [description, setDescription] = useState<string>('');
   const [skill, setSkill] = useState<MetadataType>();
+  const [skillNameSort, setSkillNameSort] = useState<boolean>(true);
+  const [skillRateSort, setSkillRateSort] = useState<boolean>(true);
+  const [skillYearsSort, setSkillYearsSort] = useState<boolean>(true);
 
   const renderData = async () => {
     setLoadState(true);
@@ -111,6 +117,26 @@ export default function SkillManager({ employee, activeSkills,setActiveSkills }:
   const removeActiveSkill = (id: string) => {
     setActiveSkills(activeSkills.filter((item) => item.skill?._id !== id));
   };
+
+  const sort = (e) => {
+    e.preventDefault()
+    if (skillNameSort === true) {
+      setSkillNameSort(false)
+    } else {
+      setSkillNameSort(true)
+    }
+    if (skillRateSort === true) {
+      setSkillRateSort(false)
+    } else {
+      setSkillRateSort(true)
+    }
+    if (skillYearsSort === true) {
+      setSkillYearsSort(false)
+    } else {
+      setSkillYearsSort(true)
+    }
+  }
+
 
   useEffect(() => {
     renderData();
@@ -219,6 +245,20 @@ export default function SkillManager({ employee, activeSkills,setActiveSkills }:
       </div>
 
       <div className={tailwindClasses.list}>
+        <div className="w-full flex justify-between">
+          <button onClick={sort}>
+            {skillNameSort === true ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            Name
+          </button>
+          <button className="pl-[45px]" onClick={sort}>
+            {skillRateSort === true ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            Rate
+          </button>
+          <button className="pr-[45px]" onClick={sort}>
+            {skillYearsSort === true ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            Years of Exp
+          </button>
+        </div>
         {activeSkills?.map((item, index) => (
           <div className={tailwindClasses.chip} key={`skill-chip-${index}`}>
             <div className={tailwindClasses.name}>
@@ -234,8 +274,21 @@ export default function SkillManager({ employee, activeSkills,setActiveSkills }:
             />
           </div>
         ))}
+        {/* <FormControl fullWidth>
+          <InputLabel htmlFor="grid-primarySkill-name">Primary Skill</InputLabel>
+          <Select
+            labelId="grid-primarySkill-name"
+            id="grid-primarySkill-name"
+            name="primarySkill"
+            value={ }
+            label="Primary Skill"
+            onChange={ }
+          >
+            hello
+          </Select>
+        </FormControl> */}
       </div>
-    </div>
+    </div >
   );
 }
 
