@@ -191,7 +191,7 @@ export default function MiniDrawer() {
           </AppBar>
         </div>
         <Drawer variant='permanent' open={open}>
-          <DrawerHeader className='relative justify-center'>
+          <DrawerHeader className='relative justify-center py-10 flex items-center'>
             <img
               src='/assets/images/deloitte-logo.png'
               alt='DCPDC Logo'
