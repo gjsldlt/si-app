@@ -8,6 +8,12 @@ import PageBanner from '../components/pageBanner/pageBanner.component';
 import ButtonComponent from '../components/ButtonComponent';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import BadgeIcon from '@mui/icons-material/Badge';
+import PsychologyIcon from '@mui/icons-material/Psychology';
+import ConstructionIcon from '@mui/icons-material/Construction';
+import ApartmentIcon from '@mui/icons-material/Apartment';
+
 import HomeSVG from '../public/assets/images/home-alt.svg';
 import {
   Button,
@@ -57,71 +63,38 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <Grid container spacing={2} className='pl-2'>
-      <Grid item xs={12} md={4} lg={4}>
-        <CardComponent
-          actions={<Button size='small'>sample</Button>}
-          content={
-            <>
-              <Typography
-                sx={{ fontSize: 14 }}
-                color='text.secondary'
-                gutterBottom
-              >
-                Word of the Day
-              </Typography>
-              <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                adjective
-              </Typography>
-              <Typography variant='body2'>
-                well meaning and kindly.
-                <br />
-                {'"a benevolent smile"'}
-              </Typography>
-            </>
-          }
-        />
-        {/* <CardComponents>
-          <CardContent>
-            <Typography
-              sx={{ fontSize: 14 }}
-              color='text.secondary'
-              gutterBottom
+    <div className='md:pt-7 md:px-28'>
+      <Grid
+        container
+        spacing={1}
+        className='bg-blue-900 justify-center rounded-lg pt-14 pb-12 px-12 '
+      >
+        <div className='flex flex-wrap max-w-[362px] md:max-w-none gap-x-2 gap-y-11 lg:gap-x-20'>
+          {[
+            { title: 'Managers', icon: <PeopleAltIcon />, total: 999 },
+            { title: 'Employees', icon: <BadgeIcon />, total: 999 },
+            { title: 'Skills', icon: <PsychologyIcon />, total: 999 },
+            { title: 'Capabilities', icon: <ConstructionIcon />, total: 999 },
+            { title: 'Industries', icon: <ApartmentIcon />, total: 999 },
+          ].map((item, index) => (
+            <div
+              key={index}
+              className='text-black w-44 h-44 bg-white rounded-3xl'
             >
-              Word of the Day
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-              adjective
-            </Typography>
-            <Typography variant='body2'>
-              well meaning and kindly.
-              <br />
-              {'"a benevolent smile"'}
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size='small'>sample</Button>
-          </CardActions>
-        </CardComponents> */}
+              <div className='bg-main rounded-2xl px-6 py-2 w-10 absolute -mt-5 ml-2 text-white flex justify-center'>
+                {item.icon}
+              </div>
+              <div className='w-full h-full p-6 flex flex-col items-center justify-center'>
+                <div className='text-center font-semibold text-xs'>
+                  TOTAL NUMBER OF {item.title}
+                </div>
+                <div className='text-6xl font-bold'>{item.total}</div>
+              </div>
+            </div>
+          ))}
+        </div>
       </Grid>
-      <Grid item xs={12} md={4} lg={4}>
-        <p className=''>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores
-          dolorem laborum repellat quam odit molestiae. Consequuntur incidunt
-          eaque atque maiores vel. Tempora quibusdam repudiandae veniam aperiam
-          suscipit, est similique quasi!
-        </p>
-        <Button className=' mt-8'>test button</Button>
-      </Grid>
-      <Grid item xs={12} md={4} lg={4}>
-        <p className=''>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum
-          expedita reprehenderit cumque voluptates, earum porro ex voluptas cum
-          similique illum quam perferendis neque modi tempora quae quas
-          consectetur non eum?
-        </p>
-      </Grid>
-    </Grid>
+    </div>
     // <div className={`${styles.container} ${tailwindClasses.container}`}>
     //   <PageBanner
     //     content={
