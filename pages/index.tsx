@@ -27,6 +27,7 @@ import CardComponent from '../components/CardComponent';
 import styles from '../styles/Home.module.css';
 import { setuid } from 'process';
 import PopupComponent from '../components/PopupComponent';
+import Dashboard from '../components/dashboard/Dashboard';
 
 const Home: NextPage = () => {
   //state to show popup component
@@ -64,36 +65,15 @@ const Home: NextPage = () => {
 
   return (
     <div className='md:pt-7 md:px-28'>
-      <Grid
-        container
-        spacing={1}
-        className='bg-blue-900 justify-center rounded-lg pt-14 pb-12 px-12 '
-      >
-        <div className='flex flex-wrap max-w-[362px] md:max-w-none gap-x-2 gap-y-11 lg:gap-x-20'>
-          {[
-            { title: 'Managers', icon: <PeopleAltIcon />, total: 999 },
-            { title: 'Employees', icon: <BadgeIcon />, total: 999 },
-            { title: 'Skills', icon: <PsychologyIcon />, total: 999 },
-            { title: 'Capabilities', icon: <ConstructionIcon />, total: 999 },
-            { title: 'Industries', icon: <ApartmentIcon />, total: 999 },
-          ].map((item, index) => (
-            <div
-              key={index}
-              className='text-black w-44 h-44 bg-white rounded-3xl'
-            >
-              <div className='bg-main rounded-2xl px-6 py-2 w-10 absolute -mt-5 ml-2 text-white flex justify-center'>
-                {item.icon}
-              </div>
-              <div className='w-full h-full p-6 flex flex-col items-center justify-center'>
-                <div className='text-center font-semibold text-xs'>
-                  TOTAL NUMBER OF {item.title}
-                </div>
-                <div className='text-6xl font-bold'>{item.total}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </Grid>
+      <Dashboard
+        cards={[
+          { title: 'Managers', icon: <PeopleAltIcon />, total: 999 },
+          { title: 'Employees', icon: <BadgeIcon />, total: 999 },
+          { title: 'Skills', icon: <PsychologyIcon />, total: 999 },
+          { title: 'Capabilities', icon: <ConstructionIcon />, total: 999 },
+          { title: 'Industries', icon: <ApartmentIcon />, total: 999 },
+        ]}
+      />
     </div>
     // <div className={`${styles.container} ${tailwindClasses.container}`}>
     //   <PageBanner
