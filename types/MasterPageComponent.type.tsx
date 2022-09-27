@@ -16,7 +16,7 @@ export interface MetadataComponentProps {
 export interface FormProps {
   renderData: () => Promise<void>
   setLoadState: React.Dispatch<React.SetStateAction<boolean>>
-  metadataToEdit?: Metadata
+  metadataToEdit?: MetadataType
   metadataType: string
   setAction?: any
   setSuccess?: any
