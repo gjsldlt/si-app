@@ -79,7 +79,7 @@ const MetadataPage = () => {
           alignItems: 'stretch',
           backgroundColor: '#F7F7F7',
           flex: '1 0',
-          height: '100%'
+          height: '100%',
         }}
       >
         <Grid item xs={12} md={4}>
