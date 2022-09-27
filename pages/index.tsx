@@ -8,6 +8,12 @@ import PageBanner from '../components/pageBanner/pageBanner.component';
 import ButtonComponent from '../components/ButtonComponent';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import BadgeIcon from '@mui/icons-material/Badge';
+import PsychologyIcon from '@mui/icons-material/Psychology';
+import ConstructionIcon from '@mui/icons-material/Construction';
+import ApartmentIcon from '@mui/icons-material/Apartment';
+
 import HomeSVG from '../public/assets/images/home-alt.svg';
 import {
   Button,
@@ -21,6 +27,7 @@ import CardComponent from '../components/CardComponent';
 import styles from '../styles/Home.module.css';
 import { setuid } from 'process';
 import PopupComponent from '../components/PopupComponent';
+import Dashboard from '../components/dashboard/Dashboard';
 
 const Home: NextPage = () => {
   //state to show popup component
@@ -57,71 +64,82 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <Grid container spacing={2} className='pl-2'>
-      <Grid item xs={12} md={4} lg={4}>
-        <CardComponent
-          actions={<Button size='small'>sample</Button>}
-          content={
-            <>
-              <Typography
-                sx={{ fontSize: 14 }}
-                color='text.secondary'
-                gutterBottom
-              >
-                Word of the Day
-              </Typography>
-              <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                adjective
-              </Typography>
-              <Typography variant='body2'>
-                well meaning and kindly.
-                <br />
-                {'"a benevolent smile"'}
-              </Typography>
-            </>
-          }
-        />
-        {/* <CardComponents>
-          <CardContent>
-            <Typography
-              sx={{ fontSize: 14 }}
-              color='text.secondary'
-              gutterBottom
-            >
-              Word of the Day
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-              adjective
-            </Typography>
-            <Typography variant='body2'>
-              well meaning and kindly.
-              <br />
-              {'"a benevolent smile"'}
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size='small'>sample</Button>
-          </CardActions>
-        </CardComponents> */}
-      </Grid>
-      <Grid item xs={12} md={4} lg={4}>
-        <p className=''>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores
-          dolorem laborum repellat quam odit molestiae. Consequuntur incidunt
-          eaque atque maiores vel. Tempora quibusdam repudiandae veniam aperiam
-          suscipit, est similique quasi!
-        </p>
-        <Button className=' mt-8'>test button</Button>
-      </Grid>
-      <Grid item xs={12} md={4} lg={4}>
-        <p className=''>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum
-          expedita reprehenderit cumque voluptates, earum porro ex voluptas cum
-          similique illum quam perferendis neque modi tempora quae quas
-          consectetur non eum?
-        </p>
-      </Grid>
-    </Grid>
+    <div className='md:pt-7 md:px-28'>
+      <Dashboard
+        cards={[
+          { title: 'Managers', icon: <PeopleAltIcon />, total: 999 },
+          { title: 'Employees', icon: <BadgeIcon />, total: 999 },
+          { title: 'Skills', icon: <PsychologyIcon />, total: 999 },
+          { title: 'Capabilities', icon: <ConstructionIcon />, total: 999 },
+          { title: 'Industries', icon: <ApartmentIcon />, total: 999 },
+        ]}
+      />
+    </div>
+    // <Grid container spacing={2} className='pl-2'>
+    //   <Grid item xs={12} md={4} lg={4}>
+    //     <CardComponent
+    //       actions={<Button size='small'>sample</Button>}
+    //       content={
+    //         <>
+    //           <Typography
+    //             sx={{ fontSize: 14 }}
+    //             color='text.secondary'
+    //             gutterBottom
+    //           >
+    //             Word of the Day
+    //           </Typography>
+    //           <Typography sx={{ mb: 1.5 }} color='text.secondary'>
+    //             adjective
+    //           </Typography>
+    //           <Typography variant='body2'>
+    //             well meaning and kindly.
+    //             <br />
+    //             {'"a benevolent smile"'}
+    //           </Typography>
+    //         </>
+    //       }
+    //     />
+    //     {/* <CardComponents>
+    //       <CardContent>
+    //         <Typography
+    //           sx={{ fontSize: 14 }}
+    //           color='text.secondary'
+    //           gutterBottom
+    //         >
+    //           Word of the Day
+    //         </Typography>
+    //         <Typography sx={{ mb: 1.5 }} color='text.secondary'>
+    //           adjective
+    //         </Typography>
+    //         <Typography variant='body2'>
+    //           well meaning and kindly.
+    //           <br />
+    //           {'"a benevolent smile"'}
+    //         </Typography>
+    //       </CardContent>
+    //       <CardActions>
+    //         <Button size='small'>sample</Button>
+    //       </CardActions>
+    //     </CardComponents> */}
+    //   </Grid>
+    //   <Grid item xs={12} md={4} lg={4}>
+    //     <p className=''>
+    //       Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores
+    //       dolorem laborum repellat quam odit molestiae. Consequuntur incidunt
+    //       eaque atque maiores vel. Tempora quibusdam repudiandae veniam aperiam
+    //       suscipit, est similique quasi!
+    //     </p>
+    //     <Button className=' mt-8'>test button</Button>
+    //   </Grid>
+    //   <Grid item xs={12} md={4} lg={4}>
+    //     <p className=''>
+    //       Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum
+    //       expedita reprehenderit cumque voluptates, earum porro ex voluptas cum
+    //       similique illum quam perferendis neque modi tempora quae quas
+    //       consectetur non eum?
+    //     </p>
+    //   </Grid>
+    // </Grid>
     // <div className={`${styles.container} ${tailwindClasses.container}`}>
     //   <PageBanner
     //     content={
