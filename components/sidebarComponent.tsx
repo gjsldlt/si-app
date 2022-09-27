@@ -181,7 +181,7 @@ export default function MiniDrawer() {
           <AppBar
             position='relative'
             open={open}
-            className='z-30 bg-blue-900 md:pl-24 py-4 md:py-[66px]'
+            className='z-30 bg-adminBanner bg-left-bottom md:pl-24 py-4 md:py-[66px]'
           >
             <div className='text-center md:text-justify  text-white font-bold uppercase text-5xl md:text-[50px]'>
               {router.pathname === '/'
