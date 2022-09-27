@@ -64,7 +64,7 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <div className='md:pt-7 md:px-28'>
+    <div>
       <Dashboard
         cards={[
           { title: 'Managers', icon: <PeopleAltIcon />, total: 999 },
