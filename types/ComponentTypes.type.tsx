@@ -1,4 +1,3 @@
-import React from 'react';
 import { Dispatch, SetStateAction } from 'react';
 import { MetadataType, UserType } from './MasterTypes.types';
 
@@ -6,7 +5,8 @@ export interface ListType {
   data: MetadataType[] | UserType[];
   activeItem?: MetadataType | UserType;
   enableItemActions: boolean;
-  onListItemClick: Dispatch<SetStateAction<MetadataType | undefined>>
+  onListMetadataClick?: Dispatch<SetStateAction<MetadataType | undefined>>;
+  onListUserClick?: Dispatch<SetStateAction<UserType | undefined>>;
   listItemType?: string;
   editFunction?: <T extends MetadataType>(arg: T) => void;
   deleteFunction?: <T extends MetadataType>(arg: T) => void;
