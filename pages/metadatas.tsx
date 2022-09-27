@@ -5,6 +5,7 @@ import { Box, Grid } from '@mui/material';
 
 import { MetadataType } from '../types/MasterTypes.types';
 import ButtonComponent from '../components/ButtonComponent';
+import { minHeight } from '@mui/system';
 
 const MetadataPage = () => {
   const [activeSkill, setActiveSkill] = useState<MetadataType>();
@@ -46,7 +47,6 @@ const MetadataPage = () => {
           display: 'flex',
           flex: "1 0",
           flexDirection: 'column',
-          height: '100%'
         }}
       >
         <Box
@@ -70,7 +70,7 @@ const MetadataPage = () => {
           container
           spacing={2}
           sx={{
-            p: { xs: 1, md: 2 }
+            p: { xs: 1, sm: 2 },
           }}
         >
           <Grid

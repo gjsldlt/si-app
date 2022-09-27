@@ -111,7 +111,8 @@ const ListComponent: FC<ListType> = ({
               <ListItemButton
                 sx={[
                   {
-                    m: 1,
+                    my: .5,
+                    mx: 1,
                     backgroundColor: '#FAF9F9',
                     borderRadius: '10px',
                     '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.1)' },

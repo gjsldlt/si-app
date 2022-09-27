@@ -33,7 +33,20 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <Box sx={{ display: 'flex' }}>
       <SidebarComponent />
-      <Container sx={{ pt: { xs: "58px", sm: "64px" }, display: 'flex', flexDirection: 'column' }} maxWidth={false} disableGutters>
+      <Container
+        sx={{
+          pt: {
+            xs: '56px',
+            sm: '64px',
+          },
+          display: 'flex',
+          flexDirection: 'column',
+          maxHeight: '100%',
+          overflow: 'auto'
+        }}
+        maxWidth={false}
+        disableGutters
+      >
         {children}
       </Container>
     </Box>

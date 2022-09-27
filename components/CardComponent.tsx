@@ -8,7 +8,7 @@ import { CardType } from '../types/ComponentTypes.type';
 
 const CardComponent: FC<CardType> = ({ title, actions, content }) => {
   return (
-    <Card sx={{ borderRadius: '10px', minWidth: 275, height: '100%' }}>
+    <Card sx={{ borderRadius: '10px', minWidth: 275, height: '85vh' }}>
       <CardActions sx={{ p: 1, display: 'flex' }}>
         <Typography
           sx={{ fontSize: '14px', fontWeight: 700 }}
