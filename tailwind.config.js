@@ -94,6 +94,7 @@ module.exports = {
       },
       backgroundImage: {
         staticBanner: `url('/assets/images/static.jpeg')`,
+        adminBanner: `url('/assets/images/admin/background-admin.jpg')`,
       },
     },
   },
