@@ -36,8 +36,8 @@ export default function Layout({ children }: LayoutProps) {
       <Container
         sx={{
           pt: {
-            xs: '56px',
-            sm: '64px',
+            xs: '140px',
+            sm: '185px',
           },
           display: 'flex',
           flexDirection: 'column',
