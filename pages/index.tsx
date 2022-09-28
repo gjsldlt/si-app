@@ -29,6 +29,7 @@ import styles from '../styles/Home.module.css';
 import { setuid } from 'process';
 import PopupComponent from '../components/PopupComponent';
 import Dashboard from '../components/dashboard/Dashboard';
+import GraphCard from '../components/dashboard/GraphCard';
 
 const Home: NextPage = () => {
   //state to show popup component
@@ -37,7 +38,7 @@ const Home: NextPage = () => {
     setOpen(true);
   };
 
-  const skillNumber = 10;
+  const skillNumber = 20;
 
   const handleClose = (): void => {
     setOpen(false);
@@ -80,40 +81,12 @@ const Home: NextPage = () => {
       />
       <br />
       <br />
-      <div className='flex pb-2'>
-        <div className='rounded-xl bg-white drop-shadow-lg p-5 relative w-96 h-96'>
-          <div>Employees with Primary Skill</div>
-          <div className='relative flex justify-center top-[40%] left-[50%] translate-x-[-50%] translate-y-[-50%]'>
-            <CircularProgress
-              variant='determinate'
-              className='absolute z-30'
-              thickness={5}
-              value={100 - skillNumber}
-              size={250}
-            />
-            <CircularProgress
-              className='text-[#86c9f0]'
-              variant='determinate'
-              thickness={5}
-              value={100}
-              size={250}
-            />
-            <div className='text-[#86c9f0] font-bold text-6xl absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]'>
-              {skillNumber}%
-            </div>
-          </div>
-          <div className='mt-9 flex'>
-            <div className='flex items-center text-xs gap-x-2'>
-              <div className='min-w-[20px] min-h-[20px] bg-[#86c9f0] rounded-full'></div>
-              EMPLOYEES WITH PRIMARY SKILL
-            </div>
-            <div className='flex items-center text-xs gap-x-2'>
-              <div className='min-w-[20px] min-h-[20px] bg-main rounded-full'></div>
-              EMPLOYEES WITH PRIMARY SKILL
-            </div>
-          </div>
-        </div>
-      </div>
+      <Grid container className='flex pb-2 justify-evenly'>
+        <GraphCard title={'Employees with Primary Skill'} percent={skillNumber} />
+        <GraphCard title={'Test'} percent={skillNumber} />
+
+      
+      </Grid>
     </div>
     // <Grid container spacing={2} className='pl-2'>
     //   <Grid item xs={12} md={4} lg={4}>
