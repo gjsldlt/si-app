@@ -8,7 +8,7 @@ type GraphType = {
 
 const GraphCard: FC<GraphType> = ({ percent, title }) => {
   return (
-    <Grid className='rounded-xl bg-white drop-shadow-lg p-5 relative' xs={12} md={4}>
+    <Grid className='rounded-xl min-w-[290px] bg-white drop-shadow-lg p-5 relative' xs={12} md={4}>
       <div>{title}</div>
       <div className='relative flex justify-center top-[40%] left-[50%] translate-x-[-50%] translate-y-[-50%]'>
         <CircularProgress

@@ -69,7 +69,7 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <div className='md:pt-7 md:px-28'>
+    <div className='md:pt-7 md:px-28 space-y-5'>
       <Dashboard
         cards={[
           { title: 'Managers', icon: <PeopleAltIcon />, total: 999 },
@@ -79,12 +79,9 @@ const Home: NextPage = () => {
           { title: 'Industries', icon: <ApartmentIcon />, total: 999 },
         ]}
       />
-      <br />
-      <br />
-      <Grid container className='flex pb-2 justify-evenly'>
+      <Grid container className='flex pb-2 justify-evenly gap-y-5'>
         <GraphCard title={'Employees with Primary Skill'} percent={skillNumber} />
         <GraphCard title={'Test'} percent={skillNumber} />
-
       
       </Grid>
     </div>

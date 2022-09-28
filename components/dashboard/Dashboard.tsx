@@ -13,7 +13,7 @@ const Dashboard: FC<DashboardType> = ({ cards }) => {
   return (
     <Grid
       container
-      className='bg-[#0E2040] justify-center -mt-2 md:mt-0 md:rounded-lg pt-14 pb-12 md:px-12'
+      className='bg-[#0E2040] justify-center -mt-2 md:mt-0 rounded-b-lg md:rounded-lg pt-14 pb-12 md:px-12'
     >
       <div className='flex flex-wrap max-w-[362px] md:min-w-[546px] md:max-w-none justify-evenly gap-y-11 w-full'>
         {cards.map((item, index) => (
