@@ -122,7 +122,7 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
           activeItem={activeMetadata}
           editFunction={editMetadata}
           deleteFunction={removeMetadata}
-          onListItemClick={onMetadataClick}
+          onListMetadataClick={onMetadataClick}
         />
       );
     }

@@ -149,7 +149,7 @@ export default function MiniDrawer() {
           body: { overflow: open ? 'hidden' : 'auto' },
         }}
       />
-      <Box sx={{ display: 'flex', height: '64px' }}>
+      <Box className='flex h-[150px] sm:h-[165px] md:h-[195px]'>
         <CssBaseline />
         <div className='absolute w-full'>
           <AppBar
@@ -164,7 +164,7 @@ export default function MiniDrawer() {
                 onClick={handleDrawerOpen}
                 edge='start'
                 sx={{
-                  marginRight:2,
+                  marginRight: 2,
                   ...(open && { display: 'none' }),
                 }}
                 className='visible md:invisible text-white'
@@ -174,7 +174,7 @@ export default function MiniDrawer() {
               <img
                 src='/assets/images/deloitte-logo.png'
                 alt='DCPDC Logo'
-                className={` w-44`}
+                className='w-44'
               />
             </Toolbar>
           </AppBar>
