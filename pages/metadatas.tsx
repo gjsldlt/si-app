@@ -42,7 +42,6 @@ const MetadataPage = () => {
     <>
       <Box
         sx={{
-          pt: { xs: 1, md: 0 },
           backgroundColor: '#F7F7F7',
           display: 'flex',
           flex: "1 0",
@@ -52,7 +51,6 @@ const MetadataPage = () => {
         <Box
           justifyContent="center"
           sx={{
-            px: { xs: 1 },
             display: { xs: "flex", md: "none" },
             alignItems: "center",
           }}
