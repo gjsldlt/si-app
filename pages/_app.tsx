@@ -12,6 +12,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import theme from '../config/theme';
 import createEmotionCache from '../config/createEmotionCache';
+import { IfedProvider } from '../context/ifedContext';
 import Head from 'next/head';
 
 // Client-side cache, shared for the whole session of the user in the browser.
@@ -44,15 +45,16 @@ export default function MyApp(props: MyAppProps) {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <>
-          {!noLayoutFlag ? (
-            <Layout>
+
+        {!noLayoutFlag ? (
+          <Layout>
+            <IfedProvider>
               <Component {...pageProps} />
-            </Layout>
-          ) : (
-            <Component {...pageProps} />
-          )}
-        </>
+            </IfedProvider>
+          </Layout>
+        ) : (
+          <Component {...pageProps} />
+        )}
       </ThemeProvider>
     </CacheProvider>
   );

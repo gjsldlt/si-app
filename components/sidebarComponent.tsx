@@ -33,6 +33,7 @@ import { clearUserSession } from '../services/user.service';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import ButtonComponent from './ButtonComponent';
+import { IfedContext } from '../context/ifedContext';
 
 const drawerWidth = 240;
 
@@ -112,6 +113,8 @@ const menuList = [
 ];
 
 export default function MiniDrawer() {
+  const { username } = React.useContext(IfedContext);
+
   const router = useRouter();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -184,9 +187,10 @@ export default function MiniDrawer() {
             className='z-30 bg-adminBanner bg-left-bottom md:pl-24 py-4 md:py-[66px]'
           >
             <div className='text-center md:text-justify  text-white font-bold uppercase text-5xl md:text-[50px]'>
-              {router.pathname === '/'
+              {name}
+              {/* {router.pathname === '/'
                 ? 'dashboard'
-                : router.pathname.split('/')}
+                : router.pathname.split('/')} */}
             </div>
           </AppBar>
         </div>
