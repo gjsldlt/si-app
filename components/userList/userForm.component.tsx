@@ -239,7 +239,7 @@ export default function UserList({
 
     return (
       <>
-        <div className={tailwindClasses.formItemFourth}>
+        <div className={tailwindClasses.formItemHalf}>
           <FormControl fullWidth>
             <InputLabel htmlFor="grid-managerId-name">Manager</InputLabel>
             <Select
@@ -260,7 +260,7 @@ export default function UserList({
             </Select>
           </FormControl>
         </div>
-        <div className={tailwindClasses.formItemFourth}>
+        <div className={tailwindClasses.formItemHalf}>
           <FormControl fullWidth>
             <InputLabel htmlFor="grid-capability-name">Capability</InputLabel>
             <Select
@@ -280,7 +280,7 @@ export default function UserList({
             </Select>
           </FormControl>
         </div>
-        <div className={tailwindClasses.formItemFourth}>
+        {/* <div className={tailwindClasses.formItemFourth}>
           <FormControl fullWidth>
             <InputLabel htmlFor="grid-primarySkill-name">Primary Skill</InputLabel>
             <Select
@@ -317,7 +317,7 @@ export default function UserList({
               ))}
             </Select>
           </FormControl>
-        </div>
+        </div> */}
         <SkillManager employee={employeeData} setEmployee={setEmployeeData} setActiveSkills={setActiveSkillList} activeSkills={activeSkillList} />
       </>
     );

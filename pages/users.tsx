@@ -31,9 +31,6 @@ function Users() {
 
   return (
     <>
-      <PageBanner height="15vh" content={<div className={tailwindClasses.customBanner}>
-        <h1 className={tailwindClasses.header}>User List</h1>
-      </div>} />
       <div className={tailwindClasses.content}>
         <div className={tailwindClasses.box1}>
           {/* Manager List */}

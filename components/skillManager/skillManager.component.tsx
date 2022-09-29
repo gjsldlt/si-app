@@ -22,7 +22,7 @@ import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
 export default function SkillManager({ employee, activeSkills, setActiveSkills }: PageProps) {
   const tailwindClasses = {
     container: "container rounded w-full m-2 p-2 flex flex-row bg-[#FAF9F9]",
-    list: "h-[275px] w-2/3 flex flex-col gap-1 pt-5 pl-3 overflow-auto",
+    list: "h-[200px] w-full flex flex-col gap-1 pt-5 pl-3 overflow-auto",
     formRow: "flex flex-col pt-1 m-[5px]",
     form: "h-full pr-2 w-1/3",
     inputLabel: "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mr-1",
@@ -30,9 +30,9 @@ export default function SkillManager({ employee, activeSkills, setActiveSkills }
     formButton: "bg-transparent hover:bg-sidebar text-sidebar font-semibold hover:text-white py-2 px-4 border border-sidebar hover:border-transparent rounded",
     chip: "chip flex justify-between p-1 h-[50px] rounded-[10px] bg-white text-sidebar px-2 flex items-center w-full",
     name: "flex justify-between w-full",
-    chipDeleteIcon: "chipDeleteIcon w-[30px] h-[30px] ml-[25px] p-[7px] text-[#1C1B1F] bg-white rounded-[25px] drop-shadow-[0_1px_1px_rgba(0,0,0,0.25)]",
-    test: "flex",
-    test2: "w-full m-[5px]"
+    chipDeleteIcon: "chipDeleteIcon w-[30px] h-[30px] ml-[25px] p-[7px] text-[#1C1B1F] bg-white rounded-[25px] drop-shadow-[0_1px_1px_rgba(0,0,0,0.25)] cursor-pointer",
+    inputContainer: "flex",
+    halfInput: "w-full m-[5px]"
   };
   const [loadState, setLoadState] = useState<boolean>(false);
   const [metadataSkills, setMetadataSkills] = useState<MetadataType[]>([]);
@@ -118,25 +118,32 @@ export default function SkillManager({ employee, activeSkills, setActiveSkills }
     setActiveSkills(activeSkills.filter((item) => item.skill?._id !== id));
   };
 
-  const sort = (e) => {
+  const nameSort = (e) => {
     e.preventDefault()
     if (skillNameSort === true) {
       setSkillNameSort(false)
     } else {
       setSkillNameSort(true)
     }
+  }
+
+  const rateSort = (e) => {
+    e.preventDefault()
     if (skillRateSort === true) {
       setSkillRateSort(false)
     } else {
       setSkillRateSort(true)
     }
+  }
+
+  const yearSort = (e) => {
+    e.preventDefault()
     if (skillYearsSort === true) {
       setSkillYearsSort(false)
     } else {
       setSkillYearsSort(true)
     }
   }
-
 
   useEffect(() => {
     renderData();
@@ -167,8 +174,8 @@ export default function SkillManager({ employee, activeSkills, setActiveSkills }
             </Select>
           </FormControl>
         </div>
-        <div className={tailwindClasses.test}>
-          <div className={tailwindClasses.test2}>
+        <div className={tailwindClasses.inputContainer}>
+          <div className={tailwindClasses.halfInput}>
             <Box
               sx={{
                 width: '100%',
@@ -189,7 +196,7 @@ export default function SkillManager({ employee, activeSkills, setActiveSkills }
               />
             </Box>
           </div>
-          <div className={tailwindClasses.test2}>
+          <div className={tailwindClasses.halfInput}>
             <Box
               sx={{
                 width: '100%',
@@ -243,50 +250,82 @@ export default function SkillManager({ employee, activeSkills, setActiveSkills }
           />
         </div>
       </div>
-
-      <div className={tailwindClasses.list}>
-        <div className="w-full flex justify-between">
-          <button onClick={sort}>
+      <div className='flex flex-col w-2/3'>
+        <div className="w-full flex justify-between mt-[10px]">
+          <button onClick={nameSort}>
             {skillNameSort === true ? <ChevronUpIcon /> : <ChevronDownIcon />}
             Name
           </button>
-          <button className="pl-[45px]" onClick={sort}>
+          <button className="pl-[45px]" onClick={rateSort}>
             {skillRateSort === true ? <ChevronUpIcon /> : <ChevronDownIcon />}
             Rate
           </button>
-          <button className="pr-[45px]" onClick={sort}>
+          <button className="pr-[45px]" onClick={yearSort}>
             {skillYearsSort === true ? <ChevronUpIcon /> : <ChevronDownIcon />}
             Years of Exp
           </button>
         </div>
-        {activeSkills?.map((item, index) => (
-          <div className={tailwindClasses.chip} key={`skill-chip-${index}`}>
-            <div className={tailwindClasses.name}>
-              <div className="w-[50px]">{item.skill?.name}</div>
-              <div className="w-[50px] flex justify-center">{item.rate}</div>
-              <div className="w-[50px] flex justify-center">{item.yearsExperience}</div>
+        <div className={tailwindClasses.list}>
+          {activeSkills?.map((item, index) => (
+            <div className={tailwindClasses.chip} key={`skill-chip-${index}`}>
+              <div className={tailwindClasses.name}>
+                <div className="w-[50px]">{item.skill?.name}</div>
+                <div className="w-[50px] flex justify-center">{item.rate}</div>
+                <div className="w-[50px] flex justify-center">{item.yearsExperience}</div>
+              </div>
+              <DeleteIcon
+                className={tailwindClasses.chipDeleteIcon}
+                onClick={() =>
+                  removeActiveSkill(item.skill ? item.skill._id : '')
+                }
+              />
             </div>
-            <DeleteIcon
-              className={tailwindClasses.chipDeleteIcon}
-              onClick={() =>
-                removeActiveSkill(item.skill ? item.skill._id : '')
-              }
-            />
+          ))}
+        </div>
+        <div className={tailwindClasses.inputContainer}>
+          <div className={tailwindClasses.halfInput}>
+            <FormControl fullWidth>
+              <InputLabel htmlFor="grid-skills-name">Primary Skill</InputLabel>
+              <Select
+                disabled={filteredMetadataSkills.length === 0}
+                required
+                labelId="grid-skills-name"
+                id="grid-skills-name"
+                name="skill"
+                value={skill?._id}
+                label="Skill"
+                onChange={onFormSkillInputChange}
+              >
+                {filteredMetadataSkills.map((item, index) => (
+                  <MenuItem key={`active-skill-option-${index}`} value={item._id!}>
+                    {`${item.name}`}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </div>
-        ))}
-        {/* <FormControl fullWidth>
-          <InputLabel htmlFor="grid-primarySkill-name">Primary Skill</InputLabel>
-          <Select
-            labelId="grid-primarySkill-name"
-            id="grid-primarySkill-name"
-            name="primarySkill"
-            value={ }
-            label="Primary Skill"
-            onChange={ }
-          >
-            hello
-          </Select>
-        </FormControl> */}
+          <div className={tailwindClasses.halfInput}>
+            <FormControl fullWidth>
+              <InputLabel htmlFor="grid-skills-name">Secondary Skill</InputLabel>
+              <Select
+                disabled={filteredMetadataSkills.length === 0}
+                required
+                labelId="grid-skills-name"
+                id="grid-skills-name"
+                name="skill"
+                value={skill?._id}
+                label="Skill"
+                onChange={onFormSkillInputChange}
+              >
+                {filteredMetadataSkills.map((item, index) => (
+                  <MenuItem key={`active-skill-option-${index}`} value={item._id!}>
+                    {`${item.name}`}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+        </div>
       </div>
     </div >
   );
