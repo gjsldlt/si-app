@@ -28,6 +28,8 @@ import styles from '../styles/Home.module.css';
 import { setuid } from 'process';
 import PopupComponent from '../components/PopupComponent';
 import Dashboard from '../components/dashboard/Dashboard';
+import SearchComponent from '../components/searchComponent';
+import CustomizedHook from '../components/CustomizedHook';
 
 const Home: NextPage = () => {
   //state to show popup component
@@ -65,7 +67,8 @@ const Home: NextPage = () => {
 
   return (
     <div>
-      <Dashboard
+      {/* Dashboard */}
+      {/* <Dashboard
         cards={[
           { title: 'Managers', icon: <PeopleAltIcon />, total: 999 },
           { title: 'Employees', icon: <BadgeIcon />, total: 999 },
@@ -73,8 +76,29 @@ const Home: NextPage = () => {
           { title: 'Capabilities', icon: <ConstructionIcon />, total: 999 },
           { title: 'Industries', icon: <ApartmentIcon />, total: 999 },
         ]}
-      />
+      /> */}
+      {/* Three columns */}
+      <div className='w-full grid grid-cols-1 md:grid-cols-3 bg-red-400'>
+        {/* <div>Graph 1</div>
+        <div>Graph 2</div> */}
+        {/* <CustomizedHook /> */}
+        <SearchComponent />
+      </div>
     </div>
+    // <div className='md:pt-7 md:px-28'>
+    //   <Dashboard
+    //     cards={[
+    //       { title: 'Managers', icon: <PeopleAltIcon />, total: 999 },
+    //       { title: 'Employees', icon: <BadgeIcon />, total: 999 },
+    //       { title: 'Skills', icon: <PsychologyIcon />, total: 999 },
+    //       { title: 'Capabilities', icon: <ConstructionIcon />, total: 999 },
+    //       { title: 'Industries', icon: <ApartmentIcon />, total: 999 },
+    //     ]}
+    //   />
+    //   <div>
+    //     <SearchComponent />
+    //   </div>
+    // </div>
     // <Grid container spacing={2} className='pl-2'>
     //   <Grid item xs={12} md={4} lg={4}>
     //     <CardComponent
