@@ -2,7 +2,7 @@ import { FC } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import { Typography, Container } from '@mui/material';
+import { Typography, Container, Pagination } from '@mui/material';
 
 import { CardType } from '../types/ComponentTypes.type';
 
@@ -12,11 +12,8 @@ const CardComponent: FC<CardType> = ({ title, actions, content }) => {
       sx={{
         borderRadius: '10px',
         minWidth: 275,
-        height: {
-          xs: 'calc(100vh - 220px)',
-          sm: 'calc(100vh - 265px)',
-          md: 'calc(100vh - 220px)'
-        }
+        height: '100%',
+        margin: { xs: 2, sm: 0 }
       }}>
       <CardActions sx={{ p: 1, display: 'flex' }}>
         <Typography
@@ -33,7 +30,10 @@ const CardComponent: FC<CardType> = ({ title, actions, content }) => {
           {actions}
         </Container>
       </CardActions>
-      <CardContent sx={{ p: 0, maxHeight: '66vh', overflow: 'auto' }}>{content}</CardContent>
+      <CardContent sx={{ p: 0, height: '60vh', overflow: 'auto' }}>{content}</CardContent>
+      <CardActions>
+        <Pagination sx={{ padding: 1, margin: 'auto' }} count={10} size="small" />
+      </CardActions>
     </Card>
   );
 };
