@@ -19,6 +19,7 @@ import {
   Button,
   CardActions,
   CardContent,
+  CircularProgress,
   Grid,
   Typography,
 } from '@mui/material';
@@ -28,6 +29,7 @@ import styles from '../styles/Home.module.css';
 import { setuid } from 'process';
 import PopupComponent from '../components/PopupComponent';
 import Dashboard from '../components/dashboard/Dashboard';
+import GraphCard from '../components/dashboard/GraphCard';
 
 const Home: NextPage = () => {
   //state to show popup component
@@ -35,6 +37,9 @@ const Home: NextPage = () => {
   const handleOpen = (): void => {
     setOpen(true);
   };
+
+  const skillNumber = 20;
+
   const handleClose = (): void => {
     setOpen(false);
   };
@@ -64,7 +69,7 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <div>
+    <div className='md:pt-7 md:px-28 space-y-5'>
       <Dashboard
         cards={[
           { title: 'Managers', icon: <PeopleAltIcon />, total: 999 },
@@ -74,6 +79,11 @@ const Home: NextPage = () => {
           { title: 'Industries', icon: <ApartmentIcon />, total: 999 },
         ]}
       />
+      <Grid container className='flex pb-2 justify-evenly gap-y-5'>
+        <GraphCard title={'Employees with Primary Skill'} percent={50} />
+        <GraphCard title={'Employees with Secondary Skill'} percent={30} />
+      
+      </Grid>
     </div>
     // <Grid container spacing={2} className='pl-2'>
     //   <Grid item xs={12} md={4} lg={4}>

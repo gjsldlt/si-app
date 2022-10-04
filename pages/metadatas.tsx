@@ -17,7 +17,7 @@ const MetadataPage = () => {
 
   const onMobileTabClick = (tab: string) => {
     setActiveMobileTab(tab);
-    console.log("tab: " + activeMobileTab);
+    console.log('tab: ' + activeMobileTab);
     setActiveCapability(undefined);
     setActiveIndustry(undefined);
     setActiveSkill(undefined);
@@ -25,18 +25,16 @@ const MetadataPage = () => {
 
   const handleResize = () => {
     if (window.innerWidth < 900) {
-      setIsMobile(true)
+      setIsMobile(true);
     } else {
-      setIsMobile(false)
+      setIsMobile(false);
     }
-  }
+  };
 
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
     handleResize();
-  })
-
-
+  });
 
   return (
     <>
@@ -45,24 +43,27 @@ const MetadataPage = () => {
           pt: { xs: 1, md: 0 },
           backgroundColor: '#F7F7F7',
           display: 'flex',
-          flex: "1 0",
+          height: '100%',
+          flex: '1 0',
           flexDirection: 'column',
         }}
       >
         <Box
-          justifyContent="center"
+          justifyContent='center'
           sx={{
             px: { xs: 1 },
-            display: { xs: "flex", md: "none" },
-            alignItems: "center",
+            display: { xs: 'flex', md: 'none' },
+            alignItems: 'center',
           }}
         >
           {mobileTabs.map((tab, index) => (
-            <ButtonComponent text={[`${tab}`]}
+            <ButtonComponent
+              text={[`${tab}`]}
               key={`mobile-tab-${index}`}
               type='button'
               handleClick={[() => onMobileTabClick(tab)]}
-              variant='outlined'></ButtonComponent>
+              variant='outlined'
+            ></ButtonComponent>
           ))}
         </Box>
 
@@ -77,9 +78,10 @@ const MetadataPage = () => {
             item
             xs={12}
             md={4}
-            display={((activeMobileTab === 'Skills') || (isMobile === false)) ?
-              'block'
-              : 'none'
+            display={
+              activeMobileTab === 'Skills' || isMobile === false
+                ? 'block'
+                : 'none'
             }
           >
             <MetadataComponent
@@ -93,9 +95,10 @@ const MetadataPage = () => {
             item
             xs={12}
             md={4}
-            display={((activeMobileTab === 'Capabilities') || (isMobile === false)) ?
-              'block'
-              : 'none'
+            display={
+              activeMobileTab === 'Capabilities' || isMobile === false
+                ? 'block'
+                : 'none'
             }
           >
             <MetadataComponent
@@ -109,9 +112,10 @@ const MetadataPage = () => {
             item
             xs={12}
             md={4}
-            display={((activeMobileTab === 'Industries') || (isMobile === false)) ?
-              'block'
-              : 'none'
+            display={
+              activeMobileTab === 'Industries' || isMobile === false
+                ? 'block'
+                : 'none'
             }
           >
             <MetadataComponent
