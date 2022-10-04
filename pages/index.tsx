@@ -80,8 +80,8 @@ const Home: NextPage = () => {
         ]}
       />
       <Grid container className='flex pb-2 justify-evenly gap-y-5'>
-        <GraphCard title={'Employees with Primary Skill'} percent={skillNumber} />
-        <GraphCard title={'Test'} percent={skillNumber} />
+        <GraphCard title={'Employees with Primary Skill'} percent={50} />
+        <GraphCard title={'Employees with Secondary Skill'} percent={30} />
       
       </Grid>
     </div>
