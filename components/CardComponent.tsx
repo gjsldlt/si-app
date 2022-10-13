@@ -6,7 +6,7 @@ import { Typography, Container, Pagination } from '@mui/material';
 
 import { CardType } from '../types/ComponentTypes.type';
 
-const CardComponent: FC<CardType> = ({ title, actions, content }) => {
+const CardComponent: FC<CardType> = ({ title, actions, content, pageCount }) => {
   return (
     <Card
       sx={{
@@ -32,7 +32,7 @@ const CardComponent: FC<CardType> = ({ title, actions, content }) => {
       </CardActions>
       <CardContent sx={{ p: 0, height: '60vh', overflow: 'auto' }}>{content}</CardContent>
       <CardActions>
-        <Pagination sx={{ padding: 1, margin: 'auto' }} count={10} size="small" />
+        <Pagination sx={{ padding: 1, margin: 'auto' }} count={pageCount} size="small" />
       </CardActions>
     </Card>
   );

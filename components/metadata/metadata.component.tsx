@@ -32,6 +32,9 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
   //state hook to capture metadala to delete on click of trash icon
   const [metadataToDelete, setMetadataToDelete] = useState<MetadataType>();
 
+  //state hook to get page count of card
+  const [metadataPageCount, setMetadataPageCount] = useState(0);
+
   //state hook to display form containing input fields
   const [displayForm, setDisplayForm] = useState<boolean>(false);
   //state hook to display delete confirmation
@@ -69,11 +72,13 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
     setLoadState(false);
   }, [type]);
 
+
+
   useEffect(() => {
     renderData();
   }, [renderData]);
 
-  const metadataTitle = () => {
+  const metadataTitle = useCallback(() => {
     let title: string;
     switch (type) {
       case 'skill':
@@ -88,7 +93,18 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
       default:
         break;
     }
-  };
+  }, [type]);
+
+  useEffect(() => {
+    console.log(metadataTitle() + ' length: ' + metadataList.length)
+
+    for (let i = 1; i <= metadataList.length / i; i++) {
+      if (metadataList.length / i <= 5) {
+        setMetadataPageCount(i)
+        break;
+      }
+    }
+  }, [metadataList.length, metadataTitle])
 
   const clickYes = async () => {
     setAction("delete");
@@ -132,6 +148,7 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
     <>
       <CardComponent
         title={metadataTitle()}
+        pageCount={metadataPageCount}
         actions={
           <>
             <ButtonComponent
