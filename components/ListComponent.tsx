@@ -119,6 +119,7 @@ const ListComponent: FC<ListType> = ({
                   },
                   activeLine
                     ? {
+                      py: 1,
                       backgroundColor: '#0E2040',
                       '&:hover': { backgroundColor: '#0E2040' },
                     }
@@ -130,7 +131,7 @@ const ListComponent: FC<ListType> = ({
                 }}
               >
                 <ListItemText
-                  sx={{ mr: 5, lineHeight: 0, }}
+                  sx={{ my: 0, mr: 5, lineHeight: 0, }}
                   disableTypography={false}
                   primary={
                     <Typography

@@ -16,5 +16,7 @@ export interface CardType {
   title?: string | undefined,
   actions?: JSX.Element,
   content?: JSX.Element,
-  pageCount?: number
+  pageCount?: number,
+  setCurrentPage?: React.Dispatch<React.SetStateAction<number>>;
+  renderData?: () => Promise<void>;
 }

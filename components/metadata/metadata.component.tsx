@@ -7,7 +7,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import TuneIcon from '@mui/icons-material/Tune';
 import { Box } from '@mui/material';
 
-import { getMetadata } from '../../services/metadata.service';
+import { getMetadata, getPgMetadata } from '../../services/metadata.service';
 import { MetadataComponentProps } from '../../types/MasterPageComponent.type';
 import { MetadataType } from '../../types/MasterTypes.types';
 import { deleteMetadata } from '../../services/metadata.service';
@@ -49,6 +49,12 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
   // state hook to show loader on popup
   const [popupLoading, setPopupLoading] = useState<boolean>(false);
 
+  const [metadataPgList, setMetadataPgList] = useState<MetadataType[]>([])
+
+  const [currentPage, setCurrentPage] = useState<number>(0)
+
+  const maxNoOfResults = 10;
+
   const showMetadataForm = () => {
     setMetadataToEdit(undefined);
     setDisplayForm(!displayForm);
@@ -69,14 +75,15 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
     setDisplayPopup(false);
     setLoadState(true);
     setMetadataList(await getMetadata(type));
+    setMetadataPgList(await getPgMetadata(type, currentPage, maxNoOfResults));
     setLoadState(false);
-  }, [type]);
-
-
+  }, [type, currentPage]);
 
   useEffect(() => {
     renderData();
   }, [renderData]);
+
+
 
   const metadataTitle = useCallback(() => {
     let title: string;
@@ -95,16 +102,15 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
     }
   }, [type]);
 
+  //add page count for every 10 entries of metadata
   useEffect(() => {
-    console.log(metadataTitle() + ' length: ' + metadataList.length)
-
     for (let i = 1; i <= metadataList.length / i; i++) {
-      if (metadataList.length / i <= 5) {
+      if (metadataList.length / i <= maxNoOfResults) {
         setMetadataPageCount(i)
         break;
       }
     }
-  }, [metadataList.length, metadataTitle])
+  }, [metadataList, metadataTitle])
 
   const clickYes = async () => {
     setAction("delete");
@@ -132,7 +138,7 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
     } else {
       return (
         <ListComponent
-          data={metadataList}
+          data={metadataPgList}
           listItemType={type}
           enableItemActions={enableRowActions}
           activeItem={activeMetadata}
@@ -148,7 +154,9 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
     <>
       <CardComponent
         title={metadataTitle()}
+        renderData={renderData}
         pageCount={metadataPageCount}
+        setCurrentPage={setCurrentPage}
         actions={
           <>
             <ButtonComponent
