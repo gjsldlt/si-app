@@ -1,4 +1,4 @@
-import { FC, ChangeEvent, useState, useEffect } from 'react';
+import { FC, ChangeEvent } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -14,8 +14,6 @@ const CardComponent: FC<CardType> = ({ title, actions, content, pageCount, setCu
     if (setCurrentPage !== undefined) {
       setCurrentPage(pageNumber - 1);
     }
-
-
   }
 
   return (
@@ -41,7 +39,7 @@ const CardComponent: FC<CardType> = ({ title, actions, content, pageCount, setCu
           {actions}
         </Container>
       </CardActions>
-      <CardContent sx={{ p: 0, height: '60vh', overflow: 'auto' }}>{content}</CardContent>
+      <CardContent sx={{ p: 0, height: '85%', overflow: 'auto' }}>{content}</CardContent>
       <CardActions>
         <Pagination onChange={(event, pageNumber) => pageChangeHandler(event, pageNumber)} sx={{ padding: 1, margin: 'auto' }} count={pageCount} size="small" />
       </CardActions>
