@@ -30,11 +30,26 @@ export const getMetadataQuery = `query
       type: $type
     ) 
     {
-      _id 
       name 
       description
     }
   }`;
+
+//query string for API get request
+export const getPgMetadataQuery = `query MetadataList($options: AdvancedListInput) {
+  metadataList(options: $options) {
+    currentPage
+    totalPages
+    totalItems
+    paginatedList {
+      _id
+      name
+      type
+      description
+    }
+  }
+}`;
+
 
 //query string for API put request
 export const updateMetadataQuery = `mutation UpdateMetadata
