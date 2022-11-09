@@ -15,5 +15,8 @@ export interface ListType {
 export interface CardType {
   title?: string | undefined,
   actions?: JSX.Element,
-  content?: JSX.Element
+  content?: JSX.Element,
+  pageCount?: number,
+  setCurrentPage?: React.Dispatch<React.SetStateAction<number>>;
+  renderData?: () => Promise<void>;
 }
