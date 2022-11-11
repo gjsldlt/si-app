@@ -3,42 +3,51 @@ import { XIcon } from '@heroicons/react/solid';
 // import _ from 'lodash';
 
 import { getMetadata } from "../../services/metadata.service";
-import { MetadataType, EmployeeType } from "../../types/MasterTypes.types";
+import { MetadataType, EmployeeType, ActiveSkillType } from "../../types/MasterTypes.types";
 import Loader from "../loader/loader.component";
 import styles from "./skillManager.module.scss";
 import ButtonComponent from "../ButtonComponent";
-import TextFieldComponent from "../TextFieldComponent";
-import { MenuItem } from "@mui/material";
+import Select from '@mui/material/Select'
+import InputLabel from '@mui/material/InputLabel'
+import FormControl from '@mui/material/FormControl'
+import MenuItem from '@mui/material/MenuItem'
+import Box from '@mui/material/Box'
+import TextField from '@mui/material/TextField'
+import InputAdornment from "@mui/material/InputAdornment";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ChevronUpIcon from '@mui/icons-material/ExpandLess';
+import ChevronDownIcon from '@mui/icons-material/ExpandMore';
+import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
 
-export default function SkillManager({ employee }: PageProps) {
+export default function SkillManager({ employee, activeSkills, setActiveSkills }: PageProps) {
   const tailwindClasses = {
-    //border border-[gray]
-    container: 'rounded  w-full m-2 p-2 flex flex-row',
-    list: 'h-full basis-[50%] flex flex-wrap gap-1 pt-5 pl-3',
-    formRow: 'flex flex-col pt-1',
-    form: 'h-full basis-[50%] pr-2',
-    inputLabel:
-      'block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mr-1',
-    input:
-      'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500',
-    formButton:
-      'bg-transparent hover:bg-sidebar text-sidebar font-semibold hover:text-white py-2 px-4 border border-sidebar hover:border-transparent rounded',
-    chip: 'p-1 border border-black rounded-xl bg-sidebar text-white px-2 flex items-center',
-    name: '',
-    chipDeleteIcon: 'h-[20px] ml-2 hover:text-current cursor-pointer',
+    container: "container rounded w-full m-2 p-2 flex flex-row bg-[#FAF9F9]",
+    list: "h-[200px] w-full flex flex-col gap-1 pt-5 pl-3 overflow-auto",
+    formRow: "flex flex-col pt-1 m-[5px]",
+    formLeft: "h-full pr-2 w-1/3 space-y-2",
+    formRight: "flex flex-col w-2/3",
+    inputLabel: "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mr-1",
+    input: "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+    formButton: "bg-transparent hover:bg-sidebar text-sidebar font-semibold hover:text-white py-2 px-4 border border-sidebar hover:border-transparent rounded",
+    chip: "chip flex justify-between p-1 h-[50px] rounded-[10px] bg-white text-sidebar px-2 flex items-center w-full",
+    name: "flex justify-between w-full",
+    chipDeleteIcon: "chipDeleteIcon w-[30px] h-[30px] ml-[25px] p-[7px] text-[#1C1B1F] bg-white rounded-[25px] drop-shadow-[0_1px_1px_rgba(0,0,0,0.25)] cursor-pointer",
+    inputContainer: "flex",
+    halfInput: "w-full m-[5px]",
+    buttonGroup: "w-full flex justify-between mt-[10px]"
   };
   const [loadState, setLoadState] = useState<boolean>(false);
   const [metadataSkills, setMetadataSkills] = useState<MetadataType[]>([]);
   const [primarySkill, setPrimarySkill] = useState<MetadataType>();
   const [secondarySkill, setSecondarySkill] = useState<MetadataType>();
-  const [activeSkills, setActiveSkills] = useState<
-    {
-      rate: number;
-      yearsExperience: number;
-      description: string;
-      skill?: MetadataType;
-    }[]
-  >([]);
+  // const [activeSkills, setActiveSkills] = useState<
+  //   {
+  //     rate: number;
+  //     yearsExperience: number;
+  //     description: string;
+  //     skill?: MetadataType;
+  //   }[]
+  // >([]);
   const filteredMetadataSkills = metadataSkills.filter(
     (mskill) =>
       activeSkills
@@ -51,6 +60,11 @@ export default function SkillManager({ employee }: PageProps) {
   const [yearsExperience, setYearsExperience] = useState<number>(0);
   const [description, setDescription] = useState<string>('');
   const [skill, setSkill] = useState<MetadataType>();
+  const [skillNameSort, setSkillNameSort] = useState<boolean>(true);
+  const [skillRateSort, setSkillRateSort] = useState<boolean>(true);
+  const [skillYearsSort, setSkillYearsSort] = useState<boolean>(true);
+  const [sortedSkills, setSortedSkills] = useState([])
+  const [skillArray, setSkillArray] = useState(activeSkills)
 
   const renderData = async () => {
     setLoadState(true);
@@ -108,132 +122,166 @@ export default function SkillManager({ employee }: PageProps) {
     setActiveSkills(activeSkills.filter((item) => item.skill?._id !== id));
   };
 
+  const compare = (a, b, type, e) => {
+    if (a[type] < b[type]) {
+      return e ? -1 : 1;
+    }
+    if (a[type] > b[type]) {
+      return e ? 1 : -1;
+    }
+    return 0;
+  }
+
+  const nameSort = (e) => {
+    e.preventDefault()
+    if (skillNameSort === true) {
+      setSkillNameSort(false)
+    } else {
+      setSkillNameSort(true)
+    }
+  }
+
+  const rateSort = (e) => {
+    e.preventDefault()
+    let tempArray = activeSkills
+    if (skillRateSort === true) {
+      tempArray.sort((a, b) => compare(b, a, 'rate', e));
+      setSkillArray(tempArray);
+      setSkillRateSort(false)
+    } else {
+      tempArray.sort((a, b) => compare(a, b, 'rate', e));
+      setSkillArray(tempArray);
+      setSkillRateSort(true)
+    }
+  }
+
+  const yearSort = (e) => {
+    e.preventDefault()
+    let tempArray = activeSkills
+    if (skillYearsSort === true) {
+      tempArray.sort((a, b) => compare(b, a, 'yearsExperience', e));
+      setSkillArray(tempArray);
+      setSkillYearsSort(false)
+    } else {
+      tempArray.sort((a, b) => compare(a, b, 'yearsExperience', e));
+      setSkillArray(tempArray);
+      setSkillYearsSort(true)
+    }
+  }
+
   useEffect(() => {
     renderData();
   }, [employee]);
 
+  useEffect(() => {
+    let tempSkills = activeSkills?.map((item, index) => (
+      <div className={tailwindClasses.chip} key={`skill-chip-${index}`}>
+        <div className={tailwindClasses.name}>
+          <div className="w-[50px]">{item.skill?.name}</div>
+          <div className="w-[50px] flex justify-center">{item.rate}</div>
+          <div className="w-[50px] flex justify-center">{item.yearsExperience}</div>
+        </div>
+        <DeleteIcon
+          className={tailwindClasses.chipDeleteIcon}
+          onClick={() =>
+            removeActiveSkill(item.skill ? item.skill._id : '')
+          }
+        />
+      </div>
+    ))
+    setSortedSkills(tempSkills);
+  }, [sortedSkills])
+
   return (
     <div className={tailwindClasses.container}>
-      <div className={tailwindClasses.form + " space-y-2"}>
+      <div className={tailwindClasses.formLeft}>
         <div className={tailwindClasses.formRow}>
-          {/* <span className={tailwindClasses.inputLabel}>Skill</span>
-          <select
-            disabled={filteredMetadataSkills.length === 0}
-            required
-            name='skill'
-            onChange={onFormSkillInputChange}
-            className={tailwindClasses.input}
-            value={skill?._id}
-            id='grid-skills-name'
-          >
-            <option value={''}>-</option>
-            {filteredMetadataSkills.map((item, index) => (
-              <option key={`active-skill-option-${index}`} value={item._id!}>
-                {`${item.name}`}
-              </option>
-            ))}
-          </select> */}
-          <TextFieldComponent
-            select={true}
-            label="Skill"
-            disabled={filteredMetadataSkills.length === 0}
-            required={true}
-            id="grid-skills-name"
-            name="skill"
-            onChange={onFormSkillInputChange}
-            value={skill ? skill?._id : ""}
-          >
-            {filteredMetadataSkills.map((item, index) => (
-              <MenuItem key={`active-skill-option-${index}`} value={item._id!}>
-                {`${item.name}`}
-              </MenuItem>
-            ))}
-          </TextFieldComponent>
+          <span className={tailwindClasses.inputLabel}>Skill</span>
+          <FormControl fullWidth>
+            <InputLabel htmlFor="grid-skills-name">Skill</InputLabel>
+            <Select
+              disabled={filteredMetadataSkills.length === 0}
+              required
+              labelId="grid-skills-name"
+              id="grid-skills-name"
+              name="skill"
+              value={skill?._id}
+              label="Skill"
+              onChange={onFormSkillInputChange}
+            >
+              {filteredMetadataSkills.map((item, index) => (
+                <MenuItem key={`active-skill-option-${index}`} value={item._id!}>
+                  {`${item.name}`}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+        <div className={tailwindClasses.inputContainer}>
+          <div className={tailwindClasses.halfInput}>
+            <Box
+              sx={{
+                width: '100%',
+                maxWidth: '100%'
+              }}
+            >
+              <TextField
+                disabled={filteredMetadataSkills.length === 0}
+                required
+                name="rate"
+                onChange={onFormSkillInputChange}
+                fullWidth
+                value={rate}
+                id="grid-rate"
+                type="number"
+                variant="outlined"
+                label="Rate"
+              />
+            </Box>
+          </div>
+          <div className={tailwindClasses.halfInput}>
+            <Box
+              sx={{
+                width: '100%',
+                maxWidth: '100%'
+              }}
+            >
+              <TextField
+                disabled={filteredMetadataSkills.length === 0}
+                required
+                name="yearsExperience"
+                onChange={onFormSkillInputChange}
+                fullWidth
+                value={yearsExperience}
+                id="grid-years-experience"
+                type="number"
+                variant="outlined"
+                label="Years of Exp"
+              />
+            </Box>
+          </div>
         </div>
         <div className={tailwindClasses.formRow}>
-          {/* <label className={tailwindClasses.inputLabel} htmlFor="grid-rate">
-            Rate
-          </label>
-          <input
-            disabled={filteredMetadataSkills.length === 0}
-            required
-            name='rate'
-            onChange={onFormSkillInputChange}
-            value={rate}
-            className={tailwindClasses.input}
-            id="grid-rate"
-            type="number"
-            placeholder="0"
-          /> */}
-          <TextFieldComponent
-            label="Rate"
-            required={true}
-            disabled={filteredMetadataSkills.length === 0}
-            id="grid-rate"
-            name="rate"
-            value={rate}
-            onChange={onFormSkillInputChange}
-            type="number"
-            placeholder="0"
-          />
-        </div>
-        <div className={tailwindClasses.formRow}>
-          {/* <label
-            className={tailwindClasses.inputLabel}
-            htmlFor='grid-years-experience'
+          <Box
+            sx={{
+              width: '100%',
+              maxWidth: '100%'
+            }}
           >
-            Years Experience
-          </label>
-          <input
-            disabled={filteredMetadataSkills.length === 0}
-            required
-            name='yearsExperience'
-            onChange={onFormSkillInputChange}
-            value={yearsExperience}
-            className={tailwindClasses.input}
-            id="grid-years-experience"
-            type="number"
-            placeholder="0"
-          /> */}
-          <TextFieldComponent
-            label="Years Experience"
-            required={true}
-            disabled={filteredMetadataSkills.length === 0}
-            id="grid-years-experience"
-            name="yearsExperience"
-            value={yearsExperience}
-            onChange={onFormSkillInputChange}
-            type="number"
-            placeholder="0"
-          />
-        </div>
-        <div className={tailwindClasses.formRow}>
-          {/* <label
-            className={tailwindClasses.inputLabel}
-            htmlFor='grid-description'
-          >
-            Description
-          </label>
-          <textarea
-            disabled={filteredMetadataSkills.length === 0}
-            required
-            name='description'
-            onChange={onFormSkillInputChange}
-            value={description}
-            className={tailwindClasses.input}
-            id="grid-description"
-            placeholder="Indicate your experience here."
-          /> */}
-          <TextFieldComponent
-            label="Description"
-            disabled={filteredMetadataSkills.length === 0}
-            id="grid-description"
-            name="description"
-            value={description}
-            onChange={onFormSkillInputChange}
-            multiline={{ enabled: true, rows: 4 }}
-            className="w-full"
-          />
+            <TextField
+              disabled={filteredMetadataSkills.length === 0}
+              required
+              name="description"
+              onChange={onFormSkillInputChange}
+              fullWidth
+              value={description}
+              id="grid-description"
+              type="text"
+              variant="outlined"
+              label="Description"
+              placeholder="Indicate your experience here"
+            />
+          </Box>
         </div>
         <div className={tailwindClasses.formRow}>
           <ButtonComponent
@@ -245,24 +293,76 @@ export default function SkillManager({ employee }: PageProps) {
           />
         </div>
       </div>
-      <div className={tailwindClasses.list}>
-        {activeSkills?.map((item, index) => (
-          <div className={tailwindClasses.chip} key={`skill-chip-${index}`}>
-            <span className={tailwindClasses.name}>{item.skill?.name}</span>
-            <XIcon
-              className={tailwindClasses.chipDeleteIcon}
-              onClick={() =>
-                removeActiveSkill(item.skill ? item.skill._id : '')
-              }
-            />
+      <div className={tailwindClasses.formRight}>
+        <div className={tailwindClasses.buttonGroup}>
+          <button onClick={nameSort}>
+            {skillNameSort === true ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            Name
+          </button>
+          <button className="pl-[45px]" onClick={rateSort}>
+            {skillRateSort === true ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            Rate
+          </button>
+          <button className="pr-[45px]" onClick={yearSort}>
+            {skillYearsSort === true ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            Years of Exp
+          </button>
+        </div>
+        <div className={tailwindClasses.list}>
+          {sortedSkills}
+        </div>
+        <div className={tailwindClasses.inputContainer}>
+          <div className={tailwindClasses.halfInput}>
+            <FormControl fullWidth>
+              <InputLabel htmlFor="grid-skills-name">Primary Skill</InputLabel>
+              <Select
+                disabled={filteredMetadataSkills.length === 0}
+                required
+                labelId="grid-skills-name"
+                id="grid-skills-name"
+                name="skill"
+                value={skill?._id}
+                label="Skill"
+                onChange={onFormSkillInputChange}
+              >
+                {filteredMetadataSkills.map((item, index) => (
+                  <MenuItem key={`active-skill-option-${index}`} value={item._id!}>
+                    {`${item.name}`}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </div>
-        ))}
+          <div className={tailwindClasses.halfInput}>
+            <FormControl fullWidth>
+              <InputLabel htmlFor="grid-skills-name">Secondary Skill</InputLabel>
+              <Select
+                disabled={filteredMetadataSkills.length === 0}
+                required
+                labelId="grid-skills-name"
+                id="grid-skills-name"
+                name="skill"
+                value={skill?._id}
+                label="Skill"
+                onChange={onFormSkillInputChange}
+              >
+                {filteredMetadataSkills.map((item, index) => (
+                  <MenuItem key={`active-skill-option-${index}`} value={item._id!}>
+                    {`${item.name}`}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+        </div>
       </div>
-    </div>
+    </div >
   );
 }
 
 type PageProps = {
   employee?: EmployeeType;
   setEmployee: (emp: EmployeeType) => void;
+  activeSkills: ActiveSkillType[],
+  setActiveSkills: (newActiveSkillList: ActiveSkillType[]) => {}
 };
