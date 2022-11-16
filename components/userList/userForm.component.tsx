@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { PlusIcon, XIcon, PencilIcon } from '@heroicons/react/solid';
+import React, { useEffect, useState } from "react";
+import { PlusIcon, XIcon, PencilIcon } from "@heroicons/react/solid";
 
-import LoaderComponent from '../loader/loader.component';
-import SkillManager from '../skillManager/skillManager.component';
+import LoaderComponent from "../loader/loader.component";
+import SkillManager from "../skillManager/skillManager.component";
 import {
   UserType,
   ManagerType,
   MetadataType,
+  ActiveSkillType,
   EmployeeType,
-} from '../../types/MasterTypes.types';
-import { USER_ROLES } from '../../helpers/constants.helper';
+} from "../../types/MasterTypes.types";
+import { USER_ROLES } from "../../helpers/constants.helper";
 import {
   getAllManagers,
   getEmployeeByUserId,
@@ -17,8 +18,13 @@ import {
 import { getMetadata } from "../../services/metadata.service";
 import Employee from "../../pages/manager/[employee]";
 import ButtonComponent from "../ButtonComponent";
-import TextFieldComponent from "../TextFieldComponent";
-import { MenuItem } from "@mui/material";
+import Box from '@mui/material/Box'
+import TextField from '@mui/material/TextField'
+import Select from '@mui/material/Select'
+import InputLabel from '@mui/material/InputLabel'
+import FormControl from '@mui/material/FormControl'
+import MenuItem from '@mui/material/MenuItem'
+import InputAdornment from "@mui/material/InputAdornment";
 
 export default function UserList({
   userToEdit,
@@ -29,56 +35,43 @@ export default function UserList({
   role,
 }: PageProps) {
   const [firstName, setFirstName] = useState<string>(
-    userToEdit ? userToEdit.firstName : ''
+    userToEdit ? userToEdit.firstName : ""
   );
   const [lastName, setLastName] = useState<string>(
-    userToEdit ? userToEdit.lastName : ''
+    userToEdit ? userToEdit.lastName : ""
   );
   const [email, setEmail] = useState<string>(
-    userToEdit ? userToEdit.email : ''
+    userToEdit ? userToEdit.email : ""
   );
-  const [password, setPassword] = useState<string>('');
-  const [confirmPassword, setConfirmPassword] = useState<string>('');
-  const [managerId, setManagerId] = useState<string>('');
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [managerId, setManagerId] = useState<string>("");
   const [managerList, setManagerList] = useState<ManagerType[]>([]);
   const [employeeData, setEmployeeData] = useState<EmployeeType>();
   const [skillList, setSkillList] = useState<MetadataType[]>([]);
-  const [activeSkillList, setActiveSkillList] = useState<
-    {
-      skill: MetadataType;
-      rate: string;
-      yearsExperience: string;
-      description: string;
-    }[]
-  >([]);
-  const [activeSkill, setActiveSkill] = useState<{
-    skill?: MetadataType;
-    rate: string;
-    yearsExperience: string;
-    description: string;
-  }>({
+  const [activeSkillList, setActiveSkillList] = useState<ActiveSkillType[]>([]);
+  const [activeSkill, setActiveSkill] = useState<ActiveSkillType>({
     skill: undefined,
-    rate: '',
-    yearsExperience: '',
-    description: '',
+    rate: undefined,
+    yearsExperience: undefined,
+    description: "",
   });
   const [capabilityList, setCapabilityList] = useState<MetadataType[]>([]);
   const tailwindClasses = {
-    form: 'flex flex-1 flex-grow justify-start items-start flex-wrap w-full content-start overflow-auto pb-2',
-    formItemHalf: 'w-full md:w-1/2 px-3 pt-1 md:pt-1 grow-0',
-    formItem: 'w-full px-3 pt-1 grow-0',
-    skillsContainer: 'flex-grow',
-    formChipContainer: 'flex flex-row',
-    chips: 'chips overflow-auto',
-    chip: 'chip',
-    chipForm: 'chipForm flex flex-col items-stretch',
-    chipFormRow: 'flex flex-col pt-3',
-    inputLabel:
-      'block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mr-1',
-    input:
-      'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500',
-    formButton:
-      'bg-transparent hover:bg-sidebar text-sidebar font-semibold hover:text-white py-2 px-4 border border-sidebar hover:border-transparent rounded',
+    form: "flex flex-1 flex-grow justify-start items-start flex-wrap w-full content-start overflow-auto pb-2",
+    formItemHalf: "formItemThird w-1/2 px-3 pt-1 md:pt-1 grow-0 my-[5px]",
+    formItemThird: "formItemThird w-1/3 px-3 pt-1 md:pt-1 grow-0 my-[5px]",
+    formItemFourth: "formItemFourth w-1/4 px-3 pt-1 md:pt-1 grow-0 my-[5px]",
+    formItem: "formItem w-full px-3 pt-1 grow-0 my-[5px]",
+    skillsContainer: "flex-grow",
+    formChipContainer: "flex flex-row",
+    chips: "chips overflow-auto",
+    chip: "chip",
+    chipForm: "chipForm flex flex-col items-stretch",
+    chipFormRow: "flex flex-col pt-3",
+    inputLabel: "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mr-1",
+    input: "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+    formButton: "bg-transparent hover:bg-sidebar text-sidebar font-semibold hover:text-white py-2 px-4 border border-sidebar hover:border-transparent rounded",
   };
 
   const onSubmitForm = (e: any) => {
@@ -94,13 +87,17 @@ export default function UserList({
       updateUser(newUser, managerId);
     } else {
       // submit to create
-      const newUser = {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: password,
-      };
-      registerUser(newUser, managerId, employeeData);
+      if (password !== confirmPassword) {
+        alert("Password does not match! Try again.")
+      } else {
+        const newUser = {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password,
+        };
+        registerUser(newUser, managerId, employeeData);
+      }
     }
   };
 
@@ -111,19 +108,19 @@ export default function UserList({
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     switch (e.target.name) {
-      case 'firstName':
+      case "firstName":
         setFirstName(e.target.value);
         break;
-      case 'lastName':
+      case "lastName":
         setLastName(e.target.value);
         break;
-      case 'email':
+      case "email":
         setEmail(e.target.value);
         break;
-      case 'password':
+      case "password":
         setPassword(e.target.value);
         break;
-      case 'confirmPassword':
+      case "confirmPassword":
         setConfirmPassword(e.target.value);
         break;
       default:
@@ -132,39 +129,39 @@ export default function UserList({
     if (role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF) {
       let tempEmp = employeeData;
       switch (e.target.name) {
-        case 'firstName':
+        case "firstName":
           tempEmp?.firstName != e.target.value;
           break;
-        case 'lastName':
+        case "lastName":
           tempEmp?.lastName != e.target.value;
           break;
-        case 'email':
+        case "email":
           tempEmp?.email != e.target.value;
           break;
-        case 'password':
+        case "password":
           tempEmp?.password != e.target.value;
           break;
-        case 'confirmPassword':
+        case "confirmPassword":
           setConfirmPassword(e.target.value);
           break;
-        case 'managerId':
+        case "managerId":
           let manager = managerList.find((item) => item._id === e.target.value);
           setManagerId(e.target.value);
           tempEmp?.manager != manager;
           break;
-        case 'primarySkill':
+        case "primarySkill":
           const primarySkill = skillList.find(
             (item) => item._id === e.target.value
           );
           tempEmp?.primarySkill != primarySkill;
           break;
-        case 'secondarySkill':
+        case "secondarySkill":
           const secondarySkill = skillList.find(
             (item) => item._id === e.target.value
           );
           tempEmp?.secondarySkill != secondarySkill;
           break;
-        case 'capability':
+        case "capability":
           const capability = capabilityList.find(
             (item) => item._id === e.target.value
           );
@@ -182,8 +179,8 @@ export default function UserList({
   const renderManagerListForNewEmployee = async () => {
     setLoadState(true);
     setManagerList(await getAllManagers());
-    setSkillList(await getMetadata('skill'));
-    setCapabilityList(await getMetadata('capability'));
+    setSkillList(await getMetadata("skill"));
+    setCapabilityList(await getMetadata("capability"));
     setLoadState(false);
   };
 
@@ -192,32 +189,14 @@ export default function UserList({
     setManagerList(await getAllManagers());
     setEmployeeData(
       await getEmployeeByUserId(
-        userToEdit ? (userToEdit?._id ? userToEdit?._id : '') : ''
+        userToEdit ? (userToEdit?._id ? userToEdit?._id : "") : ""
       )
     );
-    setSkillList(await getMetadata('skill'));
-    setCapabilityList(await getMetadata('capability'));
+    setSkillList(await getMetadata("skill"));
+    setCapabilityList(await getMetadata("capability"));
     console.log(employeeData);
     setLoadState(false);
   };
-
-  // const renderSelectInput = (name: string, value: string, optionList) => {
-  //     return <div className={tailwindClasses.formItem}>
-  //         <label className={tailwindClasses.inputLabel} htmlFor={name}>
-  //             Manager *
-  //         </label>
-  //         <select
-  //             disabled={Boolean(parentUser)}
-  //             required
-  //             name={name}
-  //             onChange={onInputChange}
-  //             className={tailwindClasses.input}
-  //             value={value}
-  //             id={name}>
-  //             {optionList}
-  //         </select>
-  //     </div>
-  // }
 
   const onActiveSkillAdd = () => {
     console.log(activeSkill);
@@ -227,16 +206,16 @@ export default function UserList({
     console.log(e.target.name, e.target.value);
     const tempSkill = activeSkill;
     switch (e.target.name) {
-      case 'skill':
+      case "skill":
         tempSkill.skill = skillList.find((itm) => itm._id === e.target.value);
         break;
-      case 'rate':
+      case "rate":
         tempSkill.rate = e.target.value;
         break;
-      case 'yearsExperience':
+      case "yearsExperience":
         tempSkill.yearsExperience = e.target.value;
         break;
-      case 'description':
+      case "description":
         tempSkill.description = e.target.value;
         break;
       default:
@@ -261,246 +240,85 @@ export default function UserList({
     return (
       <>
         <div className={tailwindClasses.formItemHalf}>
-          {/* <label
-            className={tailwindClasses.inputLabel}
-            htmlFor='grid-managerId-name'
-          >
-            Manager *
-          </label>
-          <select
-            disabled={Boolean(parentUser)}
-            required
-            name='managerId'
-            onChange={onInputChange}
-            className={tailwindClasses.input}
-            value={manager ? manager?._id : ''}
-            id='grid-managerId-name'
-          >
-            <option value={''} disabled>
-              Select a Manager
-            </option>
-            {managerList.map((item, index) => (
-              <option key={`manager-option-${index}`} value={item._id!}>
-                {`${item.firstName} ${item.lastName}`}
-              </option>
-            ))}
-          </select> */}
-          <TextFieldComponent
-            className={"w-full mt-2"}
-            label="Manager"
-            disabled={Boolean(parentUser)}
-            required={true}
-            id="grid-managerId-name"
-            name="managerId"
-            select={true}
-            onChange={onInputChange}
-            value={manager ? manager?._id : ""}
-          >
-            {managerList.map((item, index) => (
-              <MenuItem key={`manager-option-${index}`} value={item._id!}>
-                {`${item.firstName} ${item.lastName}`}
-              </MenuItem>
-            ))}
-          </TextFieldComponent>
+          <FormControl fullWidth>
+            <InputLabel htmlFor="grid-managerId-name">Manager</InputLabel>
+            <Select
+              disabled={Boolean(parentUser)}
+              required
+              labelId="grid-managerId-name"
+              id="grid-managerId-name"
+              name="managerId"
+              value={manager ? manager?._id : ""}
+              label="Manager"
+              onChange={onInputChange}
+            >
+              {managerList.map((item, index) => (
+                <MenuItem key={`manager-option-${index}`} value={item._id!}>
+                  {`${item.firstName} ${item.lastName}`}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </div>
         <div className={tailwindClasses.formItemHalf}>
-          {/* <label
-            className={tailwindClasses.inputLabel}
-            htmlFor='grid-capability-name'
-          >
-            Capability *
-          </label>
-          <select
-            required
-            name='capability'
-            onChange={onInputChange}
-            className={tailwindClasses.input}
-            value={employeeData ? employeeData?.capability?._id : ''}
-            id='grid-capability-name'
-          >
-            <option value={''}>-</option>
-            {capabilityList.map((item, index) => (
-              <option key={`capability-option-${index}`} value={item._id!}>
-                {`${item.name}`}
-              </option>
-            ))}
-          </select> */}
-          <TextFieldComponent
-            select={true}
-            label="Capability"
-            required={true}
-            id="grid-capability-name"
-            name="capability"
-            onChange={onInputChange}
-            className={"w-full mt-2"}
-            value={employeeData ? employeeData?.capability?._id : ""}
-          >
-            {capabilityList.map((item, index) => (
-              <MenuItem key={`capability-option-${index}`} value={item._id!}>
-                {`${item.name}`}
-              </MenuItem>
-            ))}
-          </TextFieldComponent>
+          <FormControl fullWidth>
+            <InputLabel htmlFor="grid-capability-name">Capability</InputLabel>
+            <Select
+              required
+              labelId="grid-capability-name"
+              id="grid-capability-name"
+              name="capability"
+              value={employeeData ? employeeData?.capability?._id : ""}
+              label="Capability"
+              onChange={onInputChange}
+            >
+              {capabilityList.map((item, index) => (
+                <MenuItem key={`capability-option-${index}`} value={item._id!}>
+                  {`${item.name}`}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </div>
-        <div className={tailwindClasses.formItemHalf}>
-          {/* <label
-            className={tailwindClasses.inputLabel}
-            htmlFor='grid-primarySkill-name'
-          >
-            Primary Skill
-          </label>
-          <select
-            name='primarySkill'
-            onChange={onInputChange}
-            className={tailwindClasses.input}
-            value={employeeData ? employeeData?.primarySkill?._id : ''}
-            id='grid-primarySkill-name'
-          >
-            <option value={''}>-</option>
-            {skillList.map((item, index) => (
-              <option key={`skill-option-${index}`} value={item._id!}>
-                {`${item.name}`}
-              </option>
-            ))}
-          </select> */}
-          <TextFieldComponent
-            select={true}
-            label="Primary Skill"
-            id="grid-primarySkill-name"
-            name="primarySkill"
-            onChange={onInputChange}
-            className={"w-full mt-2"}
-            value={employeeData ? employeeData?.primarySkill?._id : ""}
-          >
-            {skillList.map((item, index) => (
-              <MenuItem key={`skill-option-${index}`} value={item._id!}>
-                {`${item.name}`}
-              </MenuItem>
-            ))}
-          </TextFieldComponent>
+        {/* <div className={tailwindClasses.formItemFourth}>
+          <FormControl fullWidth>
+            <InputLabel htmlFor="grid-primarySkill-name">Primary Skill</InputLabel>
+            <Select
+              labelId="grid-primarySkill-name"
+              id="grid-primarySkill-name"
+              name="primarySkill"
+              value={employeeData ? employeeData?.primarySkill?._id : ""}
+              label="Primary Skill"
+              onChange={onInputChange}
+            >
+              {skillList.map((item, index) => (
+                <MenuItem key={`skill-option-${index}`} value={item._id!}>
+                  {`${item.name}`}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </div>
-        <div className={tailwindClasses.formItemHalf}>
-          {/* <label
-            className={tailwindClasses.inputLabel}
-            htmlFor='grid-secondarySkill-name'
-          >
-            Secondary Skill
-          </label>
-          <select
-            name='secondarySkill'
-            onChange={onInputChange}
-            className={tailwindClasses.input}
-            value={employeeData ? employeeData?.secondarySkill?._id : ''}
-            id='grid-secondarySkill-name'
-          >
-            <option value={''}>-</option>
-            {skillList.map((item, index) => (
-              <option key={`skill-option-${index}`} value={item._id!}>
-                {`${item.name}`}
-              </option>
-            ))}
-          </select> */}
-          <TextFieldComponent
-            select={true}
-            label="Secondary Skill"
-            id="grid-secondarySkill-name"
-            name="secondarySkill"
-            onChange={onInputChange}
-            className={"w-full mt-2"}
-            value={employeeData ? employeeData?.secondarySkill?._id : ""}
-          >
-            {skillList.map((item, index) => (
-              <MenuItem key={`skill-option-${index}`} value={item._id!}>
-                {`${item.name}`}
-              </MenuItem>
-            ))}
-          </TextFieldComponent>
-        </div>
-        <SkillManager employee={employeeData} setEmployee={setEmployeeData} />
-        {/* <div className={`${tailwindClasses.formItem} ${tailwindClasses.skillsContainer}`}>
-                <div className={tailwindClasses.formChipContainer}>
-                    <div className={tailwindClasses.chipForm}>
-                        <div className={tailwindClasses.chipFormRow}>
-                            <span className={tailwindClasses.inputLabel}>
-                                Skill
-                            </span>
-                            <select
-                                required
-                                name="skills"
-                                onChange={onActiveSkillInputChange}
-                                className={tailwindClasses.input}
-                                value={activeSkill?.skill?._id}
-                                id="grid-skills-name">
-                                <option value={null}>-</option>
-                                {
-                                    skillList.map((item, index) => (
-                                        <option key={`active-skill-option-${index}`} value={item._id!} >
-                                            {`${item.name}`}
-                                        </option>
-                                    ))
-                                }
-                            </select>
-                        </div>
-                        <div className={tailwindClasses.chipFormRow}>
-                            <label className={tailwindClasses.inputLabel} htmlFor="grid-first-name">
-                                Rate (out of 10)
-                            </label>
-                            <input
-                                required
-                                name="rate"
-                                onChange={onActiveSkillInputChange}
-                                value={activeSkill?.rate}
-                                className={tailwindClasses.input}
-                                id="grid-first-name"
-                                type="number"
-                                placeholder="-"
-                            />
-                        </div>
-                        <div className={tailwindClasses.chipFormRow}>
-                            <label className={tailwindClasses.inputLabel} htmlFor="grid-first-name">
-                                Years Experience
-                            </label>
-                            <input
-                                required
-                                name="yearsExperience"
-                                onChange={onActiveSkillInputChange}
-                                value={activeSkill?.yearsExperience}
-                                className={tailwindClasses.input}
-                                id="grid-yearsExperience-name"
-                                type="number"
-                                placeholder="-"
-                            />
-                        </div>
-                        <div className={tailwindClasses.chipFormRow}>
-                            <label className={tailwindClasses.inputLabel} htmlFor="grid-first-name">
-                                Description
-                            </label>
-                            <input
-                                required
-                                name="description"
-                                onChange={onActiveSkillInputChange}
-                                value={activeSkill?.description}
-                                className={tailwindClasses.input}
-                                id="grid-description-name"
-                                type="text"
-                                placeholder="-"
-                            />
-                        </div>
-                        <div className={tailwindClasses.chipFormRow}>
-                            <button className={tailwindClasses.formButton} onClick={onActiveSkillAdd} type="button">
-                                Add Skill
-                            </button>
-                        </div>
-                    </div>
-                    <div className={tailwindClasses.chips}>
-                        <span className={tailwindClasses.inputLabel}>
-                            Skills
-                        </span>
-                        <div className={tailwindClasses.chip}>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
+        <div className={tailwindClasses.formItemFourth}>
+          <FormControl fullWidth>
+            <InputLabel htmlFor="grid-secondarySkill-name">Secondary Skill</InputLabel>
+            <Select
+              labelId="grid-secondarySkill-name"
+              id="grid-secondarySkill-name"
+              name="secondarySkill"
+              value={employeeData ? employeeData?.secondarySkill?._id : ""}
+              label="Secondary Skill"
+              onChange={onInputChange}
+            >
+              {skillList.map((item, index) => (
+                <MenuItem key={`skill-option-${index}`} value={item._id!}>
+                  {`${item.name}`}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div> */}
+        <SkillManager employee={employeeData} setEmployee={setEmployeeData} setActiveSkills={setActiveSkillList} activeSkills={activeSkillList} />
       </>
     );
   };
@@ -517,150 +335,124 @@ export default function UserList({
 
   return (
     <form className={tailwindClasses.form} onSubmit={onSubmitForm}>
-      <div className={tailwindClasses.formItemHalf}>
-
-        {/* <label className={tailwindClasses.inputLabel} htmlFor="grid-first-name">
-          First Name *
-        </label>
-        <input
-          required
-          name='firstName'
-          onChange={onInputChange}
-          value={firstName}
-          className={tailwindClasses.input}
-          id="grid-first-name"
-          type="text"
-          placeholder="Jane"
-        /> */}
-        <TextFieldComponent
-          label="First Name"
-          required={true}
-          id="grid-first-name"
-          name="firstName"
-          onChange={onInputChange}
-          value={firstName}
-          className={"w-full mt-2"}
-          placeholder="Jane"
-        />
+      <div className={role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF
+        ? tailwindClasses.formItemThird
+        : tailwindClasses.formItemHalf}>
+        <Box
+          sx={{
+            width: '100%',
+            maxWidth: '100%'
+          }}
+        >
+          <TextField
+            required
+            name="firstName"
+            onChange={onInputChange}
+            fullWidth
+            value={firstName}
+            id="grid-first-name"
+            type="text"
+            variant="outlined"
+            label="First Name"
+          />
+        </Box>
       </div>
-      <div className={tailwindClasses.formItemHalf}>
-        {/* <label className={tailwindClasses.inputLabel} htmlFor="grid-last-name">
-          Last Name *
-        </label>
-        <input
-          required
-          name='lastName'
-          onChange={onInputChange}
-          value={lastName}
-          className={tailwindClasses.input}
-          id="grid-last-name"
-          type="text"
-          placeholder="Doe"
-        /> */}
-        <TextFieldComponent
-          label="Last Name"
-          required={true}
-          id="grid-last-name"
-          name="lastName"
-          onChange={onInputChange}
-          value={lastName}
-          className={"w-full mt-2"}
-          placeholder="Doe"
-        />
+      <div className={role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF
+        ? tailwindClasses.formItemThird
+        : tailwindClasses.formItemHalf}>
+        <Box
+          sx={{
+            width: '100%',
+            maxWidth: '100%'
+          }}
+        >
+          <TextField
+            required
+            name="lastName"
+            onChange={onInputChange}
+            fullWidth
+            value={lastName}
+            id="grid-last-name"
+            type="text"
+            variant="outlined"
+            label="Last Name"
+          />
+        </Box>
       </div>
-      <div className={tailwindClasses.formItem}>
-        {/* <label className={tailwindClasses.inputLabel} htmlFor="grid-email-name">
-          Email *
-        </label>
-        <input
-          required
-          name='email'
-          onChange={onInputChange}
-          value={email}
-          className={tailwindClasses.input}
-          id="grid-email-name"
-          type="email"
-          placeholder="email@email.com"
-        /> */}
-        <TextFieldComponent
-          label="Email"
-          required={true}
-          id="grid-email-name"
-          name="email"
-          type="email"
-          onChange={onInputChange}
-          value={email}
-          className={"w-full mt-2"}
-          placeholder="janedoe@email.com"
-        />
+      <div className={role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF
+        ? tailwindClasses.formItemThird
+        : tailwindClasses.formItem}>
+        <Box
+          sx={{
+            width: '100%',
+            maxWidth: '100%'
+          }}
+        >
+          <TextField
+            required
+            name="email"
+            onChange={onInputChange}
+            fullWidth
+            value={email}
+            id="grid-email-name"
+            type="email"
+            variant="outlined"
+            label="Email"
+          />
+        </Box>
       </div>
       {role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF
         ? renderEmployeeFormFields()
         : null}
       {userToEdit === undefined && (
         <>
-          <div className={tailwindClasses.formItem}>
-            {/* <label
-              className={tailwindClasses.inputLabel}
-              htmlFor='grid-password-name'
+          <div className={tailwindClasses.formItemHalf}>
+            <Box
+              sx={{
+                width: '100%',
+                maxWidth: '100%'
+              }}
             >
-              Password *
-            </label>
-            <input
-              required
-              name='password'
-              onChange={onInputChange}
-              value={password}
-              className={tailwindClasses.input}
-              id="grid-password-name"
-              type="password"
-            /> */}
-            <TextFieldComponent
-              label="Password"
-              required={true}
-              type="password"
-              id="grid-password-name"
-              name="password"
-              onChange={onInputChange}
-              value={password}
-              className={"w-full mt-2"}
-            />
+              <TextField
+                required
+                name="password"
+                onChange={onInputChange}
+                fullWidth
+                value={password}
+                id="grid-password-name"
+                type="password"
+                variant="outlined"
+                label="Password"
+              />
+            </Box>
           </div>
-
-          <div className={tailwindClasses.formItem}>
-            {/* <label
-              className={tailwindClasses.inputLabel}
-              htmlFor='grid-confirmPassword-name'
+          <div className={tailwindClasses.formItemHalf}>
+            <Box
+              sx={{
+                width: '100%',
+                maxWidth: '100%'
+              }}
             >
-              Confirm Password *
-            </label>
-            <input
-              required
-              name='confirmPassword'
-              onChange={onInputChange}
-              value={confirmPassword}
-              className={tailwindClasses.input}
-              id="grid-confirmPassword-name"
-              type="password"
-            /> */}
-            <TextFieldComponent
-              label="Confirm Password"
-              required={true}
-              type="password"
-              id="grid-confirmPassword-name"
-              name="confirmPassword"
-              onChange={onInputChange}
-              value={confirmPassword}
-              className={"w-full mt-2"}
-            />
+              <TextField
+                required
+                name="confirmPassword"
+                onChange={onInputChange}
+                fullWidth
+                value={confirmPassword}
+                id="grid-confirmPassword-name"
+                type="password"
+                variant="outlined"
+                label="Confirm Password"
+              />
+            </Box>
           </div>
         </>
       )}
       <div className={`${tailwindClasses.formItem} mt-1 flex justify-end`}>
         <ButtonComponent
-          type='submit'
-          text={userToEdit === undefined ? ['Create'] : ['Update']}
-          variant='outlined'
+          type="submit"
+          text={userToEdit === undefined ? ["Create"] : ["Update"]}
+          variant="outlined"
         />
       </div>
     </form>
