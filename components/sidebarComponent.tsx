@@ -109,6 +109,7 @@ const menuList = [
   { name: 'Home', icon: <HomeIcon />, link: '/' },
   { name: 'Employees', icon: <UserGroupIcon />, link: '/users' },
   { name: 'Metadata', icon: <DatabaseIcon />, link: '/metadatas' },
+  { name: 'profile', icon: <AccountCircleOutlinedIcon />, link: '/profile' },
 ];
 
 export default function MiniDrawer() {
