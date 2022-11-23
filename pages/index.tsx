@@ -8,6 +8,8 @@ import PageBanner from '../components/pageBanner/pageBanner.component';
 import ButtonComponent from '../components/ButtonComponent';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+import { getAllManagers,getEmployees } from '../services/user.service'
+import { getMetadata } from '../services/metadata.service';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import BadgeIcon from '@mui/icons-material/Badge';
 import PsychologyIcon from '@mui/icons-material/Psychology';
@@ -59,19 +61,44 @@ const Home: NextPage = () => {
     bodyImage: 'h-[250px] w-[250px]',
   };
 
+const [skillCounter, setSkillCounter] = useState('...')
+const [capabilityCounter, setCapabilityCounter] = useState('...')
+const [industryCounter, setIndustryCounter] = useState('...')
+const [managerCounter, setManagerCounter] = useState('...')
+const [employeeCounter, setEmployeeCounter] = useState('...')
+
+  const totalNumbersOf = async () => {
+
+    const managersCount = await getAllManagers();
+    const skillCount = await getMetadata('skill');
+    const capabilityCount = await getMetadata('capability');
+    const industryCount = await getMetadata('industry');
+    const employeesCount = await getEmployees();
+
+    setSkillCounter(skillCount.length)
+    setCapabilityCounter(capabilityCount.length)
+    setIndustryCounter(industryCount.length)
+    setManagerCounter(managersCount.length)
+    setEmployeeCounter(employeesCount.length)
+  }
+
   useEffect(() => {
+    totalNumbersOf();
     setUser(accessUserInSession());
   }, []);
 
+
+
+ 
   return (
     <div>
       <Dashboard
         cards={[
-          { title: 'Managers', icon: <PeopleAltIcon />, total: 999 },
-          { title: 'Employees', icon: <BadgeIcon />, total: 999 },
-          { title: 'Skills', icon: <PsychologyIcon />, total: 999 },
-          { title: 'Capabilities', icon: <ConstructionIcon />, total: 999 },
-          { title: 'Industries', icon: <ApartmentIcon />, total: 999 },
+          { title: 'Managers', icon: <PeopleAltIcon />, total:managerCounter},
+          { title: 'Employees', icon: <BadgeIcon />, total: employeeCounter },
+          { title: 'Skills', icon: <PsychologyIcon />, total: skillCounter },
+          { title: 'Capabilities', icon: <ConstructionIcon />, total: capabilityCounter },
+          { title: 'Industries', icon: <ApartmentIcon />, total: industryCounter },
         ]}
       />
     </div>
