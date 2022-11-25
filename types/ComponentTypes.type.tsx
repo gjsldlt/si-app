@@ -20,3 +20,8 @@ export interface CardType {
   setCurrentPage?: React.Dispatch<React.SetStateAction<number>>;
   renderData?: () => Promise<void>;
 }
+
+export interface FilterType {
+  title?: string | undefined,
+  content?: JSX.Element
+}
