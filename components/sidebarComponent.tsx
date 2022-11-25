@@ -199,17 +199,15 @@ export default function MiniDrawer() {
             />
             <IconButton
               onClick={handleDrawerOpen}
-              className={`${
-                open && 'hidden'
-              } text-gray hover:text-white absolute`}
+              className={`${open && 'hidden'
+                } text-gray hover:text-white absolute`}
             >
               <MenuIcon />
             </IconButton>
             <IconButton
               onClick={handleDrawerClose}
-              className={`${
-                !open && 'hidden'
-              } text-gray hover:text-white absolute top-2 right-0`}
+              className={`${!open && 'hidden'
+                } text-gray hover:text-white absolute top-2 right-0`}
             >
               <ChevronLeftIcon />
             </IconButton>
@@ -232,16 +230,13 @@ export default function MiniDrawer() {
                     justifyContent: open ? 'initial' : 'center',
                     px: 2.5,
                   }}
-                  className={`${
-                    router.pathname === item.link && '!bg-main text-black'
-                  } group`}
+                  className={`${router.pathname === item.link && '!bg-main text-black'
+                    } group`}
                 >
                   <ListItemIcon
-                    className={`${
-                      router.pathname === item.link && 'text-black'
-                    } text-gray ${
-                      router.pathname !== item.link && 'group-hover:text-white'
-                    } w-7`}
+                    className={`${router.pathname === item.link && 'text-black'
+                      } text-gray ${router.pathname !== item.link && 'group-hover:text-white'
+                      } w-7`}
                     sx={{
                       minWidth: 0,
                       mr: open ? 3 : 'auto',
@@ -251,11 +246,9 @@ export default function MiniDrawer() {
                     {item.icon}
                   </ListItemIcon>
                   <ListItemText
-                    className={`${
-                      router.pathname === item.link && 'text-black'
-                    } text-gray ${
-                      router.pathname !== item.link && 'group-hover:text-white'
-                    } `}
+                    className={`${router.pathname === item.link && 'text-black'
+                      } text-gray ${router.pathname !== item.link && 'group-hover:text-white'
+                      } `}
                     primary={item.name}
                     sx={{ opacity: open ? 1 : 0 }}
                   />
@@ -288,9 +281,8 @@ export default function MiniDrawer() {
               />
             </Card>
             <div
-              className={`self-center mt-0 lg:mt-4 w-full flex justify-center ${
-                !open && 'pt-[2px]'
-              }`}
+              className={`self-center mt-0 lg:mt-4 w-full flex justify-center ${!open && 'pt-[2px]'
+                }`}
             >
               <ButtonComponent
                 text={['Logout']}
@@ -304,9 +296,8 @@ export default function MiniDrawer() {
           </div>
         </Drawer>
         <div
-          className={`${
-            open ? 'absolute z-30 opacity-50' : 'opacity-0'
-          } bg-black  w-full h-full top-0 overflow-hidden transition-all duration-500`}
+          className={`${open ? 'absolute z-30 opacity-50' : 'opacity-0'
+            } bg-black  w-full h-full top-0 overflow-hidden transition-all duration-500`}
           onClick={handleDrawerClose}
         ></div>
         <Box component='main' sx={{ flexGrow: 1, p: 0 }}>
