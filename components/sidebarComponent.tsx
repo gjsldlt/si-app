@@ -133,6 +133,9 @@ export default function MiniDrawer() {
     router.push('/login');
   };
 
+  const handleProfile = () => {
+    router.push('/profile');
+  };
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -279,7 +282,13 @@ export default function MiniDrawer() {
                       className={`-mr-2 ${!open && '-ml-2 md:-ml-1'}`}
                       aria-label='recipe'
                     >
-                      <AccountCircleOutlinedIcon />
+                      <ButtonComponent
+                        text={['']}
+                        handleClick={[handleProfile]}
+                        icon={<Avatar />}
+                        style={open ? '' : 'icon'}
+                        placement={'right'}
+                      />
                     </Avatar>
                   </Tooltip>
                 }
