@@ -2,7 +2,7 @@ import React, { FC, ChangeEvent } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import { Typography, Container, Pagination } from '@mui/material';
+import { Typography, Container, Pagination, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import TuneIcon from '@mui/icons-material/Tune';
 
@@ -10,7 +10,13 @@ import { CardType } from '../types/ComponentTypes.type';
 
 import ButtonComponent from './ButtonComponent';
 
-const CardComponent: FC<CardType> = ({ title, actions, content, pageCount, setCurrentPage }) => {
+const CardComponent: FC<CardType> = ({
+  title,
+  actions,
+  content,
+  pageCount,
+  setCurrentPage
+}) => {
 
   const pageChangeHandler = (event: ChangeEvent<unknown>, pageNumber = 1) => {
     console.log("current page: " + pageNumber)
@@ -18,7 +24,6 @@ const CardComponent: FC<CardType> = ({ title, actions, content, pageCount, setCu
       setCurrentPage(pageNumber - 1);
     }
   }
-
 
   return (
     <Card
@@ -28,18 +33,46 @@ const CardComponent: FC<CardType> = ({ title, actions, content, pageCount, setCu
         height: '100%',
         margin: { xs: 2, sm: 0 }
       }}>
-      <CardActions sx={{ p: 1, display: 'flex' }}>
+      <CardActions
+        sx={{
+          p: 2,
+          display: 'flex'
+        }}>
         <Typography
-          sx={{ fontSize: '14px', fontWeight: 700 }}
+          sx={{
+            fontSize: '14px',
+            fontWeight: 700
+          }}
           variant='h5'
           component='div'
         >
           {title}
         </Typography>
         <Container
-          sx={{ p: 0, display: 'flex', justifyContent: 'flex-end' }}
+          sx={{
+            p: 0,
+            display: 'flex',
+            justifyContent: 'flex-end',
+            alignItems: 'center'
+          }}
           disableGutters
         >
+          <TextField
+            label='Search'
+            variant='outlined'
+            margin='none'
+            size='small'
+            inputProps={{
+              style: {
+                fontSize: 12
+              }
+            }}
+            InputLabelProps={{
+              style: {
+                fontSize: 12
+              }
+            }}
+          />
           <ButtonComponent
             style='icon'
             text={['Search']}
