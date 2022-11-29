@@ -18,6 +18,11 @@ type TextFieldType = {
   multiline?: { enabled: boolean | undefined; rows: number };
   className?: string;
   ariaLabel?: string;
+  fontSize?: number;
+  fontSizeLabel?: number;
+  size?: 'small' | 'medium' | undefined;
+  width?: number;
+  maxLength?: number;
 };
 
 const TextFieldComponent: FC<TextFieldType> = ({
@@ -37,6 +42,13 @@ const TextFieldComponent: FC<TextFieldType> = ({
   multiline,
   className,
   ariaLabel,
+
+  //added properties by JDV
+  fontSize,
+  fontSizeLabel,
+  size,
+  width,
+  maxLength
 }) => {
   // HOW THIS COMPONENT WORK
   //
@@ -145,7 +157,10 @@ const TextFieldComponent: FC<TextFieldType> = ({
         helperText={validation?.errorMsg ? validation?.errorMsg : ""}
         multiline={multiline?.enabled}
         rows={multiline?.rows}
-        inputProps={{ "aria-label": ariaLabel }}
+        inputProps={{ 'aria-label': ariaLabel, maxLength: maxLength, style: { fontSize: fontSize } }}
+        InputLabelProps={{ style: { fontSize: fontSizeLabel } }}
+        size={size}
+        style={{ width: width }}
       >
         {children}
       </TextField>
