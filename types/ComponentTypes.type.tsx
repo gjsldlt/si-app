@@ -20,3 +20,35 @@ export interface CardType {
   setCurrentPage?: React.Dispatch<React.SetStateAction<number>>;
   renderData?: () => Promise<void>;
 }
+
+export interface PopoverType {
+  title?: string | undefined,
+  content?: JSX.Element
+}
+
+
+export interface ButtonType {
+  type?: 'button' | 'submit' | 'reset' | undefined;
+  handleClick?: any;
+  variant?: 'text' | 'outlined' | 'contained' | undefined;
+  text: string[];
+  disabled?: boolean;
+  icon?: any;
+  style?: string;
+  color?: string;
+  placement?:
+  | "bottom-end"
+  | "bottom-start"
+  | "bottom"
+  | "left-end"
+  | "left-start"
+  | "left"
+  | "right-end"
+  | "right-start"
+  | "right"
+  | "top-end"
+  | "top-start"
+  | "top"
+  | undefined;
+  filter?: boolean;
+};

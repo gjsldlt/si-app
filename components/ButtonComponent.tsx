@@ -1,32 +1,10 @@
-import { FC } from "react";
+import { FC, useState, MouseEvent } from "react";
 import { Button, ButtonGroup, IconButton, Tooltip } from "@mui/material";
-import { ImportContacts } from "@mui/icons-material";
 
+import { ButtonType } from "../types/ComponentTypes.type";
+import Popover from '@mui/material/Popover';
 
-type ButtonType = {
-  type?: 'button' | 'submit' | 'reset' | undefined;
-  handleClick?: any;
-  variant?: 'text' | 'outlined' | 'contained' | undefined;
-  text: string[];
-  disabled?: boolean;
-  icon?: any;
-  style?: string;
-  color?: string;
-  placement?:
-    | "bottom-end"
-    | "bottom-start"
-    | "bottom"
-    | "left-end"
-    | "left-start"
-    | "left"
-    | "right-end"
-    | "right-start"
-    | "right"
-    | "top-end"
-    | "top-start"
-    | "top"
-    | undefined;
-};
+import PopoverComponent from './PopoverComponent';
 
 // HOW THIS COMPONENT WORK
 //
@@ -90,7 +68,22 @@ const ButtonComponent: FC<ButtonType> = ({
   style,
   color,
   placement,
+  filter,
 }) => {
+
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+  const handleFilter = (event: MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
   return (
     <>
       {text.length > 1 ? (
@@ -109,19 +102,39 @@ const ButtonComponent: FC<ButtonType> = ({
       ) : (
         <>
           {style === "icon" ? (
-            <Tooltip title={text} placement={placement}>
-              <IconButton
-                onClick={handleClick ? handleClick[0] : undefined}
-                size="small"
-                sx={{
-                  width: "34px",
-                  height: "34px",
-                  color: color,
+            <>
+              <Tooltip title={text} placement={placement}>
+                <IconButton
+                  onClick={handleClick ? handleClick[0] : (filter ? handleFilter : undefined)}
+                  size="small"
+                  sx={{
+                    width: "34px",
+                    height: "34px",
+                    color: color,
+                  }}
+                >
+                  {icon}
+                </IconButton>
+
+              </Tooltip>
+              <Popover
+                id={id}
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
                 }}
               >
-                {icon}
-              </IconButton>
-            </Tooltip>
+                <PopoverComponent />
+              </Popover>
+            </>
           ) : (
             <Button
               variant={variant}

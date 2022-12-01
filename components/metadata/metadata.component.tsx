@@ -3,8 +3,6 @@ import { FC, useState, useEffect, useCallback } from 'react';
 import MetadataForm from './metadataForm.component';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import CancelIcon from '@mui/icons-material/Cancel';
-import SearchIcon from '@mui/icons-material/Search';
-import TuneIcon from '@mui/icons-material/Tune';
 import { Box } from '@mui/material';
 
 import { getMetadata, getPgMetadata } from '../../services/metadata.service';
@@ -17,6 +15,7 @@ import PopupComponent from '../PopupComponent';
 import ButtonComponent from '../ButtonComponent';
 import CardComponent from '../CardComponent';
 import ListComponent from '../ListComponent';
+
 import { CircularProgress } from "@mui/material";
 const MetadataComponent: FC<MetadataComponentProps> = ({
   type,
@@ -49,9 +48,9 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
   // state hook to show loader on popup
   const [popupLoading, setPopupLoading] = useState<boolean>(false);
 
-  const [metadataPgList, setMetadataPgList] = useState<MetadataType[]>([])
+  const [metadataPgList, setMetadataPgList] = useState<MetadataType[]>([]);
 
-  const [currentPage, setCurrentPage] = useState<number>(0)
+  const [currentPage, setCurrentPage] = useState<number>(0);
 
   const maxNoOfResults = 10;
 
@@ -59,6 +58,8 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
     setMetadataToEdit(undefined);
     setDisplayForm(!displayForm);
   };
+
+
 
   const editMetadata = (metadata: MetadataType) => {
     setDisplayForm(true);
@@ -82,8 +83,6 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
   useEffect(() => {
     renderData();
   }, [renderData]);
-
-
 
   const metadataTitle = useCallback(() => {
     let title: string;
@@ -159,18 +158,7 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
         setCurrentPage={setCurrentPage}
         actions={
           <>
-            <ButtonComponent
-              style='icon'
-              text={['Search']}
-              color={'#0E2040'}
-              icon={<SearchIcon />}
-            />
-            <ButtonComponent
-              style='icon'
-              text={['Filter']}
-              color={'#0E2040'}
-              icon={<TuneIcon />}
-            />
+
             <ButtonComponent
               style='icon'
               text={['Add']}
@@ -184,6 +172,7 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
         }
 
       />
+
       <PopupComponent
         title={`${!popupLoading ? "Are you sure you want to delete this entry?:" : ""
           }`}

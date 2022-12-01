@@ -33,7 +33,7 @@ const addMetadata = async (
       type: mtdtType,
     },
   });
-  return response.data.data.metadataList.paginatedList;
+  return response.data.data.metadataList;
 };
 
 //READ METADATA FROM API
