@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { PlusIcon, XIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
+import { PlusIcon, XIcon,} from "@heroicons/react/solid";
+//role, parentUser, addState)
 import IconButton from '@mui/material/IconButton'
+
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Button from '@mui/material/Button'
-import AddIcon from '@mui/icons-material/Add'
+// import Button from '@mui/material/Button'
+// import AddIcon from '@mui/icons-material/Add'
 import SearchIcon from '@mui/icons-material/Search';
 import TuneIcon from '@mui/icons-material/Tune';
-import styles from './managerList.module.scss';
+// import styles from './managerList.module.scss';
 import LoaderComponent from '../loader/loader.component';
 import { getAllManagers } from '../../services/user.service';
 import {
@@ -17,11 +19,12 @@ import {
   registerManager,
   registerEmployee,
   updateManager,
+  getEmployeeByUserId
 } from "../../services/user.service";
 import {
   UserType,
   ManagerType,
-  Metadata,
+  MetadataType,
   EmployeeType,
 } from "../../types/MasterTypes.types";
 import { getMetadata } from "../../services/metadata.service";
@@ -35,13 +38,15 @@ import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import FormHelperText from '@mui/material/FormHelperText';
+// import FormHelperText from '@mui/material/FormHelperText';
 import Checkbox from '@mui/material/Checkbox';
 import InputLabel from '@mui/material/InputLabel'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+
+import { SelectChangeEvent } from "@mui/material/Select";
 export default function UserList({
   role,
   activeUser,
@@ -90,10 +95,10 @@ export default function UserList({
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [managerId, setManagerId] = useState<string>("");
   const [managerList, setManagerList] = useState<ManagerType[]>([]);
-  const [capabilityList, setCapabilityList] = useState<Metadata[]>([]);
-  const [skillList, setSkillList] = useState<Metadata[]>([]);
+  const [capabilityList, setCapabilityList] = useState<MetadataType[]>([]);
+  const [skillList, setSkillList] = useState<MetadataType[]>([]);
   const [activeSkill, setActiveSkill] = useState<{
-    skill?: Metadata;
+    skill?: MetadataType;
     rate: string;
     yearsExperience: string;
     description: string;
@@ -110,9 +115,9 @@ export default function UserList({
   const [popupLoading, setPopupLoading] = useState<boolean>(false);
   const [toFilter, setToFilter] = useState<boolean>(false)
   const [employeeData, setEmployeeData] = useState<EmployeeType>();
-  const [selectedCapability, setSelectedCapability] = useState<String[]>([])
-  const [selectedPrimarySkill, setSelectedPrimarySkill] = useState<String[]>([])
-  const [selectedSecondarySkill, setSelectedSecondarySkill] = useState<String[]>([])
+  const [selectedCapability, setSelectedCapability] = useState<string>()
+  const [selectedPrimarySkill, setSelectedPrimarySkill] = useState<string>()
+  const [selectedSecondarySkill, setSelectedSecondarySkill] = useState<string>()
 
   const handleOpen = (user: UserType) => {
     setUserToDelete(user);
@@ -293,19 +298,20 @@ export default function UserList({
     }
   };
 
-  const handleChangeCapability = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value
-    setSelectedCapability(typeof value === 'string' ? value.split(',') : value)
+  const handleChangeCapability = (event: SelectChangeEvent) => {
+    const value = event.target.value
+    setSelectedCapability(value)
+
+  }
+console.log()
+  const handleChangePrimarySkill = (event:SelectChangeEvent) => {
+    const value = event.target.value
+    setSelectedPrimarySkill(value)
   }
 
-  const handleChangePrimarySkill = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value
-    setSelectedPrimarySkill(typeof value === 'string' ? value.split(',') : value)
-  }
-
-  const handleChangeSecondarySkill = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value
-    setSelectedSecondarySkill(typeof value === 'string' ? value.split(',') : value)
+  const handleChangeSecondarySkill = (event: SelectChangeEvent) => {
+    const value = event.target.value
+    setSelectedSecondarySkill(value)
   }
 
   const filter = async () => {
@@ -340,7 +346,7 @@ export default function UserList({
 
   useEffect(() => {
     renderData();
-  }, [role, parentUser, addState]);
+  }, []);
 
   useEffect(() => {
     if (role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF) {

@@ -331,7 +331,7 @@ export default function UserList({
         renderManagerListForNewEmployee();
       }
     }
-  }, [role, parentUser, activeSkill]);
+  }, []);
 
   return (
     <form className={tailwindClasses.form} onSubmit={onSubmitForm}>

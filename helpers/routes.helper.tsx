@@ -20,7 +20,7 @@ export default [
     name: 'allusers',
     displayName: 'All Users',
     roles: ['admin'],
-    route: '/users',
+    route: '/users',a
     icon: <UserGroupIcon className='hero-icons color-grey1' />,
   },
   {
