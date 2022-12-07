@@ -7,7 +7,6 @@ import {
   getPgMetadataQuery,
   updateMetadataQuery,
   deleteMetadataQuery,
-
 } from '../query/metadata.query';
 
 axios.defaults.headers.common['Content-Type'] = `application/json`;
@@ -25,7 +24,7 @@ const addMetadata = async (
   mtdtDesc: string,
   mtdtType: string
 ) => {
-  const response = await axios.post(GLOBALHELPER.APIURL, {
+  const response = await axios.post(GLOBALHELPER.DEVURL, {
     query: addMetadataQuery,
     variables: {
       name: mtdtName,
@@ -40,7 +39,7 @@ const addMetadata = async (
 
 //Create function to get metdata from API
 const getMetadata = async (mtdtType: string) => {
-  const response = await axios.get(GLOBALHELPER.APIURL, {
+  const response = await axios.get(GLOBALHELPER.DEVURL, {
     params: {
       query: getMetadataQuery,
       variables: {
@@ -54,22 +53,23 @@ const getMetadata = async (mtdtType: string) => {
 //READ METADATA FROM API (PAGINATION)
 
 //Create function to get metdata from API
-const getPgMetadata = async (mtdtType: string, pageNum: number, numItems: number) => {
-  const response = await axios.get(GLOBALHELPER.APIURL, {
+const getPgMetadata = async (
+  mtdtType: string,
+  pageNum: number,
+  numItems: number
+) => {
+  const response = await axios.get(GLOBALHELPER.DEVURL, {
     params: {
       query: getPgMetadataQuery,
       variables: {
         options: {
           page: pageNum,
           itemsPerPage: numItems,
-          filterFields: [
-            "name",
-            "description"
-          ],
+          filterFields: ['name', 'description'],
           type: mtdtType,
         },
       },
-    }
+    },
   });
   return response.data.data.metadataList.paginatedList;
 };
@@ -82,7 +82,7 @@ const updateMetadata = async (
   mtdtName: string,
   mtdtDesc: string
 ) => {
-  const response = await axios.post(GLOBALHELPER.APIURL, {
+  const response = await axios.post(GLOBALHELPER.DEVURL, {
     query: updateMetadataQuery,
     variables: {
       id: mtdtId,
@@ -97,7 +97,7 @@ const updateMetadata = async (
 //DELETE METADATA FROM API
 
 const deleteMetadata = async (mtdtId: string) => {
-  const response = await axios.post(GLOBALHELPER.APIURL, {
+  const response = await axios.post(GLOBALHELPER.DEVURL, {
     query: deleteMetadataQuery,
     variables: {
       id: mtdtId,
@@ -106,4 +106,10 @@ const deleteMetadata = async (mtdtId: string) => {
   return response.data.data;
 };
 
-export { getMetadata, addMetadata, updateMetadata, deleteMetadata, getPgMetadata };
+export {
+  getMetadata,
+  addMetadata,
+  updateMetadata,
+  deleteMetadata,
+  getPgMetadata,
+};

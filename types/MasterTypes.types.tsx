@@ -39,8 +39,8 @@ export interface ManagerType {
 //     userId: string,
 // }
 
-
 export interface UserType {
+  capability: any;
   _id?: string;
   firstName: string;
   lastName: string;
