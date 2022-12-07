@@ -7,7 +7,6 @@ import {
   getPgMetadataQuery,
   updateMetadataQuery,
   deleteMetadataQuery,
-
 } from '../query/metadata.query';
 
 axios.defaults.headers.common['Content-Type'] = `application/json`;
@@ -67,7 +66,11 @@ const searchMetadata = async (mtdtName: string) => {
 //READ METADATA FROM API (PAGINATION)
 
 //Create function to get metdata from API
-const getPgMetadata = async (mtdtType: string, pageNum: number, numItems: number) => {
+const getPgMetadata = async (
+  mtdtType: string,
+  pageNum: number,
+  numItems: number
+) => {
   const response = await axios.get(GLOBALHELPER.DEVURL, {
     params: {
       query: getPgMetadataQuery,
@@ -75,14 +78,11 @@ const getPgMetadata = async (mtdtType: string, pageNum: number, numItems: number
         options: {
           page: pageNum,
           itemsPerPage: numItems,
-          filterFields: [
-            "name",
-            "description"
-          ],
+          filterFields: ['name', 'description'],
           type: mtdtType,
         },
       },
-    }
+    },
   });
   return response.data.data.metadataList.paginatedList;
 };
@@ -119,4 +119,10 @@ const deleteMetadata = async (mtdtId: string) => {
   return response.data.data;
 };
 
-export { getMetadata, addMetadata, updateMetadata, deleteMetadata, getPgMetadata, searchMetadata };
+export {
+  getMetadata,
+  addMetadata,
+  updateMetadata,
+  deleteMetadata,
+  getPgMetadata,
+};
