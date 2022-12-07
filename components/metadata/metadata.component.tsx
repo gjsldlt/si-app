@@ -59,8 +59,6 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
     setDisplayForm(!displayForm);
   };
 
-
-
   const editMetadata = (metadata: MetadataType) => {
     setDisplayForm(true);
     setMetadataToEdit(metadata);

@@ -13,7 +13,7 @@ axios.defaults.headers.common[
 ] = `application/json, text/plain, application/graphql, */*`;
 
 export async function authLogin({ email, password }: LoginDetails) {
-  let response = await axios.post(GLOBALHELPER.APIURL, {
+  let response = await axios.post(GLOBALHELPER.DEVURL, {
     query: `mutation(
                 $email:String!, 
                 $password:String!
@@ -56,7 +56,7 @@ export const clearUserSession = () => {
 };
 
 export const getAllManagers = async () => {
-  let data = await axios.get(GLOBALHELPER.APIURL, {
+  let data = await axios.get(GLOBALHELPER.DEVURL, {
     params: {
       query: `query GetAllManagers{
                 managers{
@@ -75,7 +75,7 @@ export const getAllManagers = async () => {
 };
 
 export const getEmployeesOfManager = async (managerId: string) => {
-  let data = await axios.get(GLOBALHELPER.APIURL, {
+  let data = await axios.get(GLOBALHELPER.DEVURL, {
     params: {
       query: `query GetAllEmployeesOfManager($managerId: String!){
                 employeesPerManager(managerId:$managerId){
@@ -101,7 +101,7 @@ export const getEmployeesOfManager = async (managerId: string) => {
 };
 
 export const getEmployees = async () => {
-  let data = await axios.get(GLOBALHELPER.APIURL, {
+  let data = await axios.get(GLOBALHELPER.DEVURL, {
     params: {
       query: `query GetAllEmployees{
                 employees{
@@ -143,7 +143,7 @@ export const getEmployees = async () => {
 };
 
 export const registerManager = async (user: UserType) => {
-  let response = await axios.post(GLOBALHELPER.APIURL, {
+  let response = await axios.post(GLOBALHELPER.DEVURL, {
     query: `
             mutation NewManager($manager:ManagerInput){
                 addManager(manager:$manager){
@@ -171,7 +171,7 @@ export const registerEmployee = async (
   emp: EmployeeType,
   managerId: string
 ) => {
-  let response = await axios.post(GLOBALHELPER.APIURL, {
+  let response = await axios.post(GLOBALHELPER.DEVURL, {
     query: `
             mutation NewEmployee(
                 $firstName: String!
@@ -213,7 +213,7 @@ export const registerEmployee = async (
 };
 
 export const deleteUser = async (id: string) => {
-  let response = await axios.post(GLOBALHELPER.APIURL, {
+  let response = await axios.post(GLOBALHELPER.DEVURL, {
     query: `
         mutation DeleteUser($id:String!){
           deleteUser(id:$id){
@@ -230,7 +230,7 @@ export const deleteUser = async (id: string) => {
 };
 
 export const getEmployeeByUserId = async (id: string) => {
-  let data = await axios.get(GLOBALHELPER.APIURL, {
+  let data = await axios.get(GLOBALHELPER.DEVURL, {
     params: {
       query: `
             query GetEmployeeByID($employeeId:String!){
@@ -282,7 +282,7 @@ export const updateManager = async (id: string, user: UserType) => {
   try {
     delete user.password;
     console.log(id, user);
-    let response = await axios.post(GLOBALHELPER.APIURL, {
+    let response = await axios.post(GLOBALHELPER.DEVURL, {
       query: `mutation UpdateUser(
                     $id:String!
                     $user: UserUpdateFields!

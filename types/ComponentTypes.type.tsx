@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { MetadataType, UserType } from './MasterTypes.types';
 
 export interface ListType {
@@ -33,7 +33,7 @@ export interface ButtonType {
   variant?: 'text' | 'outlined' | 'contained' | undefined;
   text: string[];
   disabled?: boolean;
-  icon?: any;
+  icon?: JSX.Element;
   style?: string;
   color?: string;
   placement?:
@@ -51,4 +51,28 @@ export interface ButtonType {
   | "top"
   | undefined;
   filter?: boolean;
+};
+
+export interface TextFieldType {
+  id?: string;
+  name?: string;
+  label: string;
+  select?: boolean | undefined;
+  children?: JSX.Element;
+  placeholder?: string;
+  variant?: "standard" | "filled" | "outlined" | undefined;
+  type?: "number" | "password" | "search" | "email" | undefined;
+  value: string | number | undefined;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void | undefined;
+  disabled?: boolean | undefined;
+  required?: boolean | undefined;
+  validation?: { error: boolean | undefined; errorMsg?: string };
+  multiline?: { enabled: boolean | undefined; rows: number };
+  className?: string;
+  ariaLabel?: string;
+  fontSize?: number;
+  fontSizeLabel?: number;
+  size?: 'small' | 'medium' | undefined;
+  width?: number;
+  maxLength?: number;
 };

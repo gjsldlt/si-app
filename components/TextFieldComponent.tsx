@@ -1,29 +1,7 @@
-import { MenuItem, TextField } from "@mui/material";
-import React, { ChangeEvent, FC } from "react";
+import { TextField } from "@mui/material";
+import React, { FC } from "react";
 
-type TextFieldType = {
-  id?: string;
-  name?: string;
-  label: string;
-  select?: boolean | undefined;
-  children?: any;
-  placeholder?: string;
-  variant?: "standard" | "filled" | "outlined" | undefined;
-  type?: "number" | "password" | "search" | "email" | undefined;
-  value: string | number | undefined;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void | undefined;
-  disabled?: boolean | undefined;
-  required?: boolean | undefined;
-  validation?: { error: boolean | undefined; errorMsg?: string };
-  multiline?: { enabled: boolean | undefined; rows: number };
-  className?: string;
-  ariaLabel?: string;
-  fontSize?: number;
-  fontSizeLabel?: number;
-  size?: 'small' | 'medium' | undefined;
-  width?: number;
-  maxLength?: number;
-};
+import { TextFieldType } from "../types/ComponentTypes.type";
 
 const TextFieldComponent: FC<TextFieldType> = ({
   id,

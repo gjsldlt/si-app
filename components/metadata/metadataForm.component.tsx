@@ -79,19 +79,6 @@ const MetadataForm: FC<FormProps> = ({
       onSubmit={formSubmit}
     >
       <div className={tailwindClasses.formItem}>
-        {/* <label className={tailwindClasses.inputLabel}>
-          {metadataType.charAt(0).toUpperCase() + metadataType.slice(1)}
-        </label>
-        <input
-          required
-          onChange={inputChange}
-          className={tailwindClasses.input}
-          value={newMetadataName}
-          type="text"
-          id="metadataName"
-          name="metadataName"
-          placeholder="ex. JavaScript"
-        /> */}
         <TextFieldComponent
           className={"w-full"}
           id="metadataName"
@@ -105,17 +92,6 @@ const MetadataForm: FC<FormProps> = ({
         />
       </div>
       <div className={tailwindClasses.formItem}>
-        {/* <label className={tailwindClasses.inputLabel}>Description</label>
-        <input
-          required
-          onChange={inputChange}
-          className={tailwindClasses.input}
-          value={newMetadataDesc}
-          type="text"
-          id="metadataDesc"
-          name="metadataDesc"
-          placeholder="ex. Scripting language for web pages"
-        /> */}
         <TextFieldComponent
           className={"w-full"}
           id="metadataDesc"
