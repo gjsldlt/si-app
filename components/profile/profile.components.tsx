@@ -1,6 +1,8 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { Avatar } from '@mui/material';
 import { PlusIcon, XIcon, PencilIcon, TrashIcon } from '@heroicons/react/solid';
+import CreateIcon from '@mui/icons-material/Create';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -9,13 +11,18 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Card from '@mui/material/Card';
+import ButtonComponent from '../ButtonComponent';
+import { getEmployeeByUserId } from '../../services/user.service';
+import { UserType } from '../../types/MasterTypes.types';
 
 export default function Profile() {
   const tailwindClasses = {
     avatar:
       'w-[130px] h-[130px] md:w-[160px] md:h-[160px] md:mr-[460px]  lg:mr-[1100px] lg:w-[200px] lg:h-[200px] ',
     addCloseIcon:
-      'addCloseIcon w-[30px] h-[30px] text-white  bg-[#0E2040] pt-[-10px]  rounded-[10px] ml-[285px] md:mr-[10px] md:flex md:justify-center',
+      'addCloseIcon w-[30px] h-[30px] text-white p-[5px] bg-[#0E2040] rounded-[10px] ml-[260px] ',
+    editDeleteIcon:
+      'editDeleteIcon w-[30px] h-[30px] p-[7px] text-[#1C1B1F] bg-white rounded-[25px] drop-shadow-[0_1px_1px_rgba(0,0,0,0.25)] ml-[460px] lg:ml-[1120px]',
     main_card: 'flex justify-center bg-[#FFFF] h-[auto] ',
 
     main_cardContent:
@@ -35,23 +42,50 @@ export default function Profile() {
     typographyInfocard_capability:
       'text-sm leading-normal   text-blueGray-400  uppercase flex justify-center md:pr-[70px]  lg:pr-[100px] ',
   };
+  const [user, setUser] = useState<UserType>();
+  // state hook for displaying the data from GetEmployeeByID query
+  const renderData = async () => {
+    setUser(await getEmployeeByUserId('62de5de3d6c74487764576ad'));
+  };
+  console.log(getEmployeeByUserId('62de5de3d6c74487764576ad'));
+  useEffect(() => {
+    renderData();
+  }, []);
   return (
     <Card className={tailwindClasses.main_card}>
       <CardContent className={tailwindClasses.main_cardContent}>
         <Card className={tailwindClasses.infoCard}>
           <CardContent>
-            <Typography className={tailwindClasses.typographyInfocard_name}>
-              Juan Dela Cruz
-            </Typography>
+            {user ? (
+              <Typography className={tailwindClasses.typographyInfocard_name}>
+                {user && user.firstName + ' ' + user.lastName}
+              </Typography>
+            ) : null}
             <CardContent className={tailwindClasses.cardContentInfocard_level}>
               <Typography className={tailwindClasses.typographyInfocard_level}>
                 Analyst
               </Typography>
+              {/* 
+              {user ? (
+                <Typography
+                  className={tailwindClasses.typographyInfocard_level}
+                >
+                  {user && user.level.name}
+                </Typography>
+              ) : null} */}
               <Typography
                 className={tailwindClasses.typographyInfocard_capability}
               >
                 Front End Developer
               </Typography>
+
+              {/* {user ? (
+                <Typography
+                  className={tailwindClasses.typographyInfocard_level}
+                >
+                  {user?.capability?.name}
+                </Typography>
+              ) : null} */}
             </CardContent>
           </CardContent>
         </Card>
@@ -59,6 +93,16 @@ export default function Profile() {
           <Card className={tailwindClasses.utilizationCard}>
             <>
               <CardContent>
+                <CardActions>
+                  <ButtonComponent
+                    style='icon'
+                    icon={
+                      <CreateIcon className={tailwindClasses.editDeleteIcon} />
+                    }
+                    text={['Edit']}
+                    // handleClick={[() => editUser(item)]}
+                  />
+                </CardActions>
                 <Typography className={tailwindClasses.sectionText}>
                   Utilization Status:
                   <span> N/A</span>
@@ -69,7 +113,18 @@ export default function Profile() {
                 </Typography>
                 <Typography className={tailwindClasses.sectionText}>
                   Delivery Manager:
-                  <span> Arlene Eco</span>
+                  <span>
+                    {user &&
+                      user.manager.firstName + ' ' + user.manager.lastName}
+                    {/* {user ? (
+                      <Typography
+                        className={tailwindClasses.typographyInfocard_level}
+                      >
+                        {user &&
+                          user.manager.firstName + ' ' + user.manager.lastName}
+                      </Typography>
+                    ) : null} */}
+                  </span>
                 </Typography>
               </CardContent>
 
@@ -124,7 +179,9 @@ export default function Profile() {
                   <Typography className=''>Primary Skill</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Typography>React JS</Typography>
+                  <Typography>
+                    {user?.skills ? user.skills[0].skill.name : 'n/a'}
+                  </Typography>
                 </AccordionDetails>
               </Accordion>
 
