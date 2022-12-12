@@ -108,6 +108,7 @@ const MetadataForm: FC<FormProps> = ({
           text={[`${metadataToEdit ? 'Update' : 'Add'}`]}
           type='submit'
           variant='outlined'
+          handleClick={null}
         />
       </div>
     </form>

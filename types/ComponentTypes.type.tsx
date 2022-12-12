@@ -13,23 +13,24 @@ export interface ListType {
 }
 
 export interface CardType {
-  title?: string | undefined,
-  actions?: JSX.Element,
-  content?: JSX.Element,
-  pageCount?: number,
+  title?: string | undefined;
+  actions?: JSX.Element;
+  content?: JSX.Element;
+  pageCount?: number;
   setCurrentPage?: React.Dispatch<React.SetStateAction<number>>;
   renderData?: () => Promise<void>;
+  searchInput?: string;
+  childToParent: (searchTerm: string) => void;
 }
 
 export interface PopoverType {
-  title?: string | undefined,
-  content?: JSX.Element
+  title?: string | undefined;
+  content?: JSX.Element;
 }
-
 
 export interface ButtonType {
   type?: 'button' | 'submit' | 'reset' | undefined;
-  handleClick?: any;
+  handleClick: any;
   variant?: 'text' | 'outlined' | 'contained' | undefined;
   text: string[];
   disabled?: boolean;
