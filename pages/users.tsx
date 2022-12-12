@@ -33,8 +33,9 @@ function Users() {
     <>
       <div className={tailwindClasses.content}>
         <div className={tailwindClasses.box1}>
-          {/* Manager List */}
+          {/* %%%%%%%%%%%%%%%%%%%% Manager List %%%%%%%%%%%%%%%%%%%% */}
           {/* <ManagerWidget activeManager={activeManager} height='10vh' /> */}
+          {/* %%%%%%%%%%%%%%%%%%%% From userList.component.tsx %%%%%%%%%%%%%%%%%%%% */}
           <UserList
             role="managers"
             activeUser={activeManager}
@@ -42,7 +43,8 @@ function Users() {
             enableRowActions={true} />
         </div>
         <div className={tailwindClasses.box2}>
-          {/* Employee List */}
+          {/* %%%%%%%%%%%%%%%%%%%% Employee List %%%%%%%%%%%%%%%%%%%% */}
+          {/* %%%%%%%%%%%%%%%%%%%% From userList.component.tsx %%%%%%%%%%%%%%%%%%%% */}
           <UserList
             role={activeManager ? 'employeesof' : 'employees'}
             activeUser={activeEmployee}

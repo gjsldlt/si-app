@@ -173,6 +173,7 @@ export default function SkillManager({ employee, activeSkills, setActiveSkills }
     renderData();
   }, [employee]);
 
+  // %%%%%%%%%%%%%%%%%%%% Code for sorted skills (Coded on useEffect to view them on real-time) %%%%%%%%%%%%%%%%%%%%
   useEffect(() => {
     let tempSkills = activeSkills?.map((item, index) => (
       <div className={tailwindClasses.chip} key={`skill-chip-${index}`}>
@@ -194,9 +195,12 @@ export default function SkillManager({ employee, activeSkills, setActiveSkills }
 
   return (
     <div className={tailwindClasses.container}>
+      {/* %%%%%%%%%%%%%%%%%%%% LEFT COLUMN of Skill Manager %%%%%%%%%%%%%%%%%%%% */}
       <div className={tailwindClasses.formLeft}>
         <div className={tailwindClasses.formRow}>
+          {/* %%%%%%%%%%%%%%%%%%%% "Skill" Label %%%%%%%%%%%%%%%%%%%% */}
           <span className={tailwindClasses.inputLabel}>Skill</span>
+          {/* %%%%%%%%%%%%%%%%%%%% Dropdown for Skill %%%%%%%%%%%%%%%%%%%% */}
           <FormControl fullWidth>
             <InputLabel htmlFor="grid-skills-name">Skill</InputLabel>
             <Select
@@ -217,6 +221,7 @@ export default function SkillManager({ employee, activeSkills, setActiveSkills }
             </Select>
           </FormControl>
         </div>
+        {/* %%%%%%%%%%%%%%%%%%%% Input Field for Rate %%%%%%%%%%%%%%%%%%%% */}
         <div className={tailwindClasses.inputContainer}>
           <div className={tailwindClasses.halfInput}>
             <Box
@@ -239,6 +244,7 @@ export default function SkillManager({ employee, activeSkills, setActiveSkills }
               />
             </Box>
           </div>
+          {/* %%%%%%%%%%%%%%%%%%%% Input Field for Years of Exp %%%%%%%%%%%%%%%%%%%% */}
           <div className={tailwindClasses.halfInput}>
             <Box
               sx={{
@@ -261,6 +267,7 @@ export default function SkillManager({ employee, activeSkills, setActiveSkills }
             </Box>
           </div>
         </div>
+        {/* %%%%%%%%%%%%%%%%%%%% Input Field for Description %%%%%%%%%%%%%%%%%%%% */}
         <div className={tailwindClasses.formRow}>
           <Box
             sx={{
@@ -283,6 +290,7 @@ export default function SkillManager({ employee, activeSkills, setActiveSkills }
             />
           </Box>
         </div>
+        {/* %%%%%%%%%%%%%%%%%%%% "Add Skill" Button %%%%%%%%%%%%%%%%%%%% */}
         <div className={tailwindClasses.formRow}>
           <ButtonComponent
             text={['Add Skill']}
@@ -293,25 +301,32 @@ export default function SkillManager({ employee, activeSkills, setActiveSkills }
           />
         </div>
       </div>
+      {/* RIGHT COLUMN of Skill Manager */}
       <div className={tailwindClasses.formRight}>
+        {/* %%%%%%%%%%%%%%%%%%%% Sort Arrow Buttons (Sort by Name is not yet coded. Only by Rate and Years of Exp) %%%%%%%%%%%%%%%%%%%% */}
         <div className={tailwindClasses.buttonGroup}>
+          {/* %%%%%%%%%%%%%%%%%%%% Sort by Name %%%%%%%%%%%%%%%%%%%% */}
           <button onClick={nameSort}>
             {skillNameSort === true ? <ChevronUpIcon /> : <ChevronDownIcon />}
             Name
           </button>
+          {/* %%%%%%%%%%%%%%%%%%%% Sort by Rate %%%%%%%%%%%%%%%%%%%% */}
           <button className="pl-[45px]" onClick={rateSort}>
             {skillRateSort === true ? <ChevronUpIcon /> : <ChevronDownIcon />}
             Rate
           </button>
+          {/* %%%%%%%%%%%%%%%%%%%% Sort by Years of Exp %%%%%%%%%%%%%%%%%%%% */}
           <button className="pr-[45px]" onClick={yearSort}>
             {skillYearsSort === true ? <ChevronUpIcon /> : <ChevronDownIcon />}
             Years of Exp
           </button>
         </div>
+        {/* %%%%%%%%%%%%%%%%%%%% This is where the list of skills should be displayed, see useEffect above %%%%%%%%%%%%%%%%%%%% */}
         <div className={tailwindClasses.list}>
           {sortedSkills}
         </div>
         <div className={tailwindClasses.inputContainer}>
+          {/* %%%%%%%%%%%%%%%%%%%% Dropdown for Primary Skill %%%%%%%%%%%%%%%%%%%% */}
           <div className={tailwindClasses.halfInput}>
             <FormControl fullWidth>
               <InputLabel htmlFor="grid-skills-name">Primary Skill</InputLabel>
@@ -333,6 +348,7 @@ export default function SkillManager({ employee, activeSkills, setActiveSkills }
               </Select>
             </FormControl>
           </div>
+          {/* %%%%%%%%%%%%%%%%%%%% Dropdown for Secondary Skill %%%%%%%%%%%%%%%%%%%% */}
           <div className={tailwindClasses.halfInput}>
             <FormControl fullWidth>
               <InputLabel htmlFor="grid-skills-name">Secondary Skill</InputLabel>

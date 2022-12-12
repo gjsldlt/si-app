@@ -74,6 +74,7 @@ export default function UserList({
     formButton: "bg-transparent hover:bg-sidebar text-sidebar font-semibold hover:text-white py-2 px-4 border border-sidebar hover:border-transparent rounded",
   };
 
+  {/* %%%%%%%%%%%%%%%%%%%% Submit Function whether Create or Update %%%%%%%%%%%%%%%%%%%% */}
   const onSubmitForm = (e: any) => {
     e.preventDefault();
     if (userToEdit) {
@@ -239,6 +240,7 @@ export default function UserList({
 
     return (
       <>
+      {/* %%%%%%%%%%%%%%%%%%%% Dropdown for Manager %%%%%%%%%%%%%%%%%%%% */}
         <div className={tailwindClasses.formItemHalf}>
           <FormControl fullWidth>
             <InputLabel htmlFor="grid-managerId-name">Manager</InputLabel>
@@ -260,6 +262,7 @@ export default function UserList({
             </Select>
           </FormControl>
         </div>
+        {/* %%%%%%%%%%%%%%%%%%%% Dropdown for Capability %%%%%%%%%%%%%%%%%%%% */}
         <div className={tailwindClasses.formItemHalf}>
           <FormControl fullWidth>
             <InputLabel htmlFor="grid-capability-name">Capability</InputLabel>
@@ -318,6 +321,7 @@ export default function UserList({
             </Select>
           </FormControl>
         </div> */}
+        {/* %%%%%%%%%%%%%%%%%%%% This redirects to skillManager.component.tsx %%%%%%%%%%%%%%%%%%%% */}
         <SkillManager employee={employeeData} setEmployee={setEmployeeData} setActiveSkills={setActiveSkillList} activeSkills={activeSkillList} />
       </>
     );
@@ -335,6 +339,7 @@ export default function UserList({
 
   return (
     <form className={tailwindClasses.form} onSubmit={onSubmitForm}>
+      {/* %%%%%%%%%%%%%%%%%%%% Input Field for First Name  %%%%%%%%%%%%%%%%%%%% */}
       <div className={role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF
         ? tailwindClasses.formItemThird
         : tailwindClasses.formItemHalf}>
@@ -357,6 +362,7 @@ export default function UserList({
           />
         </Box>
       </div>
+      {/* %%%%%%%%%%%%%%%%%%%% Input Field for Last Name %%%%%%%%%%%%%%%%%%%% */}
       <div className={role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF
         ? tailwindClasses.formItemThird
         : tailwindClasses.formItemHalf}>
@@ -379,6 +385,7 @@ export default function UserList({
           />
         </Box>
       </div>
+      {/* %%%%%%%%%%%%%%%%%%%% Input Field for Email %%%%%%%%%%%%%%%%%%%% */}
       <div className={role === USER_ROLES.EMPLOYEES || role === USER_ROLES.EMPLOYEESOF
         ? tailwindClasses.formItemThird
         : tailwindClasses.formItem}>
@@ -406,6 +413,7 @@ export default function UserList({
         : null}
       {userToEdit === undefined && (
         <>
+        {/* %%%%%%%%%%%%%%%%%%%% Input Field for Password %%%%%%%%%%%%%%%%%%%% */}
           <div className={tailwindClasses.formItemHalf}>
             <Box
               sx={{
@@ -426,6 +434,7 @@ export default function UserList({
               />
             </Box>
           </div>
+          {/* %%%%%%%%%%%%%%%%%%%% Input Field for Confirm Password %%%%%%%%%%%%%%%%%%%% */}
           <div className={tailwindClasses.formItemHalf}>
             <Box
               sx={{
@@ -448,6 +457,7 @@ export default function UserList({
           </div>
         </>
       )}
+      {/* %%%%%%%%%%%%%%%%%%%% If New Employee, Button will view as "Create", otherwise, "Update" %%%%%%%%%%%%%%%%%%%% */}
       <div className={`${tailwindClasses.formItem} mt-1 flex justify-end`}>
         <ButtonComponent
           type="submit"

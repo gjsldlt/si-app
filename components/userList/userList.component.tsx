@@ -218,6 +218,7 @@ export default function UserList({
     setLoadState(false);
   };
 
+// %%%%%%%%%%%%%%%%%%%% Will render the list of Managers/Employees %%%%%%%%%%%%%%%%%%%%
   const renderList = () => {
     return (
       <div className={tailwindClasses.list}>
@@ -355,6 +356,7 @@ export default function UserList({
   return (
     <div className={tailwindClasses.container}>
       <div>
+        {/* %%%%%%%%%%%%%%%%%%%% Popup for Delete %%%%%%%%%%%%%%%%%%%% */}
         <PopupComponent
           title={`${!popupLoading ? "Are you sure you want to delete this user?:" : ""
             }`}
@@ -376,6 +378,7 @@ export default function UserList({
             )}
           </div>
         </PopupComponent>
+        {/* %%%%%%%%%%%%%%%%%%%% Popup for Successfully Deleted %%%%%%%%%%%%%%%%%%%% */}
         <PopupComponent
           title={`Successfully deleted user:`}
           entry={`${userToDelete?.firstName} ${userToDelete?.lastName}`}
@@ -389,6 +392,7 @@ export default function UserList({
             />
           </div>
         </PopupComponent>
+        {/* %%%%%%%%%%%%%%%%%%%% Popup for Sucessfully Registered %%%%%%%%%%%%%%%%%%%% */}
         <PopupComponent
           title={`${userToBeRegistered?.firstName} ${userToBeRegistered?.lastName
             } is now registered as ${role === "managers" ? "manager" : "employee"
@@ -409,12 +413,15 @@ export default function UserList({
           {addState ?
             "" : (
               <div>
+                {/* %%%%%%%%%%%%%%%%%%%% Search Icon %%%%%%%%%%%%%%%%%%%% */}
                 <IconButton>
                   <SearchIcon />
                 </IconButton>
+                {/* %%%%%%%%%%%%%%%%%%%% Filter Icon %%%%%%%%%%%%%%%%%%%% */}
                 <IconButton onClick={filter}>
                   <TuneIcon />
                 </IconButton>
+                {/* %%%%%%%%%%%%%%%%%%%% Filter Functions %%%%%%%%%%%%%%%%%%%% */}
                 {toFilter ?
                   (
                     <div className={tailwindClasses.filter}>
@@ -521,7 +528,7 @@ export default function UserList({
                   )}
               </div>
             )}
-
+          {/* %%%%%%%%%%%%%%%%%%%% Add Button %%%%%%%%%%%%%%%%%%%% */}
           <button className={tailwindClasses.addButton} onClick={addNewUser}>
             {addState ? (
               <XIcon className={tailwindClasses.addCloseIcon} />
@@ -530,7 +537,9 @@ export default function UserList({
             )}
           </button>
         </div>
+        {/* %%%%%%%%%%%%%%%%%%%% Add Functions %%%%%%%%%%%%%%%%%%%% */}
         {addState ? (
+          // %%%%%%%%%%%%%%%%%%%% Will redirect to userForm.component.tsx %%%%%%%%%%%%%%%%%%%%
           <UserForm
             role={role}
             userToEdit={userToEdit}
@@ -540,9 +549,11 @@ export default function UserList({
             updateUser={updateUser}
           />
         ) : (
+          // %%%%%%%%%%%%%%%%%%%% Else, will render the list of Managers/Employees %%%%%%%%%%%%%%%%%%%%
           renderList()
         )}
       </div>
+      {/* %%%%%%%%%%%%%%%%%%%% Pagination %%%%%%%%%%%%%%%%%%%% */}
       <div className="flex justify-center my-[25px]">
         <Stack spacing={2}>
           <Pagination count={10} color="secondary" />
