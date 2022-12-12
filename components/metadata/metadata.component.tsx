@@ -5,7 +5,7 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Box } from '@mui/material';
 
-import { getMetadata, getPgMetadata, searchMetadata } from '../../services/metadata.service';
+import { getMetadata, getPgMetadata } from '../../services/metadata.service';
 import { MetadataComponentProps } from '../../types/MasterPageComponent.type';
 import { MetadataType } from '../../types/MasterTypes.types';
 import { deleteMetadata } from '../../services/metadata.service';
@@ -50,10 +50,7 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
 
   const [metadataPgList, setMetadataPgList] = useState<MetadataType[]>([]);
 
-  const [metadataSearchList, setMetadataSearchList] = useState<MetadataType[]>([]);
-
   const [currentPage, setCurrentPage] = useState<number>(0);
-
 
   // state hook to capture search term from card component
   const [searchInput, setSearchInput] = useState<string>('');

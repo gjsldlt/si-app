@@ -50,19 +50,6 @@ const getMetadata = async (mtdtType: string) => {
   return response.data.data.metadataByType;
 };
 
-//SEARCH METADATA FROM API
-const searchMetadata = async (mtdtName: string) => {
-  const response = await axios.get(GLOBALHELPER.DEVURL, {
-    params: {
-      query: getMetadataQuery,
-      variables: {
-        type: mtdtName,
-      },
-    },
-  });
-  return response.data.data.metadataByType;
-};
-
 //READ METADATA FROM API (PAGINATION)
 
 //Create function to get metdata from API
@@ -127,5 +114,4 @@ export {
   updateMetadata,
   deleteMetadata,
   getPgMetadata,
-  searchMetadata
 };
