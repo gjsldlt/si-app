@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { PlusIcon, XIcon, PencilIcon } from "@heroicons/react/solid";
 
 import LoaderComponent from "../loader/loader.component";
@@ -176,15 +176,15 @@ export default function UserList({
     console.log(id);
   };
 
-  const renderManagerListForNewEmployee = async () => {
+  const renderManagerListForNewEmployee = useCallback(async () => {
     setLoadState(true);
     setManagerList(await getAllManagers());
     setSkillList(await getMetadata("skill"));
     setCapabilityList(await getMetadata("capability"));
     setLoadState(false);
-  };
+  }, [setLoadState]);
 
-  const renderEmployeeData = async () => {
+  const renderEmployeeData = useCallback(async () => {
     setLoadState(true);
     setManagerList(await getAllManagers());
     setEmployeeData(
@@ -196,7 +196,7 @@ export default function UserList({
     setCapabilityList(await getMetadata("capability"));
     console.log(employeeData);
     setLoadState(false);
-  };
+  }, [employeeData, setLoadState, userToEdit]);
 
   const onActiveSkillAdd = () => {
     console.log(activeSkill);
@@ -331,7 +331,7 @@ export default function UserList({
         renderManagerListForNewEmployee();
       }
     }
-  }, [role, parentUser, activeSkill]);
+  }, [role, parentUser, activeSkill, userToEdit, renderEmployeeData, renderManagerListForNewEmployee]);
 
   return (
     <form className={tailwindClasses.form} onSubmit={onSubmitForm}>
@@ -471,3 +471,4 @@ type PageProps = {
   role?: string;
   updateUser: (updatedUser: UserType, managerId?: string) => void;
 };
+

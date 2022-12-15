@@ -9,7 +9,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import TuneIcon from '@mui/icons-material/Tune';
 import styles from './managerList.module.scss';
 import LoaderComponent from '../loader/loader.component';
-import { getAllManagers } from '../../services/user.service';
+import { getAllManagers, getEmployeeByUserId } from '../../services/user.service';
 import {
   getEmployees,
   getEmployeesOfManager,
@@ -21,7 +21,7 @@ import {
 import {
   UserType,
   ManagerType,
-  Metadata,
+  MetadataType,
   EmployeeType,
 } from "../../types/MasterTypes.types";
 import { getMetadata } from "../../services/metadata.service";
@@ -90,10 +90,10 @@ export default function UserList({
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [managerId, setManagerId] = useState<string>("");
   const [managerList, setManagerList] = useState<ManagerType[]>([]);
-  const [capabilityList, setCapabilityList] = useState<Metadata[]>([]);
-  const [skillList, setSkillList] = useState<Metadata[]>([]);
+  const [capabilityList, setCapabilityList] = useState<MetadataType[]>([]);
+  const [skillList, setSkillList] = useState<MetadataType[]>([]);
   const [activeSkill, setActiveSkill] = useState<{
-    skill?: Metadata;
+    skill?: MetadataType;
     rate: string;
     yearsExperience: string;
     description: string;
@@ -110,9 +110,9 @@ export default function UserList({
   const [popupLoading, setPopupLoading] = useState<boolean>(false);
   const [toFilter, setToFilter] = useState<boolean>(false)
   const [employeeData, setEmployeeData] = useState<EmployeeType>();
-  const [selectedCapability, setSelectedCapability] = useState<String[]>([])
-  const [selectedPrimarySkill, setSelectedPrimarySkill] = useState<String[]>([])
-  const [selectedSecondarySkill, setSelectedSecondarySkill] = useState<String[]>([])
+  const [selectedCapability, setSelectedCapability] = useState<string[]>([])
+  const [selectedPrimarySkill, setSelectedPrimarySkill] = useState<string[]>([])
+  const [selectedSecondarySkill, setSelectedSecondarySkill] = useState<string[]>([])
 
   const handleOpen = (user: UserType) => {
     setUserToDelete(user);

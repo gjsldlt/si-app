@@ -14,12 +14,12 @@ export interface MetadataComponentProps {
 }
 
 export interface FormProps {
-  renderData: () => Promise<void>
-  setLoadState: React.Dispatch<React.SetStateAction<boolean>>
-  metadataToEdit?: MetadataType
-  metadataType: string
-  setAction?: any
-  setSuccess?: any
+  renderData: () => Promise<void>;
+  setLoadState: React.Dispatch<React.SetStateAction<boolean>>;
+  metadataToEdit?: MetadataType;
+  metadataType: string;
+  setAction?: any;
+  setSuccess?: any;
 }
 
 export interface PopupProps {

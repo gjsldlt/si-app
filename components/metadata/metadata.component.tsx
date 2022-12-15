@@ -52,14 +52,15 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
 
   const [currentPage, setCurrentPage] = useState<number>(0);
 
+  // state hook to capture search term from card component
+  const [searchInput, setSearchInput] = useState<string>('');
+
   const maxNoOfResults = 10;
 
   const showMetadataForm = () => {
     setMetadataToEdit(undefined);
     setDisplayForm(!displayForm);
   };
-
-
 
   const editMetadata = (metadata: MetadataType) => {
     setDisplayForm(true);
@@ -71,14 +72,25 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
     setMetadataToDelete(metadata);
   };
 
+  //function to accept data (search term) from card component
+  const childToParent = useCallback((searchTerm: string) => {
+    setSearchInput(searchTerm);
+  }, []);
+
+  useEffect(() => {
+    console.log(searchInput);
+    childToParent;
+  }, [childToParent, searchInput])
+
+
   const renderData = useCallback(async () => {
     setDisplayForm(false);
     setDisplayPopup(false);
     setLoadState(true);
     setMetadataList(await getMetadata(type));
-    setMetadataPgList(await getPgMetadata(type, currentPage, maxNoOfResults));
+    setMetadataPgList(await getPgMetadata(type, searchInput, currentPage, maxNoOfResults));
     setLoadState(false);
-  }, [type, currentPage]);
+  }, [type, currentPage, searchInput]);
 
   useEffect(() => {
     renderData();
@@ -122,6 +134,8 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
     }
   };
 
+
+
   const cardBody = () => {
     if (displayForm) {
       return (
@@ -149,6 +163,8 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
     }
   };
 
+
+
   return (
     <>
       <CardComponent
@@ -156,9 +172,9 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
         renderData={renderData}
         pageCount={metadataPageCount}
         setCurrentPage={setCurrentPage}
+        childToParent={childToParent}
         actions={
           <>
-
             <ButtonComponent
               style='icon'
               text={['Add']}
@@ -174,16 +190,16 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
       />
 
       <PopupComponent
-        title={`${!popupLoading ? "Are you sure you want to delete this entry?:" : ""
+        title={`${!popupLoading ? 'Are you sure you want to delete this entry?:' : ''
           }`}
-        entry={!popupLoading ? metadataToDelete?.name : ""}
+        entry={!popupLoading ? metadataToDelete?.name : ''}
         open={displayPopup}
       >
-        <div className="flex justify-center mt-2">
+        <div>
           {!popupLoading ? (
             <ButtonComponent
-              text={["yes", "no"]}
-              variant="outlined"
+              text={['yes', 'no']}
+              variant='outlined'
               handleClick={[clickYes, () => setDisplayPopup(false)]}
             />
           ) : (
@@ -192,19 +208,19 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
         </div>
       </PopupComponent>
       <PopupComponent
-        title={`Entry successfully ${metadataAction === "add"
+        title={`Entry successfully ${metadataAction === 'add'
           ? "added"
-          : metadataAction === "update"
-            ? "updated"
-            : "deleted"
+          : metadataAction === 'update'
+            ? 'updated'
+            : 'deleted'
           }`}
         open={success}
       >
-        <div className="flex justify-center mt-2">
+        <div>
           {!popupLoading ? (
             <ButtonComponent
-              text={["yes", "no"]}
-              variant="outlined"
+              text={['yes', 'no']}
+              variant='outlined'
               handleClick={[clickYes, () => setDisplayPopup(false)]}
             />
           ) : (
@@ -223,8 +239,8 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
       >
         <Box sx={{ mt: 1, display: 'flex', justifyContent: 'center' }}>
           <ButtonComponent
-            text={["confirm"]}
-            variant="outlined"
+            text={['confirm']}
+            variant='outlined'
             handleClick={[() => setSuccess(false)]}
           />
         </Box>

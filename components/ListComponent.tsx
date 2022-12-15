@@ -61,7 +61,7 @@ const ListComponent: FC<ListType> = ({
       {data.map((data) => {
         const activeLine = activeItem?._id === data._id;
 
-        //if description of secondary text exceeeds 45 char limit, adds ellipsis
+        //if description of secondary text exceeds 45 char limit, adds ellipsis
         let shortDesc: string | undefined = undefined;
 
         /*!!!TO ADD SECONDARY TEXT FOR USERS HERE!!!*/
