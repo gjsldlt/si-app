@@ -55,6 +55,7 @@ const getMetadata = async (mtdtType: string) => {
 //Create function to get metdata from API
 const getPgMetadata = async (
   mtdtType: string,
+  srchTerm: string,
   pageNum: number,
   numItems: number
 ) => {
@@ -67,6 +68,7 @@ const getPgMetadata = async (
           itemsPerPage: numItems,
           filterFields: ['name', 'description'],
           type: mtdtType,
+          searchKeyword: srchTerm
         },
       },
     },

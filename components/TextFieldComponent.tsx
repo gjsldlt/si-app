@@ -1,24 +1,7 @@
-import { MenuItem, TextField } from "@mui/material";
-import React, { ChangeEvent, FC } from "react";
+import { TextField } from "@mui/material";
+import React, { FC } from "react";
 
-type TextFieldType = {
-  id?: string;
-  name?: string;
-  label: string;
-  select?: boolean | undefined;
-  children?: any;
-  placeholder?: string;
-  variant?: "standard" | "filled" | "outlined" | undefined;
-  type?: "number" | "password" | "search" | "email" | undefined;
-  value: string | number | undefined;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void | undefined;
-  disabled?: boolean | undefined;
-  required?: boolean | undefined;
-  validation?: { error: boolean | undefined; errorMsg?: string };
-  multiline?: { enabled: boolean | undefined; rows: number };
-  className?: string;
-  ariaLabel?: string;
-};
+import { TextFieldType } from "../types/ComponentTypes.type";
 
 const TextFieldComponent: FC<TextFieldType> = ({
   id,
@@ -37,6 +20,13 @@ const TextFieldComponent: FC<TextFieldType> = ({
   multiline,
   className,
   ariaLabel,
+
+  //added properties by JDV
+  fontSize,
+  fontSizeLabel,
+  size,
+  width,
+  maxLength
 }) => {
   // HOW THIS COMPONENT WORK
   //
@@ -145,7 +135,10 @@ const TextFieldComponent: FC<TextFieldType> = ({
         helperText={validation?.errorMsg ? validation?.errorMsg : ""}
         multiline={multiline?.enabled}
         rows={multiline?.rows}
-        inputProps={{ "aria-label": ariaLabel }}
+        inputProps={{ 'aria-label': ariaLabel, maxLength: maxLength, style: { fontSize: fontSize } }}
+        InputLabelProps={{ style: { fontSize: fontSizeLabel } }}
+        size={size}
+        style={{ width: width }}
       >
         {children}
       </TextField>

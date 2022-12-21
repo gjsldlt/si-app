@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { MetadataType, UserType } from './MasterTypes.types';
 
 export interface ListType {
@@ -13,27 +13,28 @@ export interface ListType {
 }
 
 export interface CardType {
-  title?: string | undefined,
-  actions?: JSX.Element,
-  content?: JSX.Element,
-  pageCount?: number,
+  title?: string | undefined;
+  actions?: JSX.Element;
+  content?: JSX.Element;
+  pageCount?: number;
   setCurrentPage?: React.Dispatch<React.SetStateAction<number>>;
   renderData?: () => Promise<void>;
+  searchInput?: string;
+  searchFunction: (searchTerm: string) => void;
 }
 
 export interface PopoverType {
-  title?: string | undefined,
-  content?: JSX.Element
+  title?: string | undefined;
+  content?: JSX.Element;
 }
-
 
 export interface ButtonType {
   type?: 'button' | 'submit' | 'reset' | undefined;
-  handleClick?: any;
+  handleClick: any;
   variant?: 'text' | 'outlined' | 'contained' | undefined;
   text: string[];
   disabled?: boolean;
-  icon?: any;
+  icon?: JSX.Element;
   style?: string;
   color?: string;
   placement?:
@@ -51,4 +52,28 @@ export interface ButtonType {
   | "top"
   | undefined;
   filter?: boolean;
+};
+
+export interface TextFieldType {
+  id?: string;
+  name?: string;
+  label: string;
+  select?: boolean | undefined;
+  children?: JSX.Element;
+  placeholder?: string;
+  variant?: "standard" | "filled" | "outlined" | undefined;
+  type?: "number" | "password" | "search" | "email" | undefined;
+  value: string | number | undefined;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void | undefined;
+  disabled?: boolean | undefined;
+  required?: boolean | undefined;
+  validation?: { error: boolean | undefined; errorMsg?: string };
+  multiline?: { enabled: boolean | undefined; rows: number };
+  className?: string;
+  ariaLabel?: string;
+  fontSize?: number;
+  fontSizeLabel?: number;
+  size?: 'small' | 'medium' | undefined;
+  width?: number;
+  maxLength?: number;
 };
