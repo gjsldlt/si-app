@@ -45,15 +45,11 @@ const CardComponent: FC<CardType> = ({
     if (searchTerm !== '' && searchingStatus === false) {
       setSearchingStatus(true);
       searchFunction(searchTerm);
-
-      console.log(searchingStatus)
     }
     else if (searchTerm !== '' && searchingStatus === true) {
       setSearchingStatus(false);
       setSearchTerm('')
       searchFunction('');
-
-      console.log(searchingStatus)
     }
   }
 
