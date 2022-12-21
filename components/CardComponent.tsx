@@ -5,6 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import { Typography, Container, Pagination } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import TuneIcon from '@mui/icons-material/Tune';
+import CloseIcon from '@mui/icons-material/Close';
 
 import { CardType } from '../types/ComponentTypes.type';
 
@@ -17,10 +18,12 @@ const CardComponent: FC<CardType> = ({
   content,
   pageCount,
   setCurrentPage,
-  childToParent
+  searchFunction
 }) => {
 
   const [searchTerm, setSearchTerm] = useState<string>('');
+
+  const [searchingStatus, setSearchingStatus] = useState<boolean>(false);
 
   const searchInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -37,12 +40,24 @@ const CardComponent: FC<CardType> = ({
     }
   }
 
+  const searchHandler = () => {
+    setSearchingStatus(!searchingStatus);
+    if (searchingStatus === false) {
+      searchFunction(searchTerm);
+    }
+    else {
+      searchFunction('');
+      setSearchTerm('');
+    }
+    console.log(searchingStatus)
+  }
+
   return (
     <Card
       sx={{
         borderRadius: '10px',
         minWidth: 275,
-        height: '100%',
+        height: '80vh',
         margin: { xs: 2, sm: 0 }
       }}>
       <CardActions
@@ -82,13 +97,22 @@ const CardComponent: FC<CardType> = ({
             size={'small'}
             width={150}
           />
-          <ButtonComponent
-            style='icon'
-            text={['Search']}
-            color={'#0E2040'}
-            icon={<SearchIcon />}
-            handleClick={[() => childToParent(searchTerm)]}
-          />
+          {searchingStatus ?
+            <ButtonComponent
+              style='icon'
+              text={['Search']}
+              color={'#0E2040'}
+              icon={<CloseIcon />}
+              handleClick={[() => searchHandler()]}
+            /> :
+            <ButtonComponent
+              style='icon'
+              text={['Search']}
+              color={'#0E2040'}
+              icon={<SearchIcon />}
+              handleClick={[() => searchHandler()]}
+            />
+          }
           <ButtonComponent
             style='icon'
             text={['Filter']}

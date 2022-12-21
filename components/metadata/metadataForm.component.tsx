@@ -75,7 +75,6 @@ const MetadataForm: FC<FormProps> = ({
   return (
     <form
       action='submit'
-      className={tailwindClasses.form}
       onSubmit={formSubmit}
     >
       <div className={tailwindClasses.formItem}>

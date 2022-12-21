@@ -24,34 +24,29 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
   enableRowActions,
 }: MetadataComponentProps) => {
 
-  //state hook to capture api response to MetadataType array
-  const [metadataList, setMetadataList] = useState<MetadataType[]>([]);
   //state hook to capture metadata to edit on click of pencil icon
   const [metadataToEdit, setMetadataToEdit] = useState<MetadataType>();
   //state hook to capture metadala to delete on click of trash icon
   const [metadataToDelete, setMetadataToDelete] = useState<MetadataType>();
-
   //state hook to get page count of card
   const [metadataPageCount, setMetadataPageCount] = useState(0);
-
   //state hook to display form containing input fields
   const [displayForm, setDisplayForm] = useState<boolean>(false);
   //state hook to display delete confirmation
   const [displayPopup, setDisplayPopup] = useState<boolean>(false);
   //state hook to show loadscreen component
   const [loadState, setLoadState] = useState<boolean>(true);
-
   // state hook to show succesfull  message
   const [success, setSuccess] = useState<boolean>(false);
   // state hook to show what action the metadata will be done
   const [metadataAction, setAction] = useState<string>("");
   // state hook to show loader on popup
   const [popupLoading, setPopupLoading] = useState<boolean>(false);
-
+  // state hook to gather metadata
+  const [metadataList, setMetadataList] = useState<MetadataType[]>([]);
   const [metadataPgList, setMetadataPgList] = useState<MetadataType[]>([]);
-
+  // state hook to change current page
   const [currentPage, setCurrentPage] = useState<number>(0);
-
   // state hook to capture search term from card component
   const [searchInput, setSearchInput] = useState<string>('');
 
@@ -73,21 +68,21 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
   };
 
   //function to accept data (search term) from card component
-  const childToParent = useCallback((searchTerm: string) => {
+  const searchMetadata = useCallback((searchTerm: string) => {
     setSearchInput(searchTerm);
+
   }, []);
 
   useEffect(() => {
-    console.log(searchInput);
-    childToParent;
-  }, [childToParent, searchInput])
+    searchMetadata;
+  }, [searchMetadata, searchInput])
 
 
   const renderData = useCallback(async () => {
     setDisplayForm(false);
     setDisplayPopup(false);
     setLoadState(true);
-    setMetadataList(await getMetadata(type));
+    setMetadataList(await getMetadata(type))
     setMetadataPgList(await getPgMetadata(type, searchInput, currentPage, maxNoOfResults));
     setLoadState(false);
   }, [type, currentPage, searchInput]);
@@ -115,13 +110,24 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
 
   //add page count for every 10 entries of metadata
   useEffect(() => {
-    for (let i = 1; i <= metadataList.length / i; i++) {
-      if (metadataList.length / i <= maxNoOfResults) {
-        setMetadataPageCount(i)
-        break;
+    //if no search is done and less than 10 entries
+    if (metadataList.length < maxNoOfResults && searchInput === '') {
+      setMetadataPageCount(1)
+    }
+    //if no search is done and more than 10 entries
+    else if (metadataList.length > maxNoOfResults && searchInput === '') {
+      for (let i = 1; i <= metadataList.length / i; i++) {
+        if (metadataList.length / i <= maxNoOfResults) {
+          setMetadataPageCount(i)
+          break;
+        }
       }
     }
-  }, [metadataList, metadataTitle])
+    //if search is done
+    else if (searchInput !== '') {
+      setMetadataPageCount(1)
+    }
+  }, [metadataList, metadataPgList, metadataTitle, searchInput])
 
   const clickYes = async () => {
     setAction("delete");
@@ -134,8 +140,7 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
     }
   };
 
-
-
+  //shows the body of the card (if entering data or reading data)
   const cardBody = () => {
     if (displayForm) {
       return (
@@ -172,7 +177,7 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
         renderData={renderData}
         pageCount={metadataPageCount}
         setCurrentPage={setCurrentPage}
-        childToParent={childToParent}
+        searchFunction={searchMetadata}
         actions={
           <>
             <ButtonComponent
@@ -188,7 +193,6 @@ const MetadataComponent: FC<MetadataComponentProps> = ({
         }
 
       />
-
       <PopupComponent
         title={`${!popupLoading ? 'Are you sure you want to delete this entry?:' : ''
           }`}
