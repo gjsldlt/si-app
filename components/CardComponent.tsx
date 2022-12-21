@@ -31,7 +31,8 @@ const CardComponent: FC<CardType> = ({
   }, []);
 
   useEffect(() => {
-    searchInputChange
+    searchInputChange;
+    setSearchingStatus(false);
   }, [searchInputChange, searchTerm])
 
   const pageChangeHandler = (event: ChangeEvent<unknown>, pageNumber = 1) => {
@@ -41,15 +42,19 @@ const CardComponent: FC<CardType> = ({
   }
 
   const searchHandler = () => {
-    setSearchingStatus(!searchingStatus);
-    if (searchingStatus === false) {
+    if (searchTerm !== '' && searchingStatus === false) {
+      setSearchingStatus(true);
       searchFunction(searchTerm);
+
+      console.log(searchingStatus)
     }
-    else {
+    else if (searchTerm !== '' && searchingStatus === true) {
+      setSearchingStatus(false);
+      setSearchTerm('')
       searchFunction('');
-      setSearchTerm('');
+
+      console.log(searchingStatus)
     }
-    console.log(searchingStatus)
   }
 
   return (
