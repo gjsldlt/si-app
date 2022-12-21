@@ -1,5 +1,6 @@
 import type { AppProps } from 'next/app';
 import { MetadataType } from './MasterTypes.types';
+import { UserType } from './MasterTypes.types';
 import { ReactNode } from 'react';
 
 export interface CustomAppProps extends AppProps {
@@ -12,6 +13,16 @@ export interface MetadataComponentProps {
   enableRowActions: boolean;
   activeMetadata?: MetadataType;
 }
+
+export interface UserListUpdatedComponentProps {
+  onUserDataClick: React.Dispatch<React.SetStateAction<UserType | undefined>>;
+  enableRowActions: boolean;
+  activeUserData?: UserType;
+}
+
+
+
+
 
 export interface FormProps {
   renderData: () => Promise<void>

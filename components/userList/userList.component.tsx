@@ -17,11 +17,12 @@ import {
   registerManager,
   registerEmployee,
   updateManager,
+  getEmployeeByUserId
 } from "../../services/user.service";
 import {
   UserType,
   ManagerType,
-  Metadata,
+  MetadataType,
   EmployeeType,
 } from "../../types/MasterTypes.types";
 import { getMetadata } from "../../services/metadata.service";
@@ -90,10 +91,10 @@ export default function UserList({
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [managerId, setManagerId] = useState<string>("");
   const [managerList, setManagerList] = useState<ManagerType[]>([]);
-  const [capabilityList, setCapabilityList] = useState<Metadata[]>([]);
-  const [skillList, setSkillList] = useState<Metadata[]>([]);
+  const [capabilityList, setCapabilityList] = useState<MetadataType[]>([]);
+  const [skillList, setSkillList] = useState<MetadataType[]>([]);
   const [activeSkill, setActiveSkill] = useState<{
-    skill?: Metadata;
+    skill?: MetadataType;
     rate: string;
     yearsExperience: string;
     description: string;
@@ -110,9 +111,10 @@ export default function UserList({
   const [popupLoading, setPopupLoading] = useState<boolean>(false);
   const [toFilter, setToFilter] = useState<boolean>(false)
   const [employeeData, setEmployeeData] = useState<EmployeeType>();
-  const [selectedCapability, setSelectedCapability] = useState<String[]>([])
-  const [selectedPrimarySkill, setSelectedPrimarySkill] = useState<String[]>([])
-  const [selectedSecondarySkill, setSelectedSecondarySkill] = useState<String[]>([])
+  const [selectedCapability, setSelectedCapability] = useState<string[]>([])
+  const [selectedPrimarySkill, setSelectedPrimarySkill] = useState<string[]>([])
+  const [selectedSecondarySkill, setSelectedSecondarySkill] = useState<string[]>([])
+  
 
   const handleOpen = (user: UserType) => {
     setUserToDelete(user);
@@ -293,18 +295,19 @@ export default function UserList({
     }
   };
 
-  const handleChangeCapability = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value
+  const handleChangeCapability = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value
     setSelectedCapability(typeof value === 'string' ? value.split(',') : value)
   }
 
-  const handleChangePrimarySkill = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value
+  const handleChangePrimarySkill = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value
+    console.log(value)
     setSelectedPrimarySkill(typeof value === 'string' ? value.split(',') : value)
   }
 
-  const handleChangeSecondarySkill = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value
+  const handleChangeSecondarySkill = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value
     setSelectedSecondarySkill(typeof value === 'string' ? value.split(',') : value)
   }
 
@@ -478,7 +481,7 @@ export default function UserList({
                                           name="primarySkill"
                                           value={selectedPrimarySkill}
                                           label="Primary Skill"
-                                          onChange={handleChangePrimarySkill}
+                                          onChange={(selectedPrimarySkill)=>{handleChangePrimarySkill(selectedPrimarySkill)}}
                                           multiple
                                         >
                                           {skillList.map((item, index) => (

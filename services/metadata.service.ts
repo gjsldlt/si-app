@@ -25,7 +25,7 @@ const addMetadata = async (
   mtdtDesc: string,
   mtdtType: string
 ) => {
-  const response = await axios.post(GLOBALHELPER.APIURL, {
+  const response = await axios.post(GLOBALHELPER.DEVURL, {
     query: addMetadataQuery,
     variables: {
       name: mtdtName,
@@ -40,7 +40,7 @@ const addMetadata = async (
 
 //Create function to get metdata from API
 const getMetadata = async (mtdtType: string) => {
-  const response = await axios.get(GLOBALHELPER.APIURL, {
+  const response = await axios.get(GLOBALHELPER.DEVURL, {
     params: {
       query: getMetadataQuery,
       variables: {
@@ -55,7 +55,7 @@ const getMetadata = async (mtdtType: string) => {
 
 //Create function to get metdata from API
 const getPgMetadata = async (mtdtType: string, pageNum: number, numItems: number) => {
-  const response = await axios.get(GLOBALHELPER.APIURL, {
+  const response = await axios.get(GLOBALHELPER.DEVURL, {
     params: {
       query: getPgMetadataQuery,
       variables: {
@@ -82,7 +82,7 @@ const updateMetadata = async (
   mtdtName: string,
   mtdtDesc: string
 ) => {
-  const response = await axios.post(GLOBALHELPER.APIURL, {
+  const response = await axios.post(GLOBALHELPER.DEVURL, {
     query: updateMetadataQuery,
     variables: {
       id: mtdtId,
@@ -97,7 +97,7 @@ const updateMetadata = async (
 //DELETE METADATA FROM API
 
 const deleteMetadata = async (mtdtId: string) => {
-  const response = await axios.post(GLOBALHELPER.APIURL, {
+  const response = await axios.post(GLOBALHELPER.DEVURL, {
     query: deleteMetadataQuery,
     variables: {
       id: mtdtId,
