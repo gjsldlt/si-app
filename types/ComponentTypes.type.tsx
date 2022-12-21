@@ -20,7 +20,7 @@ export interface CardType {
   setCurrentPage?: React.Dispatch<React.SetStateAction<number>>;
   renderData?: () => Promise<void>;
   searchInput?: string;
-  childToParent: (searchTerm: string) => void;
+  searchFunction: (searchTerm: string) => void;
 }
 
 export interface PopoverType {
